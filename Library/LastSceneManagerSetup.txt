@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Scenes/PlayerCount.unity
+=======
+- path: Assets/Scenes/ConnectionScrren.unity
+>>>>>>> 5ed7f0ff2879d30ae920e426cc4f78e566120873
   isLoaded: 1
   isActive: 1
