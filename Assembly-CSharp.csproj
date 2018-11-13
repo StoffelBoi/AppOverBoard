@@ -61,6 +61,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\boardAssembly.cs" />
+    <Compile Include="Assets\playerCount.cs" />
     <Compile Include="Assets\roleSelection.cs" />
     <Compile Include="Assets\StartUpScreen.cs" />
     <Reference Include="UnityEditor.StandardEvents">

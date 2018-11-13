@@ -15,16 +15,10 @@ public class StartUpScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("d"))
-        {
-          
-        }
         if (Input.touchCount > 0)
         {
-            Debug.Log(Input.touchCount);
             if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                Debug.Log("TEST");
                 SceneManager.LoadScene("PlayerCount");
             }
         }
