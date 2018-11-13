@@ -42,6 +42,7 @@ public class roleSelection : MonoBehaviour
     void DoctorClick()
     {
         //string in gamestate setzen
+        //player count erhöhen für waiting scene
         btn_doctor.interactable = false;
         //SceneManager.LoadScene("Waiting");
         gameState.roles.Add("Doctor");
@@ -51,6 +52,7 @@ public class roleSelection : MonoBehaviour
     void PoliceClick()
     {
         //string in gamestate setzen
+        //player count erhöhen für waiting scene
         btn_policeMan.interactable = false;
         //SceneManager.LoadScene("Waiting");
         gameState.roles.Add("Police");
@@ -60,6 +62,7 @@ public class roleSelection : MonoBehaviour
     void DetectivClick()
     {
         //string in gamestate setzen
+        //player count erhöhen für waiting scene
         btn_privateDetective.interactable = false;
         //SceneManager.LoadScene("Waiting");
         gameState.roles.Add("Detective");
@@ -69,6 +72,7 @@ public class roleSelection : MonoBehaviour
     void PsychicClick()
     {
         //string in gamestate setzen
+        //player count erhöhen für waiting scene
         btn_psychic.interactable = false;
         //SceneManager.LoadScene("Waiting");
         gameState.roles.Add("Psychic");
@@ -78,6 +82,7 @@ public class roleSelection : MonoBehaviour
     void PsychologistClick()
     {
         //string in gamestate setzen
+        //player count erhöhen für waiting scene
         btn_psychologist.interactable = false;
         //SceneManager.LoadScene("Waiting");
         gameState.roles.Add("Psychologist");
@@ -87,6 +92,7 @@ public class roleSelection : MonoBehaviour
     void ReporterClick()
     {
         //string in gamestate setzen
+        //player count erhöhen für waiting scene
         btn_reporter.interactable = false;
         //SceneManager.LoadScene("Waiting");
         gameState.roles.Add("Reporter");

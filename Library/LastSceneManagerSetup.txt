@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Scenes/StartupScreen.unity
+=======
+- path: Assets/Scenes/BoardAssembly.unity
+>>>>>>> 96d2ba2af1a234019317f93b29ae05384d60fd1c
   isLoaded: 1
   isActive: 1
