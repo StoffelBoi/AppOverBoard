@@ -31,7 +31,7 @@ public class Movement : MonoBehaviour {
         btnLeft.onClick.AddListener(leftClick);
         btnUp.onClick.AddListener(upClick);
         btnDown.onClick.AddListener(downClick);
-        btnSty.onClick.AddListener(stayClick);
+        btnStay.onClick.AddListener(stayClick);
         newTurn();
     }
 	void newTurn()
