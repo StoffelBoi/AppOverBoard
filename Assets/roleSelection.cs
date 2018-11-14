@@ -7,6 +7,7 @@ using System.Linq;
 
 public class RoleSelection : MonoBehaviour
 {
+    private int[] mainsquare = new int[] { 2, 3 };
     private GameState gs;
     private int selectedRoles;
     public Button btn_doctor;
@@ -120,6 +121,7 @@ public class RoleSelection : MonoBehaviour
         btn_doctor.interactable = false;
         //SceneManager.LoadScene("Waiting");
         GameState.roles.Add("Doctor");
+        GameState.currentPlace.Add(mainsquare);
         selectedRoles++;
     }
 
@@ -130,6 +132,7 @@ public class RoleSelection : MonoBehaviour
         btn_policeMan.interactable = false;
         //SceneManager.LoadScene("Waiting");
         GameState.roles.Add("Police");
+        GameState.currentPlace.Add(mainsquare);
         selectedRoles++;
     }
 
@@ -140,6 +143,7 @@ public class RoleSelection : MonoBehaviour
         btn_privateDetective.interactable = false;
         //SceneManager.LoadScene("Waiting");
         GameState.roles.Add("Detective");
+        GameState.currentPlace.Add(mainsquare);
         selectedRoles++;
     }
 
@@ -150,6 +154,7 @@ public class RoleSelection : MonoBehaviour
         btn_psychic.interactable = false;
         //SceneManager.LoadScene("Waiting");
         GameState.roles.Add("Psychic");
+        GameState.currentPlace.Add(mainsquare);
         selectedRoles++;
     }
 
@@ -160,6 +165,7 @@ public class RoleSelection : MonoBehaviour
         btn_psychologist.interactable = false;
         //SceneManager.LoadScene("Waiting");
         GameState.roles.Add("Psychologist");
+        GameState.currentPlace.Add(mainsquare);
         selectedRoles++;
     }
 
@@ -170,6 +176,7 @@ public class RoleSelection : MonoBehaviour
         btn_reporter.interactable = false;
         //SceneManager.LoadScene("Waiting");
         GameState.roles.Add("Reporter");
+        GameState.currentPlace.Add(mainsquare);
         selectedRoles++;
     }
 }

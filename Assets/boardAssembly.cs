@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System;
 
 public class BoardAssembly : MonoBehaviour {
@@ -161,8 +162,11 @@ public class BoardAssembly : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("Movement");
+        }
+    }
 
     int newNumber(System.Random rn, int under, int upper)
     {
