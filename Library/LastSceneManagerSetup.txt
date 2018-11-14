@@ -1,4 +1,8 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Scenes/StartupScreen.unity
+=======
+- path: Assets/Scenes/PrivatPlayer.unity
+>>>>>>> bc0aeae4709a9191ae14030169bdbc3298050f51
   isLoaded: 1
   isActive: 1
