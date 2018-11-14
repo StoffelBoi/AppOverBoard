@@ -19,24 +19,18 @@ public class StartUpScreen : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             SceneManager.LoadScene("ConnectionScreen");
-<<<<<<< HEAD
+
         }
-=======
-        } 
->>>>>>> bc0aeae4709a9191ae14030169bdbc3298050f51
+
+
+
+     
         if (Input.touchCount > 0)
         {
             if (Input.GetTouch(0).phase == TouchPhase.Ended)
-            {
-                SceneManager.LoadScene("PlayerCount");
-            }
+           {
+            SceneManager.LoadScene("ConnectionScreen");
+           }
         }
-        //if (Input.touchCount > 0)
-        //{
-        //    if (Input.GetTouch(0).phase == TouchPhase.Ended)
-        //    {
-        //        SceneManager.LoadScene("ConnectionScreen");
-        //    }
-        //}
     }
 }

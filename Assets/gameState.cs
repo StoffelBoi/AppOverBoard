@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class gameState : MonoBehaviour {
+public class GameState : MonoBehaviour {
     public static int playerCount;
     public static List<string> roles;
     public static int[,] board;

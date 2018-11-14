@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerCount : MonoBehaviour {
+public class PlayerCount : MonoBehaviour {
 
     public Text txt_playerCount;
     public int maxPlayer = 0; //updaten mit connection

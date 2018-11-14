@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class selectPlayerCount : MonoBehaviour {
+public class SelectPlayerCount : MonoBehaviour {
     public Dropdown dd;
     // Use this for initialization
     void Start () {
@@ -17,21 +17,21 @@ public class selectPlayerCount : MonoBehaviour {
         {
 
             case 1:
-               gameState.playerCount = 3;
+               GameState.playerCount = 3;
                 SceneManager.LoadScene("RoleSelection");
                 break;
             case 2:
-                gameState.playerCount = 4;
+                GameState.playerCount = 4;
                 SceneManager.LoadScene("RoleSelection");
                 break;
 
             case 3:
-                gameState.playerCount = 5;
+                GameState.playerCount = 5;
                 SceneManager.LoadScene("RoleSelection");
                 break;
 
             case 4:
-                gameState.playerCount = 6;
+                GameState.playerCount = 6;
                 SceneManager.LoadScene("RoleSelection");
                 break;
         }

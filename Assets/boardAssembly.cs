@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class boardAssembly : MonoBehaviour {
+public class BoardAssembly : MonoBehaviour {
 
     /*
      * 0 ... Street
@@ -84,7 +84,7 @@ public class boardAssembly : MonoBehaviour {
             {0, 0, 0, 0, 0, 0, 0 },
             {0, place9, place10, 0, place11, place12, 0 }
         };
-        gameState.board = board;
+        GameState.board = board;
         for(int rows = 0; rows < board.GetLength(0); rows++)
         {
             for(int cols = 0; cols < board.GetLength(1); cols++)

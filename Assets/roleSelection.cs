@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
 
-public class roleSelection : MonoBehaviour
+public class RoleSelection : MonoBehaviour
 {
-    private gameState gs;
+    private GameState gs;
     private int selectedRoles;
     public Button btn_doctor;
     public Button btn_policeMan;
@@ -34,67 +34,67 @@ public class roleSelection : MonoBehaviour
         System.Random rn = new System.Random();
         int Role = rn.Next(1, 5);
         int targetPlace = rn.Next(1, 4);
-        int player = rn.Next(0, gameState.playerCount);
-        gameState.criminal = gameState.roles.ElementAt(player);
+        int player = rn.Next(0, GameState.playerCount);
+        GameState.criminal = GameState.roles.ElementAt(player);
         switch (Role)
         {
             case 1:
-                gameState.criminalRole = "Bomber";
+                GameState.criminalRole = "Bomber";
                 switch (targetPlace)
                 {
                     case 1:
-                        gameState.targetPlace = 5;
+                        GameState.targetPlace = 5;
                         break;
                     case 2:
-                        gameState.targetPlace = 8;
+                        GameState.targetPlace = 8;
                         break;
                     case 3:
-                        gameState.targetPlace = 7;
+                       GameState.targetPlace = 7;
                         break;
                 }
                 break;
             case 2:
-                gameState.criminalRole = "Bio-Terrorist";
+               GameState.criminalRole = "Bio-Terrorist";
                 switch (targetPlace)
                 {
                     case 1:
-                        gameState.targetPlace = 1;
+                        GameState.targetPlace = 1;
                         break;
                     case 2:
-                        gameState.targetPlace = 10;
+                        GameState.targetPlace = 10;
                         break;
                     case 3:
-                        gameState.targetPlace = 12;
+                        GameState.targetPlace = 12;
                         break;
                 }
                 break;
             case 3:
-                gameState.criminalRole = "Meisterdieb";
+                GameState.criminalRole = "Meisterdieb";
                 switch (targetPlace)
                 {
                     case 1:
-                        gameState.targetPlace = 4;
+                        GameState.targetPlace = 4;
                         break;
                     case 2:
-                        gameState.targetPlace = 8;
+                        GameState.targetPlace = 8;
                         break;
                     case 3:
-                        gameState.targetPlace = 12;
+                        GameState.targetPlace = 12;
                         break;
                 }
                 break;
             case 4:
-                gameState.criminalRole = "Kultist";
+                GameState.criminalRole = "Kultist";
                 switch (targetPlace)
                 {
                     case 1:
-                        gameState.targetPlace = 6;
+                        GameState.targetPlace = 6;
                         break;
                     case 2:
-                        gameState.targetPlace = 7;
+                        GameState.targetPlace = 7;
                         break;
                     case 3:
-                        gameState.targetPlace = 5;
+                        GameState.targetPlace = 5;
                         break;
                 }
                 break;
@@ -104,7 +104,7 @@ public class roleSelection : MonoBehaviour
     void Update()
     {
         Debug.Log("Selected Player Count: " + selectedRoles);
-        if (selectedRoles == gameState.playerCount)
+        if (selectedRoles == GameState.playerCount)
         {
             setCriminalRole();
             SceneManager.LoadScene("Waiting");
@@ -119,7 +119,7 @@ public class roleSelection : MonoBehaviour
         //player count erhöhen für waiting scene
         btn_doctor.interactable = false;
         //SceneManager.LoadScene("Waiting");
-        gameState.roles.Add("Doctor");
+        GameState.roles.Add("Doctor");
         selectedRoles++;
     }
 
@@ -129,7 +129,7 @@ public class roleSelection : MonoBehaviour
         //player count erhöhen für waiting scene
         btn_policeMan.interactable = false;
         //SceneManager.LoadScene("Waiting");
-        gameState.roles.Add("Police");
+        GameState.roles.Add("Police");
         selectedRoles++;
     }
 
@@ -139,7 +139,7 @@ public class roleSelection : MonoBehaviour
         //player count erhöhen für waiting scene
         btn_privateDetective.interactable = false;
         //SceneManager.LoadScene("Waiting");
-        gameState.roles.Add("Detective");
+        GameState.roles.Add("Detective");
         selectedRoles++;
     }
 
@@ -149,7 +149,7 @@ public class roleSelection : MonoBehaviour
         //player count erhöhen für waiting scene
         btn_psychic.interactable = false;
         //SceneManager.LoadScene("Waiting");
-        gameState.roles.Add("Psychic");
+        GameState.roles.Add("Psychic");
         selectedRoles++;
     }
 
@@ -159,7 +159,7 @@ public class roleSelection : MonoBehaviour
         //player count erhöhen für waiting scene
         btn_psychologist.interactable = false;
         //SceneManager.LoadScene("Waiting");
-        gameState.roles.Add("Psychologist");
+        GameState.roles.Add("Psychologist");
         selectedRoles++;
     }
 
@@ -169,7 +169,7 @@ public class roleSelection : MonoBehaviour
         //player count erhöhen für waiting scene
         btn_reporter.interactable = false;
         //SceneManager.LoadScene("Waiting");
-        gameState.roles.Add("Reporter");
+        GameState.roles.Add("Reporter");
         selectedRoles++;
     }
 }
