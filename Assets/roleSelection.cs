@@ -7,7 +7,6 @@ using System.Linq;
 
 public class RoleSelection : MonoBehaviour
 {
-    private int[] mainsquare = new int[] { 2, 3 };
     private GameState gs;
     private int selectedRoles;
     public Button btn_doctor;
@@ -140,7 +139,7 @@ public class RoleSelection : MonoBehaviour
         //roleSelection.enabled = false;
         //waiting.enabled = true;
         GameState.roles.Add("Doctor");
-        GameState.currentPlace.Add(mainsquare);
+        GameState.currentPlace.Add(new int[] { 2, 3 });
         selectedRoles++;
     }
 
@@ -152,7 +151,7 @@ public class RoleSelection : MonoBehaviour
         //roleSelection.enabled = false;
         //waiting.enabled = true;
         GameState.roles.Add("Police");
-        GameState.currentPlace.Add(mainsquare);
+        GameState.currentPlace.Add(new int[] { 2, 3 });
         selectedRoles++;
     }
 
@@ -164,7 +163,7 @@ public class RoleSelection : MonoBehaviour
         //roleSelection.enabled = false;
         //waiting.enabled = true;
         GameState.roles.Add("Detective");
-        GameState.currentPlace.Add(mainsquare);
+        GameState.currentPlace.Add(new int[] { 2, 3 });
         selectedRoles++;
     }
 
@@ -176,7 +175,7 @@ public class RoleSelection : MonoBehaviour
         //roleSelection.enabled = false;
         //waiting.enabled = true;
         GameState.roles.Add("Psychic");
-        GameState.currentPlace.Add(mainsquare);
+        GameState.currentPlace.Add(new int[] { 2, 3 });
         selectedRoles++;
     }
 
@@ -188,7 +187,7 @@ public class RoleSelection : MonoBehaviour
         //roleSelection.enabled = false;
         //waiting.enabled = true;
         GameState.roles.Add("Psychologist");
-        GameState.currentPlace.Add(mainsquare);
+        GameState.currentPlace.Add(new int[] { 2, 3 });
         selectedRoles++;
     }
 
@@ -200,7 +199,7 @@ public class RoleSelection : MonoBehaviour
         //roleSelection.enabled = false;
         //waiting.enabled = true;
         GameState.roles.Add("Reporter");
-        GameState.currentPlace.Add(mainsquare);
+        GameState.currentPlace.Add(new int[] { 2, 3 });
         selectedRoles++;
     }
 }

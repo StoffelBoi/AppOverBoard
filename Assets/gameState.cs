@@ -23,30 +23,5 @@ public class GameState : MonoBehaviour {
    
 	// Update is called once per frame
 	void Update () {
-        if (board != null)
-        {
-            Debug.Log("Mainsquare: "+board[2, 3]);
-        }
-        if (playerCount != 0)
-        {
-            Debug.Log("PlayerCount: " + playerCount);
-        }
-        foreach(string s in roles)
-        {
-            Debug.Log(s);
-        }
-        if (criminalRole != null)
-        {
-            Debug.Log("criminalrole: " + criminalRole);
-        }
-        if (criminal != null)
-        {
-            Debug.Log("criminal: " + criminal);
-        }
-        if (targetPlace != 0)
-        {
-            Debug.Log("targetPlace: " + targetPlace);
-        }
-
     }
 }
