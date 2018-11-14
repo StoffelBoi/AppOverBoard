@@ -5,25 +5,28 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/RoleSelection.unity
     guid: 6b15e93cf0ce5f0478ca6d8023530e57
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/StartupScreen.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PlayerCount.unity
     guid: f4774fefa781aec47871b450b7c711d4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Waiting.unity
     guid: d09d529ccbac151428517a26ca0eac87
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ConnectionScreen.unity
     guid: f00044682441eb84ab92e2551a928a67
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BoardAssembly.unity
     guid: 9e0c9568bf2c2df4b8a101de8896e756
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Movement.unity
     guid: 8470c5022425d8a4086489c11fe731ad
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 4f242a3bc5b4ff04690cf8773537a6fd
   m_configObjects: {}

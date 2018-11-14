@@ -12,6 +12,7 @@ public class GameState : MonoBehaviour {
     public static int targetPlace;
     public static int currentTurn;
     // Use this for initialization
+   
     void Start() {
         playerCount = 0;
         roles = new List<string>();

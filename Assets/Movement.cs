@@ -17,6 +17,14 @@ public class Movement : MonoBehaviour {
     public Text txtUp;
     public bool firstMove;
     // Use this for initialization
+    public Canvas movement;
+    public Movement scriptMovement;
+    private void Awake()
+    {
+
+        scriptMovement = this.GetComponent<Movement>();
+        scriptMovement.enabled = false;
+    }
     void Start () {
         
         btnRight.onClick.AddListener(rightClick);
