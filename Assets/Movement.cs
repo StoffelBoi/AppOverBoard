@@ -16,6 +16,14 @@ public class Movement : MonoBehaviour {
     public Text txtLeft;
     public Text txtUp;
     // Use this for initialization
+    public Canvas movement;
+    public Movement scriptMovement;
+    private void Awake()
+    {
+
+        scriptMovement = this.GetComponent<Movement>();
+        scriptMovement.enabled = false;
+    }
     void Start () {
         currentPlace = GameState.currentPlace[GameState.currentTurn];
         setButtons(currentPlace);

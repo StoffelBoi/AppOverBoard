@@ -31,28 +31,39 @@ public class BoardAssembly : MonoBehaviour {
 
     public LinkedList<int> places = new LinkedList<int>();
     public Text txt_board;
+    public Canvas boardAssembly;
+    public Canvas privatPlayer;
+
+    private BoardAssembly scriptBoardAssembly;
+    private PrivatPlayer scriptPrivatPlayer;
+
     public int[,] board;
 
-    public int place1;
-    public int place2;
-    public int place3;
-    public int place4;
-    public int place5;
-    public int skillplace1;
-    public int mainsquare = 1;
-    public int skillplace2;
-    public int place6;
-    public int place7;
-    public int skillplace3;
-    public int skillplace4;
-    public int skillplace5;
-    public int place8;
-    public int place9;
-    public int place10;
-    public int place11;
-    public int place12;
+    private int place1;
+    private int place2;
+    private int place3;
+    private int place4;
+    private int place5;
+    private int skillplace1;
+    private int mainsquare = 1;
+    private int skillplace2;
+    private int place6;
+    private int place7;
+    private int skillplace3;
+    private int skillplace4;
+    private int skillplace5;
+    private int place8;
+    private int place9;
+    private int place10;
+    private int place11;
+    private int place12;
 
     // Use this for initialization
+    private void Awake()
+    {
+        scriptBoardAssembly = this.GetComponent<BoardAssembly>();
+        scriptBoardAssembly.enabled = false;
+    }
     void Start () {
         System.Random rn = new System.Random();
 
@@ -158,7 +169,10 @@ public class BoardAssembly : MonoBehaviour {
             txt_board.text += "\n";
         }
 
-	}
+        
+        scriptPrivatPlayer = privatPlayer.GetComponent<PrivatPlayer>();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {

@@ -17,7 +17,20 @@ public class RoleSelection : MonoBehaviour
     public Button btn_psychologist;
     public Button btn_reporter;
 
+    public Canvas roleSelection;
+    public Canvas waiting;
+
+    public GameObject waitingController;
+
+    private RoleSelection scriptRoleSelection;
+    private PlayerCount scriptPlayerCount;
+
     // Use this for initialization
+    private void Awake()
+    {
+        scriptRoleSelection = this.GetComponent<RoleSelection>();
+        scriptRoleSelection.enabled = false;
+    }
     void Start()
     {
         btn_doctor.onClick.AddListener(DoctorClick);
@@ -27,16 +40,18 @@ public class RoleSelection : MonoBehaviour
         btn_psychologist.onClick.AddListener(PsychologistClick);
         btn_reporter.onClick.AddListener(ReporterClick);
         selectedRoles = 0;
-       
+        
+        scriptPlayerCount = waitingController.GetComponent<PlayerCount>();
 
     }
+
     void setCriminalRole()
     {
         System.Random rn = new System.Random();
         int Role = rn.Next(1, 5);
         int targetPlace = rn.Next(1, 4);
         int player = rn.Next(0, GameState.playerCount);
-        GameState.criminal = GameState.roles.ElementAt(player);
+        GameState.criminal = GameState.roles[player];
         switch (Role)
         {
             case 1:
@@ -108,7 +123,10 @@ public class RoleSelection : MonoBehaviour
         if (selectedRoles == GameState.playerCount)
         {
             setCriminalRole();
-            SceneManager.LoadScene("Waiting");
+            roleSelection.enabled = false;
+            waiting.enabled = true;
+            scriptPlayerCount.enabled = true;
+            scriptRoleSelection.enabled = false;
         }
     }
 
@@ -119,7 +137,8 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_doctor.interactable = false;
-        //SceneManager.LoadScene("Waiting");
+        //roleSelection.enabled = false;
+        //waiting.enabled = true;
         GameState.roles.Add("Doctor");
         GameState.currentPlace.Add(mainsquare);
         selectedRoles++;
@@ -130,7 +149,8 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_policeMan.interactable = false;
-        //SceneManager.LoadScene("Waiting");
+        //roleSelection.enabled = false;
+        //waiting.enabled = true;
         GameState.roles.Add("Police");
         GameState.currentPlace.Add(mainsquare);
         selectedRoles++;
@@ -141,7 +161,8 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_privateDetective.interactable = false;
-        //SceneManager.LoadScene("Waiting");
+        //roleSelection.enabled = false;
+        //waiting.enabled = true;
         GameState.roles.Add("Detective");
         GameState.currentPlace.Add(mainsquare);
         selectedRoles++;
@@ -152,7 +173,8 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_psychic.interactable = false;
-        //SceneManager.LoadScene("Waiting");
+        //roleSelection.enabled = false;
+        //waiting.enabled = true;
         GameState.roles.Add("Psychic");
         GameState.currentPlace.Add(mainsquare);
         selectedRoles++;
@@ -163,7 +185,8 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_psychologist.interactable = false;
-        //SceneManager.LoadScene("Waiting");
+        //roleSelection.enabled = false;
+        //waiting.enabled = true;
         GameState.roles.Add("Psychologist");
         GameState.currentPlace.Add(mainsquare);
         selectedRoles++;
@@ -174,7 +197,8 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_reporter.interactable = false;
-        //SceneManager.LoadScene("Waiting");
+        //roleSelection.enabled = false;
+        //waiting.enabled = true;
         GameState.roles.Add("Reporter");
         GameState.currentPlace.Add(mainsquare);
         selectedRoles++;
