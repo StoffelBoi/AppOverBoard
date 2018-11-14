@@ -689,16 +689,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b440afe77169ef9449d2917ac99a6b3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnStay: {fileID: 0}
-  btnRight: {fileID: 0}
-  btnDown: {fileID: 0}
-  btnLeft: {fileID: 0}
-  btnUp: {fileID: 0}
-  txtStay: {fileID: 0}
-  txtRight: {fileID: 0}
-  txtDown: {fileID: 0}
-  txtLeft: {fileID: 0}
-  txtUp: {fileID: 0}
+  btnStay: {fileID: 806074845}
+  btnRight: {fileID: 1972564302}
+  btnDown: {fileID: 1777233049}
+  btnLeft: {fileID: 298575236}
+  btnUp: {fileID: 1572063902}
+  txtStay: {fileID: 451018555}
+  txtRight: {fileID: 1002169422}
+  txtDown: {fileID: 80140471}
+  txtLeft: {fileID: 1997840998}
+  txtUp: {fileID: 1193516093}
 --- !u!4 &969858276
 Transform:
   m_ObjectHideFlags: 0

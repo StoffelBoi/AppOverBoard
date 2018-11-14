@@ -31,7 +31,7 @@ public class Movement : MonoBehaviour {
         txtStay.text = translatePlace(GameState.board[currentPlace[0],currentPlace[1]]);
         if (currentPlace[0] > 0)
         {
-        txtStay.text = translatePlace(GameState.board[currentPlace[0]+1, currentPlace[1]]);
+            txtStay.text = translatePlace(GameState.board[currentPlace[0] + 1, currentPlace[1]]);
         }
         if (currentPlace[0] < 5)
         {
@@ -39,11 +39,11 @@ public class Movement : MonoBehaviour {
         }
         if (currentPlace[1] > 0)
         {
-            txtStay.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1]+1]);
+            txtStay.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1] + 1]);
         }
         if (currentPlace[1] < 6)
         {
-            txtStay.text = translatePlace(GameState.board[currentPlace[0] + 1, currentPlace[1]-1]);
+            txtStay.text = translatePlace(GameState.board[currentPlace[0] + 1, currentPlace[1] - 1]);
         }
 
     }

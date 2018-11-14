@@ -17,7 +17,7 @@ public class GameState : MonoBehaviour {
         roles = new List<string>();
         board = new int[6, 7];
         currentTurn= 0;
-
+        currentPlace = new List<int[]>();
     }
    
 	// Update is called once per frame
