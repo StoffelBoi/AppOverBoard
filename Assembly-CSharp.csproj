@@ -65,6 +65,7 @@
     <Compile Include="Assets\dontDestroy.cs" />
     <Compile Include="Assets\gameState.cs" />
     <Compile Include="Assets\playerCount.cs" />
+    <Compile Include="Assets\PrivatPlayer.cs" />
     <Compile Include="Assets\roleSelection.cs" />
     <Compile Include="Assets\selectPlayerCount.cs" />
     <Compile Include="Assets\Skip.cs" />
