@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class Movement : MonoBehaviour {
     private int[] currentPlace;
     public Button btnStay;
@@ -15,12 +15,23 @@ public class Movement : MonoBehaviour {
     public Text txtDown;
     public Text txtLeft;
     public Text txtUp;
+    public bool firstMove;
     // Use this for initialization
     void Start () {
+        
+        btnRight.onClick.AddListener(rightClick);
+        btnLeft.onClick.AddListener(leftClick);
+        btnUp.onClick.AddListener(upClick);
+        btnDown.onClick.AddListener(downClick);
+        btnSty.onClick.AddListener(stayClick);
+        newTurn();
+    }
+	void newTurn()
+    {
         currentPlace = GameState.currentPlace[GameState.currentTurn];
         setButtons(currentPlace);
-	}
-	
+        firstMove = true;
+    }
 	// Update is called once per frame
 	void Update () {
 		
@@ -28,48 +39,47 @@ public class Movement : MonoBehaviour {
 
     void setButtons(int[] currentPlace)
     {
-        txtStay.text = translatePlace(GameState.board[currentPlace[0],currentPlace[1]]);
+        txtStay.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1]]);
         if (currentPlace[0] > 0)
         {
-            txtStay.text = translatePlace(GameState.board[currentPlace[0] + 1, currentPlace[1]]);
+            txtUp.text = translatePlace(GameState.board[currentPlace[0] - 1, currentPlace[1]]);
+        }
+        else
+        {
+            btnUp.interactable = false;
+            txtUp.text = "Stadtrand";
         }
         if (currentPlace[0] < 5)
         {
-            txtStay.text = translatePlace(GameState.board[currentPlace[0] - 1, currentPlace[1]]);
+            txtDown.text = translatePlace(GameState.board[currentPlace[0] + 1, currentPlace[1]]);
+        }
+        else
+        {
+            btnDown.interactable = false;
+            txtDown.text = "Stadtrand";
         }
         if (currentPlace[1] > 0)
         {
-            txtStay.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1] + 1]);
+            txtLeft.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1] - 1]);
+        }
+        else
+        {
+            btnLeft.interactable = false;
+            txtLeft.text = "Stadtrand";
         }
         if (currentPlace[1] < 6)
         {
-            txtStay.text = translatePlace(GameState.board[currentPlace[0] + 1, currentPlace[1] - 1]);
+            txtRight.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1] + 1]);
+        }
+        else
+        {
+            btnRight.interactable = false;
+            txtRight.text = "Stadtrand";
         }
 
     }
     string translatePlace(int place)
     {
-        /*
-   * 0 ... Street
-   * 1 ... Citysquare
-   * 2 ... Park
-   * 3 ... Hospital
-   * 4 ... Bank
-   * 5 ... Parliament
-   * 6 ... Cemetary
-   * 7 ... Prison
-   * 8 ... Casino
-   * 9 ... Internet Cafe
-   * 10 .. Trainstation
-   * 11 .. Armyshop
-   * 12 .. Shoppingcenter
-   * 13 .. Junk Yard
-   * 14 .. Library
-   * 15 .. Laboratory
-   * 16 .. Italien Restaurant
-   * 17 .. Harbor
-   * 18 .. Bar
-   */
         string s = "Straße";
         switch (place)
         {
@@ -130,5 +140,50 @@ public class Movement : MonoBehaviour {
         }
         return s;
     }
-
+    void endClick()
+    {
+        
+        if (firstMove && GameState.board[GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] == 0)
+        {
+            firstMove = false;
+            currentPlace = GameState.currentPlace[GameState.currentTurn];
+            setButtons(currentPlace);
+        }
+        else
+        {
+            if (GameState.currentTurn == GameState.playerCount -1)
+            {
+                GameState.currentTurn = 0;
+            }
+            else
+            {
+                GameState.currentTurn++;
+            }
+            newTurn();
+        }
+    }
+    void rightClick()
+    {
+        GameState.currentPlace[GameState.currentTurn][1] += 1;
+        endClick();
+    }
+    void leftClick()
+    {
+        GameState.currentPlace[GameState.currentTurn][1]-=1;
+        endClick();
+    }
+    void downClick()
+    {
+        GameState.currentPlace[GameState.currentTurn][0]+=1;
+        endClick();
+    }
+    void upClick()
+    {
+        GameState.currentPlace[GameState.currentTurn][0]-=1;
+        endClick();
+    }
+    void stayClick()
+    {
+        firstMove = false;
+    }
 }
