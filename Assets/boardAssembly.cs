@@ -31,11 +31,11 @@ public class BoardAssembly : MonoBehaviour {
 
     public LinkedList<int> places = new LinkedList<int>();
     public Text txt_board;
-    public Canvas boardAssembly;
-    public Canvas privatPlayer;
-
+    public Canvas boardAssemblyCanvas;
+    public Canvas movementCanvas;
+    public GameObject movementController;
+    private Movement scriptMovement;
     private BoardAssembly scriptBoardAssembly;
-    private PrivatPlayer scriptPrivatPlayer;
 
     public int[,] board;
 
@@ -65,6 +65,8 @@ public class BoardAssembly : MonoBehaviour {
         scriptBoardAssembly.enabled = false;
     }
     void Start () {
+
+        scriptMovement = movementController.GetComponent<Movement>();
         System.Random rn = new System.Random();
 
         skillplace1 = newNumber(rn, 2, 7);
@@ -170,7 +172,7 @@ public class BoardAssembly : MonoBehaviour {
         }
 
         
-        scriptPrivatPlayer = privatPlayer.GetComponent<PrivatPlayer>();
+       
 
     }
 	
@@ -178,7 +180,10 @@ public class BoardAssembly : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SceneManager.LoadScene("Movement");
+            boardAssemblyCanvas.enabled = false;
+            movementCanvas.enabled = true;
+            scriptMovement.enabled = true;
+            scriptBoardAssembly.enabled = false;
         }
     }
 

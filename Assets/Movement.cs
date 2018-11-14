@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class Movement : MonoBehaviour {
+    private Movement scriptMovement;
+    public Canvas movement;
     private int[] currentPlace;
     public Button btnStay;
     public Button btnRight;
@@ -15,13 +17,18 @@ public class Movement : MonoBehaviour {
     public Text txtDown;
     public Text txtLeft;
     public Text txtUp;
-    public bool firstMove;
+    private bool firstMove;
+    public Image img;
+    public Sprite Doctor;
+    public Sprite Detective;
+    public Sprite Police;
+    public Sprite Psychic;
+    public Sprite Reporter;
+    public Sprite Psychologist;
     // Use this for initialization
-    public Canvas movement;
-    public Movement scriptMovement;
+
     private void Awake()
     {
-
         scriptMovement = this.GetComponent<Movement>();
         scriptMovement.enabled = false;
     }
@@ -36,6 +43,27 @@ public class Movement : MonoBehaviour {
     }
 	void newTurn()
     {
+        switch (GameState.roles[GameState.currentTurn])
+        {
+            case "Detective":
+                img.GetComponent<Image>().sprite = Detective;
+                break;
+            case "Doctor":
+                img.GetComponent<Image>().sprite = Doctor;
+                break;
+            case "Police":
+                img.GetComponent<Image>().sprite = Police;
+                break;
+            case "Psychic":
+                img.GetComponent<Image>().sprite = Psychic;
+                break;
+            case "Reporter":
+                img.GetComponent<Image>().sprite = Reporter;
+                break;
+            case "Psychologist":
+                img.GetComponent<Image>().sprite = Psychologist;
+                break;
+        }
         currentPlace = GameState.currentPlace[GameState.currentTurn];
         setButtons(currentPlace);
         firstMove = true;
@@ -50,6 +78,7 @@ public class Movement : MonoBehaviour {
         txtStay.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1]]);
         if (currentPlace[0] > 0)
         {
+            btnUp.interactable = true;
             txtUp.text = translatePlace(GameState.board[currentPlace[0] - 1, currentPlace[1]]);
         }
         else
@@ -59,6 +88,7 @@ public class Movement : MonoBehaviour {
         }
         if (currentPlace[0] < 5)
         {
+            btnDown.interactable = true;
             txtDown.text = translatePlace(GameState.board[currentPlace[0] + 1, currentPlace[1]]);
         }
         else
@@ -68,6 +98,7 @@ public class Movement : MonoBehaviour {
         }
         if (currentPlace[1] > 0)
         {
+            btnLeft.interactable = true;
             txtLeft.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1] - 1]);
         }
         else
@@ -77,6 +108,7 @@ public class Movement : MonoBehaviour {
         }
         if (currentPlace[1] < 6)
         {
+            btnRight.interactable = true;
             txtRight.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1] + 1]);
         }
         else
