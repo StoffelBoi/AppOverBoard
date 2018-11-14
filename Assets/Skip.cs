@@ -13,7 +13,7 @@ public class Skip : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SceneManager.LoadScene("StartupScreen");
+            SceneManager.LoadScene("BoardAssembly");
         }
     }
 }

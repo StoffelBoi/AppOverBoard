@@ -5,23 +5,44 @@ using UnityEngine;
 public class gameState : MonoBehaviour {
     public static int playerCount;
     public static List<string> roles;
-    public static int[] board;
+    public static int[,] board;
+    public static string criminal;
+    public static string criminalRole;
+    public static int targetPlace;
     // Use this for initialization
     void Start() {
         playerCount = 0;
         roles = new List<string>();
-
+        board = new int[6, 7];
 
     }
    
 	// Update is called once per frame
 	void Update () {
-        
-        Debug.Log("PlayerCount: " + playerCount);
+        if (board != null)
+        {
+            Debug.Log("Mainsquare: "+board[2, 3]);
+        }
+        if (playerCount != 0)
+        {
+            Debug.Log("PlayerCount: " + playerCount);
+        }
         foreach(string s in roles)
         {
             Debug.Log(s);
         }
-       
-	}
+        if (criminalRole != null)
+        {
+            Debug.Log("criminalrole: " + criminalRole);
+        }
+        if (criminal != null)
+        {
+            Debug.Log("criminal: " + criminal);
+        }
+        if (targetPlace != 0)
+        {
+            Debug.Log("targetPlace: " + targetPlace);
+        }
+
+    }
 }

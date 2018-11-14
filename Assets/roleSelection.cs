@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class roleSelection : MonoBehaviour
 {
@@ -25,14 +26,87 @@ public class roleSelection : MonoBehaviour
         btn_psychologist.onClick.AddListener(PsychologistClick);
         btn_reporter.onClick.AddListener(ReporterClick);
         selectedRoles = 0;
-    }
+       
 
+    }
+    void setCriminalRole()
+    {
+        System.Random rn = new System.Random();
+        int Role = rn.Next(1, 5);
+        int targetPlace = rn.Next(1, 4);
+        int player = rn.Next(0, gameState.playerCount);
+        gameState.criminal = gameState.roles.ElementAt(player);
+        switch (Role)
+        {
+            case 1:
+                gameState.criminalRole = "Bomber";
+                switch (targetPlace)
+                {
+                    case 1:
+                        gameState.targetPlace = 5;
+                        break;
+                    case 2:
+                        gameState.targetPlace = 8;
+                        break;
+                    case 3:
+                        gameState.targetPlace = 7;
+                        break;
+                }
+                break;
+            case 2:
+                gameState.criminalRole = "Bio-Terrorist";
+                switch (targetPlace)
+                {
+                    case 1:
+                        gameState.targetPlace = 1;
+                        break;
+                    case 2:
+                        gameState.targetPlace = 10;
+                        break;
+                    case 3:
+                        gameState.targetPlace = 12;
+                        break;
+                }
+                break;
+            case 3:
+                gameState.criminalRole = "Meisterdieb";
+                switch (targetPlace)
+                {
+                    case 1:
+                        gameState.targetPlace = 4;
+                        break;
+                    case 2:
+                        gameState.targetPlace = 8;
+                        break;
+                    case 3:
+                        gameState.targetPlace = 12;
+                        break;
+                }
+                break;
+            case 4:
+                gameState.criminalRole = "Kultist";
+                switch (targetPlace)
+                {
+                    case 1:
+                        gameState.targetPlace = 6;
+                        break;
+                    case 2:
+                        gameState.targetPlace = 7;
+                        break;
+                    case 3:
+                        gameState.targetPlace = 5;
+                        break;
+                }
+                break;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
         Debug.Log("Selected Player Count: " + selectedRoles);
         if (selectedRoles == gameState.playerCount)
         {
+            setCriminalRole();
             SceneManager.LoadScene("Waiting");
         }
     }

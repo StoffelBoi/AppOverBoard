@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ConnectionScreen.unity
     guid: f00044682441eb84ab92e2551a928a67
+  - enabled: 1
+    path: Assets/Scenes/BoardAssembly.unity
+    guid: 9e0c9568bf2c2df4b8a101de8896e756
   m_configObjects: {}
