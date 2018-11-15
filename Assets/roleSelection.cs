@@ -53,7 +53,7 @@ public class RoleSelection : MonoBehaviour
         switch (Role)
         {
             case 1:
-                GameState.criminalRole = "Bomber";
+                GameState.criminalRole = "Inferno";
                 switch (targetPlace)
                 {
                     case 1:
@@ -68,7 +68,7 @@ public class RoleSelection : MonoBehaviour
                 }
                 break;
             case 2:
-               GameState.criminalRole = "Bio-Terrorist";
+               GameState.criminalRole = "Dr.Mortifier";
                 switch (targetPlace)
                 {
                     case 1:
@@ -83,7 +83,7 @@ public class RoleSelection : MonoBehaviour
                 }
                 break;
             case 3:
-                GameState.criminalRole = "Meisterdieb";
+                GameState.criminalRole = "Phantom";
                 switch (targetPlace)
                 {
                     case 1:
@@ -98,7 +98,7 @@ public class RoleSelection : MonoBehaviour
                 }
                 break;
             case 4:
-                GameState.criminalRole = "Kultist";
+                GameState.criminalRole = "Fasculto";
                 switch (targetPlace)
                 {
                     case 1:
@@ -139,6 +139,7 @@ public class RoleSelection : MonoBehaviour
         //waiting.enabled = true;
         GameState.roles.Add("Doctor");
         GameState.currentPlace.Add(new int[] { 2, 3 });
+        GameState.money.Add(6);
         selectedRoles++;
     }
 
@@ -151,6 +152,7 @@ public class RoleSelection : MonoBehaviour
         //waiting.enabled = true;
         GameState.roles.Add("Police");
         GameState.currentPlace.Add(new int[] { 2, 3 });
+        GameState.money.Add(6);
         selectedRoles++;
     }
 
@@ -163,6 +165,7 @@ public class RoleSelection : MonoBehaviour
         //waiting.enabled = true;
         GameState.roles.Add("Detective");
         GameState.currentPlace.Add(new int[] { 2, 3 });
+        GameState.money.Add(6);
         selectedRoles++;
     }
 
@@ -175,6 +178,7 @@ public class RoleSelection : MonoBehaviour
         //waiting.enabled = true;
         GameState.roles.Add("Psychic");
         GameState.currentPlace.Add(new int[] { 2, 3 });
+        GameState.money.Add(6);
         selectedRoles++;
     }
 
@@ -187,6 +191,7 @@ public class RoleSelection : MonoBehaviour
         //waiting.enabled = true;
         GameState.roles.Add("Psychologist");
         GameState.currentPlace.Add(new int[] { 2, 3 });
+        GameState.money.Add(6);
         selectedRoles++;
     }
 
@@ -199,6 +204,7 @@ public class RoleSelection : MonoBehaviour
         //waiting.enabled = true;
         GameState.roles.Add("Reporter");
         GameState.currentPlace.Add(new int[] { 2, 3 });
+        GameState.money.Add(6);
         selectedRoles++;
     }
 }

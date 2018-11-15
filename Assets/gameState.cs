@@ -9,8 +9,20 @@ public class GameState : MonoBehaviour {
     public static int[,] board;
     public static string criminal;
     public static string criminalRole;
+    public static List<int> money;
+    public static List<int> solvedHints;
+    public static List<int> unsolvedHints;
+    public static List<List<string>> items;
+    public static List<string> playerFact;
+    public static List<string> roleFact;
+    public static List<string> placeFact;
+    public static List<int> trueSolveds;
+    public static List<int> trueUnsolveds;
     public static int targetPlace;
     public static int currentTurn;
+
+    public static bool planted = false; // Variable fuer bio-terrorist wenn er seine bombe platziert hat
+    
     // Use this for initialization
    
     void Start() {
