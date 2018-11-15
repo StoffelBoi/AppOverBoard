@@ -11,7 +11,6 @@ public class StartUpScreen : MonoBehaviour
     public Canvas waitingCanvas;
     public Canvas boardAssemblyCanvas;
     public Canvas privatPlayerCanvas;
-    public Canvas movementCanvas;
     public GameObject connectionController;
     public GameObject roleSelectionController;
     public GameObject waitingController;
@@ -36,7 +35,6 @@ public class StartUpScreen : MonoBehaviour
         waitingCanvas.enabled = false;
         boardAssemblyCanvas.enabled = false;
         privatPlayerCanvas.enabled = false;
-        movementCanvas.enabled = false;
     }
 
     // Update is called once per frame
