@@ -7,7 +7,6 @@ using System.Linq;
 
 public class RoleSelection : MonoBehaviour
 {
-    private GameState gs;
     private int selectedRoles;
     public Button btn_doctor;
     public Button btn_policeMan;
