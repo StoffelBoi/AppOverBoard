@@ -33,9 +33,16 @@ public class PrivatPlayer : MonoBehaviour {
     private string roleFact;
     private string placeFact;
 
-
+    public Canvas privatPlayer;
+    private PrivatPlayer scriptPrivatPlayer;
 
     // Use this for initialization
+    void Awake()
+    {
+        scriptPrivatPlayer = this.GetComponent<PrivatPlayer>();
+        privatPlayer.enabled = false;
+        scriptPrivatPlayer.enabled = false;
+    }
     void Start () {
         txt_villainPlain.enabled = false;
         txt_villain.enabled = false;

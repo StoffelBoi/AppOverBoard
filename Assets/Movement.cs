@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 public class Movement : MonoBehaviour {
     private Movement scriptMovement;
     public Canvas movement;
+
+    public Canvas place;
+    public GameObject placeController;
+    private Place scriptPlace;
     private int[] currentPlace;
     public Button btnStay;
     public Button btnRight;
@@ -32,14 +36,19 @@ public class Movement : MonoBehaviour {
         scriptMovement = this.GetComponent<Movement>();
         scriptMovement.enabled = false;
     }
-    void Start () {
-        
+    void OnEnable()
+    {
+        scriptPlace = placeController.GetComponent<Place>();
+        scriptMovement = this.GetComponent<Movement>();
         btnRight.onClick.AddListener(rightClick);
         btnLeft.onClick.AddListener(leftClick);
         btnUp.onClick.AddListener(upClick);
         btnDown.onClick.AddListener(downClick);
         btnStay.onClick.AddListener(stayClick);
         newTurn();
+    }
+    void Start () {
+        
     }
 	void newTurn()
     {
@@ -182,7 +191,10 @@ public class Movement : MonoBehaviour {
     }
     void endClick()
     {
-        
+        Debug.Log("currentTurn: " + GameState.currentTurn);
+        Debug.Log("currentPlace[0]: " + GameState.currentPlace[GameState.currentTurn][0]);
+        Debug.Log("currentPlace[1]: " + GameState.currentPlace[GameState.currentTurn][1]);
+
         if (firstMove && GameState.board[GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] == 0)
         {
             firstMove = false;
@@ -191,15 +203,11 @@ public class Movement : MonoBehaviour {
         }
         else
         {
-            if (GameState.currentTurn == GameState.playerCount -1)
-            {
-                GameState.currentTurn = 0;
-            }
-            else
-            {
-                GameState.currentTurn++;
-            }
-            newTurn();
+           
+            movement.enabled = false;
+            place.enabled = true;
+            scriptPlace.enabled = true;
+            scriptMovement.enabled = false;
         }
     }
     void rightClick()
