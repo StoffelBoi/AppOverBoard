@@ -117,7 +117,6 @@ public class RoleSelection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Selected Player Count: " + selectedRoles);
         if (selectedRoles == GameState.playerCount)
         {
             setCriminalRole();

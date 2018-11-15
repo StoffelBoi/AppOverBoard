@@ -38,8 +38,17 @@ public class PrivatPlayer : MonoBehaviour {
     public bool timeWindowThief = false; //boolean fuer Meisterdieb ob er sein objektiv ausfuehren kann
     public bool timeWindowCultist = false; //boolean fuer Kultist ob er sein objektiv ausfuehren kann
 
+    public Canvas privatPlayer;
+    private PrivatPlayer scriptPrivatPlayer;
+
 
     // Use this for initialization
+    void Awake()
+    {
+        scriptPrivatPlayer = this.GetComponent<PrivatPlayer>();
+        privatPlayer.enabled = false;
+        scriptPrivatPlayer.enabled = false;
+    }
     void Start () {
         txt_villainPlain.enabled = false;
         txt_villain.enabled = false;
