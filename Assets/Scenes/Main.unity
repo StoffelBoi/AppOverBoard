@@ -2412,6 +2412,10 @@ MonoBehaviour:
   txt_playerFact: {fileID: 883887550}
   txt_roleFact: {fileID: 2065507689}
   txt_placeFact: {fileID: 1734762018}
+  trueSolved: 0
+  trueUnsolved: 0
+  timeWindowThief: 0
+  timeWindowCultist: 0
   privatPlayer: {fileID: 901352371}
 --- !u!4 &626111167
 Transform:
@@ -7442,8 +7446,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 330, y: 580}
-  m_SizeDelta: {x: 160, y: 100}
+  m_AnchoredPosition: {x: -58.450012, y: 498}
+  m_SizeDelta: {x: 296.9, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1796660069
 GameObject:
@@ -7632,26 +7636,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1819798338}
   m_CullTransparentMesh: 0
-
---- !u!224 &1767664783
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1767664780}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 901352368}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -58.450012, y: 498}
-  m_SizeDelta: {x: 296.9, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
-
 --- !u!1 &1849874326
 GameObject:
   m_ObjectHideFlags: 0
