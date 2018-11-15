@@ -13,13 +13,13 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - StartUp
+  - Connection
+  - RoleSelection
+  - Waiting
+  - BoardAssembly
+  - PrivatPlayer
+  - Movement
   - 
   - 
   - 
