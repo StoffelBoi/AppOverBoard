@@ -33,7 +33,9 @@ public class PrivatPlayer : MonoBehaviour {
     private string roleFact;
     private string placeFact;
     public int trueSolved;
-    public int trueUnsolved; 
+    public int trueUnsolved;
+
+    private List<int> knownFacts;
 
     public bool timeWindowThief = false; //boolean fuer Meisterdieb ob er sein objektiv ausfuehren kann
     public bool timeWindowCultist = false; //boolean fuer Kultist ob er sein objektiv ausfuehren kann
@@ -209,12 +211,6 @@ public class PrivatPlayer : MonoBehaviour {
         txt_unsolved.text = unsolved.ToString();
     }
 
-
-    /*
-     * 
-     * TO DO RANDOM GENERATION FERTIG !!!!!! 
-     * 
-     */
     public void UpdateTrueSolved(int amount)
     {
         System.Random rn = new System.Random();
@@ -224,8 +220,28 @@ public class PrivatPlayer : MonoBehaviour {
             trueSolved += 1;
             if(trueSolved % 3 == 0)
             {
-                //while()
-                rn.Next(1, 4);
+                int next = rn.Next(1, 4);
+
+                while(knownFacts.Contains(next))
+                {
+                    next = rn.Next(1, 4);
+                }
+
+                switch(next)
+                {
+                    case 1:
+                        UpdatePlayerFact();
+                        knownFacts.Add(next);
+                        break;
+                    case 2:
+                        UpdateRoleFact();
+                        knownFacts.Add(next);
+                        break;
+                    case 3:
+                        UpdatePlaceFact();
+                        knownFacts.Add(next);
+                        break;
+                }
             }
         }
     }
