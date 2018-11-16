@@ -54,6 +54,9 @@ public class RoleSelection : MonoBehaviour
         {
             case 1:
                 GameState.criminalRole = "Inferno";
+                GameState.questPlaces.Add(13);
+                GameState.questPlaces.Add(12);
+                GameState.questPlaces.Add(11);
                 switch (targetPlace)
                 {
                     case 1:
@@ -69,6 +72,9 @@ public class RoleSelection : MonoBehaviour
                 break;
             case 2:
                GameState.criminalRole = "Dr.Mortifier";
+                GameState.questPlaces.Add(15);
+                GameState.questPlaces.Add(12);
+                GameState.questPlaces.Add(14);
                 switch (targetPlace)
                 {
                     case 1:
@@ -84,6 +90,9 @@ public class RoleSelection : MonoBehaviour
                 break;
             case 3:
                 GameState.criminalRole = "Phantom";
+                GameState.questPlaces.Add(9);
+                GameState.questPlaces.Add(11);
+                GameState.questPlaces.Add(18);
                 switch (targetPlace)
                 {
                     case 1:
@@ -99,6 +108,9 @@ public class RoleSelection : MonoBehaviour
                 break;
             case 4:
                 GameState.criminalRole = "Fasculto";
+                GameState.questPlaces.Add(18);
+                GameState.questPlaces.Add(14);
+                GameState.questPlaces.Add(17);
                 switch (targetPlace)
                 {
                     case 1:
@@ -113,6 +125,7 @@ public class RoleSelection : MonoBehaviour
                 }
                 break;
         }
+        Debug.Log(GameState.criminalRole + " played by " + GameState.criminal);
     }
     // Update is called once per frame
     void Update()
@@ -137,8 +150,8 @@ public class RoleSelection : MonoBehaviour
         //roleSelection.enabled = false;
         //waiting.enabled = true;
         GameState.roles.Add("Doctor");
-        GameState.currentPlace.Add(new int[] { 2, 3 });
-        GameState.money.Add(6);
+        initializingPlayer();
+        addingHintBoards();
         selectedRoles++;
     }
 
@@ -150,8 +163,8 @@ public class RoleSelection : MonoBehaviour
         //roleSelection.enabled = false;
         //waiting.enabled = true;
         GameState.roles.Add("Police");
-        GameState.currentPlace.Add(new int[] { 2, 3 });
-        GameState.money.Add(6);
+        initializingPlayer();
+        addingHintBoards();
         selectedRoles++;
     }
 
@@ -163,8 +176,8 @@ public class RoleSelection : MonoBehaviour
         //roleSelection.enabled = false;
         //waiting.enabled = true;
         GameState.roles.Add("Detective");
-        GameState.currentPlace.Add(new int[] { 2, 3 });
-        GameState.money.Add(6);
+        initializingPlayer();
+        addingHintBoards();
         selectedRoles++;
     }
 
@@ -176,8 +189,8 @@ public class RoleSelection : MonoBehaviour
         //roleSelection.enabled = false;
         //waiting.enabled = true;
         GameState.roles.Add("Psychic");
-        GameState.currentPlace.Add(new int[] { 2, 3 });
-        GameState.money.Add(6);
+        initializingPlayer();
+        addingHintBoards();
         selectedRoles++;
     }
 
@@ -189,8 +202,8 @@ public class RoleSelection : MonoBehaviour
         //roleSelection.enabled = false;
         //waiting.enabled = true;
         GameState.roles.Add("Psychologist");
-        GameState.currentPlace.Add(new int[] { 2, 3 });
-        GameState.money.Add(6);
+        initializingPlayer();
+        addingHintBoards();
         selectedRoles++;
     }
 
@@ -202,8 +215,34 @@ public class RoleSelection : MonoBehaviour
         //roleSelection.enabled = false;
         //waiting.enabled = true;
         GameState.roles.Add("Reporter");
+        initializingPlayer();
+        selectedRoles++;
+    }
+    void initializingPlayer()
+    {
         GameState.currentPlace.Add(new int[] { 2, 3 });
         GameState.money.Add(6);
-        selectedRoles++;
+        GameState.trueUnsolveds.Add(0);
+        GameState.trueSolveds.Add(0);
+        GameState.unsolvedHints.Add(0);
+        GameState.solvedHints.Add(0);
+        GameState.isDisabled.Add(0);
+        GameState.skillUsed.Add(false);
+        addingHintBoards();
+    }
+    void addingHintBoards()
+    {
+        int[,] notFoundTrue = new int[6, 7];
+        int[,] notFoundFalse = new int[6, 7];
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                notFoundTrue[i, j] = 0;
+                notFoundFalse[i, j] = 0;
+            }
+        }
+        GameState.notFoundTrue.Add(notFoundTrue);
+        GameState.notFoundFalse.Add(notFoundFalse);
     }
 }

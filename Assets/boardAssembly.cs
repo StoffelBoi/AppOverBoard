@@ -65,7 +65,6 @@ public class BoardAssembly : MonoBehaviour {
         scriptBoardAssembly.enabled = false;
     }
     void Start () {
-
         scriptMovement = movementController.GetComponent<Movement>();
         System.Random rn = new System.Random();
 
