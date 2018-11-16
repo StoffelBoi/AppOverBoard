@@ -21,10 +21,7 @@ public class GameState : MonoBehaviour {
     public static int targetPlace;
     public static int currentTurn;
     public static bool planted = false; // Variable fuer bio-terrorist wenn er seine bombe platziert hat
-    public static List<int> questPlaces;
-    public static int activatedPlaces;
-    public static List<int> isDisabled;
-
+    
     // Use this for initialization
    
     void Start() {
@@ -42,9 +39,7 @@ public class GameState : MonoBehaviour {
         placeFact = new List<string>();
         trueSolveds = new List<int>();
         trueUnsolveds = new List<int>();
-        questPlaces = new List<int>();
-        activatedPlaces = 0;
-        isDisabled = new List<int>();
+
     }
    
 	// Update is called once per frame
