@@ -45,6 +45,18 @@ public class Place : MonoBehaviour
     public Button btnManipulation;
     public Button btnActivateQuestPlace;
 
+    public Button btnPlayerOne;
+    public Button btnPlayerTwo;
+    public Button btnPlayerThree;
+    public Button btnPlayerFour;
+    public Button btnPlayerFive;
+    public Button btnPlayerSix;
+    public Text btnPlayerOneText;
+    public Text btnPlayerTwoText;
+    public Text btnPlayerThreeText;
+    public Text btnPlayerFourText;
+    public Text btnPlayerFiveText;
+    public Text btnPlayerSixText;
     private int currentPlace;
 
 
@@ -58,6 +70,9 @@ public class Place : MonoBehaviour
     }
     void Start()
     {
+        
+        
+
         btnPlaceOption.onClick.AddListener(btnPlaceOptionClick);
         btnFindHint.onClick.AddListener(btnFindHintClick);
         btnUseItem.onClick.AddListener(btnUseItemClick);
@@ -73,9 +88,16 @@ public class Place : MonoBehaviour
     void OnEnable()
     {
         scriptMovement = movementController.GetComponent<Movement>();
-        scriptPlace = GetComponent<Place>();
         currentPlace = GameState.board[GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
         translatePlace(currentPlace);
+
+        btnPlayerOne.gameObject.SetActive(false);
+        btnPlayerTwo.gameObject.SetActive(false);
+        btnPlayerThree.gameObject.SetActive(false);
+        btnPlayerFour.gameObject.SetActive(false);
+        btnPlayerFive.gameObject.SetActive(false);
+        btnPlayerSix.gameObject.SetActive(false);
+
 
         if (GameState.criminal == GameState.roles[GameState.currentTurn])
         {
@@ -90,9 +112,7 @@ public class Place : MonoBehaviour
             btnBigTrap.gameObject.SetActive(true);
             btnManipulation.gameObject.SetActive(true);
             btnActivateQuestPlace.gameObject.SetActive(true);
-
-            
-
+            btnActivateQuestPlace.interactable = false;
         }
         else
         {
@@ -107,11 +127,14 @@ public class Place : MonoBehaviour
             btnBigTrap.gameObject.SetActive(false);
             btnManipulation.gameObject.SetActive(false);
             btnActivateQuestPlace.gameObject.SetActive(false);
-
         }
-    }
+        if (GameState.questPlaces.Contains(currentPlace))
+        {
+            btnActivateQuestPlace.interactable = true;
+        }
+        }
 
-    void toMovement()
+    void nextTurn()
     {
         if (GameState.currentTurn == GameState.playerCount - 1)
         {
@@ -121,62 +144,205 @@ public class Place : MonoBehaviour
         {
             GameState.currentTurn++;
         }
+        if (GameState.isDisabled[GameState.currentTurn] > 0)
+        {
+            GameState.isDisabled[GameState.currentTurn]--;
+            nextTurn();
+        }
+        else
+        {
+            toMovement();
+        }
+        
+    }
+
+    void toMovement()
+    {
         place.enabled = false;
         movement.enabled = true;
         scriptMovement.enabled = true;
         scriptPlace.enabled = false;
     }
 
-
     void btnPlaceOptionClick()
     {
-        toMovement();
+        //TODO ADD FUNCTIONALITY
+        nextTurn();
     }
     void btnFindHintClick()
     {
-        toMovement();
+        //TODO ADD FUNCTIONALITY
+        nextTurn();
     }
     void btnUseItemClick()
     {
-        toMovement();
+        //TODO ADD FUNCTIONALITY
+        nextTurn();
     }
 
     void btnPlaceOption_altClick()
     {
-        toMovement();
+        //TODO ADD FUNCTIONALITY
+        nextTurn();
     }
     void btnFindHind_altClick()
     {
-        toMovement();
+        //TODO ADD FUNCTIONALITY
+        nextTurn();
     }
     void btnUseItem_altClick()
     {
-        toMovement();
+        //TODO ADD FUNCTIONALITY
+        nextTurn();
     }
 
     void btnFalseHintClick()
     {
-        toMovement();
+        //TODO ADD FUNCTIONALITY
+        nextTurn();
     }
     void btnSmallTrapClick()
     {
-        toMovement();
+        //TODO ADD FUNCTIONALITY
+        nextTurn();
     }
     void btnBigTrapClick()
     {
-        toMovement();
+        btnPlaceOption_alt.gameObject.SetActive(false);
+        btnFindHint_alt.gameObject.SetActive(false);
+        btnUseItem_alt.gameObject.SetActive(false);
+        btnFalseHint.gameObject.SetActive(false);
+        btnSmallTrap.gameObject.SetActive(false);
+        btnBigTrap.gameObject.SetActive(false);
+        btnManipulation.gameObject.SetActive(false);
+        btnActivateQuestPlace.gameObject.SetActive(false);
+
+        btnPlayerOne.gameObject.SetActive(true);
+        btnPlayerTwo.gameObject.SetActive(true);
+        btnPlayerThree.gameObject.SetActive(true);
+        btnPlayerFour.gameObject.SetActive(true);
+        btnPlayerFive.gameObject.SetActive(true);
+        btnPlayerSix.gameObject.SetActive(true);
+
+        btnPlayerFour.interactable = false;
+        btnPlayerFive.interactable = false;
+        btnPlayerSix.interactable = false;
+
+        btnPlayerOneText.text = GameState.roles[0];
+        btnPlayerTwoText.text = GameState.roles[1];
+        btnPlayerThreeText.text = GameState.roles[2];
+        btnPlayerFourText.text = "nicht verfügbar";
+        btnPlayerFiveText.text = "nicht verfügbar";
+        btnPlayerSixText.text = "nicht verfügbar";
+
+        btnPlayerOne.onClick.AddListener(btnPlayerOneClick);
+        btnPlayerTwo.onClick.AddListener(btnPlayerTwoClick);
+        btnPlayerThree.onClick.AddListener(btnPlayerThreeClick);
+        switch (GameState.playerCount)
+        {
+            case 4:
+                btnPlayerFour.interactable = true;
+
+                btnPlayerFourText.text = GameState.roles[3];
+
+                btnPlayerFour.onClick.AddListener(btnPlayerFourClick);
+                break;
+            case 5:
+                btnPlayerFour.interactable = true;
+                btnPlayerFive.interactable = true;
+
+                btnPlayerFourText.text = GameState.roles[3];
+                btnPlayerFiveText.text = GameState.roles[4];
+
+                btnPlayerFour.onClick.AddListener(btnPlayerFourClick);
+                btnPlayerFive.onClick.AddListener(btnPlayerFiveClick);
+                break;
+            case 6:
+                btnPlayerFour.interactable = true;
+                btnPlayerFive.interactable = true;
+                btnPlayerSix.interactable = true;
+
+                btnPlayerFourText.text = GameState.roles[3];
+                btnPlayerFiveText.text = GameState.roles[4];
+                btnPlayerSixText.text = GameState.roles[5];
+
+                btnPlayerFour.onClick.AddListener(btnPlayerFourClick);
+                btnPlayerFive.onClick.AddListener(btnPlayerFiveClick);
+                btnPlayerSix.onClick.AddListener(btnPlayerSixClick);
+                break;
+        }
     }
     void btnManipulationClick()
     {
-        toMovement();
+        //TODO ADD FUNCTIONALITY
+        nextTurn();
     }
     void btnActivateQuestPlaceClick()
     {
-        toMovement();
+            GameState.activatedPlaces++;
+            GameState.questPlaces.Remove(currentPlace);
+            nextTurn();
     }
 
-
-
+    void btnPlayerOneClick()
+    {
+        playerChosen(0);
+    }
+    void btnPlayerTwoClick()
+    {
+        playerChosen(1);
+    }
+    void btnPlayerThreeClick()
+    {
+        playerChosen(2);
+    }
+    void btnPlayerFourClick()
+    {
+        playerChosen(3);
+    }
+    void btnPlayerFiveClick()
+    {
+        playerChosen(4);
+    }
+    void btnPlayerSixClick()
+    {
+        playerChosen(5);
+    }
+    void playerChosen(int player)
+    {
+        GameState.isDisabled[player] = 2;
+        if (GameState.criminalRole == "Phantom")
+        {
+            int[] prison = new int[] { 2, 3 };
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    if (GameState.board[i, j] == 7)
+                    {
+                        prison = new int[] { i, j };
+                    }
+                }
+            }
+            GameState.currentPlace[player] = prison;
+        }
+        else
+        {
+            int[] hospital=new int[] { 2, 3 };
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j<7; j++)
+                {
+                    if (GameState.board[i, j] == 3)
+                    {
+                        hospital = new int[] { i, j };
+                    }
+                }
+            }
+            GameState.currentPlace[player] = hospital;
+        }
+        nextTurn();
+    }
     void translatePlace(int place)
     {
         string s = "Straße";
