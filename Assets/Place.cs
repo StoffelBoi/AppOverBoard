@@ -52,14 +52,28 @@ public class Place : MonoBehaviour
 
     void Awake()
     {
-        scriptPlace = this.GetComponent<Place>();
+        scriptPlace = GetComponent<Place>();
         scriptPlace.enabled = false;
         place.enabled = false;
+    }
+    void Start()
+    {
+        btnPlaceOption.onClick.AddListener(btnPlaceOptionClick);
+        btnFindHint.onClick.AddListener(btnFindHintClick);
+        btnUseItem.onClick.AddListener(btnUseItemClick);
+        btnPlaceOption_alt.onClick.AddListener(btnPlaceOption_altClick);
+        btnFindHint_alt.onClick.AddListener(btnFindHind_altClick);
+        btnUseItem_alt.onClick.AddListener(btnUseItem_altClick);
+        btnFalseHint.onClick.AddListener(btnFalseHintClick);
+        btnSmallTrap.onClick.AddListener(btnSmallTrapClick);
+        btnBigTrap.onClick.AddListener(btnBigTrapClick);
+        btnManipulation.onClick.AddListener(btnManipulationClick);
+        btnActivateQuestPlace.onClick.AddListener(btnActivateQuestPlaceClick);
     }
     void OnEnable()
     {
         scriptMovement = movementController.GetComponent<Movement>();
-
+        scriptPlace = GetComponent<Place>();
         currentPlace = GameState.board[GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
         translatePlace(currentPlace);
 
@@ -77,14 +91,7 @@ public class Place : MonoBehaviour
             btnManipulation.gameObject.SetActive(true);
             btnActivateQuestPlace.gameObject.SetActive(true);
 
-            btnPlaceOption_alt.onClick.AddListener(btnPlaceOption_altClick);
-            btnFindHint_alt.onClick.AddListener(btnFindHind_altClick);
-            btnUseItem_alt.onClick.AddListener(btnUseItem_altClick);
-            btnFalseHint.onClick.AddListener(btnFalseHintClick);
-            btnSmallTrap.onClick.AddListener(btnSmallTrapClick);
-            btnBigTrap.onClick.AddListener(btnBigTrapClick);
-            btnManipulation.onClick.AddListener(btnManipulationClick);
-            btnActivateQuestPlace.onClick.AddListener(btnActivateQuestPlaceClick);
+            
 
         }
         else
@@ -101,23 +108,72 @@ public class Place : MonoBehaviour
             btnManipulation.gameObject.SetActive(false);
             btnActivateQuestPlace.gameObject.SetActive(false);
 
-            btnPlaceOption.onClick.AddListener(btnPlaceOptionClick);
-            btnFindHint.onClick.AddListener(btnFindHintClick);
-            btnUseItem.onClick.AddListener(btnUseItemClick);
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void toMovement()
     {
-
+        if (GameState.currentTurn == GameState.playerCount - 1)
+        {
+            GameState.currentTurn = 0;
+        }
+        else
+        {
+            GameState.currentTurn++;
+        }
+        place.enabled = false;
+        movement.enabled = true;
+        scriptMovement.enabled = true;
+        scriptPlace.enabled = false;
     }
 
 
+    void btnPlaceOptionClick()
+    {
+        toMovement();
+    }
+    void btnFindHintClick()
+    {
+        toMovement();
+    }
+    void btnUseItemClick()
+    {
+        toMovement();
+    }
 
+    void btnPlaceOption_altClick()
+    {
+        toMovement();
+    }
+    void btnFindHind_altClick()
+    {
+        toMovement();
+    }
+    void btnUseItem_altClick()
+    {
+        toMovement();
+    }
 
-
-
+    void btnFalseHintClick()
+    {
+        toMovement();
+    }
+    void btnSmallTrapClick()
+    {
+        toMovement();
+    }
+    void btnBigTrapClick()
+    {
+        toMovement();
+    }
+    void btnManipulationClick()
+    {
+        toMovement();
+    }
+    void btnActivateQuestPlaceClick()
+    {
+        toMovement();
+    }
 
 
 
@@ -202,69 +258,5 @@ public class Place : MonoBehaviour
         }
         text.text = s;
         image.GetComponent<Image>().sprite = pic;
-    }
-    void toMovement()
-    {
-        Debug.Log("PlayerCount: "+GameState.playerCount);
-        if (GameState.currentTurn >= GameState.playerCount - 1)
-        {
-            GameState.currentTurn = 0;
-        }
-        else
-        {
-            GameState.currentTurn++;
-        }
-        place.enabled = false;
-        movement.enabled = true;
-        scriptMovement.enabled = true;
-        scriptPlace.enabled = false;
-    }
-
-
-    void btnPlaceOptionClick()
-    {
-        toMovement();
-    }
-    void btnFindHintClick()
-    {
-        toMovement();
-    }
-    void btnUseItemClick()
-    {
-        toMovement();
-    }
-
-    void btnPlaceOption_altClick()
-    {
-        toMovement();
-    }
-    void btnFindHind_altClick()
-    {
-        toMovement();
-    }
-    void btnUseItem_altClick()
-    {
-        toMovement();
-    }
-
-    void btnFalseHintClick()
-    {
-        toMovement();
-    }
-    void btnSmallTrapClick()
-    {
-        toMovement();
-    }
-    void btnBigTrapClick()
-    {
-        toMovement();
-    }
-    void btnManipulationClick()
-    {
-        toMovement();
-    }
-    void btnActivateQuestPlaceClick()
-    {
-        toMovement();
     }
 }

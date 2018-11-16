@@ -37,6 +37,7 @@ public class StartUpScreen : MonoBehaviour
         boardAssemblyCanvas.enabled = false;
         privatPlayerCanvas.enabled = false;
         movementCanvas.enabled = false;
+
     }
 
     // Update is called once per frame
