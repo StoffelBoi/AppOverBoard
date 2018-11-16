@@ -20,7 +20,6 @@ public class GameState : MonoBehaviour {
     public static List<int> trueUnsolveds;
     public static int targetPlace;
     public static int currentTurn;
-
     public static bool planted = false; // Variable fuer bio-terrorist wenn er seine bombe platziert hat
     
     // Use this for initialization
@@ -45,7 +44,7 @@ public class GameState : MonoBehaviour {
    
 	// Update is called once per frame
 	void Update () {
-        Debug.Log("currentTurn: " + currentTurn);
+
 
     }
 }

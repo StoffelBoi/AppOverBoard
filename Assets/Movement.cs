@@ -33,23 +33,23 @@ public class Movement : MonoBehaviour {
 
     private void Awake()
     {
-        scriptMovement = this.GetComponent<Movement>();
+        scriptMovement = GetComponent<Movement>();
         scriptMovement.enabled = false;
     }
-    void OnEnable()
+    void Start()
     {
-        scriptPlace = placeController.GetComponent<Place>();
-        scriptMovement = this.GetComponent<Movement>();
         btnRight.onClick.AddListener(rightClick);
         btnLeft.onClick.AddListener(leftClick);
         btnUp.onClick.AddListener(upClick);
         btnDown.onClick.AddListener(downClick);
         btnStay.onClick.AddListener(stayClick);
+    }
+    void OnEnable()
+    {
+        scriptPlace = placeController.GetComponent<Place>();
         newTurn();
     }
-    void Start () {
-        
-    }
+
 	void newTurn()
     {
         switch (GameState.roles[GameState.currentTurn])
@@ -127,73 +127,10 @@ public class Movement : MonoBehaviour {
         }
 
     }
-    string translatePlace(int place)
-    {
-        string s = "Straße";
-        switch (place)
-        {
-            case 1:
-                s= "Stadtplatz";
-                break;
-            case 2:
-                s= "Park";
-                break;
-            case 3:
-                s= "Krankenhaus";
-                break;
-            case 4:
-                s= "Bank";
-                break;
-            case 5:
-                s= "Parlament";
-                break;
-            case 6:
-                s= "Friedhof";
-                break;
-            case 7:
-                s= "Gefängnis";
-                break;
-            case 8:
-                s= "Kasino";
-                break;
-            case 9:
-                s= "Internet Cafe";
-                break;
-            case 10:
-                s= "Bahnhof";
-                break;
-            case 11:
-                s= "Armee Laden";
-                break;
-            case 12:
-                s= "Shopping Center";
-                break;
-            case 13:
-                s= "Schrottplatz";
-                break;
-            case 14:
-                s= "Bibliothek";
-                break;
-            case 15:
-                s= "Labor";
-                break;
-            case 16:
-                s= "Italiener";
-                break;
-            case 17:
-                s= "Hafen";
-                break;
-            case 18:
-                s= "Bar";
-                break;
-        }
-        return s;
-    }
+    
     void endClick()
     {
-        Debug.Log("currentTurn: " + GameState.currentTurn);
-        Debug.Log("currentPlace[0]: " + GameState.currentPlace[GameState.currentTurn][0]);
-        Debug.Log("currentPlace[1]: " + GameState.currentPlace[GameState.currentTurn][1]);
+        
 
         if (firstMove && GameState.board[GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] == 0)
         {
@@ -203,7 +140,6 @@ public class Movement : MonoBehaviour {
         }
         else
         {
-           
             movement.enabled = false;
             place.enabled = true;
             scriptPlace.enabled = true;
@@ -233,5 +169,69 @@ public class Movement : MonoBehaviour {
     void stayClick()
     {
         firstMove = false;
+        endClick();
+    }
+
+    string translatePlace(int place)
+    {
+        string s = "Straße";
+        switch (place)
+        {
+            case 1:
+                s = "Stadtplatz";
+                break;
+            case 2:
+                s = "Park";
+                break;
+            case 3:
+                s = "Krankenhaus";
+                break;
+            case 4:
+                s = "Bank";
+                break;
+            case 5:
+                s = "Parlament";
+                break;
+            case 6:
+                s = "Friedhof";
+                break;
+            case 7:
+                s = "Gefängnis";
+                break;
+            case 8:
+                s = "Kasino";
+                break;
+            case 9:
+                s = "Internet Cafe";
+                break;
+            case 10:
+                s = "Bahnhof";
+                break;
+            case 11:
+                s = "Armee Laden";
+                break;
+            case 12:
+                s = "Shopping Center";
+                break;
+            case 13:
+                s = "Schrottplatz";
+                break;
+            case 14:
+                s = "Bibliothek";
+                break;
+            case 15:
+                s = "Labor";
+                break;
+            case 16:
+                s = "Italiener";
+                break;
+            case 17:
+                s = "Hafen";
+                break;
+            case 18:
+                s = "Bar";
+                break;
+        }
+        return s;
     }
 }
