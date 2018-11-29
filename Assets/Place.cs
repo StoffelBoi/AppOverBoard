@@ -33,40 +33,23 @@ public class Place : MonoBehaviour
     public Sprite harbor;
     public Sprite bar;
 
-    public Button btnPlaceOption;
-    public Button btnFindHint;
-    public Button btnUseItem;
-    public Button btnPlaceOption_alt;
-    public Button btnFindHint_alt;
-    public Button btnUseItem_alt;
-    public Button btnFalseHint;
-    public Button btnSmallTrap;
-    public Button btnBigTrap;
-    public Button btnManipulation;
-    public Button btnActivateQuestPlace;
+    public Button btnOne;
+    public Button btnTwo;
+    public Button btnThree;
+    public Button btnFour;
+    public Button btnFive;
+    public Button btnSix;
+    public Button btnSeven;
+    public Button btnEight;
 
-    public Button btnLookAround;
-
-    public Text btnPlaceOptionText;
-    public Text btnPlaceOption_altText;
-    public Text btnActivateQuestPlaceText;
-
-    public Button btnPlayerOne;
-    public Button btnPlayerTwo;
-    public Button btnPlayerThree;
-    public Button btnPlayerFour;
-    public Button btnPlayerFive;
-    public Button btnPlayerSix;
-
-    public Text btnPlayerOneText;
-    public Text btnPlayerTwoText;
-    public Text btnPlayerThreeText;
-    public Text btnPlayerFourText;
-    public Text btnPlayerFiveText;
-    public Text btnPlayerSixText;
-
-    public Button btnManipulationMovement;
-    public Button btnManipulationHint;
+    public Text btnOneText;
+    public Text btnTwoText;
+    public Text btnThreeText;
+    public Text btnFourText;
+    public Text btnFiveText;
+    public Text btnSixText;
+    public Text btnSevenText;
+    public Text btnEightText;
 
     private int currentPlace;
 
@@ -78,20 +61,8 @@ public class Place : MonoBehaviour
     }
     void Start()
     {
-        btnPlaceOption.onClick.AddListener(btnPlaceOptionClick);
-        btnFindHint.onClick.AddListener(btnFindHintClick);
-        btnUseItem.onClick.AddListener(btnUseItemClick);
-        btnPlaceOption_alt.onClick.AddListener(btnPlaceOptionClick);
-        btnFindHint_alt.onClick.AddListener(btnFindHintClick);
-        btnUseItem_alt.onClick.AddListener(btnUseItemClick);
-        btnFalseHint.onClick.AddListener(btnFalseHintClick);
-        btnSmallTrap.onClick.AddListener(btnSmallTrapClick);
-        btnBigTrap.onClick.AddListener(btnBigTrapClick);
-        btnManipulation.onClick.AddListener(btnManipulationClick);
-        btnActivateQuestPlace.onClick.AddListener(btnActivateQuestPlaceClick);
-        btnManipulationMovement.onClick.AddListener(btnManipulationMovementClick);
-        btnManipulationHint.onClick.AddListener(btnManipulationHintClick);
-        btnLookAround.onClick.AddListener(btnLookAroundClick);
+        
+      
     }
     void OnEnable()
     {
@@ -99,116 +70,52 @@ public class Place : MonoBehaviour
         scriptPlace = GetComponent<Place>();
         currentPlace = GameState.board[GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
         translatePlace(currentPlace);
-        //deactivating lookAround Button
-        btnLookAround.gameObject.SetActive(false);
-
-        //disabling the player choice menu buttons
-        btnPlayerOne.gameObject.SetActive(false);
-        btnPlayerTwo.gameObject.SetActive(false);
-        btnPlayerThree.gameObject.SetActive(false);
-        btnPlayerFour.gameObject.SetActive(false);
-        btnPlayerFive.gameObject.SetActive(false);
-        btnPlayerSix.gameObject.SetActive(false);
-
-        //disabling and hiding the manipulation menu buttons
-        btnManipulationMovement.gameObject.SetActive(false);
-        btnManipulationHint.gameObject.SetActive(false);
-
-        //resetting text for place option button
-        btnPlaceOptionText.text = "Ortsoption";
-        btnPlaceOption_altText.text = "Ortsoption";
-
-        //checking if current place is a street and changing menu accordingly
+        //menu if its a street
         if (currentPlace == 0)
         {
-            deactivatePlaceButtons();
-            btnLookAround.gameObject.SetActive(true);
+            oneButton();
+            btnOneText.text = "Umschauen";
+            btnOne.onClick.AddListener(btnLookAroundClick);
         }
+        //menu if its not a street
         else
         {
-            //changing menu if the current Player is a criminal
+            //menu if its a criminal
             if (GameState.criminal == GameState.roles[GameState.currentTurn])
             {
-                deactivatePlaceButtons();
-                btnPlaceOption_alt.gameObject.SetActive(true);
-                btnFindHint_alt.gameObject.SetActive(true);
-                btnUseItem_alt.gameObject.SetActive(true);
-                btnFalseHint.gameObject.SetActive(true);
-                btnSmallTrap.gameObject.SetActive(true);
-                btnBigTrap.gameObject.SetActive(true);
-                btnManipulation.gameObject.SetActive(true);
-                btnActivateQuestPlace.gameObject.SetActive(true);
-                btnActivateQuestPlace.interactable = false;
-                btnManipulation.interactable = false;
-                btnBigTrap.interactable = false;
+             
+                eightButtons();
+                btnOneText.text = "Ortsoption";
+                btnTwoText.text = "Hinweis finden";
+                btnThreeText.text = "Item benutzen";
+                btnFourText.text = "falscher Hinweis";
+                btnFiveText.text = "kleine Falle";
+                btnSixText.text = "große Falle";
+                btnSevenText.text = "Manipulation";
+                btnEightText.text = "Questort aktivieren";
 
-                //checking if a skillplace can be used
-                if (currentPlace == 2)
-                {
-                    btnPlaceOption_alt.interactable = false;
-                    if (GameState.roles[GameState.currentTurn] == "Detective" && !GameState.skillUsed[GameState.currentTurn])
-                    {
-                        btnPlaceOption_altText.text = "Fähigkeit nutzen";
-                        btnPlaceOption_alt.interactable = true;
-                    }
-                }
-                if (currentPlace == 3)
-                {
-                    btnPlaceOption_alt.interactable = false;
-                    if (GameState.roles[GameState.currentTurn] == "Doctor" && !GameState.skillUsed[GameState.currentTurn])
-                    {
-                        btnPlaceOption_altText.text = "Fähigkeit nutzen";
-                        btnPlaceOption_alt.interactable = true;
-                    }
-                }
-                if (currentPlace == 4)
-                {
-                    btnPlaceOption_alt.interactable = false;
-                    if (GameState.roles[GameState.currentTurn] == "Police" && !GameState.skillUsed[GameState.currentTurn])
-                    {
-                        btnPlaceOption_altText.text = "Fähigkeit nutzen";
-                        btnPlaceOption_alt.interactable = true;
-                    }
-                }
-                if (currentPlace == 5)
-                {
-                    btnPlaceOption_alt.interactable = false;
-                    if (GameState.roles[GameState.currentTurn] == "Reporter" && !GameState.skillUsed[GameState.currentTurn])
-                    {
-                        btnPlaceOption_altText.text = "Fähigkeit nutzen";
-                        btnPlaceOption_alt.interactable = true;
-                    }
-                }
-                if (currentPlace == 6)
-                {
-                    btnPlaceOption_alt.interactable = false;
-                    if (GameState.roles[GameState.currentTurn] == "Psychic" && !GameState.skillUsed[GameState.currentTurn])
-                    {
-                        btnPlaceOption_altText.text = "Fähigkeit nutzen";
-                        btnPlaceOption_alt.interactable = true;
-                    }
-                }
-                if (currentPlace == 7)
-                {
-                    btnPlaceOption_alt.interactable = false;
-                    if (GameState.roles[GameState.currentTurn] == "Psychologist" && !GameState.skillUsed[GameState.currentTurn])
-                    {
-                        btnPlaceOption_altText.text = "Fähigkeit nutzen";
-                        btnPlaceOption_alt.interactable = true;
-                    }
-                }
+                btnOne.onClick.AddListener(btnPlaceOptionClick);
+                btnTwo.onClick.AddListener(btnFindHintClick);
+                btnThree.onClick.AddListener(btnUseItemClick);
+                btnFour.onClick.AddListener(btnFalseHintClick);
+                btnFive.onClick.AddListener(btnSmallTrapClick);
+                btnSix.onClick.AddListener(btnBigTrapClick);
+                btnSeven.onClick.AddListener(btnManipulationClick);
+                btnEight.onClick.AddListener(btnActivateQuestPlaceClick);
 
-
+                btnSix.interactable = false;
+                btnSeven.interactable = false;
+                btnEight.interactable = false;
                 //checking if big Trap can be used
                 if (!GameState.bigTrapUsed)
                 {
-                    btnBigTrap.interactable = true;
+                    btnSix.interactable = true;
                 }
 
                 //checking if manipulation can be used
                 if (GameState.money[GameState.currentTurn] >= 10)
                 {
-                    btnManipulation.interactable = true;
+                    btnSeven.interactable = true;
                 }
 
                 //checking if a questplace can be activated
@@ -218,7 +125,7 @@ public class Place : MonoBehaviour
                     {
                         if (GameState.questPlaces.Contains(currentPlace))
                         {
-                            btnActivateQuestPlace.interactable = true;
+                            btnEight.interactable = true;
                             {
                             }
 
@@ -228,78 +135,82 @@ public class Place : MonoBehaviour
                     {
                         if (GameState.targetPlace == currentPlace)
                         {
-                            btnActivateQuestPlace.interactable = true;
-                            btnActivateQuestPlaceText.text = "Verbrechen ausführen";
+                            btnEight.interactable = true;
+                            btnEightText.text = "Verbrechen ausführen";
                         }
                     }
                 }
             }
+            //menu if its a good guy
             else
             {
-                deactivatePlaceButtons();
-                btnPlaceOption.gameObject.SetActive(true);
-                btnFindHint.gameObject.SetActive(true);
-                btnUseItem.gameObject.SetActive(true);
+        
+                threeButtons();
+                btnOneText.text = "Ortsoption";
+                btnTwoText.text = "Hinweis finden";
+                btnThreeText.text = "Item benutzen";
+                btnOne.onClick.AddListener(btnPlaceOptionClick);
+                btnTwo.onClick.AddListener(btnFindHintClick);
+                btnThree.onClick.AddListener(btnUseItemClick);
 
-
-                //checking if a skillPlace can be used
-                if (currentPlace == 2)
+            }
+            //checking if a skillplace can be used
+            if (currentPlace == 2)
+            {
+                btnOne.interactable = false;
+                if (GameState.roles[GameState.currentTurn] == "Detective" && !GameState.skillUsed[GameState.currentTurn])
                 {
-                    btnPlaceOption.interactable = false;
-                    if (GameState.roles[GameState.currentTurn] == "Detective" && !GameState.skillUsed[GameState.currentTurn])
-                    {
-                        btnPlaceOptionText.text = "Fähigkeit nutzen";
-                        btnPlaceOption.interactable = true;
-                    }
+                    btnOneText.text = "Fähigkeit nutzen";
+                    btnOne.interactable = true;
                 }
-                if (currentPlace == 3)
+            }
+            if (currentPlace == 3)
+            {
+                btnOne.interactable = false;
+                if (GameState.roles[GameState.currentTurn] == "Doctor" && !GameState.skillUsed[GameState.currentTurn])
                 {
-                    btnPlaceOption.interactable = false;
-                    if (GameState.roles[GameState.currentTurn] == "Doctor" && !GameState.skillUsed[GameState.currentTurn])
-                    {
-                        btnPlaceOptionText.text = "Fähigkeit nutzen";
-                        btnPlaceOption.interactable = true;
-                    }
+                    btnOneText.text = "Fähigkeit nutzen";
+                    btnOne.interactable = true;
                 }
-                if (currentPlace == 4)
+            }
+            if (currentPlace == 4)
+            {
+                btnOne.interactable = false;
+                if (GameState.roles[GameState.currentTurn] == "Police" && !GameState.skillUsed[GameState.currentTurn])
                 {
-                    btnPlaceOption.interactable = false;
-                    if (GameState.roles[GameState.currentTurn] == "Police" && !GameState.skillUsed[GameState.currentTurn])
-                    {
-                        btnPlaceOptionText.text = "Fähigkeit nutzen";
-                        btnPlaceOption.interactable = true;
-                    }
+                    btnOneText.text = "Fähigkeit nutzen";
+                    btnOne.interactable = true;
                 }
-                if (currentPlace == 5)
+            }
+            if (currentPlace == 5)
+            {
+                btnOne.interactable = false;
+                if (GameState.roles[GameState.currentTurn] == "Reporter" && !GameState.skillUsed[GameState.currentTurn])
                 {
-                    btnPlaceOption.interactable = false;
-                    if (GameState.roles[GameState.currentTurn] == "Reporter" && !GameState.skillUsed[GameState.currentTurn])
-                    {
-                        btnPlaceOptionText.text = "Fähigkeit nutzen";
-                        btnPlaceOption.interactable = true;
-                    }
+                    btnOneText.text = "Fähigkeit nutzen";
+                    btnOne.interactable = true;
                 }
-                if (currentPlace == 6)
+            }
+            if (currentPlace == 6)
+            {
+                btnOne.interactable = false;
+                if (GameState.roles[GameState.currentTurn] == "Psychic" && !GameState.skillUsed[GameState.currentTurn])
                 {
-                    btnPlaceOption.interactable = false;
-                    if (GameState.roles[GameState.currentTurn] == "Psychic" && !GameState.skillUsed[GameState.currentTurn])
-                    {
-                        btnPlaceOptionText.text = "Fähigkeit nutzen";
-                        btnPlaceOption.interactable = true;
-                    }
+                    btnOneText.text = "Fähigkeit nutzen";
+                    btnOne.interactable = true;
                 }
-                if (currentPlace == 7)
+            }
+            if (currentPlace == 7)
+            {
+                btnOne.interactable = false;
+                if (GameState.roles[GameState.currentTurn] == "Psychologist" && !GameState.skillUsed[GameState.currentTurn])
                 {
-                    btnPlaceOption.interactable = false;
-                    if (GameState.roles[GameState.currentTurn] == "Psychologist" && !GameState.skillUsed[GameState.currentTurn])
-                    {
-                        btnPlaceOptionText.text = "Fähigkeit nutzen";
-                        btnPlaceOption.interactable = true;
-                    }
+                    btnOneText.text = "Fähigkeit nutzen";
+                    btnOne.interactable = true;
                 }
             }
         }
-       
+
     }
 
     void toMovement()
@@ -339,7 +250,7 @@ public class Place : MonoBehaviour
             scriptMovement.enabled = true;
             scriptPlace.enabled = false;
         }
-        
+
     }
 
     //TODO: add Random Events
@@ -348,7 +259,7 @@ public class Place : MonoBehaviour
         Debug.Log("Du schaust dich um und ... bemerkst nichts außergewöhnliches");
         toMovement();
     }
-    
+
     //TODO: add Functionality;
     void btnUseItemClick()
     {
@@ -446,7 +357,7 @@ public class Place : MonoBehaviour
     void btnFindHintClick()
     {
         GameState.unsolvedHints[GameState.currentTurn] = GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
-        Debug.Log(GameState.roles[GameState.currentTurn]+" has found "+(GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]])+" hints");
+        Debug.Log(GameState.roles[GameState.currentTurn] + " has found " + (GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]]) + " hints");
         GameState.trueUnsolveds[GameState.currentTurn] = GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
         GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] = 0;
         GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] = 0;
@@ -461,22 +372,25 @@ public class Place : MonoBehaviour
     {
         GameState.bigTrapUsed = true;
         addTrueHint();
-        activatePlayerButtons();
-        btnPlayerOne.onClick.AddListener(btnPlayerOneClickBigTrap);
-        btnPlayerTwo.onClick.AddListener(btnPlayerTwoClickBigTrap);
-        btnPlayerThree.onClick.AddListener(btnPlayerThreeClickBigTrap);
-        btnPlayerFour.onClick.AddListener(btnPlayerFourClickBigTrap);
-        btnPlayerFive.onClick.AddListener(btnPlayerFiveClickBigTrap);
-        btnPlayerSix.onClick.AddListener(btnPlayerSixClickBigTrap);
+        playerButtons();
+        btnOne.onClick.AddListener(btnPlayerOneClickBigTrap);
+        btnTwo.onClick.AddListener(btnPlayerTwoClickBigTrap);
+        btnThree.onClick.AddListener(btnPlayerThreeClickBigTrap);
+        btnFour.onClick.AddListener(btnPlayerFourClickBigTrap);
+        btnFive.onClick.AddListener(btnPlayerFiveClickBigTrap);
+        btnSix.onClick.AddListener(btnPlayerSixClickBigTrap);
+
         Debug.Log(GameState.roles[GameState.currentTurn] + " used a big Trap");
     }
     void btnManipulationClick()
     {
         Debug.Log(GameState.roles[GameState.currentTurn] + " is manipulating");
         addTrueHint();
-        deactivatePlaceButtons();
-        btnManipulationMovement.gameObject.SetActive(true);
-        btnManipulationHint.gameObject.SetActive(true);
+        twoButtons();
+        btnOneText.text = "Bewwegung";
+        btnTwoText.text = "Hinweis";
+        btnOne.onClick.AddListener(btnManipulationMovementClick);
+        btnTwo.onClick.AddListener(btnManipulationHintClick);
     }
 
 
@@ -491,10 +405,7 @@ public class Place : MonoBehaviour
     }
     void laboratoryAction()
     {
-        GameState.trueSolveds[GameState.currentTurn] += GameState.trueUnsolveds[GameState.currentTurn];
-        GameState.solvedHints[GameState.currentTurn] += GameState.unsolvedHints[GameState.currentTurn];
-        GameState.trueUnsolveds[GameState.currentTurn] = 0;
-        GameState.unsolvedHints[GameState.currentTurn] = 0;
+        libraryAction();
     }
     //TODO check for money item
     void mainsquareAction()
@@ -505,7 +416,7 @@ public class Place : MonoBehaviour
         }
         else
         {
-            GameState.money[GameState.currentTurn]+=6;
+            GameState.money[GameState.currentTurn] += 6;
         }
     }
 
@@ -575,23 +486,27 @@ public class Place : MonoBehaviour
     //eventlistener for manipulation action
     void btnManipulationMovementClick()
     {
-        Debug.Log("False");
-        btnManipulationMovement.gameObject.SetActive(false);
-        btnManipulationHint.gameObject.SetActive(false);
-        activatePlayerButtons();
-        btnPlayerOne.onClick.AddListener(btnPlayerOneClickManipulationMovement);
-        btnPlayerTwo.onClick.AddListener(btnPlayerTwoClickManipulationMovement);
-        btnPlayerThree.onClick.AddListener(btnPlayerThreeClickManipulationMovement);
-        btnPlayerFour.onClick.AddListener(btnPlayerFourClickManipulationMovement);
-        btnPlayerFive.onClick.AddListener(btnPlayerFiveClickManipulationMovement);
-        btnPlayerSix.onClick.AddListener(btnPlayerSixClickManipulationMovement);
+        
+        playerButtons();
+        btnOne.onClick.AddListener(btnPlayerOneClickManipulationMovement);
+        btnTwo.onClick.AddListener(btnPlayerTwoClickManipulationMovement);
+        btnThree.onClick.AddListener(btnPlayerThreeClickManipulationMovement);
+        btnFour.onClick.AddListener(btnPlayerFourClickManipulationMovement);
+        btnFive.onClick.AddListener(btnPlayerFiveClickManipulationMovement);
+        btnSix.onClick.AddListener(btnPlayerSixClickManipulationMovement);
 
     }
 
     //TODO: addMovementManipulation
     void btnPlayerOneClickManipulationMovement()
     {
-
+        playerButtons();
+        btnOne.onClick.AddListener(toMovement);
+        btnTwo.onClick.AddListener(toMovement);
+        btnThree.onClick.AddListener(toMovement);
+        btnFour.onClick.AddListener(toMovement);
+        btnFive.onClick.AddListener(toMovement);
+        btnSix.onClick.AddListener(toMovement);
     }
     void btnPlayerTwoClickManipulationMovement()
     {
@@ -613,31 +528,27 @@ public class Place : MonoBehaviour
     {
 
     }
-    
+
 
     void btnManipulationHintClick()
     {
-        Debug.Log("Test 1");
-        btnManipulationMovement.gameObject.SetActive(false);
-        btnManipulationHint.gameObject.SetActive(false);
-        activatePlayerButtons();
-        btnPlayerOne.onClick.AddListener(btnPlayerOneClickManipulationHint);
-        btnPlayerTwo.onClick.AddListener(btnPlayerTwoClickManipulationHint);
-        btnPlayerThree.onClick.AddListener(btnPlayerThreeClickManipulationHint);
-        btnPlayerFour.onClick.AddListener(btnPlayerFourClickManipulationHint);
-        btnPlayerFive.onClick.AddListener(btnPlayerFiveClickManipulationHint);
-        btnPlayerSix.onClick.AddListener(btnPlayerSixClickManipulationHint);
+        playerButtons();
+        btnOne.onClick.AddListener(btnPlayerOneClickManipulationHint);
+        btnTwo.onClick.AddListener(btnPlayerTwoClickManipulationHint);
+        btnThree.onClick.AddListener(btnPlayerThreeClickManipulationHint);
+        btnFour.onClick.AddListener(btnPlayerFourClickManipulationHint);
+        btnFive.onClick.AddListener(btnPlayerFiveClickManipulationHint);
+        btnSix.onClick.AddListener(btnPlayerSixClickManipulationHint);
     }
 
     void btnPlayerOneClickManipulationHint()
     {
         if (GameState.trueUnsolveds[0] > 0)
         {
-            
+
             GameState.trueUnsolveds[0]--;
             GameState.unsolvedHints[0]--;
         }
-        Debug.Log("Test 2");
         toMovement();
     }
     void btnPlayerTwoClickManipulationHint()
@@ -720,83 +631,270 @@ public class Place : MonoBehaviour
         toMovement();
     }
 
-
-    //Useful functions
-    void deactivatePlaceButtons()
+    //LayoutFunctions
+    //@TODO: Layout for 5 buttons and 7 buttons
+    void oneButton()
     {
-        btnPlaceOption.gameObject.SetActive(false);
-        btnFindHint.gameObject.SetActive(false);
-        btnUseItem.gameObject.SetActive(false);
-        btnPlaceOption_alt.gameObject.SetActive(false);
-        btnFindHint_alt.gameObject.SetActive(false);
-        btnUseItem_alt.gameObject.SetActive(false);
-        btnFalseHint.gameObject.SetActive(false);
-        btnSmallTrap.gameObject.SetActive(false);
-        btnBigTrap.gameObject.SetActive(false);
-        btnManipulation.gameObject.SetActive(false);
-        btnActivateQuestPlace.gameObject.SetActive(false);
+        disableButtons();
+        btnOne.gameObject.SetActive(true);
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 1000);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -400);
+
+        btnOneText.fontSize = 180;
     }
-
-    void activatePlayerButtons()
+    void twoButtons()
     {
+        disableButtons();
+        btnOne.gameObject.SetActive(true);
+        btnTwo.gameObject.SetActive(true);
 
-        deactivatePlaceButtons();
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 475);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -138);
+
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 475);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -663);
+
+        btnOneText.fontSize = 150;
+        btnTwoText.fontSize = 150;
+    }
+    void threeButtons()
+    {
+        disableButtons();
+        btnOne.gameObject.SetActive(true);
+        btnTwo.gameObject.SetActive(true);
+        btnThree.gameObject.SetActive(true);
+
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 300);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -50);
+
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 300);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -400);
+
+        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 300);
+        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -750);
+
+        btnOneText.fontSize = 130;
+        btnTwoText.fontSize = 130;
+        btnThreeText.fontSize = 130;
+    }
+    void fourButtons()
+    {
+        disableButtons();
+        btnOne.gameObject.SetActive(true);
+        btnTwo.gameObject.SetActive(true);
+        btnThree.gameObject.SetActive(true);
+        btnFour.gameObject.SetActive(true);
+
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(213, 1000);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -6);
+
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(213, 1000);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -269);
+
+        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(213, 1000);
+        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -531);
+
+        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(213, 1000);
+        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -793);
+
+        btnOneText.fontSize = 100;
+        btnTwoText.fontSize = 100;
+        btnThreeText.fontSize = 100;
+        btnFourText.fontSize = 100;
+    }
+    void fiveButtons()
+    {
+        disableButtons();
+        btnOne.gameObject.SetActive(true);
+        btnTwo.gameObject.SetActive(true);
+        btnThree.gameObject.SetActive(true);
+        btnFour.gameObject.SetActive(true);
+        btnFive.gameObject.SetActive(true);
 
 
-        btnPlayerOne.gameObject.SetActive(true);
-        btnPlayerTwo.gameObject.SetActive(true);
-        btnPlayerThree.gameObject.SetActive(true);
-        btnPlayerFour.gameObject.SetActive(true);
-        btnPlayerFive.gameObject.SetActive(true);
-        btnPlayerSix.gameObject.SetActive(true);
 
-        btnPlayerOne.onClick.RemoveAllListeners();
-        btnPlayerTwo.onClick.RemoveAllListeners();
-        btnPlayerThree.onClick.RemoveAllListeners();
-        btnPlayerFour.onClick.RemoveAllListeners();
-        btnPlayerFive.onClick.RemoveAllListeners();
-        btnPlayerSix.onClick.RemoveAllListeners();
+    }
+    void sixButtons()
+    {
+        disableButtons();
+        btnOne.gameObject.SetActive(true);
+        btnTwo.gameObject.SetActive(true);
+        btnThree.gameObject.SetActive(true);
+        btnFour.gameObject.SetActive(true);
+        btnFive.gameObject.SetActive(true);
+        btnSix.gameObject.SetActive(true);
 
-        btnPlayerFour.interactable = false;
-        btnPlayerFive.interactable = false;
-        btnPlayerSix.interactable = false;
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 300);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -50);
 
-        btnPlayerOneText.text = GameState.roles[0];
-        btnPlayerTwoText.text = GameState.roles[1];
-        btnPlayerThreeText.text = GameState.roles[2];
-        btnPlayerFourText.text = "nicht verfügbar";
-        btnPlayerFiveText.text = "nicht verfügbar";
-        btnPlayerSixText.text = "nicht verfügbar";
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 300);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -50);
+
+        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 300);
+        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -400);
+
+        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 300);
+        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -400);
+
+        btnFive.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 300);
+        btnFive.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -750);
+
+        btnSix.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 300);
+        btnSix.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -750);
+
+        btnOneText.fontSize = 75;
+        btnTwoText.fontSize = 75;
+        btnThreeText.fontSize = 75;
+        btnFourText.fontSize = 75;
+        btnFiveText.fontSize = 75;
+        btnSixText.fontSize = 75;
+
+    }
+    void sevenButtons()
+    {
+        disableButtons();
+        btnOne.gameObject.SetActive(true);
+        btnTwo.gameObject.SetActive(true);
+        btnThree.gameObject.SetActive(true);
+        btnFour.gameObject.SetActive(true);
+        btnFive.gameObject.SetActive(true);
+        btnSix.gameObject.SetActive(true);
+        btnSeven.gameObject.SetActive(true);
+
+    }
+    void eightButtons()
+    {
+        disableButtons();
+        btnOne.gameObject.SetActive(true);
+        btnTwo.gameObject.SetActive(true);
+        btnThree.gameObject.SetActive(true);
+        btnFour.gameObject.SetActive(true);
+        btnFive.gameObject.SetActive(true);
+        btnSix.gameObject.SetActive(true);
+        btnSeven.gameObject.SetActive(true);
+        btnEight.gameObject.SetActive(true);
+
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -6);
+
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -6);
+
+        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
+        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -269);
+
+        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
+        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -269);
+
+        btnFive.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
+        btnFive.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -531);
+
+        btnSix.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
+        btnSix.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -531);
+
+        btnSeven.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
+        btnSeven.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -794);
+
+        btnEight.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
+        btnEight.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -794);
+
+        btnOneText.fontSize = 65;
+        btnTwoText.fontSize = 65;
+        btnThreeText.fontSize = 65;
+        btnFourText.fontSize = 65;
+        btnFiveText.fontSize = 65;
+        btnSixText.fontSize = 65;
+        btnSevenText.fontSize = 65;
+        btnEightText.fontSize = 65;
+
+    }
+    void disableButtons()
+    {
+        btnOne.gameObject.SetActive(true);
+        btnTwo.gameObject.SetActive(true);
+        btnThree.gameObject.SetActive(true);
+        btnFour.gameObject.SetActive(true);
+        btnFive.gameObject.SetActive(true);
+        btnSix.gameObject.SetActive(true);
+        btnSeven.gameObject.SetActive(true);
+        btnEight.gameObject.SetActive(true);
+
+        btnOne.onClick.RemoveAllListeners();
+        btnTwo.onClick.RemoveAllListeners();
+        btnThree.onClick.RemoveAllListeners();
+        btnFour.onClick.RemoveAllListeners();
+        btnFive.onClick.RemoveAllListeners();
+        btnSix.onClick.RemoveAllListeners();
+        btnSeven.onClick.RemoveAllListeners();
+        btnEight.onClick.RemoveAllListeners();
+
+        btnOne.interactable = true;
+        btnTwo.interactable = true;
+        btnThree.interactable = true;
+        btnFour.interactable = true;
+        btnFive.interactable = true;
+        btnSix.interactable = true;
+        btnSeven.interactable = true;
+        btnEight.interactable = true;
+
+        btnOne.gameObject.SetActive(false);
+        btnTwo.gameObject.SetActive(false);
+        btnThree.gameObject.SetActive(false);
+        btnFour.gameObject.SetActive(false);
+        btnFive.gameObject.SetActive(false);
+        btnSix.gameObject.SetActive(false);
+        btnSeven.gameObject.SetActive(false);
+        btnEight.gameObject.SetActive(false);
+    }
+    void playerButtons()
+    {
+        sixButtons();
+
+        btnFour.interactable = false;
+        btnFive.interactable = false;
+        btnSix.interactable = false;
+
+        btnOneText.text = GameState.roles[0];
+        btnTwoText.text = GameState.roles[1];
+        btnThreeText.text = GameState.roles[2];
+        btnFourText.text = "nicht verfügbar";
+        btnFiveText.text = "nicht verfügbar";
+        btnSixText.text = "nicht verfügbar";
 
 
         switch (GameState.playerCount)
         {
             case 4:
-                btnPlayerFour.interactable = true;
+                btnFour.interactable = true;
 
-                btnPlayerFourText.text = GameState.roles[3];
+                btnFourText.text = GameState.roles[3];
 
                 break;
             case 5:
-                btnPlayerFour.interactable = true;
-                btnPlayerFive.interactable = true;
+                btnFour.interactable = true;
+                btnFive.interactable = true;
 
 
-                btnPlayerFourText.text = GameState.roles[3];
-                btnPlayerFiveText.text = GameState.roles[4];
+                btnFourText.text = GameState.roles[3];
+                btnFiveText.text = GameState.roles[4];
 
                 break;
             case 6:
-                btnPlayerFour.interactable = true;
-                btnPlayerFive.interactable = true;
-                btnPlayerSix.interactable = true;
+                btnFour.interactable = true;
+                btnFive.interactable = true;
+                btnSix.interactable = true;
 
-                btnPlayerFourText.text = GameState.roles[3];
-                btnPlayerFiveText.text = GameState.roles[4];
-                btnPlayerSixText.text = GameState.roles[5];
+                btnFourText.text = GameState.roles[3];
+                btnFiveText.text = GameState.roles[4];
+                btnSixText.text = GameState.roles[5];
                 break;
         }
+
+
+
     }
+
+    //Useful functions
 
     int[] findTargetPosition(string criminalRole)
     {
@@ -832,7 +930,7 @@ public class Place : MonoBehaviour
         return targetPosition;
     }
 
-    void activatedTrap(int player,int[]targetPosition)
+    void activatedTrap(int player, int[] targetPosition)
     {
         GameState.money[player] = 0;
         GameState.currentPlace[player] = targetPosition;
