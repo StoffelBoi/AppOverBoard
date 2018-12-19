@@ -12,6 +12,20 @@ public class StartUpScreen : MonoBehaviour
     public Canvas boardAssemblyCanvas;
     public Canvas privatPlayerCanvas;
     public Canvas movementCanvas;
+    public Canvas contentsRulesCanvas;
+    public Canvas places1RulesCanvas;
+    public Canvas places2RulesCanvas;
+    public Canvas places3RulesCanvas;
+    public Canvas places4RulesCanvas;
+    public Canvas evil1RulesCanvas;
+    public Canvas evil2RulesCanvas;
+    public Canvas evil3RulesCanvas;
+    public Canvas evil4RulesCanvas;
+    public Canvas good1RulesCanvas;
+    public Canvas good2RulesCanvas;
+    public Canvas winCondRulesCanvas;
+    public Canvas hintsRulesCanvas;
+    public Canvas movementRulesCanvas;
     public GameObject connectionController;
     public GameObject roleSelectionController;
     public GameObject waitingController;
@@ -37,7 +51,20 @@ public class StartUpScreen : MonoBehaviour
         boardAssemblyCanvas.enabled = false;
         privatPlayerCanvas.enabled = false;
         movementCanvas.enabled = false;
-
+        contentsRulesCanvas.enabled = false;
+        places1RulesCanvas.enabled = false;
+        places2RulesCanvas.enabled = false;
+        places3RulesCanvas.enabled = false;
+        places4RulesCanvas.enabled = false;
+        evil1RulesCanvas.enabled = false;
+        evil2RulesCanvas.enabled = false;
+        evil3RulesCanvas.enabled = false;
+        evil4RulesCanvas.enabled = false;
+        good1RulesCanvas.enabled = false;
+        good2RulesCanvas.enabled = false;
+        winCondRulesCanvas.enabled = false;
+        hintsRulesCanvas.enabled = false;
+        movementRulesCanvas.enabled = false;
     }
 
     // Update is called once per frame

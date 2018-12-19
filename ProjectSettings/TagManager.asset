@@ -28,13 +28,13 @@ TagManager:
   - RuleEvil1
   - RuleEvil2
   - RuleEvil3
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - RuleEvil4
+  - RuleGood1
+  - RuleGood2
+  - RulesWinCondition
+  - RulesHints
+  - RulesMovement
+  - Contents
   - 
   - 
   m_SortingLayers:
