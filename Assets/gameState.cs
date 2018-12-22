@@ -28,7 +28,7 @@ public class GameState : MonoBehaviour {
     public static List<int> isDisabled;
     public static bool bigTrapUsed;
     public static List<bool> skillUsed;
-   
+    
     void Start() {
         playerCount = 0;
         roles = new List<string>();

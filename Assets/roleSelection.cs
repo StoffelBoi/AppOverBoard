@@ -228,6 +228,7 @@ public class RoleSelection : MonoBehaviour
         GameState.solvedHints.Add(0);
         GameState.isDisabled.Add(0);
         GameState.skillUsed.Add(false);
+        GameState.items.Add(new List<string>());
         addingHintBoards();
     }
     void addingHintBoards()

@@ -69,6 +69,7 @@ public class Place : MonoBehaviour
         scriptMovement = movementController.GetComponent<Movement>();
         scriptPlace = GetComponent<Place>();
         currentPlace = GameState.board[GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
+        Debug.Log(currentPlace);
         translatePlace(currentPlace);
         //menu if its a street
         if (currentPlace == 0)
@@ -216,8 +217,8 @@ public class Place : MonoBehaviour
     void toMovement()
     {
         System.Random rn = new System.Random();
-        int randomHint = rn.Next(0, 10);
-        if (randomHint == 0)
+        int randomHint = rn.Next(1, 10);
+        if (randomHint == 1)
         {
             if (GameState.roles[GameState.currentTurn] == GameState.criminal)
             {
@@ -275,7 +276,7 @@ public class Place : MonoBehaviour
         toMovement();
     }
 
-    //TODO: action for commiting the crime
+    //TODO: action for commiting the crime with time aspekt
     void btnActivateQuestPlaceClick()
     {
         GameState.money[GameState.currentTurn] -= 6;
@@ -292,7 +293,6 @@ public class Place : MonoBehaviour
 
         toMovement();
     }
-
     void btnPlaceOptionClick()
     {
         switch (currentPlace)
@@ -352,7 +352,6 @@ public class Place : MonoBehaviour
                 barAction();
                 break;
         }
-        toMovement();
     }
     void btnFindHintClick()
     {
@@ -398,19 +397,32 @@ public class Place : MonoBehaviour
     //place action functions
     void libraryAction()
     {
-        GameState.trueSolveds[GameState.currentTurn] += GameState.trueUnsolveds[GameState.currentTurn];
-        GameState.solvedHints[GameState.currentTurn] += GameState.unsolvedHints[GameState.currentTurn];
-        GameState.trueUnsolveds[GameState.currentTurn] = 0;
-        GameState.unsolvedHints[GameState.currentTurn] = 0;
+        oneButton();
+        btnOneText.text = "Hinweis entschlüsseln";
+        btnOne.onClick.AddListener(solveHint);
     }
     void laboratoryAction()
     {
         libraryAction();
     }
-    //TODO check for money item
+    void solveHint()
+    {
+        GameState.trueSolveds[GameState.currentTurn] += GameState.trueUnsolveds[GameState.currentTurn];
+        GameState.solvedHints[GameState.currentTurn] += GameState.unsolvedHints[GameState.currentTurn];
+        GameState.trueUnsolveds[GameState.currentTurn] = 0;
+        GameState.unsolvedHints[GameState.currentTurn] = 0;
+        toMovement();
+    }
     void mainsquareAction()
     {
-        if (false)
+        oneButton();
+        btnOneText.text = "Geld verdienen";
+        btnOne.onClick.AddListener(earnMoney);
+
+    }
+    void earnMoney()
+    {
+        if (GameState.items[GameState.currentTurn].Contains("Calculator"))
         {
             GameState.money[GameState.currentTurn] += 8;
         }
@@ -418,75 +430,434 @@ public class Place : MonoBehaviour
         {
             GameState.money[GameState.currentTurn] += 6;
         }
+        toMovement();
     }
-
-    //TODO add Functionality for the following places
+    //@TODO add functionality
     void parkAction()
     {
 
     }
+    //@TODO add functionality
     void hospitalAction()
     {
 
     }
+    //@TODO add functionality
     void bankAction()
     {
 
     }
+    //@TODO add functionality
     void parliamentAction()
     {
 
     }
+    //@TODO add functionality
     void cemetaryAction()
     {
 
     }
+    //@TODO add functionality
     void prisonAction()
     {
 
     }
+    //@TODO add functionality
     void casinoAction()
     {
 
     }
+    void btnCasinoBet(int bet)
+    {
+        System.Random rn = new System.Random();
+        int rand = rn.Next(0, 1);
+        if(rand == 0)
+        {
+            GameState.money[GameState.currentTurn] += bet;
+        }
+        else
+        {
+            GameState.money[GameState.currentTurn] -= bet;
+        }
+    }
     void internetcafeAction()
     {
-
+        twoButtons();
+        btnOneText.text = "Geld verdienen";
+        btnTwoText.text = "fremde Falle kaufen";
+        btnTwo.interactable = false;
+        btnOne.onClick.AddListener(earnMoney);
+        btnTwo.onClick.AddListener(btnBuyTrap);
+        if (GameState.criminal == GameState.roles[GameState.currentTurn])
+        {
+            if (GameState.money[GameState.currentTurn] >= 2)
+            {
+                btnTwo.interactable = true;
+            }
+        }
     }
+    void btnBuyTrap()
+    {
+        fourButtons();
+        btnOneText.text = "Infernos Falle";
+        btnTwoText.text = "Dr.Mortifiers Falle";
+        btnThreeText.text = "Phantoms Falle";
+        btnFourText.text = "Fascultos Falle";
+        btnOne.onClick.AddListener(btnBuyingInfernoTrap);
+        btnOne.onClick.AddListener(btnBuyingDrMortifierTrap);
+        btnOne.onClick.AddListener(btnBuyingPhantomTrap);
+        btnOne.onClick.AddListener(btnBuyingFascultoTrap);
+    }
+    void btnBuyingInfernoTrap()
+    {
+        GameState.money[GameState.currentTurn] -= 2;
+        GameState.items[GameState.currentTurn].Add("Bomb");
+        addTrueHint();
+        toMovement();
+    }
+    void btnBuyingDrMortifierTrap()
+    {
+        GameState.money[GameState.currentTurn] -= 2;
+        GameState.items[GameState.currentTurn].Add("PetriDish");
+        addTrueHint();
+        toMovement();
+    }
+    void btnBuyingPhantomTrap()
+    {
+        GameState.money[GameState.currentTurn] -= 2;
+        GameState.items[GameState.currentTurn].Add("StolenGoods");
+        addTrueHint();
+        toMovement();
+    }
+    void btnBuyingFascultoTrap()
+    {
+        GameState.money[GameState.currentTurn] -= 2;
+        GameState.items[GameState.currentTurn].Add("CursedArtifact");
+        addTrueHint();
+        toMovement();
+    }
+    //@TODO add functionality
     void trainstationAction()
     {
 
     }
     void armyshopAction()
     {
-
+        twoButtons();
+        btnOneText.text = "Schutzweste";
+        btnTwoText.text = "Permanenter Schutz";
+        btnOne.onClick.AddListener(btnBuyProtectiveVest);
+        btnTwo.onClick.AddListener(btnBuyPermanentProtection);
+        if (GameState.money[GameState.currentTurn] < 6)
+        {
+            btnOne.interactable = false;
+        }
+        if (GameState.money[GameState.currentTurn] < 15)
+        {
+            btnTwo.interactable = false;
+        }
+    }
+    void btnBuyProtectiveVest()
+    {
+        GameState.money[GameState.currentTurn] -= 6;
+        GameState.items[GameState.currentTurn].Add("ProtectiveVest");
+        toMovement();
+    }
+    void btnBuyPermanentProtection()
+    {
+        fourButtons();
+        btnOneText.text = "feuerfester Mantel";
+        btnTwoText.text = "Gasmaske";
+        btnThreeText.text = "Bodycam";
+        btnFourText.text = "Talisman";
+        btnOne.onClick.AddListener(btnBuyBodycam);
+        btnTwo.onClick.AddListener(btnBuyGasmask);
+        btnThree.onClick.AddListener(btnBuyBodycam);
+        btnFour.onClick.AddListener(btnBuyTalisman);
+    }
+    void btnBuyFireProofCoat()
+    {
+        GameState.money[GameState.currentTurn] -= 15;
+        GameState.items[GameState.currentTurn].Add("FireProofCoat");
+        toMovement();
+    }
+    void btnBuyGasmask()
+    {
+        GameState.money[GameState.currentTurn] -= 15;
+        GameState.items[GameState.currentTurn].Add("Gasmask");
+        toMovement();
+    }
+    void btnBuyBodycam()
+    {
+        GameState.money[GameState.currentTurn] -= 15;
+        GameState.items[GameState.currentTurn].Add("Bodycam");
+        toMovement();
+    }
+    void btnBuyTalisman()
+    {
+        GameState.money[GameState.currentTurn] -= 15;
+        GameState.items[GameState.currentTurn].Add("Talisman");
+        toMovement();
     }
     void shoppingcenterAction()
     {
+        sixButtons();
+        btnOneText.text = "Turnschuhe";
+        btnTwoText.text = "Fingerabdruckset";
+        btnThreeText.text = "Energy Drink";
+        btnFourText.text = "Taschenrechner";
+        btnFiveText.text = "Whiskey";
+        btnSixText.text = "Zufallsfalle";
 
+        btnOne.onClick.AddListener(btnBuyTrainers);
+        btnTwo.onClick.AddListener(btnBuyFingerprintKit);
+        btnThree.onClick.AddListener(btnBuyEnergyDrink);
+        btnFour.onClick.AddListener(btnBuyCalculator);
+        btnFive.onClick.AddListener(btnBuyWhiskey);
+        btnSix.onClick.AddListener(btnBuyRandomTrap);
+
+
+        if (!(GameState.criminal == GameState.roles[GameState.currentTurn]))
+        {
+            btnSix.interactable = false;
+        }
+        if (GameState.money[GameState.currentTurn] < 8)
+        {
+            btnFour.interactable=false;
+            btnFive.interactable = false;
+        }
+        if (GameState.money[GameState.currentTurn] < 4)
+        {
+            btnTwo.interactable = false;
+        }
+        if (GameState.money[GameState.currentTurn] < 3)
+        {
+            btnThree.interactable = false;
+        }
+        if (GameState.money[GameState.currentTurn] < 2)
+        {
+            btnSix.interactable = false;
+            btnOne.interactable = false;
+        }
+    }
+    void btnBuyTrainers()
+    {
+        GameState.money[GameState.currentTurn] -= 2;
+        GameState.items[GameState.currentTurn].Add("Trainers");
+        toMovement();
+    }
+    void btnBuyFingerprintKit()
+    {
+        GameState.money[GameState.currentTurn] -= 4;
+        GameState.items[GameState.currentTurn].Add("FingerprintKit");
+        toMovement();
+    }
+    void btnBuyEnergyDrink()
+    {
+        GameState.money[GameState.currentTurn] -= 3;
+        GameState.items[GameState.currentTurn].Add("EnergyDrink");
+        toMovement();
+    }
+    void btnBuyCalculator()
+    {
+        GameState.money[GameState.currentTurn] -= 8;
+        GameState.items[GameState.currentTurn].Add("Calculator");
+        toMovement();
+    }
+    void btnBuyWhiskey()
+    {
+        GameState.money[GameState.currentTurn] -= 8;
+        GameState.items[GameState.currentTurn].Add("Whiskey");
+        toMovement();
+    }
+    void btnBuyRandomTrap()
+    {
+        System.Random rn = new System.Random();
+        int rand = rn.Next(0, 3);
+        switch (rand)
+        {
+            case 0:
+                btnBuyingInfernoTrap();
+                break;
+            case 1:
+                btnBuyingDrMortifierTrap();
+                break;
+            case 2:
+                btnBuyingPhantomTrap();
+                break;
+            case 3:
+                btnBuyingFascultoTrap();
+                break;
+        }
     }
     void junkyardAction()
     {
-
+        oneButton();
+        btnOneText.text = "Items suchen";
+        btnOne.onClick.AddListener(btnJunkyardLookForStuff);
     }
+    void btnJunkyardLookForStuff()
+    {
+        System.Random rn = new System.Random();
+        int rand = 0;
+        if (GameState.criminal == GameState.roles[GameState.currentTurn])
+        {
+            rand = rn.Next(0, 17);
+        }
+        else
+        {
+            rand = rn.Next(0, 13);
+        }
 
+
+        switch (rand)
+        {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                Debug.Log("Nichts gefunden");
+                break;
+            case 5:
+                GameState.items[GameState.currentTurn].Add("FireProofCoat");
+                break;
+            case 6:
+                GameState.items[GameState.currentTurn].Add("ProtectiveVest");
+                break;
+            case 7:
+                GameState.items[GameState.currentTurn].Add("Gasmask");
+                break;
+            case 8:
+                GameState.items[GameState.currentTurn].Add("Talisman");
+                break;
+            case 9:
+                GameState.items[GameState.currentTurn].Add("Trainers");
+                break;
+            case 10:
+                GameState.items[GameState.currentTurn].Add("FingerprintKit");
+                break;
+            case 11:
+                GameState.items[GameState.currentTurn].Add("EnergyDrink");
+                break;
+            case 12:
+                GameState.items[GameState.currentTurn].Add("Calculator");
+                break;
+            case 13:
+                GameState.items[GameState.currentTurn].Add("Whiskey");
+                break;
+            case 14:
+                GameState.items[GameState.currentTurn].Add("Bomb");
+                break;
+            case 15:
+                GameState.items[GameState.currentTurn].Add("PetriDish");
+                break;
+            case 16:
+                GameState.items[GameState.currentTurn].Add("StolenGoods");
+                break;
+            case 17:
+                GameState.items[GameState.currentTurn].Add("CursedArtifact");
+                break;
+        }
+        toMovement();
+    }
     void italienrestaurantAction()
     {
-
+        fourButtons();
+        btnOneText.text = "1 Geld";
+        btnTwoText.text = "2 Geld";
+        btnThreeText.text = "3 Geld";
+        btnFourText.text = "4 Geld";
+        btnOne.onClick.AddListener(btnItalienTwentyPercentChance);
+        btnTwo.onClick.AddListener(btnItalienThirtyPercentChance);
+        btnThree.onClick.AddListener(btnItalienFiftyPercentChance);
+        btnFour.onClick.AddListener(btnItalienSixtyPercentChance);
+        switch (GameState.money[GameState.currentTurn])
+        {
+            case 1:
+                btnTwo.interactable = false;
+                btnThree.interactable = false;
+                btnFour.interactable = false;
+                break;
+            case 2:
+                btnThree.interactable = false;
+                btnFour.interactable = false;
+                break;
+            case 3:
+                btnFour.interactable = false;
+                break;
+        }
+    }
+    void btnItalienTwentyPercentChance()
+    {
+        GameState.money[GameState.currentTurn]--;
+        chanceToGetTrueHint(2);
+        toMovement();
+    }
+    void btnItalienThirtyPercentChance()
+    {
+        GameState.money[GameState.currentTurn]-=2;
+        chanceToGetTrueHint(3);
+        toMovement();
+    }
+    void btnItalienFiftyPercentChance()
+    {
+        GameState.money[GameState.currentTurn]-=3;
+        chanceToGetTrueHint(5);
+        toMovement();
+    }
+    void btnItalienSixtyPercentChance()
+    {
+        GameState.money[GameState.currentTurn]-=4;
+        chanceToGetTrueHint(6);
+        toMovement();
     }
     void harborAction()
     {
-
+        twoButtons();
+        btnOneText.text= "Hinweis - 5 Geld";
+        btnTwoText.text = "fremde Falle kaufen";
+        btnOne.onClick.AddListener(btnHarborHint);
+        btnTwo.onClick.AddListener(btnBuyTrap);
+        if (GameState.money[GameState.currentTurn] < 5)
+        {
+            btnOne.interactable = false;
+        }
+    }
+    void btnHarborHint()
+    {
+        GameState.money[GameState.currentTurn] -= 5;
+        chanceToGetTrueHint(5);
+        toMovement();
     }
     void barAction()
     {
+        Debug.Log("Hello");
+        oneButton();
+        btnOneText.text = "SAAAAAUUUUFEN";
+        btnOne.onClick.AddListener(btnBarHint);
+    }
+    void btnBarHint()
+    {
+        GameState.money[GameState.currentTurn] -= 2;
+        chanceToGetTrueHint(4);
 
+        System.Random rn = new System.Random();
+        int randOne = rn.Next(0, 6);
+        int randTwo = rn.Next(0, 7);
+        while (GameState.board[randOne, randTwo] == 0)
+        {
+            randOne = rn.Next(0, 6);
+            randTwo = rn.Next(0, 7);
+        }
+        GameState.currentPlace[GameState.currentTurn][0]=randOne;
+        GameState.currentPlace[GameState.currentTurn][1] = randTwo;
+        toMovement();
     }
 
     //eventlistener for manipulation action
     void btnManipulationMovementClick()
     {
-        
         playerButtons();
         btnOne.onClick.AddListener(btnPlayerOneClickManipulationMovement);
         btnTwo.onClick.AddListener(btnPlayerTwoClickManipulationMovement);
@@ -685,16 +1056,16 @@ public class Place : MonoBehaviour
         btnThree.gameObject.SetActive(true);
         btnFour.gameObject.SetActive(true);
 
-        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(213, 1000);
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 213);
         btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -6);
 
-        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(213, 1000);
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 213);
         btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -269);
 
-        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(213, 1000);
+        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 213);
         btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -531);
 
-        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(213, 1000);
+        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 213);
         btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -793);
 
         btnOneText.fontSize = 100;
@@ -1033,6 +1404,17 @@ public class Place : MonoBehaviour
         for (int i = 0; i < GameState.playerCount; i++)
         {
             GameState.notFoundFalse[i][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]]++;
+        }
+    }
+
+    void chanceToGetTrueHint(int chance)
+    {
+        GameState.solvedHints[GameState.currentTurn]++;
+        System.Random rn = new System.Random();
+        int randomHint = rn.Next(1, 10);
+        if (randomHint < chance)
+        {
+            GameState.trueSolveds[GameState.currentTurn]++;
         }
     }
 }
