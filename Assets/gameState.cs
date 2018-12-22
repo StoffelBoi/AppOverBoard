@@ -28,7 +28,9 @@ public class GameState : MonoBehaviour {
     public static List<int> isDisabled;
     public static bool bigTrapUsed;
     public static List<bool> skillUsed;
-    
+    public static List<bool> usedEnergyDrink;
+    public static List<string> traps;
+
     void Start() {
         playerCount = 0;
         roles = new List<string>();
@@ -51,6 +53,12 @@ public class GameState : MonoBehaviour {
         isDisabled = new List<int>();
         bigTrapUsed = false;
         skillUsed = new List<bool>();
+        usedEnergyDrink = new List<bool>();
+        traps = new List<string>();
+        for (int i = 0; i < 18; i++)
+        {
+            traps.Add("Safe");
+        }
     }
    
 	void Update () {

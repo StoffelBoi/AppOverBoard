@@ -50,6 +50,7 @@ public class RoleSelection : MonoBehaviour
         int targetPlace = rn.Next(1, 4);
         int player = rn.Next(0, GameState.playerCount);
         GameState.criminal = GameState.roles[player];
+
         switch (Role)
         {
             case 1:
@@ -147,11 +148,9 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_doctor.interactable = false;
-        //roleSelection.enabled = false;
-        //waiting.enabled = true;
         GameState.roles.Add("Doctor");
         initializingPlayer();
-        addingHintBoards();
+
         selectedRoles++;
     }
 
@@ -160,11 +159,9 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_policeMan.interactable = false;
-        //roleSelection.enabled = false;
-        //waiting.enabled = true;
         GameState.roles.Add("Police");
         initializingPlayer();
-        addingHintBoards();
+
         selectedRoles++;
     }
 
@@ -173,11 +170,9 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_privateDetective.interactable = false;
-        //roleSelection.enabled = false;
-        //waiting.enabled = true;
         GameState.roles.Add("Detective");
         initializingPlayer();
-        addingHintBoards();
+       
         selectedRoles++;
     }
 
@@ -186,11 +181,9 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_psychic.interactable = false;
-        //roleSelection.enabled = false;
-        //waiting.enabled = true;
         GameState.roles.Add("Psychic");
         initializingPlayer();
-        addingHintBoards();
+  
         selectedRoles++;
     }
 
@@ -199,11 +192,9 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_psychologist.interactable = false;
-        //roleSelection.enabled = false;
-        //waiting.enabled = true;
         GameState.roles.Add("Psychologist");
         initializingPlayer();
-        addingHintBoards();
+  
         selectedRoles++;
     }
 
@@ -212,8 +203,6 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_reporter.interactable = false;
-        //roleSelection.enabled = false;
-        //waiting.enabled = true;
         GameState.roles.Add("Reporter");
         initializingPlayer();
         selectedRoles++;
