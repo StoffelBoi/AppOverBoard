@@ -33,7 +33,7 @@ public class GameState : MonoBehaviour {
     public static List<string> traps;
     public static List<string> lastTransaction;
     public static List<string> lastAction;
-
+    public static List<int> quarantined;
     void Start() {
         playerCount = 0;
         roles = new List<string>();
@@ -59,11 +59,13 @@ public class GameState : MonoBehaviour {
         skillUsed = new List<bool>();
         usedEnergyDrink = new List<bool>();
         traps = new List<string>();
+        quarantined = new List<int>();
         lastTransaction = new List<string>();
         lastAction = new List<string>();
-        for (int i = 0; i < 18; i++)
+        for (int i = 0; i < 19; i++)
         {
             traps.Add("Safe");
+            quarantined.Add(0);
         }
     }
    

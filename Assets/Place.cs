@@ -334,6 +334,17 @@ public class Place : MonoBehaviour
             {
                 GameState.currentTurn++;
             }
+            //counting down quarantine time
+            if(GameState.roles[GameState.currentTurn] == "Doctor")
+            {
+                for(int i = 0; i<19; i++)
+                {
+                    if (GameState.quarantined[i] > 0)
+                    {
+                        GameState.quarantined[i]--;
+                    }
+                }
+            }
             if (GameState.isDisabled[GameState.currentTurn] > 0)
             {
                 Debug.Log(GameState.roles[GameState.currentTurn] + " is still disabled");
@@ -650,8 +661,6 @@ public class Place : MonoBehaviour
         toMovement();
     }
 
-
-    
     #region placeactions
     void btnPlaceOptionClick()
     {
@@ -772,11 +781,87 @@ public class Place : MonoBehaviour
     //@TODO add functionality
     void hospitalAction()
     {
-        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        threeButtons();
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(250, -400);
+        actionsTextField.gameObject.SetActive(true);
+        actionsTextField.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300);
+        actionsTextField.GetComponent<RectTransform>().anchoredPosition = new Vector2(-250, -400);
+        actionsTextField.fontSize = 100;
+        actionsTextField.text = "Stadtplatz";
+        btnOneText.text = "+";
+        btnTwoText.text = "Quarantäne";
+        btnThreeText.text = "-";
+        btnOne.onClick.AddListener(btnPlaceUp);
+        btnTwo.onClick.AddListener(btnQuarantine);
+        btnThree.onClick.AddListener(btnPlaceDown);
+
+
+        
+    }
+    void btnQuarantine()
+    {
+        switch (actionsTextField.text)
+        {
+            case "Stadtplatz":
+                GameState.quarantined[1] = 3;
+                break;
+            case "Park":
+                GameState.quarantined[2] = 3;
+                break;
+            case "Krankenhaus":
+                GameState.quarantined[3] = 3;
+                break;
+            case "Bank":
+                GameState.quarantined[4] = 3;
+                break;
+            case "Parlament":
+                GameState.quarantined[5] = 3;
+                break;
+            case "Friedhof":
+                GameState.quarantined[6] = 3;
+                break;
+            case "Gefängnis":
+                GameState.quarantined[7] = 3;
+                break;
+            case "Kasino":
+                GameState.quarantined[8] = 3;
+                break;
+            case "Internet Cafe":
+                GameState.quarantined[9] = 3;
+                break;
+            case "Bahnhof":
+                GameState.quarantined[10] = 3;
+                break;
+            case "Armee Laden":
+                GameState.quarantined[11] = 3;
+                break;
+            case "Shopping Center":
+                GameState.quarantined[12] = 3;
+                break;
+            case "Schrottplatz":
+                GameState.quarantined[13] = 3;
+                break;
+            case "Bibliothek":
+                GameState.quarantined[14] = 3;
+                break;
+            case "Labor":
+                GameState.quarantined[15] = 3;
+                break;
+            case "Italiener":
+                GameState.quarantined[16] = 3;
+                break;
+            case "Hafen":
+                GameState.quarantined[17] = 3;
+                break;
+            case "Bar":
+                GameState.quarantined[18] = 3;
+                break;
+        }
+        GameState.lastAction[GameState.currentTurn] = "Fähgikeit";
         GameState.skillUsed[GameState.currentTurn] = true;
         toMovement();
     }
-
     void bankAction()
     {
         playerButtons();
@@ -1068,15 +1153,15 @@ public class Place : MonoBehaviour
         btnOneText.text = "+";
         btnTwoText.text = "Abfahrt";
         btnThreeText.text = "-";
-        btnOne.onClick.AddListener(btnTrainstationPlaceUp);
+        btnOne.onClick.AddListener(btnPlaceUp);
         btnTwo.onClick.AddListener(btnTrainstationTravel);
-        btnThree.onClick.AddListener(btnTrainstationPlaceDown);
+        btnThree.onClick.AddListener(btnPlaceDown);
         if (GameState.money[GameState.currentTurn] < 2)
         {
             btnTwo.interactable = false;
         }
     }
-    void btnTrainstationPlaceDown()
+    void btnPlaceDown()
     {
         switch (actionsTextField.text)
         {
@@ -1136,7 +1221,7 @@ public class Place : MonoBehaviour
                 break;
         }
     }
-    void btnTrainstationPlaceUp()
+    void btnPlaceUp()
     {
         switch (actionsTextField.text)
         {
@@ -1670,18 +1755,38 @@ public class Place : MonoBehaviour
         int[] currentPlayerPlace = GameState.currentPlace[player];
         if (currentPlayerPlace[0] > 0)
         {
-            btnOne.interactable = true;
-            btnOneText.text = translatePlace(GameState.board[currentPlayerPlace[0] - 1, currentPlayerPlace[1]]);
+            if(GameState.quarantined[GameState.board[currentPlayerPlace[0] - 1, currentPlayerPlace[1]]] > 0)
+            {
+                btnOne.interactable = false;
+                btnOneText.fontSize = 50; 
+                btnOneText.text = "Quarantäne";
+            }
+            else
+            {
+                btnOne.interactable = true;
+                btnOneText.text = translatePlace(GameState.board[currentPlayerPlace[0] - 1, currentPlayerPlace[1]]);
+            }
+            
         }
         else
         {
+
             btnOne.interactable = false;
             btnOneText.text = "Stadtrand";
         }
         if (currentPlayerPlace[1] < 6)
         {
-            btnTwo.interactable = true;
-            btnTwoText.text = translatePlace(GameState.board[currentPlayerPlace[0], currentPlayerPlace[1] + 1]);
+            if (GameState.quarantined[GameState.board[currentPlayerPlace[0], currentPlayerPlace[1] + 1]] > 0)
+            {
+                btnTwo.interactable = false;
+                btnTwoText.fontSize = 50;
+                btnTwoText.text = "Quarantäne";
+            }
+            else
+            {
+                btnTwo.interactable = true;
+                btnTwoText.text = translatePlace(GameState.board[currentPlayerPlace[0], currentPlayerPlace[1] + 1]);
+            }
         }
         else
         {
@@ -1691,8 +1796,17 @@ public class Place : MonoBehaviour
 
         if (currentPlayerPlace[0] < 5)
         {
-            btnThree.interactable = true;
-            btnThreeText.text = translatePlace(GameState.board[currentPlayerPlace[0] + 1, currentPlayerPlace[1]]);
+            if (GameState.quarantined[GameState.board[currentPlayerPlace[0] + 1, currentPlayerPlace[1]]] > 0)
+            {
+                btnThree.interactable = false;
+                btnThreeText.fontSize = 50;
+                btnThreeText.text = "Quarantäne";
+            }
+            else
+            {
+                btnThree.interactable = true;
+                btnThreeText.text = translatePlace(GameState.board[currentPlayerPlace[0] + 1, currentPlayerPlace[1]]);
+            }
         }
         else
         {
@@ -1701,8 +1815,17 @@ public class Place : MonoBehaviour
         }
         if (currentPlayerPlace[1] > 0)
         {
-            btnFour.interactable = true;
-            btnFourText.text = translatePlace(GameState.board[currentPlayerPlace[0], currentPlayerPlace[1] - 1]);
+            if (GameState.quarantined[GameState.board[currentPlayerPlace[0], currentPlayerPlace[1] - 1]] > 0)
+            {
+                btnFour.interactable = false;
+                btnFourText.fontSize = 50;
+                btnFourText.text = "Quarantäne";
+            }
+            else
+            {
+                btnFour.interactable = true;
+                btnFourText.text = translatePlace(GameState.board[currentPlayerPlace[0], currentPlayerPlace[1] - 1]);
+            }
         }
         else
         {
@@ -1710,7 +1833,18 @@ public class Place : MonoBehaviour
             btnFourText.text = "Stadtrand";
         }
 
-        btnFiveText.text = translatePlace(GameState.board[currentPlayerPlace[0], currentPlayerPlace[1]]);
+        if (GameState.quarantined[GameState.board[currentPlayerPlace[0], currentPlayerPlace[1]]] > 0)
+        {
+            btnFive.interactable = false;
+            btnFiveText.fontSize = 50;
+            btnFiveText.text = "Quarantäne";
+        }
+        else
+        {
+            btnFive.interactable = true;
+            btnFiveText.text = translatePlace(GameState.board[currentPlayerPlace[0], currentPlayerPlace[1]]);
+        }
+
         btnOne.onClick.AddListener(btnManipulationUp);
         btnTwo.onClick.AddListener(btnManipulationRight);
         btnThree.onClick.AddListener(btnManipulationDown);

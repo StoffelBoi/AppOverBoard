@@ -74,11 +74,34 @@ public class Movement : MonoBehaviour {
 
     void setButtons(int[] currentPlace)
     {
-        txtStay.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1]]);
+        txtDown.fontSize = 60;
+        txtUp.fontSize = 60;
+        txtLeft.fontSize = 60;
+        txtRight.fontSize = 60;
+        txtStay.fontSize = 60;
+        if (GameState.quarantined[GameState.board[currentPlace[0], currentPlace[1]]] > 0)
+        {
+            btnStay.interactable = false;
+            txtStay.fontSize = 50;
+            txtStay.text = "Quarantäne";
+        }
+        else
+        {
+            txtStay.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1]]);
+        }
         if (currentPlace[0] > 0)
         {
-            btnUp.interactable = true;
-            txtUp.text = translatePlace(GameState.board[currentPlace[0] - 1, currentPlace[1]]);
+            if(GameState.quarantined[GameState.board[currentPlace[0] - 1, currentPlace[1]]] > 0){
+                btnUp.interactable = false;
+                txtUp.fontSize = 50;
+                txtUp.text = "Quarantäne";
+            }
+            else
+            {
+                btnUp.interactable = true;
+                txtUp.text = translatePlace(GameState.board[currentPlace[0] - 1, currentPlace[1]]);
+            }
+           
         }
         else
         {
@@ -87,8 +110,18 @@ public class Movement : MonoBehaviour {
         }
         if (currentPlace[0] < 5)
         {
-            btnDown.interactable = true;
-            txtDown.text = translatePlace(GameState.board[currentPlace[0] + 1, currentPlace[1]]);
+            if (GameState.quarantined[GameState.board[currentPlace[0] + 1, currentPlace[1]]] > 0)
+            {
+                btnDown.interactable = false;
+                txtDown.fontSize = 50;
+                txtDown.text = "Quarantäne";
+            }
+            else
+            {
+                btnDown.interactable = true;
+                txtDown.text = translatePlace(GameState.board[currentPlace[0] + 1, currentPlace[1]]);
+            }
+                
         }
         else
         {
@@ -97,8 +130,18 @@ public class Movement : MonoBehaviour {
         }
         if (currentPlace[1] > 0)
         {
-            btnLeft.interactable = true;
-            txtLeft.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1] - 1]);
+
+            if (GameState.quarantined[GameState.board[currentPlace[0], currentPlace[1] - 1]] > 0)
+            {
+                btnLeft.interactable = false;
+                txtLeft.fontSize = 50;
+                txtLeft.text = "Quarantäne";
+            }
+            else
+            {
+                btnLeft.interactable = true;
+                txtLeft.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1] - 1]);
+            }
         }
         else
         {
@@ -107,8 +150,18 @@ public class Movement : MonoBehaviour {
         }
         if (currentPlace[1] < 6)
         {
-            btnRight.interactable = true;
-            txtRight.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1] + 1]);
+
+            if (GameState.quarantined[GameState.board[currentPlace[0], currentPlace[1] + 1]] > 0)
+            {
+                btnRight.interactable = false;
+                txtRight.fontSize = 50;
+                txtRight.text = "Quarantäne";
+            }
+            else
+            {
+                btnRight.interactable = true;
+                txtRight.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1] + 1]);
+            }
         }
         else
         {
