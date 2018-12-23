@@ -39,6 +39,8 @@ public class Place : MonoBehaviour
     public Button btnSeven;
     public Button btnEight;
 
+    public Button btnBack;
+
     public Text btnOneText;
     public Text btnTwoText;
     public Text btnThreeText;
@@ -50,19 +52,25 @@ public class Place : MonoBehaviour
 
     private int currentBet;
     private int currentPlace;
-    
+    private bool firstMovementManipulation;
+    private int manipulatedPlayer;
     void OnEnable()
     {
-        
+        btnBack.gameObject.SetActive(false);
+        btnBack.onClick.RemoveAllListeners();
+        btnBack.onClick.AddListener(btnGoBack);
         currentPlace = GameState.board[GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
         actionsTextField.gameObject.SetActive(false);
-        translatePlace(currentPlace);
+        placeName.text = translatePlace(currentPlace);
+        setPlaceImage(currentPlace);
         //menu if its a street
         if (currentPlace == 0)
         {
-            oneButton();
+            twoButtons();
             btnOneText.text = "Umschauen";
             btnOne.onClick.AddListener(btnLookAroundClick);
+            btnTwoText.text = "Item benutzen";
+            btnTwo.onClick.AddListener(btnUseItemClick);
         }
         //menu if its not a street
         else
@@ -300,6 +308,7 @@ public class Place : MonoBehaviour
 
         }
     }
+
     void toMovement()
     {
         if (!GameState.usedEnergyDrink.Contains(true))
@@ -331,6 +340,12 @@ public class Place : MonoBehaviour
                 GameState.isDisabled[GameState.currentTurn]--;
                 toMovement();
             }
+            if (GameState.isManipulated[GameState.currentTurn])
+            {
+                Debug.Log(GameState.roles[GameState.currentTurn] + " was forced to move here");
+                GameState.isManipulated[GameState.currentTurn] = false;
+                OnEnable();
+            }
             else
             {
                 UIManager.Instance.Movement();
@@ -343,15 +358,23 @@ public class Place : MonoBehaviour
         }
     }
 
+    void btnGoBack()
+    {
+        OnEnable();
+    }
+
     //TODO: add Random Events
     void btnLookAroundClick()
     {
+        GameState.lastAction[GameState.currentTurn] = "Umschauen";
         Debug.Log("Du schaust dich um und ... bemerkst nichts außergewöhnliches");
         toMovement();
     }
 
+    #region Use Item
     void btnUseItemClick()
     {
+        btnBack.gameObject.SetActive(true);
         int trainersCount=0;
         int FingerprintKitCount = 0;
         int EnergyDrinkCount = 0;
@@ -412,11 +435,13 @@ public class Place : MonoBehaviour
     }
     void btnTrainersOnClick()
     {
+        GameState.lastAction[GameState.currentTurn] = "Item benutzen";
         GameState.items[GameState.currentTurn].Remove("Trainers");
         UIManager.Instance.Movement();
     }
     void btnFingerprintKitOnClick()
     {
+        GameState.lastAction[GameState.currentTurn] = "Item benutzen";
         GameState.solvedHints[GameState.currentTurn] = GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
         Debug.Log(GameState.roles[GameState.currentTurn] + " has found " + (GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]]) + " hints");
         GameState.trueSolveds[GameState.currentTurn] = GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
@@ -427,21 +452,25 @@ public class Place : MonoBehaviour
     }
     void btnEnergyDrinkOnClick()
     {
+        GameState.lastAction[GameState.currentTurn] = "Item benutzen";
         GameState.usedEnergyDrink.Add(true);
         GameState.items[GameState.currentTurn].Remove("EnergyDrink");
         OnEnable();
     }
     void btnWhiskeyOnClick()
     {
+        GameState.lastAction[GameState.currentTurn] = "Item benutzen";
         GameState.trueSolveds[GameState.currentTurn]++;
         GameState.solvedHints[GameState.currentTurn]++;
         GameState.items[GameState.currentTurn].Remove("Whiskey");
         OnEnable();
     }
+    #endregion
 
-
+    #region Small Trap
     void btnSmallTrapClick()
     {
+        btnBack.gameObject.SetActive(true);
         int bombCount = 0;
         int petriDishCount = 0;
         int stoleGoodsCount = 0;
@@ -552,6 +581,7 @@ public class Place : MonoBehaviour
     }
     void setInfernoTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "kleine Falle";
         GameState.items[GameState.currentTurn].Remove("Bomb");
         GameState.traps[currentPlace] = "Bomb";
         addTrueHint();
@@ -559,6 +589,7 @@ public class Place : MonoBehaviour
     }
     void setDrMortifierTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "kleine Falle";
         GameState.items[GameState.currentTurn].Remove("PetriDish");
         GameState.traps[currentPlace] = "PetriDish";
         addTrueHint();
@@ -566,6 +597,7 @@ public class Place : MonoBehaviour
     }
     void setPhantomTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "kleine Falle";
         GameState.items[GameState.currentTurn].Remove("StolenGoods");
         GameState.traps[currentPlace] = "StolenGoods";
         addTrueHint();
@@ -573,15 +605,18 @@ public class Place : MonoBehaviour
     }
     void setFascultoTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "kleine Falle";
         GameState.items[GameState.currentTurn].Remove("CursedArtifact");
         GameState.traps[currentPlace] = "CursedArtifact";
         addTrueHint();
         toMovement();
     }
+    #endregion
 
     //TODO: action for commiting the crime with time aspekt
     void btnActivateQuestPlaceClick()
     {
+        GameState.lastAction[GameState.currentTurn] = "Questort aktivieren";
         GameState.money[GameState.currentTurn] -= 6;
         addTrueHint();
         if (GameState.activatedQuestPlaces < 3)
@@ -597,8 +632,30 @@ public class Place : MonoBehaviour
         toMovement();
     }
 
+    void btnFindHintClick()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Hinweis finden";
+        GameState.unsolvedHints[GameState.currentTurn] = GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
+        Debug.Log(GameState.roles[GameState.currentTurn] + " has found " + (GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]]) + " hints");
+        GameState.trueUnsolveds[GameState.currentTurn] = GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
+        GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] = 0;
+        GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] = 0;
+        toMovement();
+    }
+
+    void btnFalseHintClick()
+    {
+        GameState.lastAction[GameState.currentTurn] = "falscher Hinweis";
+        addFalseHint();
+        toMovement();
+    }
+
+
+    
+    #region placeactions
     void btnPlaceOptionClick()
     {
+        btnBack.gameObject.SetActive(true);
         switch (currentPlace)
         {
             case 1:
@@ -657,48 +714,6 @@ public class Place : MonoBehaviour
                 break;
         }
     }
-    void btnFindHintClick()
-    {
-        GameState.unsolvedHints[GameState.currentTurn] = GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
-        Debug.Log(GameState.roles[GameState.currentTurn] + " has found " + (GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]]) + " hints");
-        GameState.trueUnsolveds[GameState.currentTurn] = GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
-        GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] = 0;
-        GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] = 0;
-        toMovement();
-    }
-    void btnFalseHintClick()
-    {
-        addFalseHint();
-        toMovement();
-    }
-    void btnBigTrapClick()
-    {
-        GameState.bigTrapUsed = true;
-        addTrueHint();
-        playerButtons();
-        btnOne.onClick.AddListener(btnPlayerOneClickBigTrap);
-        btnTwo.onClick.AddListener(btnPlayerTwoClickBigTrap);
-        btnThree.onClick.AddListener(btnPlayerThreeClickBigTrap);
-        btnFour.onClick.AddListener(btnPlayerFourClickBigTrap);
-        btnFive.onClick.AddListener(btnPlayerFiveClickBigTrap);
-        btnSix.onClick.AddListener(btnPlayerSixClickBigTrap);
-
-        Debug.Log(GameState.roles[GameState.currentTurn] + " used a big Trap");
-    }
-    void btnManipulationClick()
-    {
-        Debug.Log(GameState.roles[GameState.currentTurn] + " is manipulating");
-        addTrueHint();
-        twoButtons();
-        btnOneText.text = "Bewwegung";
-        btnTwoText.text = "Hinweis";
-        btnOne.onClick.AddListener(btnManipulationMovementClick);
-        btnTwo.onClick.AddListener(btnManipulationHintClick);
-    }
-
-
-
-    //place action functions
     void libraryAction()
     {
         oneButton();
@@ -715,7 +730,9 @@ public class Place : MonoBehaviour
         GameState.solvedHints[GameState.currentTurn] += GameState.unsolvedHints[GameState.currentTurn];
         GameState.trueUnsolveds[GameState.currentTurn] = 0;
         GameState.unsolvedHints[GameState.currentTurn] = 0;
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
         toMovement();
+
     }
     void mainsquareAction()
     {
@@ -734,39 +751,189 @@ public class Place : MonoBehaviour
         {
             GameState.money[GameState.currentTurn] += 6;
         }
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        toMovement();
+    }
+    void parkAction()
+    {
+        oneButton();
+        btnOneText.text = "Obdachlose befragen";
+        btnOne.onClick.AddListener(btnAskHomeless);
+        
+    }
+    void btnAskHomeless()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        Debug.Log("Der Verbrecher hat " + GameState.activatedQuestPlaces + " Questorte aktiviert.");
+        GameState.skillUsed[GameState.currentTurn]=true;
         toMovement();
     }
 
     //@TODO add functionality
-    void parkAction()
-    {
-
-    }
-    //@TODO add functionality
     void hospitalAction()
     {
-
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        toMovement();
     }
-    //@TODO add functionality
+
     void bankAction()
     {
-
+        playerButtons();
+        btnOne.onClick.AddListener(btnPlayerOneTransaction);
+        btnTwo.onClick.AddListener(btnPlayerTwoTransaction);
+        btnThree.onClick.AddListener(btnPlayerThreeTransaction);
+        btnFour.onClick.AddListener(btnPlayerFourTransaction);
+        btnFive.onClick.AddListener(btnPlayerFiveTransaction);
+        btnSix.onClick.AddListener(btnPlayerSixTransaction);
     }
-    //@TODO add functionality
+    void btnPlayerOneTransaction()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        Debug.Log(GameState.roles[5] + "s letzte Transaktion war: " + GameState.lastTransaction[0]);
+        toMovement();
+    }
+    void btnPlayerTwoTransaction()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        Debug.Log(GameState.roles[5] + "s letzte Transaktion war: " + GameState.lastTransaction[1]);
+        toMovement();
+    }
+    void btnPlayerThreeTransaction()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        Debug.Log(GameState.roles[5] + "s letzte Transaktion war: " + GameState.lastTransaction[2]);
+        toMovement();
+    }
+    void btnPlayerFourTransaction()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        Debug.Log(GameState.roles[5] + "s letzte Transaktion war: " + GameState.lastTransaction[3]);
+        toMovement();
+    }
+    void btnPlayerFiveTransaction()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        Debug.Log(GameState.roles[5] + "s letzte Transaktion war: " + GameState.lastTransaction[4]);
+        toMovement();
+    }
+    void btnPlayerSixTransaction()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        Debug.Log(GameState.roles[5] + "s letzte Transaktion war: " + GameState.lastTransaction[5]);
+        toMovement();
+    }
+
     void parliamentAction()
     {
-
+        playerButtons();
+        btnOne.onClick.AddListener(btnPlayerOneAction);
+        btnTwo.onClick.AddListener(btnPlayerTwoAction);
+        btnThree.onClick.AddListener(btnPlayerThreeAction);
+        btnFour.onClick.AddListener(btnPlayerFourAction);
+        btnFive.onClick.AddListener(btnPlayerFiveAction);
+        btnSix.onClick.AddListener(btnPlayerSixAction);
     }
-    //@TODO add functionality
+    void btnPlayerOneAction()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        Debug.Log(GameState.roles[0] + "s letzte Aktion war: " + GameState.lastAction[0]);
+        toMovement();
+    }
+    void btnPlayerTwoAction()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        Debug.Log(GameState.roles[1] + "s letzte Aktion war: " + GameState.lastAction[1]);
+        toMovement();
+    }
+    void btnPlayerThreeAction()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        Debug.Log(GameState.roles[2] + "s letzte Aktion war: " + GameState.lastAction[2]);
+        toMovement();
+    }
+    void btnPlayerFourAction()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        Debug.Log(GameState.roles[3] + "s letzte Aktion war: " + GameState.lastAction[3]);
+        toMovement();
+    }
+    void btnPlayerFiveAction()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        Debug.Log(GameState.roles[4] + "s letzte Aktion war: " + GameState.lastAction[4]);
+        toMovement();
+    }
+    void btnPlayerSixAction()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        Debug.Log(GameState.roles[5] + "s letzte Aktion war: " + GameState.lastAction[5]);
+        toMovement();
+    }
+
     void cemetaryAction()
     {
-
+        oneButton();
+        btnOneText.text = "Seance";
+        btnOne.onClick.AddListener(btnSeance);
+        
     }
-    //@TODO add functionality
+    void btnSeance()
+    {
+        string s = "Es befinden sich scharfe Fallen an den Orten:";
+        bool noTraps = true;
+        for (int i = 0; i < 18; i++)
+        {
+            if (GameState.traps[i] != "Safe")
+            {
+                s += (" " + translatePlace(i));
+                noTraps = false;
+            }
+        }
+        if (noTraps)
+        {
+            s = "Es befinden sich keine scharfen Fallen in der Stadt";
+        }
+        Debug.Log(s);
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        toMovement();
+    }
+
     void prisonAction()
     {
-
+        oneButton();
+        btnOneText.text = "Kriminalstudie";
+        btnOne.onClick.AddListener(btnCriminalStudy);
+        
     }
+    void btnCriminalStudy()
+    {
+        GameState.skillUsed[GameState.currentTurn] = true;
+        GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                GameState.notFoundFalse[GameState.currentTurn][i, j] = 0;
+            }
+        }
+        Debug.Log("Alle falschen Hinweise verschwinden aus der Stadt");
+        toMovement();
+    }
+
     void casinoAction()
     {
         threeButtons();
@@ -807,6 +974,7 @@ public class Place : MonoBehaviour
     {
         System.Random rn = new System.Random();
         int rand = rn.Next(0, 100);
+        GameState.lastTransaction[GameState.currentTurn] = "Kasino Wette";
         if(rand < 50)
         {
             Debug.Log(GameState.roles[GameState.currentTurn] + " won " + currentBet + "$");
@@ -817,6 +985,7 @@ public class Place : MonoBehaviour
             Debug.Log(GameState.roles[GameState.currentTurn] + " lost " + currentBet + "$");
             GameState.money[GameState.currentTurn] -= currentBet;
         }
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
         toMovement();
     }
 
@@ -850,6 +1019,8 @@ public class Place : MonoBehaviour
     }
     void btnBuyingInfernoTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Kleine Falle";
         GameState.money[GameState.currentTurn] -= 2;
         GameState.items[GameState.currentTurn].Add("Bomb");
         addTrueHint();
@@ -857,6 +1028,8 @@ public class Place : MonoBehaviour
     }
     void btnBuyingDrMortifierTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Kleine Falle";
         GameState.money[GameState.currentTurn] -= 2;
         GameState.items[GameState.currentTurn].Add("PetriDish");
         addTrueHint();
@@ -864,6 +1037,8 @@ public class Place : MonoBehaviour
     }
     void btnBuyingPhantomTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Kleine Falle";
         GameState.money[GameState.currentTurn] -= 2;
         GameState.items[GameState.currentTurn].Add("StolenGoods");
         addTrueHint();
@@ -871,6 +1046,8 @@ public class Place : MonoBehaviour
     }
     void btnBuyingFascultoTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Kleine Falle";
         GameState.money[GameState.currentTurn] -= 2;
         GameState.items[GameState.currentTurn].Add("CursedArtifact");
         addTrueHint();
@@ -1021,6 +1198,8 @@ public class Place : MonoBehaviour
     }
     void btnTrainstationTravel()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Zugticket";
         GameState.money[GameState.currentTurn] -= 2;
         switch (actionsTextField.text)
         {
@@ -1100,6 +1279,8 @@ public class Place : MonoBehaviour
     }
     void btnBuyProtectiveVest()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Schutzweste";
         GameState.money[GameState.currentTurn] -= 6;
         GameState.items[GameState.currentTurn].Add("ProtectiveVest");
         toMovement();
@@ -1118,24 +1299,32 @@ public class Place : MonoBehaviour
     }
     void btnBuyFireProofCoat()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Feuerfester Mantel";
         GameState.money[GameState.currentTurn] -= 15;
         GameState.items[GameState.currentTurn].Add("FireProofCoat");
         toMovement();
     }
     void btnBuyGasmask()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Gasmaske";
         GameState.money[GameState.currentTurn] -= 15;
         GameState.items[GameState.currentTurn].Add("Gasmask");
         toMovement();
     }
     void btnBuyBodycam()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Bodycam";
         GameState.money[GameState.currentTurn] -= 15;
         GameState.items[GameState.currentTurn].Add("Bodycam");
         toMovement();
     }
     void btnBuyTalisman()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Talisman";
         GameState.money[GameState.currentTurn] -= 15;
         GameState.items[GameState.currentTurn].Add("Talisman");
         toMovement();
@@ -1184,30 +1373,40 @@ public class Place : MonoBehaviour
     }
     void btnBuyTrainers()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Turnschuhe";
         GameState.money[GameState.currentTurn] -= 2;
         GameState.items[GameState.currentTurn].Add("Trainers");
         toMovement();
     }
     void btnBuyFingerprintKit()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Fingerabdruckset";
         GameState.money[GameState.currentTurn] -= 4;
         GameState.items[GameState.currentTurn].Add("FingerprintKit");
         toMovement();
     }
     void btnBuyEnergyDrink()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Energy Drink";
         GameState.money[GameState.currentTurn] -= 3;
         GameState.items[GameState.currentTurn].Add("EnergyDrink");
         toMovement();
     }
     void btnBuyCalculator()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Taschenrechner";
         GameState.money[GameState.currentTurn] -= 8;
         GameState.items[GameState.currentTurn].Add("Calculator");
         toMovement();
     }
     void btnBuyWhiskey()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Whiskey";
         GameState.money[GameState.currentTurn] -= 8;
         GameState.items[GameState.currentTurn].Add("Whiskey");
         toMovement();
@@ -1302,6 +1501,7 @@ public class Place : MonoBehaviour
                 GameState.items[GameState.currentTurn].Add("CursedArtifact");
                 break;
         }
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
         toMovement();
     }
     void italienrestaurantAction()
@@ -1333,24 +1533,32 @@ public class Place : MonoBehaviour
     }
     void btnItalienTwentyPercentChance()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "\"Italienisches Essen\"";
         GameState.money[GameState.currentTurn]--;
         chanceToGetTrueHint(2);
         toMovement();
     }
     void btnItalienThirtyPercentChance()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "\"Italienisches Essen\"";
         GameState.money[GameState.currentTurn]-=2;
         chanceToGetTrueHint(3);
         toMovement();
     }
     void btnItalienFiftyPercentChance()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "\"Italienisches Essen\"";
         GameState.money[GameState.currentTurn]-=3;
         chanceToGetTrueHint(5);
         toMovement();
     }
     void btnItalienSixtyPercentChance()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "\"Italienisches Essen\"";
         GameState.money[GameState.currentTurn]-=4;
         chanceToGetTrueHint(6);
         toMovement();
@@ -1369,6 +1577,8 @@ public class Place : MonoBehaviour
     }
     void btnHarborHint()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "\"Hafenequipment\"";
         GameState.money[GameState.currentTurn] -= 5;
         chanceToGetTrueHint(5);
         toMovement();
@@ -1382,6 +1592,8 @@ public class Place : MonoBehaviour
     }
     void btnBarHint()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        GameState.lastTransaction[GameState.currentTurn] = "Billiger Vodka";
         GameState.money[GameState.currentTurn] -= 2;
         chanceToGetTrueHint(4);
 
@@ -1398,10 +1610,24 @@ public class Place : MonoBehaviour
         toMovement();
     }
 
-    //eventlistener for manipulation action
+    #endregion
+
+    #region manipulation
+    void btnManipulationClick()
+    {
+        btnBack.gameObject.SetActive(true);
+        Debug.Log(GameState.roles[GameState.currentTurn] + " is manipulating");
+        addTrueHint();
+        twoButtons();
+        btnOneText.text = "Bewegung";
+        btnTwoText.text = "Hinweis";
+        btnOne.onClick.AddListener(btnManipulationMovementClick);
+        btnTwo.onClick.AddListener(btnManipulationHintClick);
+    }
     void btnManipulationMovementClick()
     {
         playerButtons();
+        firstMovementManipulation = true;
         btnOne.onClick.AddListener(btnPlayerOneClickManipulationMovement);
         btnTwo.onClick.AddListener(btnPlayerTwoClickManipulationMovement);
         btnThree.onClick.AddListener(btnPlayerThreeClickManipulationMovement);
@@ -1411,38 +1637,169 @@ public class Place : MonoBehaviour
 
     }
 
-    //TODO: addMovementManipulation
+    
     void btnPlayerOneClickManipulationMovement()
     {
-        playerButtons();
-        btnOne.onClick.AddListener(toMovement);
-        btnTwo.onClick.AddListener(toMovement);
-        btnThree.onClick.AddListener(toMovement);
-        btnFour.onClick.AddListener(toMovement);
-        btnFive.onClick.AddListener(toMovement);
-        btnSix.onClick.AddListener(toMovement);
+        MovementManipulation(0);
     }
     void btnPlayerTwoClickManipulationMovement()
     {
-
+        MovementManipulation(1);
     }
     void btnPlayerThreeClickManipulationMovement()
     {
-
+        MovementManipulation(2);
     }
     void btnPlayerFourClickManipulationMovement()
     {
-
+        MovementManipulation(3);
     }
     void btnPlayerFiveClickManipulationMovement()
     {
-
+        MovementManipulation(4);
     }
     void btnPlayerSixClickManipulationMovement()
     {
+        MovementManipulation(5);
+    }
+
+    void MovementManipulation (int player)
+    {
+        manipulatedPlayer = player;
+        fiveButtons();
+        int[] currentPlayerPlace = GameState.currentPlace[player];
+        if (currentPlayerPlace[0] > 0)
+        {
+            btnOne.interactable = true;
+            btnOneText.text = translatePlace(GameState.board[currentPlayerPlace[0] - 1, currentPlayerPlace[1]]);
+        }
+        else
+        {
+            btnOne.interactable = false;
+            btnOneText.text = "Stadtrand";
+        }
+        if (currentPlayerPlace[1] < 6)
+        {
+            btnTwo.interactable = true;
+            btnTwoText.text = translatePlace(GameState.board[currentPlayerPlace[0], currentPlayerPlace[1] + 1]);
+        }
+        else
+        {
+            btnTwo.interactable = false;
+            btnTwoText.text = "Stadtrand";
+        }
+
+        if (currentPlayerPlace[0] < 5)
+        {
+            btnThree.interactable = true;
+            btnThreeText.text = translatePlace(GameState.board[currentPlayerPlace[0] + 1, currentPlayerPlace[1]]);
+        }
+        else
+        {
+            btnThree.interactable = false;
+            btnThreeText.text = "Stadtrand";
+        }
+        if (currentPlayerPlace[1] > 0)
+        {
+            btnFour.interactable = true;
+            btnFourText.text = translatePlace(GameState.board[currentPlayerPlace[0], currentPlayerPlace[1] - 1]);
+        }
+        else
+        {
+            btnFour.interactable = false;
+            btnFourText.text = "Stadtrand";
+        }
+
+        btnFiveText.text = translatePlace(GameState.board[currentPlayerPlace[0], currentPlayerPlace[1]]);
+        btnOne.onClick.AddListener(btnManipulationUp);
+        btnTwo.onClick.AddListener(btnManipulationRight);
+        btnThree.onClick.AddListener(btnManipulationDown);
+        btnFour.onClick.AddListener(btnManipulationLeft);
+        btnFive.onClick.AddListener(btnManipulationStay);
 
     }
 
+    void btnManipulationUp()
+    {
+        btnBack.gameObject.SetActive(false);
+        GameState.currentPlace[manipulatedPlayer][0] -= 1;
+        if (firstMovementManipulation && GameState.board[GameState.currentPlace[manipulatedPlayer][0], GameState.currentPlace[manipulatedPlayer][1]] == 0)
+        {
+            firstMovementManipulation = false;
+            MovementManipulation(manipulatedPlayer);
+        }
+        else
+        {
+            GameState.lastAction[GameState.currentTurn] = "Manipulation";
+            GameState.money[GameState.currentTurn] -= 10;
+            firstMovementManipulation = false;
+            GameState.isManipulated[manipulatedPlayer] = true;
+            toMovement();
+        }
+    }
+    void btnManipulationRight()
+    {
+        btnBack.gameObject.SetActive(false);
+        GameState.currentPlace[manipulatedPlayer][1] += 1;
+        if (firstMovementManipulation && GameState.board[GameState.currentPlace[manipulatedPlayer][0], GameState.currentPlace[manipulatedPlayer][1]] == 0)
+        {
+            firstMovementManipulation = false;
+            MovementManipulation(manipulatedPlayer);
+        }
+        else
+        {
+            GameState.lastAction[GameState.currentTurn] = "Manipulation";
+            GameState.money[GameState.currentTurn] -= 10;
+            firstMovementManipulation = false;
+            GameState.isManipulated[manipulatedPlayer] = true;
+            toMovement();
+        }
+    }
+    void btnManipulationDown()
+    {
+        btnBack.gameObject.SetActive(false);
+        GameState.currentPlace[manipulatedPlayer][0] += 1;
+        if (firstMovementManipulation && GameState.board[GameState.currentPlace[manipulatedPlayer][0], GameState.currentPlace[manipulatedPlayer][1]] == 0)
+        {
+            firstMovementManipulation = false;
+            MovementManipulation(manipulatedPlayer);
+        }
+        else
+        {
+            GameState.lastAction[GameState.currentTurn] = "Manipulation";
+            GameState.money[GameState.currentTurn] -= 10;
+            firstMovementManipulation = false;
+            GameState.isManipulated[manipulatedPlayer] = true;
+            toMovement();
+        }
+    }
+    void btnManipulationLeft()
+    {
+        btnBack.gameObject.SetActive(false);
+        GameState.currentPlace[manipulatedPlayer][1] -= 1;
+        if (firstMovementManipulation && GameState.board[GameState.currentPlace[manipulatedPlayer][0], GameState.currentPlace[manipulatedPlayer][1]] == 0)
+        {
+            firstMovementManipulation = false;
+            MovementManipulation(manipulatedPlayer);
+        }
+        else
+        {
+            GameState.lastAction[GameState.currentTurn] = "Manipulation";
+            GameState.money[GameState.currentTurn] -= 10;
+            firstMovementManipulation = false;
+            GameState.isManipulated[manipulatedPlayer] = true;
+            toMovement();
+        }
+    }
+    void btnManipulationStay()
+    {
+        GameState.lastAction[GameState.currentTurn] = "Manipulation";
+        btnBack.gameObject.SetActive(false);
+        GameState.isManipulated[manipulatedPlayer] = true;
+        firstMovementManipulation = false;
+        GameState.money[GameState.currentTurn] -= 10;
+        toMovement();
+    }
 
     void btnManipulationHintClick()
     {
@@ -1459,94 +1816,128 @@ public class Place : MonoBehaviour
     {
         if (GameState.trueUnsolveds[0] > 0)
         {
-
+            GameState.money[GameState.currentTurn] -= 10;
             GameState.trueUnsolveds[0]--;
             GameState.unsolvedHints[0]--;
         }
+        GameState.lastAction[GameState.currentTurn] = "Manipulation";
         toMovement();
     }
     void btnPlayerTwoClickManipulationHint()
     {
+        GameState.money[GameState.currentTurn] -= 10;
         if (GameState.trueUnsolveds[1] > 0)
         {
             GameState.trueUnsolveds[1]--;
             GameState.unsolvedHints[1]--;
         }
+        GameState.lastAction[GameState.currentTurn] = "Manipulation";
         toMovement();
     }
     void btnPlayerThreeClickManipulationHint()
     {
+        GameState.money[GameState.currentTurn] -= 10;
         if (GameState.trueUnsolveds[2] > 0)
         {
             GameState.trueUnsolveds[2]--;
             GameState.unsolvedHints[2]--;
         }
+        GameState.lastAction[GameState.currentTurn] = "Manipulation";
         toMovement();
     }
     void btnPlayerFourClickManipulationHint()
     {
+        GameState.money[GameState.currentTurn] -= 10;
         if (GameState.trueUnsolveds[3] > 0)
         {
             GameState.trueUnsolveds[3]--;
             GameState.unsolvedHints[3]--;
         }
+        GameState.lastAction[GameState.currentTurn] = "Manipulation";
         toMovement();
     }
     void btnPlayerFiveClickManipulationHint()
     {
+        GameState.money[GameState.currentTurn] -= 10;
         if (GameState.trueUnsolveds[4] > 0)
         {
             GameState.trueUnsolveds[4]--;
             GameState.unsolvedHints[4]--;
         }
+        GameState.lastAction[GameState.currentTurn] = "Manipulation";
         toMovement();
     }
     void btnPlayerSixClickManipulationHint()
     {
+        GameState.money[GameState.currentTurn] -= 10;
         if (GameState.trueUnsolveds[5] > 0)
         {
             GameState.trueUnsolveds[5]--;
             GameState.unsolvedHints[5]--;
         }
+        GameState.lastAction[GameState.currentTurn] = "Manipulation";
         toMovement();
     }
 
+    #endregion
 
+    #region Big Trap
+    void btnBigTrapClick()
+    {
+        btnBack.gameObject.SetActive(true);
+        GameState.bigTrapUsed = true;
+        addTrueHint();
+        playerButtons();
+        btnOne.onClick.AddListener(btnPlayerOneClickBigTrap);
+        btnTwo.onClick.AddListener(btnPlayerTwoClickBigTrap);
+        btnThree.onClick.AddListener(btnPlayerThreeClickBigTrap);
+        btnFour.onClick.AddListener(btnPlayerFourClickBigTrap);
+        btnFive.onClick.AddListener(btnPlayerFiveClickBigTrap);
+        btnSix.onClick.AddListener(btnPlayerSixClickBigTrap);
 
-    //event listener for big trap action
+        Debug.Log(GameState.roles[GameState.currentTurn] + " used a big Trap");
+    }
     void btnPlayerOneClickBigTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "Große Falle";
         activatedTrap(0, findTargetPosition(GameState.criminalRole));
         toMovement();
     }
     void btnPlayerTwoClickBigTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "Große Falle";
         activatedTrap(1, findTargetPosition(GameState.criminalRole));
         toMovement();
     }
     void btnPlayerThreeClickBigTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "Große Falle";
         activatedTrap(2, findTargetPosition(GameState.criminalRole));
         toMovement();
     }
     void btnPlayerFourClickBigTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "Große Falle";
         activatedTrap(3, findTargetPosition(GameState.criminalRole));
         toMovement();
     }
     void btnPlayerFiveClickBigTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "Große Falle";
         activatedTrap(4, findTargetPosition(GameState.criminalRole));
         toMovement();
     }
     void btnPlayerSixClickBigTrap()
     {
+        GameState.lastAction[GameState.currentTurn] = "Große Falle";
         activatedTrap(5, findTargetPosition(GameState.criminalRole));
         toMovement();
     }
+    #endregion
 
-    //LayoutFunctions
-    //@TODO: Layout for 5 buttons and 7 buttons
+    //@TODO: Layout for 7 buttons
+    #region LayoutFunctions
+
     void oneButton()
     {
         disableButtons();
@@ -1640,6 +2031,28 @@ public class Place : MonoBehaviour
         btnThree.gameObject.SetActive(true);
         btnFour.gameObject.SetActive(true);
         btnFive.gameObject.SetActive(true);
+
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -50);
+
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(350, -400);
+
+        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
+        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(-0, -750);
+
+        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
+        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(-350, -400);
+
+        btnFive.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
+        btnFive.GetComponent<RectTransform>().anchoredPosition = new Vector2(-0, -400);
+
+        btnOneText.fontSize = 60;
+        btnTwoText.fontSize = 60;
+        btnThreeText.fontSize = 60;
+        btnFourText.fontSize = 60;
+        btnFiveText.fontSize = 60;
+
 
         btnOne.interactable = true;
         btnTwo.interactable = true;
@@ -1849,8 +2262,9 @@ public class Place : MonoBehaviour
 
 
     }
+    #endregion
 
-    //Useful functions
+    #region Useful functions
     int[] findTargetPosition(string criminalRole)
     {
         int[] targetPosition = new int[2];
@@ -1892,87 +2306,165 @@ public class Place : MonoBehaviour
         GameState.isDisabled[player] = 2;
     }
 
-    void translatePlace(int place)
+    string translatePlace(int place)
     {
         string s = "Straße";
-        Sprite pic = street;
         switch (place)
         {
             case 1:
                 s = "Stadtplatz";
-                pic = mainsquare;
+               
                 break;
             case 2:
                 s = "Park";
-                pic = park;
+               
                 break;
             case 3:
                 s = "Krankenhaus";
-                pic = hospital;
+              
                 break;
             case 4:
                 s = "Bank";
-                pic = bank;
+               
                 break;
             case 5:
                 s = "Parlament";
-                pic = parliament;
+              
                 break;
             case 6:
                 s = "Friedhof";
-                pic = cementary;
+              
                 break;
             case 7:
                 s = "Gefängnis";
-                pic = prison;
+              
                 break;
             case 8:
                 s = "Kasino";
-                pic = casino;
+               
                 break;
             case 9:
                 s = "Internet Cafe";
-                pic = internetcafe;
+              
                 break;
             case 10:
                 s = "Bahnhof";
-                pic = trainstation;
+                
                 break;
             case 11:
                 s = "Armee Laden";
-                pic = armyshop;
+              
                 break;
             case 12:
                 s = "Shopping Center";
-                pic = shoppingcenter;
+               
                 break;
             case 13:
                 s = "Schrottplatz";
-                pic = junkyard;
+              
                 break;
             case 14:
                 s = "Bibliothek";
-                pic = library;
+               
                 break;
             case 15:
                 s = "Labor";
-                pic = laboratory;
+                
                 break;
             case 16:
                 s = "Italiener";
-                pic = italienrestaurant;
+                
                 break;
             case 17:
                 s = "Hafen";
-                pic = harbor;
+               
                 break;
             case 18:
                 s = "Bar";
+                
+                break;
+        }
+        return s;
+    }
+    void setPlaceImage(int place)
+    {
+        Sprite pic = street;
+        switch (place)
+        {
+            case 1:
+           
+                pic = mainsquare;
+                break;
+            case 2:
+
+                pic = park;
+                break;
+            case 3:
+         
+                pic = hospital;
+                break;
+            case 4:
+        
+                pic = bank;
+                break;
+            case 5:
+
+                pic = parliament;
+                break;
+            case 6:
+        
+                pic = cementary;
+                break;
+            case 7:
+
+                pic = prison;
+                break;
+            case 8:
+        
+                pic = casino;
+                break;
+            case 9:
+    
+                pic = internetcafe;
+                break;
+            case 10:
+   
+                pic = trainstation;
+                break;
+            case 11:
+            
+                pic = armyshop;
+                break;
+            case 12:
+            
+                pic = shoppingcenter;
+                break;
+            case 13:
+       
+                pic = junkyard;
+                break;
+            case 14:
+     ;
+                pic = library;
+                break;
+            case 15:
+     
+                pic = laboratory;
+                break;
+            case 16:
+       
+                pic = italienrestaurant;
+                break;
+            case 17:
+     
+                pic = harbor;
+                break;
+            case 18:
+
                 pic = bar;
                 break;
         }
-        placeName.text = s;
-        image.GetComponent<Image>().sprite = pic;
+        image.sprite = pic;
     }
 
     void addTrueHint()
@@ -2018,4 +2510,5 @@ public class Place : MonoBehaviour
         }
         return position;
     }
+    #endregion
 }

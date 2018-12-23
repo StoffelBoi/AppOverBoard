@@ -26,10 +26,13 @@ public class GameState : MonoBehaviour {
     public static List<int> questPlaces;
     public static int activatedQuestPlaces;
     public static List<int> isDisabled;
+    public static List<bool> isManipulated;
     public static bool bigTrapUsed;
     public static List<bool> skillUsed;
     public static List<bool> usedEnergyDrink;
     public static List<string> traps;
+    public static List<string> lastTransaction;
+    public static List<string> lastAction;
 
     void Start() {
         playerCount = 0;
@@ -51,10 +54,13 @@ public class GameState : MonoBehaviour {
         questPlaces = new List<int>();
         activatedQuestPlaces = 0;
         isDisabled = new List<int>();
+        isManipulated = new List<bool>();
         bigTrapUsed = false;
         skillUsed = new List<bool>();
         usedEnergyDrink = new List<bool>();
         traps = new List<string>();
+        lastTransaction = new List<string>();
+        lastAction = new List<string>();
         for (int i = 0; i < 18; i++)
         {
             traps.Add("Safe");
