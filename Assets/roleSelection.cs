@@ -15,21 +15,7 @@ public class RoleSelection : MonoBehaviour
     public Button btn_psychologist;
     public Button btn_reporter;
 
-    public Canvas roleSelection;
-    public Canvas waiting;
-
-    public GameObject waitingController;
-
-    private RoleSelection scriptRoleSelection;
-    private PlayerCount scriptPlayerCount;
-
-    // Use this for initialization
-    private void Awake()
-    {
-        scriptRoleSelection = this.GetComponent<RoleSelection>();
-        scriptRoleSelection.enabled = false;
-    }
-    void Start()
+    void OnEnable()
     {
         btn_doctor.onClick.AddListener(DoctorClick);
         btn_policeMan.onClick.AddListener(PoliceClick);
@@ -38,8 +24,6 @@ public class RoleSelection : MonoBehaviour
         btn_psychologist.onClick.AddListener(PsychologistClick);
         btn_reporter.onClick.AddListener(ReporterClick);
         selectedRoles = 0;
-        
-        scriptPlayerCount = waitingController.GetComponent<PlayerCount>();
 
     }
 
@@ -134,10 +118,7 @@ public class RoleSelection : MonoBehaviour
         if (selectedRoles == GameState.playerCount)
         {
             setCriminalRole();
-            roleSelection.enabled = false;
-            waiting.enabled = true;
-            scriptPlayerCount.enabled = true;
-            scriptRoleSelection.enabled = false;
+            UIManager.Instance.Waiting();
         }
     }
 

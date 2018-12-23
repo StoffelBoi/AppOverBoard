@@ -5,13 +5,10 @@ using UnityEngine.UI;
 
 public class Place : MonoBehaviour
 {
-    private Place scriptPlace;
-    public Canvas place;
-    public GameObject movementController;
-    public Canvas movement;
-    private Movement scriptMovement;
+    
     public Text placeName;
     public Image image;
+    public Text actionsTextField;
 
     public Sprite street;
     public Sprite mainsquare;
@@ -53,24 +50,10 @@ public class Place : MonoBehaviour
 
     private int currentBet;
     private int currentPlace;
-
-    public Text actionsTextField;
-    void Awake()
-    {
-        scriptPlace = GetComponent<Place>();
-        scriptPlace.enabled = false;
-        place.enabled = false;
-    }
-    void Start()
-    {
-
-
-    }
+    
     void OnEnable()
     {
         
-        scriptMovement = movementController.GetComponent<Movement>();
-        scriptPlace = GetComponent<Place>();
         currentPlace = GameState.board[GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
         actionsTextField.gameObject.SetActive(false);
         translatePlace(currentPlace);
@@ -319,41 +302,39 @@ public class Place : MonoBehaviour
     }
     void toMovement()
     {
-        if (!GameState.usedEnergyDrink.Contains(true)) { 
-        System.Random rn = new System.Random();
-        int randomHint = rn.Next(1, 10);
-        if (randomHint == 1)
+        if (!GameState.usedEnergyDrink.Contains(true))
         {
-            if (GameState.roles[GameState.currentTurn] == GameState.criminal)
+            System.Random rn = new System.Random();
+            int randomHint = rn.Next(1, 10);
+            if (randomHint == 1)
             {
-                addTrueHint();
+                if (GameState.roles[GameState.currentTurn] == GameState.criminal)
+                {
+                    addTrueHint();
+                }
+                else
+                {
+                    addFalseHint();
+                }
+            }
+            if (GameState.currentTurn == GameState.playerCount - 1)
+            {
+                GameState.currentTurn = 0;
             }
             else
             {
-                addFalseHint();
+                GameState.currentTurn++;
             }
-        }
-        if (GameState.currentTurn == GameState.playerCount - 1)
-        {
-            GameState.currentTurn = 0;
-        }
-        else
-        {
-            GameState.currentTurn++;
-        }
-        if (GameState.isDisabled[GameState.currentTurn] > 0)
-        {
-            Debug.Log(GameState.roles[GameState.currentTurn] + " is still disabled");
-            GameState.isDisabled[GameState.currentTurn]--;
-            toMovement();
-        }
-        else
-        {
-            place.enabled = false;
-            movement.enabled = true;
-            scriptMovement.enabled = true;
-            scriptPlace.enabled = false;
-        }
+            if (GameState.isDisabled[GameState.currentTurn] > 0)
+            {
+                Debug.Log(GameState.roles[GameState.currentTurn] + " is still disabled");
+                GameState.isDisabled[GameState.currentTurn]--;
+                toMovement();
+            }
+            else
+            {
+                UIManager.Instance.Movement();
+            }
         }
         else
         {
@@ -432,10 +413,7 @@ public class Place : MonoBehaviour
     void btnTrainersOnClick()
     {
         GameState.items[GameState.currentTurn].Remove("Trainers");
-        place.enabled = false;
-        movement.enabled = true;
-        scriptMovement.enabled = true;
-        scriptPlace.enabled = false;
+        UIManager.Instance.Movement();
     }
     void btnFingerprintKitOnClick()
     {

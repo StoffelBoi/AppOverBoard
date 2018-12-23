@@ -4,12 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class Movement : MonoBehaviour {
-    private Movement scriptMovement;
-    public Canvas movement;
-
-    public Canvas place;
-    public GameObject placeController;
-    private Place scriptPlace;
+    
     private int[] currentPlace;
     public Button btnStay;
     public Button btnRight;
@@ -31,11 +26,7 @@ public class Movement : MonoBehaviour {
     public Sprite Psychologist;
     // Use this for initialization
 
-    private void Awake()
-    {
-        scriptMovement = GetComponent<Movement>();
-        scriptMovement.enabled = false;
-    }
+    
     void Start()
     {
         btnRight.onClick.AddListener(rightClick);
@@ -46,7 +37,6 @@ public class Movement : MonoBehaviour {
     }
     void OnEnable()
     {
-        scriptPlace = placeController.GetComponent<Place>();
         newTurn();
     }
 
@@ -140,10 +130,7 @@ public class Movement : MonoBehaviour {
         }
         else
         {
-            movement.enabled = false;
-            place.enabled = true;
-            scriptPlace.enabled = true;
-            scriptMovement.enabled = false;
+            UIManager.Instance.Place();
         }
     }
     void rightClick()
