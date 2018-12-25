@@ -15,7 +15,7 @@ public class RoleSelection : MonoBehaviour
     public Button btn_psychologist;
     public Button btn_reporter;
 
-    void OnEnable()
+    void Start()
     {
         btn_doctor.onClick.AddListener(DoctorClick);
         btn_policeMan.onClick.AddListener(PoliceClick);

@@ -7812,7 +7812,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &798654980
 Transform:
   m_ObjectHideFlags: 0
@@ -13180,15 +13180,15 @@ GameObject:
 --- !u!114 &1358096517
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114067707485801836, guid: 4ed83965928a6464b9d250d437c158ed,
-    type: 2}
-  m_PrefabInternal: {fileID: 822269553}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1358096516}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83e2ec7c363d28047a30b3af10748f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentTurnView: 0
 --- !u!4 &1358096519
 Transform:
   m_ObjectHideFlags: 0

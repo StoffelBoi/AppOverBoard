@@ -77,7 +77,7 @@ public class UIManager : MonoBehaviour {
         canvasRulesHints.enabled = false;
         canvasRulesMovement.enabled = false;
 
-
+        /*
         StartUpController.GetComponent<StartUp>().enabled = false;
         ConnectionController.GetComponent<Connection>().enabled = false;
         RoleSelectionController.GetComponent<RoleSelection>().enabled = false;
@@ -87,6 +87,8 @@ public class UIManager : MonoBehaviour {
         MovementController.GetComponent<Movement>().enabled = false;
         PlaceController.GetComponent<Place>().enabled = false;
         RulesController.GetComponent<Rules>().enabled = false;
+        */
+
 
         StartUpController.SetActive(false);
         ConnectionController.SetActive(false);
@@ -105,7 +107,7 @@ public class UIManager : MonoBehaviour {
         canvasStartUp.gameObject.SetActive(true);
         canvasStartUp.enabled = true;
         StartUpController.SetActive(true);
-        StartUpController.GetComponent<StartUp>().enabled = true;
+        //StartUpController.GetComponent<StartUp>().enabled = true;
     }
 
     public void Connection()
@@ -114,7 +116,7 @@ public class UIManager : MonoBehaviour {
         canvasConnection.gameObject.SetActive(true);
         canvasConnection.enabled = true;
         ConnectionController.SetActive(true);
-        ConnectionController.GetComponent<Connection>().enabled = true;
+        //ConnectionController.GetComponent<Connection>().enabled = true;
     }
 
     public void RoleSelection()
@@ -123,7 +125,7 @@ public class UIManager : MonoBehaviour {
         canvasRoleSelection.gameObject.SetActive(true);
         canvasRoleSelection.enabled = true;
         RoleSelectionController.SetActive(true);
-        RoleSelectionController.GetComponent<RoleSelection>().enabled = true;
+        //RoleSelectionController.GetComponent<RoleSelection>().enabled = true;
     }
 
     public void Waiting()
@@ -132,7 +134,7 @@ public class UIManager : MonoBehaviour {
         canvasWaiting.gameObject.SetActive(true);
         canvasWaiting.enabled = true;
         WaitingController.SetActive(true);
-        WaitingController.GetComponent<Waiting>().enabled = true;
+        //WaitingController.GetComponent<Waiting>().enabled = true;
     }
 
     public void BoardAssembly()
@@ -141,7 +143,7 @@ public class UIManager : MonoBehaviour {
         canvasBoardAssembly.gameObject.SetActive(true);
         canvasBoardAssembly.enabled = true;
         BoardAssemblyController.SetActive(true);
-        BoardAssemblyController.GetComponent<BoardAssembly>().enabled = true;
+        //BoardAssemblyController.GetComponent<BoardAssembly>().enabled = true;
     }
 
     public void PrivatePlayer()
@@ -150,7 +152,7 @@ public class UIManager : MonoBehaviour {
         canvasPrivatePlayer.gameObject.SetActive(true);
         canvasPrivatePlayer.enabled = true;
         PrivatePlayerController.SetActive(true);
-        PrivatePlayerController.GetComponent<PrivatePlayer>().enabled = true;
+        //PrivatePlayerController.GetComponent<PrivatePlayer>().enabled = true;
     }
 
     public void Movement()
@@ -159,7 +161,7 @@ public class UIManager : MonoBehaviour {
         canvasMovement.gameObject.SetActive(true);
         canvasMovement.enabled = true;
         MovementController.SetActive(true);
-        MovementController.GetComponent<Movement>().enabled = true;
+        //MovementController.GetComponent<Movement>().enabled = true;
     }
 
     public void Place()
@@ -168,6 +170,6 @@ public class UIManager : MonoBehaviour {
         canvasPlace.gameObject.SetActive(true);
         canvasPlace.enabled = true;
         PlaceController.SetActive(true);
-        PlaceController.GetComponent<Place>().enabled = true;
+        //PlaceController.GetComponent<Place>().enabled = true;
     }
 }

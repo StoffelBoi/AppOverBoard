@@ -54,8 +54,10 @@ public class Place : MonoBehaviour
     private int currentPlace;
     private bool firstMovementManipulation;
     private int manipulatedPlayer;
+
     void OnEnable()
     {
+        Debug.Log("iwashere");
         btnBack.gameObject.SetActive(false);
         btnBack.onClick.RemoveAllListeners();
         btnBack.onClick.AddListener(btnGoBack);

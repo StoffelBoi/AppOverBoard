@@ -6,7 +6,9 @@ public class GameState : MonoBehaviour {
     public static int playerCount;
     public static List<string> roles;
     public static List<int[]> currentPlace;
+    public List<int[]> currentPlaceView;
     public static int[,] board;
+    public int[,] boardView;
     public static string criminal;
     public static string criminalRole;
     public static List<int> money;
@@ -22,6 +24,7 @@ public class GameState : MonoBehaviour {
     public static List<string> placeFact;
     public static int targetPlace;
     public static int currentTurn;
+    public int currentTurnView;
     public static bool planted = false; // Variable fuer bio-terrorist wenn er seine bombe platziert hat
     public static List<int> questPlaces;
     public static int activatedQuestPlaces;
@@ -34,7 +37,8 @@ public class GameState : MonoBehaviour {
     public static List<string> lastTransaction;
     public static List<string> lastAction;
     public static List<int> quarantined;
-    void Start() {
+
+    void Awake() {
         playerCount = 0;
         roles = new List<string>();
         board = new int[6, 7];
@@ -70,7 +74,8 @@ public class GameState : MonoBehaviour {
     }
    
 	void Update () {
-
-
+        boardView = board;
+        currentPlaceView = currentPlace;
+        currentTurnView = currentTurn;
     }
 }
