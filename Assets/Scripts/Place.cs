@@ -40,6 +40,7 @@ public class Place : MonoBehaviour
     public Button btnEight;
 
     public Button btnBack;
+    public Button btnInfo;
 
     public Text btnOneText;
     public Text btnTwoText;
@@ -52,15 +53,28 @@ public class Place : MonoBehaviour
 
     private int currentBet;
     private int currentPlace;
+    private int delayedTurns;
+
     private bool firstMovementManipulation;
     private int manipulatedPlayer;
 
+    public Text dialogueText;
+    public Image dialoguePanel;
+    public string leftOverDialogue;
+    public string currentDialogue;
     void OnEnable()
     {
-        Debug.Log("iwashere");
+        currentDialogue = "";
+        leftOverDialogue = "";
+        dialogueText.text = currentDialogue;
+        dialogueText.gameObject.SetActive(false);
+        dialoguePanel.gameObject.SetActive(false);
+
         btnBack.gameObject.SetActive(false);
         btnBack.onClick.RemoveAllListeners();
         btnBack.onClick.AddListener(btnGoBack);
+        btnInfo.onClick.RemoveAllListeners();
+        btnInfo.onClick.AddListener(btnToInfo);
         currentPlace = GameState.board[GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
         actionsTextField.gameObject.SetActive(false);
         placeName.text = translatePlace(currentPlace);
@@ -138,7 +152,7 @@ public class Place : MonoBehaviour
                     }
                 }
                 //checking if theres already a trap on the current place
-                if (GameState.traps[currentPlace] != "Safe")
+                if (GameState.activeTraps[currentPlace] != "Safe")
                 {
                     btnFive.interactable = false;
                 }
@@ -216,102 +230,147 @@ public class Place : MonoBehaviour
             Invoke("checkForTraps", 0.01f);
         //resetting the current bet
         currentBet = 0;
+        delayedTurns = 1;
     }
  
+    void btnToInfo()
+    {
+        UIManager.Instance.PrivatePlayer();
+    }
+
     void checkForTraps()
     {
-        if (GameState.traps[currentPlace] != "Safe")
+        if (GameState.roles[GameState.currentTurn] == GameState.criminal)
         {
-            switch (GameState.traps[currentPlace])
+            for (int i = 0; i < 19; i++)
             {
-               case "Bomb":
+                if (GameState.infernoTraps[i] > 0)
+                {
+                    if (GameState.infernoTraps[i] == 1)
+                    {
+                        GameState.activeTraps[i] = "Bomb";
+                    }
+                    GameState.infernoTraps[i]--;
+                }
+                if (GameState.drMortifierTraps[i] > 0)
+                {
+                    if (GameState.drMortifierTraps[i] == 1)
+                    {
+                        GameState.activeTraps[i] = "PetriDish";
+                    }
+                    GameState.drMortifierTraps[i]--;
+                }
+                if (GameState.phantomTraps[i] > 0)
+                {
+                    if (GameState.phantomTraps[i] == 1)
+                    {
+                        GameState.activeTraps[i] = "StolenGoods";
+                    }
+                    GameState.phantomTraps[i]--;
+                }
+                if (GameState.fascultoTraps[i] > 0)
+                {
+                    if (GameState.fascultoTraps[i] == 1)
+                    {
+                        GameState.activeTraps[i] = "CursedArtifact";
+                    }
+                    GameState.fascultoTraps[i]--;
+                }
+            }
+        }
+
+        if (GameState.activeTraps[currentPlace] != "Safe")
+        {
+            switch (GameState.activeTraps[currentPlace])
+            {
+                case "Bomb":
                     if (!GameState.items[GameState.currentTurn].Contains("FireProofCoat"))
                     {
                         if (!GameState.items[GameState.currentTurn].Contains("ProtectiveVest"))
                         {
-                                Debug.Log(GameState.roles[GameState.currentTurn] + " has triggered a " + GameState.traps[currentPlace]);
-                                activatedTrap(GameState.currentTurn, findTargetPosition("Inferno"));
-                                GameState.isDisabled[currentPlace] = 1;
-                            }
-                        else
-                        {
-                                Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a protective vest");
-                                GameState.items[GameState.currentTurn].Remove("ProtectiveVest");
-                        }
+                            Debug.Log(GameState.roles[GameState.currentTurn] + " has triggered a " + GameState.activeTraps[currentPlace]);
+                            activatedTrap(GameState.currentTurn, findTargetPosition("Inferno"));
+                            GameState.isDisabled[GameState.currentTurn] = 1;
                         }
                         else
                         {
-                            Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a fire proof coat");
+                            Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a protective vest");
+                            GameState.items[GameState.currentTurn].Remove("ProtectiveVest");
                         }
+                    }
+                    else
+                    {
+                        Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a fire proof coat");
+                    }
                     break;
                 case "PetriDish":
-                        if (!GameState.items[GameState.currentTurn].Contains("Gasmask"))
+                    if (!GameState.items[GameState.currentTurn].Contains("Gasmask"))
+                    {
+                        if (!GameState.items[GameState.currentTurn].Contains("ProtectiveVest"))
                         {
-                            if (!GameState.items[GameState.currentTurn].Contains("ProtectiveVest"))
-                            {
-                                Debug.Log(GameState.roles[GameState.currentTurn] + " has triggered a " + GameState.traps[currentPlace]);
-                                activatedTrap(GameState.currentTurn, findTargetPosition("Dr.Mortifier"));
-                                GameState.isDisabled[currentPlace] = 1;
-                            }
-                            else
-                            {
-                                Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a protective vest");
-                                GameState.items[GameState.currentTurn].Remove("ProtectiveVest");
-                            }
+                            Debug.Log(GameState.roles[GameState.currentTurn] + " has triggered a " + GameState.activeTraps[currentPlace]);
+                            activatedTrap(GameState.currentTurn, findTargetPosition("Dr.Mortifier"));
+                            GameState.isDisabled[GameState.currentTurn] = 1;
                         }
                         else
                         {
-                            Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a Gasmask");
+                            Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a protective vest");
+                            GameState.items[GameState.currentTurn].Remove("ProtectiveVest");
                         }
-                        break;
+                    }
+                    else
+                    {
+                        Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a Gasmask");
+                    }
+                    break;
                 case "StolenGoods":
-                        if (!GameState.items[GameState.currentTurn].Contains("Bodycam"))
+                    if (!GameState.items[GameState.currentTurn].Contains("Bodycam"))
+                    {
+                        if (!GameState.items[GameState.currentTurn].Contains("ProtectiveVest"))
                         {
-                            if (!GameState.items[GameState.currentTurn].Contains("ProtectiveVest"))
-                            {
-                                Debug.Log(GameState.roles[GameState.currentTurn] + " has triggered a " + GameState.traps[currentPlace]);
-                                activatedTrap(GameState.currentTurn, findTargetPosition("Phantom"));
-                                GameState.isDisabled[currentPlace] = 1;
-                            }
-                            else
-                            {
-                                Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a protective vest");
-                                GameState.items[GameState.currentTurn].Remove("ProtectiveVest");
-                            }
+                            Debug.Log(GameState.roles[GameState.currentTurn] + " has triggered a " + GameState.activeTraps[currentPlace]);
+                            activatedTrap(GameState.currentTurn, findTargetPosition("Phantom"));
+                            GameState.isDisabled[GameState.currentTurn] = 1;
                         }
                         else
                         {
-                            Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a Bodycam");
+                            Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a protective vest");
+                            GameState.items[GameState.currentTurn].Remove("ProtectiveVest");
                         }
-                        break;
-                    case "CursedArtifact":
-                        if (!GameState.items[GameState.currentTurn].Contains("Talisman"))
+                    }
+                    else
+                    {
+                        Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a Bodycam");
+                    }
+                    break;
+                case "CursedArtifact":
+                    if (!GameState.items[GameState.currentTurn].Contains("Talisman"))
+                    {
+                        if (!GameState.items[GameState.currentTurn].Contains("ProtectiveVest"))
                         {
-                            if (!GameState.items[GameState.currentTurn].Contains("ProtectiveVest"))
-                            {
-                                Debug.Log(GameState.roles[GameState.currentTurn] + " has triggered a " + GameState.traps[currentPlace]);
-                                activatedTrap(GameState.currentTurn, findTargetPosition("Fasculto"));
-                                GameState.isDisabled[currentPlace] = 1;
-                            }
-                            else
-                            {
-                                Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a protective vest");
-                                GameState.items[GameState.currentTurn].Remove("ProtectiveVest");
-                            }
+                            Debug.Log(GameState.roles[GameState.currentTurn] + " has triggered a " + GameState.activeTraps[currentPlace]);
+                            activatedTrap(GameState.currentTurn, findTargetPosition("Fasculto"));
+                            GameState.isDisabled[GameState.currentTurn] = 1;
                         }
                         else
                         {
-                            Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a Talisman");
+                            Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a protective vest");
+                            GameState.items[GameState.currentTurn].Remove("ProtectiveVest");
                         }
-                        break;
-                }
-            GameState.traps[currentPlace] = "Safe";
-            toMovement();
+                    }
+                    else
+                    {
+                        Debug.Log(GameState.roles[GameState.currentTurn] + " was protected by a Talisman");
+                    }
+                    break;
+            }
+            GameState.activeTraps[currentPlace] = "Safe";
+            endTurn();
 
         }
     }
 
-    void toMovement()
+    void endTurn()
     {
         if (!GameState.usedEnergyDrink.Contains(true))
         {
@@ -328,18 +387,21 @@ public class Place : MonoBehaviour
                     addFalseHint();
                 }
             }
+            GameState.playerState[GameState.currentTurn] = "Waiting";
             if (GameState.currentTurn == GameState.playerCount - 1)
             {
                 GameState.currentTurn = 0;
+
             }
             else
             {
                 GameState.currentTurn++;
             }
+            GameState.playerState[GameState.currentTurn] = "Movement";
             //counting down quarantine time
-            if(GameState.roles[GameState.currentTurn] == "Doctor")
+            if (GameState.roles[GameState.currentTurn] == "Doctor")
             {
-                for(int i = 0; i<19; i++)
+                for (int i = 0; i < 19; i++)
                 {
                     if (GameState.quarantined[i] > 0)
                     {
@@ -351,7 +413,7 @@ public class Place : MonoBehaviour
             {
                 Debug.Log(GameState.roles[GameState.currentTurn] + " is still disabled");
                 GameState.isDisabled[GameState.currentTurn]--;
-                toMovement();
+                endTurn();
             }
             if (GameState.isManipulated[GameState.currentTurn])
             {
@@ -361,7 +423,7 @@ public class Place : MonoBehaviour
             }
             else
             {
-                UIManager.Instance.Movement();
+                UIManager.Instance.PrivatePlayer();
             }
         }
         else
@@ -371,29 +433,122 @@ public class Place : MonoBehaviour
         }
     }
 
+    #region Dialogue
+    void setDialogue(string newDialogue)
+    {
+        btnInfo.gameObject.SetActive(false);
+        btnBack.gameObject.SetActive(false);
+        oneButton();
+        btnOneText.text = "Weiter";
+        btnOne.onClick.AddListener(stopTypeWriter);
+
+        currentDialogue = "";
+        dialoguePanel.gameObject.SetActive(true);
+        dialogueText.gameObject.SetActive(true);
+        dialogueText.text = currentDialogue;
+        dialogueText.fontSize = 60;
+
+        if (newDialogue.Length <= 130)
+        {
+            currentDialogue = newDialogue;
+            leftOverDialogue = "";
+        }
+        else
+        {
+            string currentString = "";
+            string currentWord = "";
+            bool firstLine = true;
+            foreach (var c in newDialogue)
+            {
+                if (firstLine)
+                {
+                    if (char.IsWhiteSpace(c))
+                    {
+                        if (currentString.Length + currentWord.Length > 120)
+                        {
+                            currentDialogue = currentString;
+                            firstLine = false;
+                            currentString = "";
+                            leftOverDialogue = "";
+                            leftOverDialogue += currentWord;
+                            leftOverDialogue += c;
+                            currentWord = "";
+                        }
+                        currentString += currentWord + c;
+                        currentWord = string.Empty;
+                    }
+                    currentWord += c;
+                }
+                else
+                {
+                    leftOverDialogue += c;
+                }
+            }
+        }
+        StartCoroutine("TypeWriter");
+    }
+
+    IEnumerator TypeWriter()
+    {
+        foreach (char c in currentDialogue)
+        {
+            dialogueText.text += c;
+            yield return new WaitForSeconds(0.02f);
+        }
+        btnOne.onClick.RemoveAllListeners();
+        if (leftOverDialogue == "")
+        {
+            btnOne.onClick.AddListener(endTurn);
+        }
+        else
+        {
+            btnOne.onClick.AddListener(btnLeftOverDialogue);
+        }
+    }
+
+    void stopTypeWriter()
+    {
+        StopCoroutine("TypeWriter");
+        dialogueText.text = currentDialogue;
+        btnOne.onClick.RemoveAllListeners();
+        if (leftOverDialogue == "")
+        {
+            btnOne.onClick.AddListener(endTurn);
+        }
+        else
+        {
+            btnOne.onClick.AddListener(btnLeftOverDialogue);
+        }
+    }
+
+    void btnLeftOverDialogue()
+    {
+        setDialogue(leftOverDialogue);
+    }
+    #endregion
+
     void btnGoBack()
     {
         OnEnable();
     }
 
-    //TODO: add Random Events
+    //@TODO: add Random Events
     void btnLookAroundClick()
     {
         GameState.lastAction[GameState.currentTurn] = "Umschauen";
-        Debug.Log("Du schaust dich um und ... bemerkst nichts außergewöhnliches");
-        toMovement();
+        setDialogue("Du schaust dich um aber du bemerkst nichts außergewöhnliches.");
     }
 
     #region Use Item
     void btnUseItemClick()
     {
         btnBack.gameObject.SetActive(true);
-        int trainersCount=0;
+        int trainersCount = 0;
         int FingerprintKitCount = 0;
         int EnergyDrinkCount = 0;
         int WhiskeyCount = 0;
 
-        for(int i = 0; i<GameState.items[GameState.currentTurn].Count; i++)
+        for (int i = 0; i < GameState.items[GameState.currentTurn].Count; i++)
         {
             switch (GameState.items[GameState.currentTurn][i])
             {
@@ -412,10 +567,10 @@ public class Place : MonoBehaviour
             }
         }
 
-
+        simpleDialogue("Welches Item willst du benutzen?", 60);
 
         fourButtons();
-        btnOneText.text = "Turnschuhe x"+trainersCount;
+        btnOneText.text = "Turnschuhe x" + trainersCount;
         btnTwoText.text = "Fingerabdruckset x" + FingerprintKitCount;
         btnThreeText.text = "Energy Drink x" + EnergyDrinkCount;
         btnFourText.text = "Whiskey x" + WhiskeyCount;
@@ -432,11 +587,11 @@ public class Place : MonoBehaviour
         {
             btnTwo.interactable = false;
         }
-        if(EnergyDrinkCount == 0)
+        if (EnergyDrinkCount == 0)
         {
             btnThree.interactable = false;
         }
-        if(WhiskeyCount == 0)
+        if (WhiskeyCount == 0)
         {
             btnFour.interactable = false;
         }
@@ -444,16 +599,25 @@ public class Place : MonoBehaviour
         {
             btnFour.interactable = false;
         }
-       
+
     }
     void btnTrainersOnClick()
     {
         GameState.lastAction[GameState.currentTurn] = "Item benutzen";
         GameState.items[GameState.currentTurn].Remove("Trainers");
+        oneButton();
+        btnOneText.text = "Weiter";
+        btnOne.onClick.AddListener(btnTrainersContinue);
+        simpleDialogue("Du ziehst deine Turnschuhe an und beginnst zu laufen.", 60);
+    }
+    void btnTrainersContinue()
+    {
         UIManager.Instance.Movement();
+
     }
     void btnFingerprintKitOnClick()
     {
+        int tempFoundHints= GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]]; ;
         GameState.lastAction[GameState.currentTurn] = "Item benutzen";
         GameState.solvedHints[GameState.currentTurn] = GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
         Debug.Log(GameState.roles[GameState.currentTurn] + " has found " + (GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]]) + " hints");
@@ -461,6 +625,45 @@ public class Place : MonoBehaviour
         GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] = 0;
         GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] = 0;
         GameState.items[GameState.currentTurn].Remove("FingerprintKit");
+        if (checkForFact())
+        {
+            if (tempFoundHints == 1)
+            {
+                simpleDialogue("Mit dem Fingerprintset findest und entschlüsselst du einen Hinweis und hast dadurch eine wichtige Information herausfinden können.", 60);
+            }
+            else
+            {
+                simpleDialogue("Mit dem Fingerprintset findest und entschlüsselst du " + tempFoundHints + " Hinweise und hast dadurch eine wichtige Information herausfinden können.", 60);
+            }
+            
+        }
+        else
+        {
+            if (tempFoundHints > 0)
+            {
+                if (tempFoundHints == 1)
+                {
+                    simpleDialogue("Mit dem Fingerprintset findest und entschlüsselst du einen Hinweis.", 60);
+                }
+                else
+                {
+                    simpleDialogue("Mit dem Fingerprintset findest und entschlüsselst du " + tempFoundHints + " Hinweise", 60);
+                }
+
+            }
+            else
+            {
+                simpleDialogue("Selbst mit dem Fingerabdruckset lässt sich hier kein Hinweis finden.",60);
+            }
+        }
+
+        oneButton();
+        btnOneText.text = "Weiter";
+        btnOne.onClick.AddListener(btnFingerprintkitContinue);
+        
+    }
+    void btnFingerprintkitContinue()
+    {
         OnEnable();
     }
     void btnEnergyDrinkOnClick()
@@ -468,6 +671,13 @@ public class Place : MonoBehaviour
         GameState.lastAction[GameState.currentTurn] = "Item benutzen";
         GameState.usedEnergyDrink.Add(true);
         GameState.items[GameState.currentTurn].Remove("EnergyDrink");
+        oneButton();
+        btnOneText.text = "Weiter";
+        btnOne.onClick.AddListener(btnEnergyDrinkContinue);
+        simpleDialogue("Du trinkst einen Energy Drink und fühlst dich voller Energie", 60);
+    }
+    void btnEnergyDrinkContinue()
+    {
         OnEnable();
     }
     void btnWhiskeyOnClick()
@@ -476,6 +686,14 @@ public class Place : MonoBehaviour
         GameState.trueSolveds[GameState.currentTurn]++;
         GameState.solvedHints[GameState.currentTurn]++;
         GameState.items[GameState.currentTurn].Remove("Whiskey");
+        checkForFact();
+        oneButton();
+        btnOneText.text = "Weiter";
+        btnOne.onClick.AddListener(btnWhiskeyContinue);
+        simpleDialogue("Du tauscht deinen Whiskey gegen einen sicher richtigen Hinweis.",60);
+    }
+    void btnWhiskeyContinue()
+    {
         OnEnable();
     }
     #endregion
@@ -509,16 +727,16 @@ public class Place : MonoBehaviour
         }
 
 
-
+        simpleDialogue("Welche Falle willst du legen?", 60);
         fourButtons();
-        btnOneText.text = "Bombe x"+bombCount;
-        btnTwoText.text = "Petrischale x"+petriDishCount;
-        btnThreeText.text = "Diebesgut x"+stoleGoodsCount;
-        btnFourText.text = "Verfluchtes Artifakt x"+cursedArtifactCount;
-        btnOne.onClick.AddListener(setInfernoTrap);
-        btnTwo.onClick.AddListener(setDrMortifierTrap);
-        btnThree.onClick.AddListener(setPhantomTrap);
-        btnFour.onClick.AddListener(setFascultoTrap);
+        btnOneText.text = "Bombe x" + bombCount;
+        btnTwoText.text = "Petrischale x" + petriDishCount;
+        btnThreeText.text = "Diebesgut x" + stoleGoodsCount;
+        btnFourText.text = "Verfluchtes Artifakt x" + cursedArtifactCount;
+        btnOne.onClick.AddListener(calibrateInfernoTrap);
+        btnTwo.onClick.AddListener(calibrateDrMortifierTrap);
+        btnThree.onClick.AddListener(calibratePhantomTrap);
+        btnFour.onClick.AddListener(calibrateFascultoTrap);
         if (bombCount == 0)
         {
             if (GameState.criminalRole == "Inferno")
@@ -526,6 +744,10 @@ public class Place : MonoBehaviour
                 btnOneText.text = "Bombe 2$";
                 btnOne.onClick.RemoveAllListeners();
                 btnOne.onClick.AddListener(buyOwnTrap);
+                if (GameState.money[GameState.currentTurn] < 2)
+                {
+                    btnOne.interactable = false;
+                }
             }
             else
             {
@@ -539,6 +761,10 @@ public class Place : MonoBehaviour
                 btnTwoText.text = "Petrischale 2$";
                 btnTwo.onClick.RemoveAllListeners();
                 btnTwo.onClick.AddListener(buyOwnTrap);
+                if (GameState.money[GameState.currentTurn] < 2)
+                {
+                    btnTwo.interactable = false;
+                }
             }
             else
             {
@@ -552,6 +778,10 @@ public class Place : MonoBehaviour
                 btnThreeText.text = "Diebesgut 2$";
                 btnThree.onClick.RemoveAllListeners();
                 btnThree.onClick.AddListener(buyOwnTrap);
+                if (GameState.money[GameState.currentTurn] < 2)
+                {
+                    btnThree.interactable = false;
+                }
             }
             else
             {
@@ -565,6 +795,10 @@ public class Place : MonoBehaviour
                 btnFourText.text = "Verfluchtes Artifakt 2$";
                 btnFour.onClick.RemoveAllListeners();
                 btnFour.onClick.AddListener(buyOwnTrap);
+                if (GameState.money[GameState.currentTurn] < 2)
+                {
+                    btnFour.interactable = false;
+                }
             }
             else
             {
@@ -575,58 +809,151 @@ public class Place : MonoBehaviour
     }
     void buyOwnTrap()
     {
-        GameState.money[GameState.currentTurn] -= 2;
         switch (GameState.criminalRole)
         {
             case ("Inferno"):
-                setInfernoTrap();
+                calibrateInfernoTrap();
                 break;
             case ("Dr.Mortifier"):
-                setDrMortifierTrap();
+                calibrateDrMortifierTrap();
                 break;
             case ("Phantom"):
-                setPhantomTrap();
+                calibratePhantomTrap();
                 break;
             case ("Fasculto"):
-                setFascultoTrap();
+                calibrateFascultoTrap();
                 break;
         }
+        btnBack.gameObject.SetActive(false);
+    }
+    void delayTrapMenu()
+    {
+        simpleDialogue("Nach wievielen Runden ist die Falle scharf?", 60);
+        threeButtons();
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(700, 300);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(+150, -400);
+        actionsTextField.gameObject.SetActive(true);
+        actionsTextField.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
+        actionsTextField.GetComponent<RectTransform>().anchoredPosition = new Vector2(-350, -400);
+        actionsTextField.fontSize = 130;
+        actionsTextField.text = "" + delayedTurns;
+        btnOneText.text = "+";
+        btnTwoText.text = "Falle legen";
+        btnThreeText.text = "-";
+        btnOne.onClick.AddListener(btnDelayedTurnUp);
+        btnThree.onClick.AddListener(btnDelayedTurnDown);
+        if (delayedTurns == 1)
+        {
+            btnThree.interactable = false;
+        }
+    }
+    void btnDelayedTurnUp()
+    {
+        delayedTurns++;
+        actionsTextField.text = "" + delayedTurns;
+        if (delayedTurns > 1)
+        {
+            btnThree.interactable = true;
+        }
+    }
+    void btnDelayedTurnDown()
+    {
+        delayedTurns--;
+        if (delayedTurns == 1)
+        {
+            btnThree.interactable = false;
+        }
+        actionsTextField.text = "" + delayedTurns;
+    }
+    void calibrateInfernoTrap()
+    {
+        delayTrapMenu();
+        btnTwo.onClick.AddListener(setInfernoTrap);
     }
     void setInfernoTrap()
     {
         GameState.lastAction[GameState.currentTurn] = "kleine Falle";
-        GameState.items[GameState.currentTurn].Remove("Bomb");
-        GameState.traps[currentPlace] = "Bomb";
+        if (GameState.items[GameState.currentTurn].Contains("Bomb"))
+        {
+            GameState.items[GameState.currentTurn].Remove("Bomb");
+        }
+        else
+        {
+            GameState.money[GameState.currentTurn] -= 2;
+        }
+
+        GameState.infernoTraps[currentPlace] = delayedTurns;
         addTrueHint();
-        toMovement();
+        setDialogue("Du lässte eine Bombe zurück.");
+    }
+
+    void calibrateDrMortifierTrap()
+    {
+        delayTrapMenu();
+        btnTwo.onClick.AddListener(setDrMortifierTrap);
     }
     void setDrMortifierTrap()
     {
         GameState.lastAction[GameState.currentTurn] = "kleine Falle";
+        if (GameState.items[GameState.currentTurn].Contains("PetriDish"))
+        {
+            GameState.items[GameState.currentTurn].Remove("PetriDish");
+        }
+        else
+        {
+            GameState.money[GameState.currentTurn] -= 2;
+        }
         GameState.items[GameState.currentTurn].Remove("PetriDish");
-        GameState.traps[currentPlace] = "PetriDish";
+        GameState.drMortifierTraps[currentPlace] = delayedTurns;
         addTrueHint();
-        toMovement();
+        setDialogue("Du infizierst den Ort mit einer Art von Grippe.");
+
+    }
+    void calibratePhantomTrap()
+    {
+        delayTrapMenu();
+        btnTwo.onClick.AddListener(setPhantomTrap);
     }
     void setPhantomTrap()
     {
         GameState.lastAction[GameState.currentTurn] = "kleine Falle";
+        if (GameState.items[GameState.currentTurn].Contains("StolenGoods"))
+        {
+            GameState.items[GameState.currentTurn].Remove("StolenGoods");
+        }
+        else
+        {
+            GameState.money[GameState.currentTurn] -= 2;
+        }
         GameState.items[GameState.currentTurn].Remove("StolenGoods");
-        GameState.traps[currentPlace] = "StolenGoods";
+        GameState.phantomTraps[currentPlace] = delayedTurns;
         addTrueHint();
-        toMovement();
+        setDialogue("Du platzierst strategisch Diebesgut und sagst deinen Komplizen zu welchem Zeitpunkt sie dies Melden sollen.");
+    }
+    void calibrateFascultoTrap()
+    {
+        delayTrapMenu();
+        btnTwo.onClick.AddListener(setFascultoTrap);
     }
     void setFascultoTrap()
     {
         GameState.lastAction[GameState.currentTurn] = "kleine Falle";
+        if (GameState.items[GameState.currentTurn].Contains("CursedArtifact"))
+        {
+            GameState.items[GameState.currentTurn].Remove("CursedArtifact");
+        }
+        else
+        {
+            GameState.money[GameState.currentTurn] -= 2;
+        }
         GameState.items[GameState.currentTurn].Remove("CursedArtifact");
-        GameState.traps[currentPlace] = "CursedArtifact";
+        GameState.fascultoTraps[currentPlace] = delayedTurns;
         addTrueHint();
-        toMovement();
+        setDialogue("Du hinterlässt ein verfluchtes Artifakt");
     }
     #endregion
 
-    //TODO: action for commiting the crime with time aspekt
+    //@TODO: action for commiting the crime with time aspekt
     void btnActivateQuestPlaceClick()
     {
         GameState.lastAction[GameState.currentTurn] = "Questort aktivieren";
@@ -636,33 +963,118 @@ public class Place : MonoBehaviour
         {
             GameState.questPlaces.Remove(currentPlace);
             GameState.activatedQuestPlaces++;
+            string s = "";
+
+            switch (GameState.criminalRole)
+            {
+                case "Inferno":
+                    switch (currentPlace)
+                    {
+                        //Armyshop
+                        case 11:
+                            s = "Du kennst den Besitzer des Army Shops und er führt dich in ein für das normale Publikum nicht zugängliches Zimmer. Dort kannst du dir einige deiner benötigten Materialien besorgen.";
+                            break;
+                        //ShoppingCenter
+                        case 12:
+                            s = "Man glaubt gar nicht an was für gefährliches Zeug man als normaler Bürger in einem Baumarkt kommt.";
+                            break;
+                        //Junk Yard
+                        case 13:
+                            s = "Für die richtig seltenen Komponenten deiner Bombe durchforstest du einen ganzen Tag lang den Schrottplatz.";
+                            break;
+                    }
+                    break;
+                case "Dr.Mortifier":
+                    switch (currentPlace)
+                    {
+                        //ShoppingCenter
+                        case 12:
+                            s = "Du schleichst dich nach den Öffnungszeiten in eine Apotheke und entwendest das nötige Equipment.";
+                            break;
+                        //Library
+                        case 14:
+                            s = "Um sicher zugehen das du deine Bakterienstämme auch wirklich richtig miteinander kreuzt, studierst du einen Tag lang in der Bibliothek medizinische Bücher.";
+                            //Laboratory
+                            break;
+                        case 15:
+                            s = "Du brichst in ein das Labor ein, dass gerade für eine Studie eine Lieferung seltenere Bakterienstämme bekommen hat. Du bist nun im Besitze der nötigen Bakterienstämme.";
+                            break;
+
+                    }
+                    break;
+                case "Phantom":
+                    switch (currentPlace)
+                    {
+                        //Internet Cafe
+                        case 9:
+                            s = "Um nicht zurückverfolgt werden zu können, hackst du dich vom Internet Cafe aus in das Sicherheitsystem deines Zielortes";
+                            break;
+                        //Army Shop
+                        case 11:
+                            s = "Für einen gelungenen Einbruch, braucht man gutes Equipment. Im Hinterzimmer des Armee Ladens findest du alles was du brauchst.";
+                            break;
+                        //Bar
+                        case 18:
+                            s = "Du triffst dich in der Bar mit deinen Komplizen und ihr besprecht jedes noch so kleine Detail eures Plans.";
+                            break;
+                    }
+                    break;
+                case "Fasculto":
+                    switch (currentPlace)
+                    {
+                        //Library
+                        case 14:
+                            s = "Es ist nicht vielen Bekannt das es in der Bibliothek eine geheime okkulte Abteilung gibt. Du und deine Anhänger wissen natürlich wie man zu dieser gelangt und du schmuggelst heimlich eine Kopie des berüchtigten Nekronomikons hinaus.";
+                            break;
+                        //Harbor
+                        case 17:
+                            s = "Um dein Ritual vorzubereiten, betest du am Hafen zu den dunklen Göttern der See.";
+                            break;
+                        //Bar
+                        case 18:
+                            s = "Für dein Ritual ist ein Opfer notwendig. Es fällt dir leicht in der Bar eine betrunkene Person in den Unterschlupf deines Kultes zu locken.";
+                            break;
+                    }
+                    break;
+            }
+
+
+            setDialogue(s);
         }
         else
         {
+            endTurn();
             //TODO action for planted 
         }
-
-        toMovement();
+        
     }
 
     void btnFindHintClick()
     {
+        int tempfoundHints= GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]]; ;
         GameState.lastAction[GameState.currentTurn] = "Hinweis finden";
-        GameState.unsolvedHints[GameState.currentTurn] = GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
-        Debug.Log(GameState.roles[GameState.currentTurn] + " has found " + (GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]]) + " hints");
-        GameState.trueUnsolveds[GameState.currentTurn] = GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
+        GameState.unsolvedHints[GameState.currentTurn] += GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] + GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
+        GameState.trueUnsolveds[GameState.currentTurn] += GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
         GameState.notFoundTrue[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] = 0;
         GameState.notFoundFalse[GameState.currentTurn][GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] = 0;
-        toMovement();
+        if (tempfoundHints > 0)
+        {
+            setDialogue("Du schaust dich genauer um, und findes " + tempfoundHints + " Hinweise, die zum Verbrecher führen könnten.");     
+        }
+        else
+        {
+            setDialogue("Du schaust dich genauer um, findest aber nicht was auf den Verbrecher hinweisen könnte.");
+        }
     }
 
     void btnFalseHintClick()
     {
         GameState.lastAction[GameState.currentTurn] = "falscher Hinweis";
         addFalseHint();
-        toMovement();
+        setDialogue("Du platzierst einen falschen Hinweis.");
     }
 
+    //@TODO add description for all places
     #region placeactions
     void btnPlaceOptionClick()
     {
@@ -737,14 +1149,39 @@ public class Place : MonoBehaviour
     }
     void solveHint()
     {
+        int tempUnsolvedHints= GameState.unsolvedHints[GameState.currentTurn];
         GameState.trueSolveds[GameState.currentTurn] += GameState.trueUnsolveds[GameState.currentTurn];
         GameState.solvedHints[GameState.currentTurn] += GameState.unsolvedHints[GameState.currentTurn];
         GameState.trueUnsolveds[GameState.currentTurn] = 0;
         GameState.unsolvedHints[GameState.currentTurn] = 0;
         GameState.lastAction[GameState.currentTurn] = "Ortsoption";
-        toMovement();
 
+        if (checkForFact())
+        {
+            if (tempUnsolvedHints == 1)
+            {
+                setDialogue("Du hast einen Hinweis entschlüsselt und hast dadurch eine wichtige Information herausfinden können.");
+            }
+            else
+            {
+                setDialogue("Du hast " + tempUnsolvedHints + " Hinweise entschlüsselt und hast dadurch eine wichtige Information herausfinden können.");
+            }
+            
+        }
+        else
+        {
+            if (tempUnsolvedHints == 1)
+            {
+                setDialogue("Du hast einen Hinweis entschlüsselt.");
+            }
+            else
+            {
+                setDialogue("Du hast " + tempUnsolvedHints + " Hinweise entschlüsselt.");
+            }
+            
+        }
     }
+
     void mainsquareAction()
     {
         oneButton();
@@ -754,33 +1191,32 @@ public class Place : MonoBehaviour
     }
     void earnMoney()
     {
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
         if (GameState.items[GameState.currentTurn].Contains("Calculator"))
         {
             GameState.money[GameState.currentTurn] += 8;
+            setDialogue("Dank deines Taschenrechners konntest du 8$ verdienen.");
         }
         else
         {
             GameState.money[GameState.currentTurn] += 6;
+            setDialogue("Du hast 6$ verdient.");
         }
-        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
-        toMovement();
+        
     }
     void parkAction()
     {
         oneButton();
         btnOneText.text = "Obdachlose befragen";
         btnOne.onClick.AddListener(btnAskHomeless);
-        
+
     }
     void btnAskHomeless()
     {
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
-        Debug.Log("Der Verbrecher hat " + GameState.activatedQuestPlaces + " Questorte aktiviert.");
-        GameState.skillUsed[GameState.currentTurn]=true;
-        toMovement();
+        GameState.skillUsed[GameState.currentTurn] = true;
+        setDialogue("Dein Obdachlosennetzwerk berichtet dir, dass der Verbrecher schon" + GameState.activatedQuestPlaces + "/3 seiner Zwischenziele erreicht hat.");
     }
-
-    //@TODO add functionality
     void hospitalAction()
     {
         threeButtons();
@@ -797,72 +1233,89 @@ public class Place : MonoBehaviour
         btnOne.onClick.AddListener(btnPlaceUp);
         btnTwo.onClick.AddListener(btnQuarantine);
         btnThree.onClick.AddListener(btnPlaceDown);
-
-
-        
+        simpleDialogue("Welcher Ort soll unter Quarantäne gestellt werden?", 60);
     }
     void btnQuarantine()
     {
+        GameState.lastAction[GameState.currentTurn] = "Fähgikeit";
+        GameState.skillUsed[GameState.currentTurn] = true;
+        string place = "";
         switch (actionsTextField.text)
         {
             case "Stadtplatz":
                 GameState.quarantined[1] = 3;
+                place = "den Stadtplatz";
                 break;
             case "Park":
                 GameState.quarantined[2] = 3;
+                place = "den Park";
                 break;
             case "Krankenhaus":
                 GameState.quarantined[3] = 3;
+                place = "das Krankenhaus";
                 break;
             case "Bank":
                 GameState.quarantined[4] = 3;
+                place = "die Bank";
                 break;
             case "Parlament":
                 GameState.quarantined[5] = 3;
+                place = "das Parlament";
                 break;
             case "Friedhof":
                 GameState.quarantined[6] = 3;
+                place = "den Friedhof";
                 break;
             case "Gefängnis":
                 GameState.quarantined[7] = 3;
+                place = "das Gefängnis";
                 break;
             case "Kasino":
                 GameState.quarantined[8] = 3;
+                place = "das Kasino";
                 break;
             case "Internet Cafe":
                 GameState.quarantined[9] = 3;
+                place = "das Internet Cafe";
                 break;
             case "Bahnhof":
                 GameState.quarantined[10] = 3;
+                place = "den Bahnhof";
                 break;
             case "Armee Laden":
                 GameState.quarantined[11] = 3;
+                place = "den Armee Laden";
                 break;
             case "Shopping Center":
                 GameState.quarantined[12] = 3;
+                place = "das Shopping Center";
                 break;
             case "Schrottplatz":
                 GameState.quarantined[13] = 3;
+                place = "den Schrottplatz";
                 break;
             case "Bibliothek":
                 GameState.quarantined[14] = 3;
+                place = "die Bibliothek";
                 break;
             case "Labor":
                 GameState.quarantined[15] = 3;
+                place = "das Labor";
                 break;
             case "Italiener":
                 GameState.quarantined[16] = 3;
+                place = "den Italiener";
                 break;
             case "Hafen":
                 GameState.quarantined[17] = 3;
+                place = "den Hafen";
                 break;
             case "Bar":
                 GameState.quarantined[18] = 3;
+                place = "die Bar";
                 break;
         }
-        GameState.lastAction[GameState.currentTurn] = "Fähgikeit";
-        GameState.skillUsed[GameState.currentTurn] = true;
-        toMovement();
+        setDialogue("Du hast " + place + " unter Quarantäne gestellt");
     }
     void bankAction()
     {
@@ -873,48 +1326,43 @@ public class Place : MonoBehaviour
         btnFour.onClick.AddListener(btnPlayerFourTransaction);
         btnFive.onClick.AddListener(btnPlayerFiveTransaction);
         btnSix.onClick.AddListener(btnPlayerSixTransaction);
+        simpleDialogue("Wählen einen Spieler", 70);
     }
     void btnPlayerOneTransaction()
     {
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
         GameState.skillUsed[GameState.currentTurn] = true;
-        Debug.Log(GameState.roles[5] + "s letzte Transaktion war: " + GameState.lastTransaction[0]);
-        toMovement();
+        setDialogue(translateName(0) + "s letzte Transaktion war: " + GameState.lastTransaction[0]);
     }
     void btnPlayerTwoTransaction()
     {
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
         GameState.skillUsed[GameState.currentTurn] = true;
-        Debug.Log(GameState.roles[5] + "s letzte Transaktion war: " + GameState.lastTransaction[1]);
-        toMovement();
+        setDialogue(translateName(1) + "s letzte Transaktion war: " + GameState.lastTransaction[1]);
     }
     void btnPlayerThreeTransaction()
     {
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
         GameState.skillUsed[GameState.currentTurn] = true;
-        Debug.Log(GameState.roles[5] + "s letzte Transaktion war: " + GameState.lastTransaction[2]);
-        toMovement();
+        setDialogue(translateName(2) + "s letzte Transaktion war: " + GameState.lastTransaction[2]);
     }
     void btnPlayerFourTransaction()
     {
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
         GameState.skillUsed[GameState.currentTurn] = true;
-        Debug.Log(GameState.roles[5] + "s letzte Transaktion war: " + GameState.lastTransaction[3]);
-        toMovement();
+        setDialogue(translateName(3) + "s letzte Transaktion war: " + GameState.lastTransaction[3]);
     }
     void btnPlayerFiveTransaction()
     {
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
         GameState.skillUsed[GameState.currentTurn] = true;
-        Debug.Log(GameState.roles[5] + "s letzte Transaktion war: " + GameState.lastTransaction[4]);
-        toMovement();
+        setDialogue(translateName(4) + "s letzte Transaktion war: " + GameState.lastTransaction[4]);
     }
     void btnPlayerSixTransaction()
     {
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
         GameState.skillUsed[GameState.currentTurn] = true;
-        Debug.Log(GameState.roles[5] + "s letzte Transaktion war: " + GameState.lastTransaction[5]);
-        toMovement();
+        setDialogue(translateName(5) + "s letzte Transaktion war: " + GameState.lastTransaction[5]);
     }
 
     void parliamentAction()
@@ -926,48 +1374,43 @@ public class Place : MonoBehaviour
         btnFour.onClick.AddListener(btnPlayerFourAction);
         btnFive.onClick.AddListener(btnPlayerFiveAction);
         btnSix.onClick.AddListener(btnPlayerSixAction);
+        simpleDialogue("Wählen einen Spieler", 70);
     }
     void btnPlayerOneAction()
     {
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
         GameState.skillUsed[GameState.currentTurn] = true;
-        Debug.Log(GameState.roles[0] + "s letzte Aktion war: " + GameState.lastAction[0]);
-        toMovement();
+        setDialogue(translateName(0) + "s letzte Aktion war: " + GameState.lastAction[0]);
     }
     void btnPlayerTwoAction()
     {
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
         GameState.skillUsed[GameState.currentTurn] = true;
-        Debug.Log(GameState.roles[1] + "s letzte Aktion war: " + GameState.lastAction[1]);
-        toMovement();
+        setDialogue(translateName(1) + "s letzte Aktion war: " + GameState.lastAction[1]);
     }
     void btnPlayerThreeAction()
     {
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
         GameState.skillUsed[GameState.currentTurn] = true;
-        Debug.Log(GameState.roles[2] + "s letzte Aktion war: " + GameState.lastAction[2]);
-        toMovement();
+        setDialogue(translateName(2) + "s letzte Aktion war: " + GameState.lastAction[2]);
     }
     void btnPlayerFourAction()
     {
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
         GameState.skillUsed[GameState.currentTurn] = true;
-        Debug.Log(GameState.roles[3] + "s letzte Aktion war: " + GameState.lastAction[3]);
-        toMovement();
+        setDialogue(translateName(3) + "s letzte Aktion war: " + GameState.lastAction[3]);
     }
     void btnPlayerFiveAction()
     {
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
         GameState.skillUsed[GameState.currentTurn] = true;
-        Debug.Log(GameState.roles[4] + "s letzte Aktion war: " + GameState.lastAction[4]);
-        toMovement();
+        setDialogue(translateName(4) + "s letzte Aktion war: " + GameState.lastAction[4]);
     }
     void btnPlayerSixAction()
     {
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
         GameState.skillUsed[GameState.currentTurn] = true;
-        Debug.Log(GameState.roles[5] + "s letzte Aktion war: " + GameState.lastAction[5]);
-        toMovement();
+        setDialogue(translateName(5) + "s letzte Aktion war: " + GameState.lastAction[5]);
     }
 
     void cemetaryAction()
@@ -975,15 +1418,15 @@ public class Place : MonoBehaviour
         oneButton();
         btnOneText.text = "Seance";
         btnOne.onClick.AddListener(btnSeance);
-        
+
     }
     void btnSeance()
     {
-        string s = "Es befinden sich scharfe Fallen an den Orten:";
+        string s = "Die Geister teilen dir mit,dass sich sich scharfe Fallen an den Orten:";
         bool noTraps = true;
         for (int i = 0; i < 18; i++)
         {
-            if (GameState.traps[i] != "Safe")
+            if (GameState.activeTraps[i] != "Safe")
             {
                 s += (" " + translatePlace(i));
                 noTraps = false;
@@ -991,12 +1434,16 @@ public class Place : MonoBehaviour
         }
         if (noTraps)
         {
-            s = "Es befinden sich keine scharfen Fallen in der Stadt";
+            s = "Die Geister teilen dir mit,dass sich keine scharfe Fallen in der Stadt befinden.";
         }
-        Debug.Log(s);
+        else
+        {
+            s += " befinden.";
+        }
+        
         GameState.lastAction[GameState.currentTurn] = "Fähigkeit";
         GameState.skillUsed[GameState.currentTurn] = true;
-        toMovement();
+        setDialogue(s);
     }
 
     void prisonAction()
@@ -1004,7 +1451,7 @@ public class Place : MonoBehaviour
         oneButton();
         btnOneText.text = "Kriminalstudie";
         btnOne.onClick.AddListener(btnCriminalStudy);
-        
+
     }
     void btnCriminalStudy()
     {
@@ -1017,8 +1464,7 @@ public class Place : MonoBehaviour
                 GameState.notFoundFalse[GameState.currentTurn][i, j] = 0;
             }
         }
-        Debug.Log("Alle falschen Hinweise verschwinden aus der Stadt");
-        toMovement();
+        setDialogue("Deine Studie ermöglicht es dir bereits vorhandene falsche Hinweise als solche zu durchschauen.");
     }
 
     void casinoAction()
@@ -1045,35 +1491,51 @@ public class Place : MonoBehaviour
         {
             btnOne.interactable = false;
         }
-
+        simpleDialogue("Wieviel setzt du?", 70);
     }
     void btnCasinoBetUp()
     {
         currentBet++;
-        casinoAction();
+        if (currentBet == 0)
+        {
+            btnThree.interactable = false;
+        }
+        if (currentBet == GameState.money[GameState.currentTurn])
+        {
+            btnOne.interactable = false;
+        }
+        actionsTextField.text = "" + currentBet;
+       
     }
     void btnCasinoBetDown()
     {
         currentBet--;
-        casinoAction();
+        if (currentBet == 0)
+        {
+            btnThree.interactable = false;
+        }
+        if (currentBet == GameState.money[GameState.currentTurn])
+        {
+            btnOne.interactable = false;
+        }
+        actionsTextField.text = "" + currentBet;
     }
     void btnCasinoBet()
     {
         System.Random rn = new System.Random();
         int rand = rn.Next(0, 100);
         GameState.lastTransaction[GameState.currentTurn] = "Kasino Wette";
-        if(rand < 50)
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
+        if (rand < 50)
         {
-            Debug.Log(GameState.roles[GameState.currentTurn] + " won " + currentBet + "$");
             GameState.money[GameState.currentTurn] += currentBet;
+            setDialogue("Du hast" + currentBet + "$ gewonnen!");
         }
         else
-        {
-            Debug.Log(GameState.roles[GameState.currentTurn] + " lost " + currentBet + "$");
+        { 
             GameState.money[GameState.currentTurn] -= currentBet;
+            setDialogue("Du hast" + currentBet + "$ verloren!");
         }
-        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
-        toMovement();
     }
 
     void internetcafeAction()
@@ -1103,6 +1565,7 @@ public class Place : MonoBehaviour
         btnOne.onClick.AddListener(btnBuyingDrMortifierTrap);
         btnOne.onClick.AddListener(btnBuyingPhantomTrap);
         btnOne.onClick.AddListener(btnBuyingFascultoTrap);
+        simpleDialogue("Welche Falle willst du kaufen?",60);
     }
     void btnBuyingInfernoTrap()
     {
@@ -1111,7 +1574,7 @@ public class Place : MonoBehaviour
         GameState.money[GameState.currentTurn] -= 2;
         GameState.items[GameState.currentTurn].Add("Bomb");
         addTrueHint();
-        toMovement();
+        setDialogue("Du hast dir eine Bombe gekauft.");
     }
     void btnBuyingDrMortifierTrap()
     {
@@ -1120,7 +1583,8 @@ public class Place : MonoBehaviour
         GameState.money[GameState.currentTurn] -= 2;
         GameState.items[GameState.currentTurn].Add("PetriDish");
         addTrueHint();
-        toMovement();
+        endTurn();
+        setDialogue("Du hast dir eine Petrischale gekauft.");
     }
     void btnBuyingPhantomTrap()
     {
@@ -1129,7 +1593,7 @@ public class Place : MonoBehaviour
         GameState.money[GameState.currentTurn] -= 2;
         GameState.items[GameState.currentTurn].Add("StolenGoods");
         addTrueHint();
-        toMovement();
+        setDialogue("Du hast dir Diebesgut gekauft.");
     }
     void btnBuyingFascultoTrap()
     {
@@ -1138,7 +1602,7 @@ public class Place : MonoBehaviour
         GameState.money[GameState.currentTurn] -= 2;
         GameState.items[GameState.currentTurn].Add("CursedArtifact");
         addTrueHint();
-        toMovement();
+        setDialogue("Du hast dir ein verfluchtes Artifakt gekauft.");
     }
 
 
@@ -1162,6 +1626,7 @@ public class Place : MonoBehaviour
         {
             btnTwo.interactable = false;
         }
+        simpleDialogue("Wo fährst du hin?",70);
     }
     void btnPlaceDown()
     {
@@ -1292,60 +1757,78 @@ public class Place : MonoBehaviour
         {
             case "Stadtplatz":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(1);
+                setDialogue("Du hast einen Zug zum Stadtplatz genommen");
                 break;
             case "Park":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(2);
+                setDialogue("Du hast einen Zug zum Park genommen");
                 break;
             case "Krankenhaus":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(3);
+                setDialogue("Du hast einen Zug zum Krankenhaus genommen");
                 break;
             case "Bank":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(4);
+                setDialogue("Du hast einen Zug zur Bank genommen");
                 break;
             case "Parlament":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(5);
+                setDialogue("Du hast einen Zug zum Parlament genommen");
                 break;
             case "Friedhof":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(6);
+                setDialogue("Du hast einen Zug zum Friedhof genommen");
                 break;
             case "Gefängnis":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(7);
+                setDialogue("Du hast einen Zug zum Gefängnis genommen");
                 break;
             case "Kasino":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(8);
+                setDialogue("Du hast einen Zug zum Kasino genommen");
                 break;
             case "Internet Cafe":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(9);
+                setDialogue("Du hast einen Zug zum Internet Cafe genommen");
                 break;
             case "Bahnhof":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(10);
+                setDialogue("Du hast einen Zug zum Bahnhof genommen");
                 break;
             case "Armee Laden":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(11);
+                setDialogue("Du hast einen Zug zum Armee Laden genommen");
                 break;
             case "Shopping Center":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(12);
+                setDialogue("Du hast einen Zug zum Shopping Center genommen");
                 break;
             case "Schrottplatz":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(13);
+                setDialogue("Du hast einen Zug zum Schrottplatz genommen");
                 break;
             case "Bibliothek":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(14);
+                setDialogue("Du hast einen Zug zur Bibliothek genommen");
                 break;
             case "Labor":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(15);
+                setDialogue("Du hast einen Zug zum Labor genommen");
                 break;
             case "Italiener":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(16);
+                setDialogue("Du hast einen Zug zum Italiener genommen");
                 break;
             case "Hafen":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(17);
+                setDialogue("Du hast einen Zug zum Hafen genommen");
                 break;
             case "Bar":
                 GameState.currentPlace[GameState.currentTurn] = findPosition(18);
+                setDialogue("Du hast einen Zug zur Bar genommen");
                 break;
         }
-        toMovement();
+        endTurn();
     }
 
     void armyshopAction()
@@ -1363,6 +1846,7 @@ public class Place : MonoBehaviour
         {
             btnTwo.interactable = false;
         }
+        simpleDialogue("Welche Art von Schutz?", 60);
     }
     void btnBuyProtectiveVest()
     {
@@ -1370,7 +1854,7 @@ public class Place : MonoBehaviour
         GameState.lastTransaction[GameState.currentTurn] = "Schutzweste";
         GameState.money[GameState.currentTurn] -= 6;
         GameState.items[GameState.currentTurn].Add("ProtectiveVest");
-        toMovement();
+        setDialogue("Du hast dir eine Schutzweste gekauft.");
     }
     void btnBuyPermanentProtection()
     {
@@ -1383,6 +1867,7 @@ public class Place : MonoBehaviour
         btnTwo.onClick.AddListener(btnBuyGasmask);
         btnThree.onClick.AddListener(btnBuyBodycam);
         btnFour.onClick.AddListener(btnBuyTalisman);
+        simpleDialogue("Welche Art von permanenten Schutz?", 60);
     }
     void btnBuyFireProofCoat()
     {
@@ -1390,7 +1875,7 @@ public class Place : MonoBehaviour
         GameState.lastTransaction[GameState.currentTurn] = "Feuerfester Mantel";
         GameState.money[GameState.currentTurn] -= 15;
         GameState.items[GameState.currentTurn].Add("FireProofCoat");
-        toMovement();
+        setDialogue("Du hast dir einen feuerfesten Mantel gekauft.");
     }
     void btnBuyGasmask()
     {
@@ -1398,7 +1883,7 @@ public class Place : MonoBehaviour
         GameState.lastTransaction[GameState.currentTurn] = "Gasmaske";
         GameState.money[GameState.currentTurn] -= 15;
         GameState.items[GameState.currentTurn].Add("Gasmask");
-        toMovement();
+        setDialogue("Du hast dir einen Mantel gekauft.");
     }
     void btnBuyBodycam()
     {
@@ -1406,7 +1891,7 @@ public class Place : MonoBehaviour
         GameState.lastTransaction[GameState.currentTurn] = "Bodycam";
         GameState.money[GameState.currentTurn] -= 15;
         GameState.items[GameState.currentTurn].Add("Bodycam");
-        toMovement();
+        setDialogue("Du hast dir eine Bodycam gekauft.");
     }
     void btnBuyTalisman()
     {
@@ -1414,7 +1899,7 @@ public class Place : MonoBehaviour
         GameState.lastTransaction[GameState.currentTurn] = "Talisman";
         GameState.money[GameState.currentTurn] -= 15;
         GameState.items[GameState.currentTurn].Add("Talisman");
-        toMovement();
+        setDialogue("Du hast dir einen Talisman gekauft.");
     }
 
     void shoppingcenterAction()
@@ -1441,7 +1926,7 @@ public class Place : MonoBehaviour
         }
         if (GameState.money[GameState.currentTurn] < 8)
         {
-            btnFour.interactable=false;
+            btnFour.interactable = false;
             btnFive.interactable = false;
         }
         if (GameState.money[GameState.currentTurn] < 4)
@@ -1457,6 +1942,7 @@ public class Place : MonoBehaviour
             btnSix.interactable = false;
             btnOne.interactable = false;
         }
+        simpleDialogue("Was willst du kaufen?",60);
     }
     void btnBuyTrainers()
     {
@@ -1464,7 +1950,7 @@ public class Place : MonoBehaviour
         GameState.lastTransaction[GameState.currentTurn] = "Turnschuhe";
         GameState.money[GameState.currentTurn] -= 2;
         GameState.items[GameState.currentTurn].Add("Trainers");
-        toMovement();
+        setDialogue("Du hast dir Turnschuhe gekauft.");
     }
     void btnBuyFingerprintKit()
     {
@@ -1472,7 +1958,7 @@ public class Place : MonoBehaviour
         GameState.lastTransaction[GameState.currentTurn] = "Fingerabdruckset";
         GameState.money[GameState.currentTurn] -= 4;
         GameState.items[GameState.currentTurn].Add("FingerprintKit");
-        toMovement();
+        setDialogue("Du hast dir ein Fingerabdruckset gekauft.");
     }
     void btnBuyEnergyDrink()
     {
@@ -1480,7 +1966,7 @@ public class Place : MonoBehaviour
         GameState.lastTransaction[GameState.currentTurn] = "Energy Drink";
         GameState.money[GameState.currentTurn] -= 3;
         GameState.items[GameState.currentTurn].Add("EnergyDrink");
-        toMovement();
+        setDialogue("Du hast dir einen Energy Drink gekauft.");
     }
     void btnBuyCalculator()
     {
@@ -1488,7 +1974,7 @@ public class Place : MonoBehaviour
         GameState.lastTransaction[GameState.currentTurn] = "Taschenrechner";
         GameState.money[GameState.currentTurn] -= 8;
         GameState.items[GameState.currentTurn].Add("Calculator");
-        toMovement();
+        setDialogue("Du hast dir einen Taschenrechner gekauft.");
     }
     void btnBuyWhiskey()
     {
@@ -1496,7 +1982,7 @@ public class Place : MonoBehaviour
         GameState.lastTransaction[GameState.currentTurn] = "Whiskey";
         GameState.money[GameState.currentTurn] -= 8;
         GameState.items[GameState.currentTurn].Add("Whiskey");
-        toMovement();
+        setDialogue("Du hast dir eine Flasche Whiskey gekauft.");
     }
     void btnBuyRandomTrap()
     {
@@ -1537,7 +2023,7 @@ public class Place : MonoBehaviour
         {
             rand = rn.Next(0, 13);
         }
-
+        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
 
         switch (rand)
         {
@@ -1546,50 +2032,61 @@ public class Place : MonoBehaviour
             case 2:
             case 3:
             case 4:
-                Debug.Log("Nichts gefunden");
+                setDialogue("Nichts gefunden");
                 break;
             case 5:
                 GameState.items[GameState.currentTurn].Add("FireProofCoat");
+                setDialogue("Du hast feuerfesten Manel gefunden.");
                 break;
             case 6:
                 GameState.items[GameState.currentTurn].Add("ProtectiveVest");
+                setDialogue("Du hast eine Schutzweste gefunden.");
                 break;
             case 7:
                 GameState.items[GameState.currentTurn].Add("Gasmask");
+                setDialogue("Du hast eine Gasmaske gefunden.");
                 break;
             case 8:
                 GameState.items[GameState.currentTurn].Add("Talisman");
+                setDialogue("Du hast einen Talisman gefunden.");
                 break;
             case 9:
                 GameState.items[GameState.currentTurn].Add("Trainers");
+                setDialogue("Du hast Turnschuhe gefunden.");
                 break;
             case 10:
                 GameState.items[GameState.currentTurn].Add("FingerprintKit");
+                setDialogue("Du hast ein Fingerabdruckset gefunden.");
                 break;
             case 11:
                 GameState.items[GameState.currentTurn].Add("EnergyDrink");
+                setDialogue("Du hast einen Energy Drink gefunden.");
                 break;
             case 12:
                 GameState.items[GameState.currentTurn].Add("Calculator");
+                setDialogue("Du hast einen Taschenrechner gefunden.");
                 break;
             case 13:
                 GameState.items[GameState.currentTurn].Add("Whiskey");
+                setDialogue("Du hast eine Flasche Whiskey gefunden.");
                 break;
             case 14:
                 GameState.items[GameState.currentTurn].Add("Bomb");
+                setDialogue("Du hast eine Bombe gefunden.");
                 break;
             case 15:
                 GameState.items[GameState.currentTurn].Add("PetriDish");
+                setDialogue("Du hast eine Petrischale gefunden.");
                 break;
             case 16:
                 GameState.items[GameState.currentTurn].Add("StolenGoods");
+                setDialogue("Du hast Diebesgut gefunden.");
                 break;
             case 17:
                 GameState.items[GameState.currentTurn].Add("CursedArtifact");
+                setDialogue("Du hast ein verfluchtes Artifakt gefunden.");
                 break;
         }
-        GameState.lastAction[GameState.currentTurn] = "Ortsoption";
-        toMovement();
     }
     void italienrestaurantAction()
     {
@@ -1617,6 +2114,7 @@ public class Place : MonoBehaviour
                 btnFour.interactable = false;
                 break;
         }
+        simpleDialogue("Wieviel zahlst du für deine Spaghetti?", 60);
     }
     void btnItalienTwentyPercentChance()
     {
@@ -1624,42 +2122,50 @@ public class Place : MonoBehaviour
         GameState.lastTransaction[GameState.currentTurn] = "\"Italienisches Essen\"";
         GameState.money[GameState.currentTurn]--;
         chanceToGetTrueHint(2);
-        toMovement();
+        setDialogue("Du hattest ein interessantes Gespräch mit dem Besitzer. Du weißt jedoch nicht ob er die Wahrheit erzählt hat.");
     }
     void btnItalienThirtyPercentChance()
     {
         GameState.lastAction[GameState.currentTurn] = "Ortsoption";
         GameState.lastTransaction[GameState.currentTurn] = "\"Italienisches Essen\"";
-        GameState.money[GameState.currentTurn]-=2;
+        GameState.money[GameState.currentTurn] -= 2;
         chanceToGetTrueHint(3);
-        toMovement();
+        setDialogue("Du hattest ein interessantes Gespräch mit dem Besitzer. Du weißt jedoch nicht ob er die Wahrheit erzählt hat.");
     }
     void btnItalienFiftyPercentChance()
     {
         GameState.lastAction[GameState.currentTurn] = "Ortsoption";
         GameState.lastTransaction[GameState.currentTurn] = "\"Italienisches Essen\"";
-        GameState.money[GameState.currentTurn]-=3;
+        GameState.money[GameState.currentTurn] -= 3;
         chanceToGetTrueHint(5);
-        toMovement();
+        setDialogue("Du hattest ein interessantes Gespräch mit dem Besitzer. Du weißt jedoch nicht ob er die Wahrheit erzählt hat.");
     }
     void btnItalienSixtyPercentChance()
     {
         GameState.lastAction[GameState.currentTurn] = "Ortsoption";
         GameState.lastTransaction[GameState.currentTurn] = "\"Italienisches Essen\"";
-        GameState.money[GameState.currentTurn]-=4;
+        GameState.money[GameState.currentTurn] -= 4;
         chanceToGetTrueHint(6);
-        toMovement();
+        setDialogue("Du hattest ein interessantes Gespräch mit dem Besitzer. Du weißt jedoch nicht ob er die Wahrheit erzählt hat.");
     }
     void harborAction()
     {
         twoButtons();
-        btnOneText.text= "Hinweis - 5 Geld";
+        btnOneText.text = "Hinweis - 5 Geld";
         btnTwoText.text = "fremde Falle kaufen";
         btnOne.onClick.AddListener(btnHarborHint);
         btnTwo.onClick.AddListener(btnBuyTrap);
         if (GameState.money[GameState.currentTurn] < 5)
         {
             btnOne.interactable = false;
+        }
+        if (GameState.criminalRole != GameState.roles[GameState.currentTurn])
+        {
+            btnTwo.interactable = false;
+        }
+        else
+        {
+            simpleDialogue("Was willst du machen?", 60);
         }
     }
     void btnHarborHint()
@@ -1668,13 +2174,12 @@ public class Place : MonoBehaviour
         GameState.lastTransaction[GameState.currentTurn] = "\"Hafenequipment\"";
         GameState.money[GameState.currentTurn] -= 5;
         chanceToGetTrueHint(5);
-        toMovement();
+        setDialogue("Du hast den Hafenarbeitern etwas Equipment abgekauft und dabei einige interessanten Dinge erfahren. Du bist dir aber nicht sicher ob sie dir nicht vielleicht nur Seemannsgarn erzählt haben.");
     }
     void barAction()
     {
-        Debug.Log("Hello");
         oneButton();
-        btnOneText.text = "SAAAAAUUUUFEN";
+        btnOneText.text = "Ein Bier trinken";
         btnOne.onClick.AddListener(btnBarHint);
     }
     void btnBarHint()
@@ -1692,9 +2197,67 @@ public class Place : MonoBehaviour
             randOne = rn.Next(0, 6);
             randTwo = rn.Next(0, 7);
         }
-        GameState.currentPlace[GameState.currentTurn][0]=randOne;
+        GameState.currentPlace[GameState.currentTurn][0] = randOne;
         GameState.currentPlace[GameState.currentTurn][1] = randTwo;
-        toMovement();
+        string place = "";
+        switch (translatePlace(GameState.board[GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]]))
+        {
+            case "Stadtplatz":
+                place = "am Stadtplatz";
+                break;
+            case "Park":
+                place = "im Park";
+                break;
+            case "Krankenhaus":
+                place = "im Krankenhaus";
+                break;
+            case "Bank":
+                place = "in der Bank";
+                break;
+            case "Parlament":
+                place = "im Parlament";
+                break;
+            case "Friedhof":
+                place = "im Friedhof";
+                break;
+            case "Gefängnis":
+                place = "im Gefängnis";
+                break;
+            case "Kasino":
+                place = "im Kasino";
+                break;
+            case "Internet Cafe":
+                place = "im Internet Cafe";
+                break;
+            case "Bahnhof":
+                place = "am Bahnhof";
+                break;
+            case "Armee Laden":
+                place = "im Armee Laden";
+                break;
+            case "Shopping Center":
+                place = "im Shopping Center";
+                break;
+            case "Schrottplatz":
+                place = "im Schrottplatz";
+                break;
+            case "Bibliothek":
+                place = "in der Bibliothek";
+                break;
+            case "Labor":
+                place = "im Labor";
+                break;
+            case "Italiener":
+                place = "beim Italiener";
+                break;
+            case "Hafen":
+                place = "am Hafen";
+                break;
+            case "Bar":
+                place = "in der Bar";
+                break;
+        }
+        setDialogue("Du bist auf ein Bier in die Bar gegangen. Am nächsten Morgen bis du " + place + " aufgewacht. Die anderen Barbesucher haben dir eine wichtigen Hinweis gegeben aber du kannst dich nicht mehr genau daran erinnern.");
     }
 
     #endregion
@@ -1710,9 +2273,11 @@ public class Place : MonoBehaviour
         btnTwoText.text = "Hinweis";
         btnOne.onClick.AddListener(btnManipulationMovementClick);
         btnTwo.onClick.AddListener(btnManipulationHintClick);
+        simpleDialogue("Welche Art von Manipulation?",60);
     }
     void btnManipulationMovementClick()
     {
+        simpleDialogue("Wähle einen Spieler aus.", 80);
         playerButtons();
         firstMovementManipulation = true;
         btnOne.onClick.AddListener(btnPlayerOneClickManipulationMovement);
@@ -1724,7 +2289,7 @@ public class Place : MonoBehaviour
 
     }
 
-    
+
     void btnPlayerOneClickManipulationMovement()
     {
         MovementManipulation(0);
@@ -1750,17 +2315,18 @@ public class Place : MonoBehaviour
         MovementManipulation(5);
     }
 
-    void MovementManipulation (int player)
+    void MovementManipulation(int player)
     {
+        simpleDialogue("Wohin muss "+translateName(player)+" gehen?", 70);
         manipulatedPlayer = player;
         fiveButtons();
         int[] currentPlayerPlace = GameState.currentPlace[player];
         if (currentPlayerPlace[0] > 0)
         {
-            if(GameState.quarantined[GameState.board[currentPlayerPlace[0] - 1, currentPlayerPlace[1]]] > 0)
+            if (GameState.quarantined[GameState.board[currentPlayerPlace[0] - 1, currentPlayerPlace[1]]] > 0)
             {
                 btnOne.interactable = false;
-                btnOneText.fontSize = 50; 
+                btnOneText.fontSize = 50;
                 btnOneText.text = "Quarantäne";
             }
             else
@@ -1768,7 +2334,7 @@ public class Place : MonoBehaviour
                 btnOne.interactable = true;
                 btnOneText.text = translatePlace(GameState.board[currentPlayerPlace[0] - 1, currentPlayerPlace[1]]);
             }
-            
+
         }
         else
         {
@@ -1870,7 +2436,7 @@ public class Place : MonoBehaviour
             GameState.money[GameState.currentTurn] -= 10;
             firstMovementManipulation = false;
             GameState.isManipulated[manipulatedPlayer] = true;
-            toMovement();
+            MovementManipulationDialogue();
         }
     }
     void btnManipulationRight()
@@ -1888,7 +2454,7 @@ public class Place : MonoBehaviour
             GameState.money[GameState.currentTurn] -= 10;
             firstMovementManipulation = false;
             GameState.isManipulated[manipulatedPlayer] = true;
-            toMovement();
+            MovementManipulationDialogue();
         }
     }
     void btnManipulationDown()
@@ -1906,7 +2472,7 @@ public class Place : MonoBehaviour
             GameState.money[GameState.currentTurn] -= 10;
             firstMovementManipulation = false;
             GameState.isManipulated[manipulatedPlayer] = true;
-            toMovement();
+            MovementManipulationDialogue();
         }
     }
     void btnManipulationLeft()
@@ -1924,7 +2490,7 @@ public class Place : MonoBehaviour
             GameState.money[GameState.currentTurn] -= 10;
             firstMovementManipulation = false;
             GameState.isManipulated[manipulatedPlayer] = true;
-            toMovement();
+            MovementManipulationDialogue();
         }
     }
     void btnManipulationStay()
@@ -1934,11 +2500,41 @@ public class Place : MonoBehaviour
         GameState.isManipulated[manipulatedPlayer] = true;
         firstMovementManipulation = false;
         GameState.money[GameState.currentTurn] -= 10;
-        toMovement();
+        MovementManipulationDialogue();
+    }
+
+    void MovementManipulationDialogue()
+    {
+        string name = translateName(manipulatedPlayer);
+        string place = "";
+        int currentPlace = GameState.board[GameState.currentPlace[manipulatedPlayer][0], GameState.currentPlace[manipulatedPlayer][1]];
+        if(currentPlace==0|| currentPlace == 14 || currentPlace == 18 || currentPlace == 4)
+        {
+            place = "zur " + translatePlace(currentPlace);
+        }
+        else{
+            place = "zum " + translatePlace(currentPlace);
+        }
+        switch (GameState.criminalRole)
+        {
+            case "Inferno":
+                setDialogue("Mit einer ferngesteuerten Bombe hast du " + name + " dazu gezwungen " + place + " zu gehen.");
+                break;
+            case "Dr.Mortifier":
+                setDialogue("Mit einem spezielen Virus hast du " + name + " dazu gezwunden " + place + "zu gehen.");
+                break;
+            case "Phantom":
+                setDialogue("Indem du dich als verlässliche Quelle ausgegeben hast, hast du " + name + " dazu gebracht " + place + " zu gehen");
+                break;
+            case "Fasculto":
+                setDialogue("Mit einer Voodoo Puppe hast du " + name + " dazu gebracht " + place + " zu gehen.");
+                break;
+        }
     }
 
     void btnManipulationHintClick()
     {
+        simpleDialogue("Wähle einen Spieler aus.", 80);
         playerButtons();
         btnOne.onClick.AddListener(btnPlayerOneClickManipulationHint);
         btnTwo.onClick.AddListener(btnPlayerTwoClickManipulationHint);
@@ -1957,7 +2553,7 @@ public class Place : MonoBehaviour
             GameState.unsolvedHints[0]--;
         }
         GameState.lastAction[GameState.currentTurn] = "Manipulation";
-        toMovement();
+        HintManipulationDialogue(0);
     }
     void btnPlayerTwoClickManipulationHint()
     {
@@ -1968,7 +2564,7 @@ public class Place : MonoBehaviour
             GameState.unsolvedHints[1]--;
         }
         GameState.lastAction[GameState.currentTurn] = "Manipulation";
-        toMovement();
+        HintManipulationDialogue(1);
     }
     void btnPlayerThreeClickManipulationHint()
     {
@@ -1979,7 +2575,7 @@ public class Place : MonoBehaviour
             GameState.unsolvedHints[2]--;
         }
         GameState.lastAction[GameState.currentTurn] = "Manipulation";
-        toMovement();
+        HintManipulationDialogue(2);
     }
     void btnPlayerFourClickManipulationHint()
     {
@@ -1990,7 +2586,7 @@ public class Place : MonoBehaviour
             GameState.unsolvedHints[3]--;
         }
         GameState.lastAction[GameState.currentTurn] = "Manipulation";
-        toMovement();
+        HintManipulationDialogue(3);
     }
     void btnPlayerFiveClickManipulationHint()
     {
@@ -2001,7 +2597,7 @@ public class Place : MonoBehaviour
             GameState.unsolvedHints[4]--;
         }
         GameState.lastAction[GameState.currentTurn] = "Manipulation";
-        toMovement();
+        HintManipulationDialogue(4);
     }
     void btnPlayerSixClickManipulationHint()
     {
@@ -2012,7 +2608,27 @@ public class Place : MonoBehaviour
             GameState.unsolvedHints[5]--;
         }
         GameState.lastAction[GameState.currentTurn] = "Manipulation";
-        toMovement();
+        HintManipulationDialogue(5);
+    }
+
+    void HintManipulationDialogue(int player) {
+        string name = translateName(player);
+
+        switch (GameState.criminalRole)
+        {
+            case "Inferno":
+                setDialogue("Mit einer ferngesteuerten Bombe hast du " + name + " dazu gezwungen Beweismaterial zu zerstören.");
+                break;
+            case "Dr.Mortifier":
+                setDialogue("Mit einem spezielen Virus hast du " + name + " dazu gezwunden Beweismaterial zu zerstören.");
+                break;
+            case "Phantom":
+                setDialogue("Indem du dich als verlässliche Quelle ausgegeben hast, hast du " + name + " dazu gebracht Beweismaterial als falsch abzustempeln.");
+                break;
+            case "Fasculto":
+                setDialogue("Mit einer Voodoo Puppe hast du " + name + " dazu gebracht Beweismaterial zu zerstören.");
+                break;
+        }
     }
 
     #endregion
@@ -2021,8 +2637,7 @@ public class Place : MonoBehaviour
     void btnBigTrapClick()
     {
         btnBack.gameObject.SetActive(true);
-        GameState.bigTrapUsed = true;
-        addTrueHint();
+        
         playerButtons();
         btnOne.onClick.AddListener(btnPlayerOneClickBigTrap);
         btnTwo.onClick.AddListener(btnPlayerTwoClickBigTrap);
@@ -2031,43 +2646,81 @@ public class Place : MonoBehaviour
         btnFive.onClick.AddListener(btnPlayerFiveClickBigTrap);
         btnSix.onClick.AddListener(btnPlayerSixClickBigTrap);
 
+        simpleDialogue("Wähle einen Spieler aus.",80);
+
         Debug.Log(GameState.roles[GameState.currentTurn] + " used a big Trap");
     }
     void btnPlayerOneClickBigTrap()
     {
         GameState.lastAction[GameState.currentTurn] = "Große Falle";
         activatedTrap(0, findTargetPosition(GameState.criminalRole));
-        toMovement();
+        GameState.bigTrapUsed = true;
+        addTrueHint();
+        bigTrapDialogue(0);
     }
     void btnPlayerTwoClickBigTrap()
     {
         GameState.lastAction[GameState.currentTurn] = "Große Falle";
         activatedTrap(1, findTargetPosition(GameState.criminalRole));
-        toMovement();
+        GameState.bigTrapUsed = true;
+        addTrueHint();
+        bigTrapDialogue(1);
     }
     void btnPlayerThreeClickBigTrap()
     {
         GameState.lastAction[GameState.currentTurn] = "Große Falle";
         activatedTrap(2, findTargetPosition(GameState.criminalRole));
-        toMovement();
+        GameState.bigTrapUsed = true;
+        addTrueHint();
+        bigTrapDialogue(2);
     }
     void btnPlayerFourClickBigTrap()
     {
         GameState.lastAction[GameState.currentTurn] = "Große Falle";
         activatedTrap(3, findTargetPosition(GameState.criminalRole));
-        toMovement();
+        GameState.bigTrapUsed = true;
+        addTrueHint();
+        bigTrapDialogue(3);
     }
     void btnPlayerFiveClickBigTrap()
     {
         GameState.lastAction[GameState.currentTurn] = "Große Falle";
         activatedTrap(4, findTargetPosition(GameState.criminalRole));
-        toMovement();
+        GameState.bigTrapUsed = true;
+        addTrueHint();
+        bigTrapDialogue(4);
     }
     void btnPlayerSixClickBigTrap()
     {
         GameState.lastAction[GameState.currentTurn] = "Große Falle";
         activatedTrap(5, findTargetPosition(GameState.criminalRole));
-        toMovement();
+        GameState.bigTrapUsed = true;
+        addTrueHint();
+        bigTrapDialogue(5);
+    }
+
+    void bigTrapDialogue(int player)
+    {
+        string s = "";
+        string name = translateName(player);
+        switch (GameState.criminalRole)
+        {
+            case "Inferno":
+                s = "Du hast "+name+" mit einer kleinen Rakete getroffen.";
+                break;
+            case "Dr.Mortifier":
+                s = "Du hast " + name + " mit einer starken Grippe infiziert.";
+                break;
+            case "Phantom":
+                s = "Du hast Diebesgut in der Wohnung von " + name + " platziert.";
+                break;
+            case "Fasculto":
+                s = "Du hast " + name + " mit einem Unglücksfluch belegt und dadurch eine schweren Unfall ausgelöst.";
+                break;
+        }
+        
+
+        setDialogue(s);
     }
     #endregion
 
@@ -2315,6 +2968,8 @@ public class Place : MonoBehaviour
     }
     void disableButtons()
     {
+
+
         btnOne.gameObject.SetActive(true);
         btnTwo.gameObject.SetActive(true);
         btnThree.gameObject.SetActive(true);
@@ -2350,6 +3005,8 @@ public class Place : MonoBehaviour
         btnSix.gameObject.SetActive(false);
         btnSeven.gameObject.SetActive(false);
         btnEight.gameObject.SetActive(false);
+
+        actionsTextField.gameObject.SetActive(false);
     }
     void playerButtons()
     {
@@ -2359,9 +3016,9 @@ public class Place : MonoBehaviour
         btnFive.interactable = false;
         btnSix.interactable = false;
 
-        btnOneText.text = GameState.roles[0];
-        btnTwoText.text = GameState.roles[1];
-        btnThreeText.text = GameState.roles[2];
+        btnOneText.text = translateName(0);
+        btnTwoText.text = translateName(1);
+        btnThreeText.text = translateName(2);
         btnFourText.text = "nicht verfügbar";
         btnFiveText.text = "nicht verfügbar";
         btnSixText.text = "nicht verfügbar";
@@ -2372,7 +3029,7 @@ public class Place : MonoBehaviour
             case 4:
                 btnFour.interactable = true;
 
-                btnFourText.text = GameState.roles[3];
+                btnFourText.text = translateName(3);
 
                 break;
             case 5:
@@ -2380,8 +3037,8 @@ public class Place : MonoBehaviour
                 btnFive.interactable = true;
 
 
-                btnFourText.text = GameState.roles[3];
-                btnFiveText.text = GameState.roles[4];
+                btnFourText.text = translateName(3);
+                btnFiveText.text = translateName(4);
 
                 break;
             case 6:
@@ -2389,9 +3046,9 @@ public class Place : MonoBehaviour
                 btnFive.interactable = true;
                 btnSix.interactable = true;
 
-                btnFourText.text = GameState.roles[3];
-                btnFiveText.text = GameState.roles[4];
-                btnSixText.text = GameState.roles[5];
+                btnFourText.text = translateName(3);
+                btnFiveText.text = translateName(4);
+                btnSixText.text = translateName(5);
                 break;
         }
 
@@ -2401,6 +3058,63 @@ public class Place : MonoBehaviour
     #endregion
 
     #region Useful functions
+
+    string translateName(int player)
+    {
+        string name = "";
+        switch (GameState.roles[player])
+        {
+            case "Doctor":
+                name = "Moe McKay";
+                break;
+
+            case "Police":
+                name = "Felicity Fields";
+                break;
+
+            case "Detective":
+                name = "Collin Cooper";
+                break;
+
+            case "Psychic":
+                name = "Olivia Osswald";
+                break;
+
+            case "Psychologist":
+                name = "Laura Larsen";
+                break;
+
+            case "Reporter":
+                name = "Eric Edmond";
+                break;
+        }
+        return name;
+    }
+
+
+    void simpleDialogue(string simpleMessage, int fontsize)
+    {
+        StopCoroutine("SimpleTypeWriter");
+
+
+        dialoguePanel.gameObject.SetActive(true);
+        dialogueText.gameObject.SetActive(true);
+        currentDialogue = simpleMessage;
+        dialogueText.fontSize = fontsize;
+        dialogueText.text = "";
+        StartCoroutine("SimpleTypeWriter");
+    }
+
+    IEnumerator SimpleTypeWriter()
+    {
+        foreach (char c in currentDialogue)
+        {
+            dialogueText.text += c;
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
+
+
     int[] findTargetPosition(string criminalRole)
     {
         int[] targetPosition = new int[2];
@@ -2627,6 +3341,7 @@ public class Place : MonoBehaviour
         if (randomHint < chance)
         {
             GameState.trueSolveds[GameState.currentTurn]++;
+            checkForFact();
         }
     }
 
@@ -2635,9 +3350,9 @@ public class Place : MonoBehaviour
         int[] position = new int[2];
         for (int i = 0; i<6; i++)
         {
-            for (int j = 0; j<7; j++)
+            for (int j = 0; j < 7; j++)
             {
-                if(GameState.board[i,j] == place)
+                if (GameState.board[i, j] == place)
                 {
                     position[0] = i;
                     position[1] = j;
@@ -2646,5 +3361,57 @@ public class Place : MonoBehaviour
         }
         return position;
     }
+
+    bool checkForFact()
+    {
+        
+        if (GameState.solvedFacts[GameState.currentTurn] < 3)
+        {
+            if ((GameState.trueSolveds[GameState.currentTurn] - (GameState.solvedFacts[GameState.currentTurn] * 3)) >= 3)
+            {
+                System.Random rn = new System.Random();
+                int randomFact = rn.Next(0, 3);
+                switch (randomFact)
+                {
+                    case 0:
+                        if (GameState.playerFact[GameState.currentTurn] == "")
+                        {
+                            GameState.playerFact[GameState.currentTurn] = GameState.criminal;
+                            GameState.solvedFacts[GameState.currentTurn]++;
+                            return true;
+                        }
+                        else
+                        {
+                            return checkForFact();
+                        }
+                    case 1:
+                        if (GameState.placeFact[GameState.currentTurn] == "")
+                        {
+                            GameState.placeFact[GameState.currentTurn] = translatePlace(GameState.targetPlace);
+                            GameState.solvedFacts[GameState.currentTurn]++;
+                            return true;
+                        }
+                        else
+                        {
+                            return checkForFact();
+                        }
+                    case 2:
+                        if (GameState.roleFact[GameState.currentTurn] == "")
+                        {
+                            GameState.roleFact[GameState.currentTurn] = GameState.criminalRole;
+                            GameState.solvedFacts[GameState.currentTurn]++;
+                            return true;
+                        }
+                        else
+                        {
+                            return checkForFact();
+                        }
+                }
+                return checkForFact();
+            }
+        }
+        return false;
+    }
+
     #endregion
 }

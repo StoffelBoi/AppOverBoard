@@ -24,17 +24,27 @@ public class Movement : MonoBehaviour {
     public Sprite Psychic;
     public Sprite Reporter;
     public Sprite Psychologist;
+
+    public Button btnInfo;
     // Use this for initialization
 
     
     void Start()
     {
+        btnInfo.onClick.AddListener(btnToInfo);
         btnRight.onClick.AddListener(rightClick);
         btnLeft.onClick.AddListener(leftClick);
         btnUp.onClick.AddListener(upClick);
         btnDown.onClick.AddListener(downClick);
         btnStay.onClick.AddListener(stayClick);
+        firstMove = true;
     }
+
+    void btnToInfo()
+    {
+        UIManager.Instance.PrivatePlayer();
+    }
+
     void OnEnable()
     {
         newTurn();
@@ -65,7 +75,7 @@ public class Movement : MonoBehaviour {
         }
         currentPlace = GameState.currentPlace[GameState.currentTurn];
         setButtons(currentPlace);
-        firstMove = true;
+        
     }
 	// Update is called once per frame
 	void Update () {
@@ -183,6 +193,8 @@ public class Movement : MonoBehaviour {
         }
         else
         {
+            firstMove = true;
+            GameState.playerState[GameState.currentTurn] = "Action";
             UIManager.Instance.Place();
         }
     }

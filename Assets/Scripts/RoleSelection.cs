@@ -66,7 +66,7 @@ public class RoleSelection : MonoBehaviour
                         GameState.targetPlace = 1;
                         break;
                     case 2:
-                        GameState.targetPlace = 10;
+                        GameState.targetPlace = 17;
                         break;
                     case 3:
                         GameState.targetPlace = 12;
@@ -118,7 +118,9 @@ public class RoleSelection : MonoBehaviour
         if (selectedRoles == GameState.playerCount)
         {
             setCriminalRole();
+            GameState.playerState[0] = "Movement";
             UIManager.Instance.Waiting();
+            
         }
     }
 
@@ -202,6 +204,12 @@ public class RoleSelection : MonoBehaviour
         GameState.items.Add(new List<string>());
         GameState.lastTransaction.Add("Nichts");
         GameState.lastAction.Add("Nichts");
+        GameState.playerState.Add("Waiting");
+
+        GameState.solvedFacts.Add(0);
+        GameState.playerFact.Add("");
+        GameState.roleFact.Add("");
+        GameState.placeFact.Add("");
         addingHintBoards();
     }
     void addingHintBoards()

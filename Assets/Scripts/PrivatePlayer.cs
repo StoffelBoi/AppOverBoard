@@ -20,7 +20,11 @@ public class PrivatePlayer : MonoBehaviour {
     public Text txt_roleFact;
     public Text txt_placeFact;
 
-    private int playerID;
+    public Button btnTurn;
+    public Text btnTurnText;
+    public Button btnRules;
+
+    public int playerID;
     private string character;
     private string villainRole = "";
     private string target = "";
@@ -40,7 +44,8 @@ public class PrivatePlayer : MonoBehaviour {
     public bool timeWindowThief = false; //boolean fuer Meisterdieb ob er sein objektiv ausfuehren kann
     public bool timeWindowCultist = false; //boolean fuer Kultist ob er sein objektiv ausfuehren kann
 
-    void Start () {
+    void OnEnable()
+    {
         txt_villainPlain.enabled = false;
         txt_villain.enabled = false;
         txt_TargetPlain.enabled = false;
@@ -48,14 +53,25 @@ public class PrivatePlayer : MonoBehaviour {
         txt_TimePlain.enabled = false;
         txt_time.enabled = false;
 
-        playerID = GameState.playerCount;
-        GameState.playerCount++;
+        playerID = GameState.currentTurn;
 
-        character = GameState.roles[playerID];
-        txt_char.text = character;
+        txt_char.text = GameState.roles[playerID]; ;
 
-        if(GameState.criminal == character)
+        txt_money.text = GameState.money[playerID].ToString();
+
+        txt_solved.text = GameState.solvedHints[playerID].ToString();
+
+        txt_unsolved.text = GameState.unsolvedHints[playerID].ToString();
+
+        txt_placeFact.text = GameState.placeFact[playerID];
+        txt_playerFact.text = GameState.playerFact[playerID];
+        txt_roleFact.text = GameState.roleFact[playerID];
+
+        if (GameState.criminal == character)
         {
+            btnRules.onClick.RemoveAllListeners();
+            btnRules.onClick.AddListener(btnToRules);
+
             txt_villainPlain.enabled = true;
             txt_villain.enabled = true;
             txt_TargetPlain.enabled = true;
@@ -63,8 +79,7 @@ public class PrivatePlayer : MonoBehaviour {
             txt_TimePlain.enabled = true;
             txt_time.enabled = true;
 
-            villainRole = GameState.criminalRole;
-            txt_villain.text = villainRole;
+            txt_villain.text = GameState.criminalRole;
 
             switch (GameState.targetPlace)
             {
@@ -95,8 +110,8 @@ public class PrivatePlayer : MonoBehaviour {
             }
 
             txt_target.text = target;
-            
-            switch(villainRole)
+
+            switch (villainRole)
             {
                 case "Inferno":
                     targetTime = 50;
@@ -112,20 +127,50 @@ public class PrivatePlayer : MonoBehaviour {
                     break;
             }
 
-            InvokeRepeating("UpdateTime", 60, 60);
-
-            txt_time.text = targetTime.ToString();
-
-            money = GameState.money[playerID];
-            txt_money.text = money.ToString();
-
-            solved = GameState.solvedHints[playerID];
-            txt_solved.text = solved.ToString();
-
-            unsolved = GameState.unsolvedHints[playerID];
-            txt_unsolved.text = unsolved.ToString();
+            //InvokeRepeating("UpdateTime", 60, 60);
+            //txt_time.text = targetTime.ToString();
         }
-	}
+
+    }
+
+    void btnToRules()
+    {
+        UIManager.Instance.Rules();
+    }
+
+    void Update()
+    {
+        if (GameState.playerState[playerID] == "Movement")
+        {
+            btnTurnText.text = "Bewegung";
+            btnTurn.interactable = true;
+            btnTurn.onClick.RemoveAllListeners();
+            btnTurn.onClick.AddListener(btnToMovement);
+        }
+        else if(GameState.playerState[playerID] == "Action")
+        {
+            btnTurnText.text = "Aktion";
+            btnTurn.interactable = true;
+            btnTurn.onClick.RemoveAllListeners();
+            btnTurn.onClick.AddListener(btnToPlace);
+        }
+        else
+        {
+            btnTurnText.text = "Warten";
+            btnTurn.interactable = false;
+            btnTurn.onClick.RemoveAllListeners();
+        }
+    }
+
+    void btnToPlace()
+    {
+        UIManager.Instance.Place();
+    }
+
+    void btnToMovement()
+    {
+        UIManager.Instance.Movement();
+    }
 
     public void UpdateTime()
     {
@@ -307,8 +352,4 @@ public class PrivatePlayer : MonoBehaviour {
         txt_placeFact.text = placeFact;
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

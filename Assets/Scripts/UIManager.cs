@@ -172,4 +172,10 @@ public class UIManager : MonoBehaviour {
         PlaceController.SetActive(true);
         //PlaceController.GetComponent<Place>().enabled = true;
     }
+
+    //@TODO Make RulesLogic
+    public void Rules()
+    {
+        DisableEverything();
+    }
 }

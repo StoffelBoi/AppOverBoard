@@ -171,7 +171,7 @@ public class BoardAssembly : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            UIManager.Instance.Movement();
+            UIManager.Instance.PrivatePlayer();
         }
     }
 
