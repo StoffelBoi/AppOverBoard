@@ -89,7 +89,7 @@ public class BoardAssembly : MonoBehaviour {
             {0, 0, 0, 0, 0, 0, 0 },
             {0, place9, place10, 0, place11, place12, 0 }
         };
-        GameState.board = board;
+        GameState.Instance.board = board;
         for(int rows = 0; rows < board.GetLength(0); rows++)
         {
             for(int cols = 0; cols < board.GetLength(1); cols++)
@@ -173,6 +173,13 @@ public class BoardAssembly : MonoBehaviour {
         {
             TimeManager.Instance.startTimer();
             UIManager.Instance.PrivatePlayer();
+        }
+        if (Input.touchCount > 0)
+        {
+            if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                UIManager.Instance.PrivatePlayer();
+            }
         }
     }
 

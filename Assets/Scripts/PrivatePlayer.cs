@@ -56,23 +56,23 @@ public class PrivatePlayer : MonoBehaviour {
         txt_target.enabled = false;
        
 
-        playerID = GameState.currentTurn;
-        character = GameState.roles[playerID];
+        playerID = GameState.Instance.currentTurn;
+        character = GameState.Instance.roles[playerID];
         txt_char.text = character;
 
-        txt_money.text = GameState.money[playerID].ToString();
+        txt_money.text = GameState.Instance.money[playerID].ToString();
 
-        txt_solved.text = GameState.solvedHints[playerID].ToString();
+        txt_solved.text = GameState.Instance.solvedHints[playerID].ToString();
 
-        txt_unsolved.text = GameState.unsolvedHints[playerID].ToString();
+        txt_unsolved.text = GameState.Instance.unsolvedHints[playerID].ToString();
 
-        txt_placeFact.text = GameState.placeFact[playerID];
-        txt_playerFact.text = GameState.playerFact[playerID];
-        txt_roleFact.text = GameState.roleFact[playerID];
+        txt_placeFact.text = GameState.Instance.placeFact[playerID];
+        txt_playerFact.text = GameState.Instance.playerFact[playerID];
+        txt_roleFact.text = GameState.Instance.roleFact[playerID];
 
         
 
-        if (GameState.criminal == character)
+        if (GameState.Instance.criminal == character)
         {
             btnGuess.interactable = false;
             btnRules.onClick.RemoveAllListeners();
@@ -84,9 +84,9 @@ public class PrivatePlayer : MonoBehaviour {
             txt_target.enabled = true;
             
 
-            txt_villain.text = GameState.criminalRole;
+            txt_villain.text = GameState.Instance.criminalRole;
 
-            switch (GameState.targetPlace)
+            switch (GameState.Instance.targetPlace)
             {
                 case 1:
                     target = "Stadtplatz";
@@ -139,7 +139,7 @@ public class PrivatePlayer : MonoBehaviour {
     }
     void btnToGuess()
     {
-        GameState.playerState[GameState.currentTurn] = "Guessing";
+        GameState.Instance.playerState[GameState.Instance.currentTurn] = "Guessing";
         UIManager.Instance.Place();
     }
     void btnToRules()
@@ -149,7 +149,7 @@ public class PrivatePlayer : MonoBehaviour {
 
     void Update()
     {
-        if(GameState.playerState[playerID]== "Guessing")
+        if(GameState.Instance.playerState[playerID]== "Guessing")
         {
             btnTurn.onClick.RemoveAllListeners();
             btnTurn.onClick.AddListener(btnToGuess);
@@ -157,14 +157,14 @@ public class PrivatePlayer : MonoBehaviour {
             btnTurn.interactable = true;
             btnGuess.gameObject.SetActive(false);
         }
-        else if (GameState.playerState[playerID] == "Movement")
+        else if (GameState.Instance.playerState[playerID] == "Movement")
         {
             btnTurnText.text = "Bewegung";
             btnTurn.interactable = true;
             btnTurn.onClick.RemoveAllListeners();
             btnTurn.onClick.AddListener(btnToMovement);
         }
-        else if(GameState.playerState[playerID] == "Action")
+        else if(GameState.Instance.playerState[playerID] == "Action")
         {
             btnTurnText.text = "Aktion";
             btnTurn.interactable = true;
@@ -180,7 +180,7 @@ public class PrivatePlayer : MonoBehaviour {
         }
         if (isActiveAndEnabled)
         {
-            txt_time.text = TimeManager.Instance.elapsedTime;
+            txt_time.text = GameState.Instance.elapsedTime;
         }
     }
 
@@ -206,7 +206,7 @@ public class PrivatePlayer : MonoBehaviour {
 
         else if(villainRole == "Dr.Mortifier")
         {
-            if(GameState.planted)
+            if(GameState.Instance.planted)
             {
                 if(targetTime == 0)
                 {
@@ -331,19 +331,19 @@ public class PrivatePlayer : MonoBehaviour {
 
     private void UpdatePlayerFact()
     {
-        playerFact = GameState.criminal;
+        playerFact = GameState.Instance.criminal;
         txt_playerFact.text = playerFact;
     }
 
     private void UpdateRoleFact()
     {
-        roleFact = GameState.criminalRole;
+        roleFact = GameState.Instance.criminalRole;
         txt_roleFact.text = roleFact;
     }
 
     private void UpdatePlaceFact()
     {
-        switch (GameState.targetPlace)
+        switch (GameState.Instance.targetPlace)
         {
             case 1:
                 placeFact = "Stadtplatz";

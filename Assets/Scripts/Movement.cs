@@ -52,7 +52,7 @@ public class Movement : MonoBehaviour {
 
 	void newTurn()
     {
-        switch (GameState.roles[GameState.currentTurn])
+        switch (GameState.Instance.roles[GameState.Instance.currentTurn])
         {
             case "Detective":
                 img.GetComponent<Image>().sprite = Detective;
@@ -73,7 +73,7 @@ public class Movement : MonoBehaviour {
                 img.GetComponent<Image>().sprite = Psychologist;
                 break;
         }
-        currentPlace = GameState.currentPlace[GameState.currentTurn];
+        currentPlace = GameState.Instance.currentPlace[GameState.Instance.currentTurn];
         setButtons(currentPlace);
         
     }
@@ -89,7 +89,7 @@ public class Movement : MonoBehaviour {
         txtLeft.fontSize = 60;
         txtRight.fontSize = 60;
         txtStay.fontSize = 60;
-        if (GameState.quarantined[GameState.board[currentPlace[0], currentPlace[1]]] > 0)
+        if (GameState.Instance.quarantined[GameState.Instance.board[currentPlace[0], currentPlace[1]]] > 0)
         {
             btnStay.interactable = false;
             txtStay.fontSize = 50;
@@ -97,11 +97,11 @@ public class Movement : MonoBehaviour {
         }
         else
         {
-            txtStay.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1]]);
+            txtStay.text = translatePlace(GameState.Instance.board[currentPlace[0], currentPlace[1]]);
         }
         if (currentPlace[0] > 0)
         {
-            if(GameState.quarantined[GameState.board[currentPlace[0] - 1, currentPlace[1]]] > 0){
+            if(GameState.Instance.quarantined[GameState.Instance.board[currentPlace[0] - 1, currentPlace[1]]] > 0){
                 btnUp.interactable = false;
                 txtUp.fontSize = 50;
                 txtUp.text = "Quarantäne";
@@ -109,7 +109,7 @@ public class Movement : MonoBehaviour {
             else
             {
                 btnUp.interactable = true;
-                txtUp.text = translatePlace(GameState.board[currentPlace[0] - 1, currentPlace[1]]);
+                txtUp.text = translatePlace(GameState.Instance.board[currentPlace[0] - 1, currentPlace[1]]);
             }
            
         }
@@ -120,7 +120,7 @@ public class Movement : MonoBehaviour {
         }
         if (currentPlace[0] < 5)
         {
-            if (GameState.quarantined[GameState.board[currentPlace[0] + 1, currentPlace[1]]] > 0)
+            if (GameState.Instance.quarantined[GameState.Instance.board[currentPlace[0] + 1, currentPlace[1]]] > 0)
             {
                 btnDown.interactable = false;
                 txtDown.fontSize = 50;
@@ -129,7 +129,7 @@ public class Movement : MonoBehaviour {
             else
             {
                 btnDown.interactable = true;
-                txtDown.text = translatePlace(GameState.board[currentPlace[0] + 1, currentPlace[1]]);
+                txtDown.text = translatePlace(GameState.Instance.board[currentPlace[0] + 1, currentPlace[1]]);
             }
                 
         }
@@ -141,7 +141,7 @@ public class Movement : MonoBehaviour {
         if (currentPlace[1] > 0)
         {
 
-            if (GameState.quarantined[GameState.board[currentPlace[0], currentPlace[1] - 1]] > 0)
+            if (GameState.Instance.quarantined[GameState.Instance.board[currentPlace[0], currentPlace[1] - 1]] > 0)
             {
                 btnLeft.interactable = false;
                 txtLeft.fontSize = 50;
@@ -150,7 +150,7 @@ public class Movement : MonoBehaviour {
             else
             {
                 btnLeft.interactable = true;
-                txtLeft.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1] - 1]);
+                txtLeft.text = translatePlace(GameState.Instance.board[currentPlace[0], currentPlace[1] - 1]);
             }
         }
         else
@@ -161,7 +161,7 @@ public class Movement : MonoBehaviour {
         if (currentPlace[1] < 6)
         {
 
-            if (GameState.quarantined[GameState.board[currentPlace[0], currentPlace[1] + 1]] > 0)
+            if (GameState.Instance.quarantined[GameState.Instance.board[currentPlace[0], currentPlace[1] + 1]] > 0)
             {
                 btnRight.interactable = false;
                 txtRight.fontSize = 50;
@@ -170,7 +170,7 @@ public class Movement : MonoBehaviour {
             else
             {
                 btnRight.interactable = true;
-                txtRight.text = translatePlace(GameState.board[currentPlace[0], currentPlace[1] + 1]);
+                txtRight.text = translatePlace(GameState.Instance.board[currentPlace[0], currentPlace[1] + 1]);
             }
         }
         else
@@ -185,37 +185,37 @@ public class Movement : MonoBehaviour {
     {
         
 
-        if (firstMove && GameState.board[GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]] == 0)
+        if (firstMove && GameState.Instance.board[GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]] == 0)
         {
             firstMove = false;
-            currentPlace = GameState.currentPlace[GameState.currentTurn];
+            currentPlace = GameState.Instance.currentPlace[GameState.Instance.currentTurn];
             setButtons(currentPlace);
         }
         else
         {
             firstMove = true;
-            GameState.playerState[GameState.currentTurn] = "Action";
+            GameState.Instance.playerState[GameState.Instance.currentTurn] = "Action";
             UIManager.Instance.Place();
         }
     }
     void rightClick()
     {
-        GameState.currentPlace[GameState.currentTurn][1] += 1;
+        GameState.Instance.currentPlace[GameState.Instance.currentTurn][1] += 1;
         endClick();
     }
     void leftClick()
     {
-        GameState.currentPlace[GameState.currentTurn][1]-=1;
+        GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]-=1;
         endClick();
     }
     void downClick()
     {
-        GameState.currentPlace[GameState.currentTurn][0]+=1;
+        GameState.Instance.currentPlace[GameState.Instance.currentTurn][0]+=1;
         endClick();
     }
     void upClick()
     {
-        GameState.currentPlace[GameState.currentTurn][0]-=1;
+        GameState.Instance.currentPlace[GameState.Instance.currentTurn][0]-=1;
         endClick();
     }
     void stayClick()

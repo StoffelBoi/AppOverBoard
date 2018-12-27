@@ -1,71 +1,86 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class GameState : MonoBehaviour {
-    public static int playerCount;
-    public static List<string> roles;
-    public static List<int[]> currentPlace;
-    public static int[,] board;
-    public static string criminal;
-    public static string criminalRole;
-    public static List<int> money;
-    public static List<int> solvedHints;
-    public static List<int> unsolvedHints;
-    public static List<int> trueSolveds;
-    public static List<int> trueUnsolveds;
-    public static List<int[,]> notFoundTrue;
-    public static List<int[,]> notFoundFalse;
-    public static List<List<string>> items;
-
-    public static List<int> solvedFacts;
-    public static List<string> playerFact;
-    public static List<string> roleFact;
-    public static List<string> placeFact;
-
-    public static int targetPlace;
-    public static int currentTurn;
-    public static bool planted = false; // Variable fuer bio-terrorist wenn er seine bombe platziert hat
-    public static List<int> questPlaces;
-    public static int activatedQuestPlaces;
-    public static List<int> isDisabled;
-    public static List<bool> isManipulated;
-    public static bool bigTrapUsed;
-    public static List<bool> skillUsed;
-    public static List<bool> usedEnergyDrink;
+using UnityEngine.Networking;
 
 
+public class GameState : NetworkBehaviour {
 
-    public static List<int> infernoTraps;
-    public static List<int> drMortifierTraps;
-    public static List<int> phantomTraps;
-    public static List<int> fascultoTraps;
-
-    public static List<string> activeTraps;
+    [SyncVar]
+    public  int playerCount;
+    [SyncVar]
+    public  int connectedPlayer;
 
 
-    public static List<string> lastTransaction;
-    public static List<string> lastAction;
-    public static List<int> quarantined;
-    public static List<string> playerState;
+    public  List<string> roles;
+    public  List<int[]> currentPlace;
+    public  int[,] board;
+    public  string criminal;
+    public  string criminalRole;
+    public  List<int> money;
+    public  List<int> solvedHints;
+    public  List<int> unsolvedHints;
+    public  List<int> trueSolveds;
+    public  List<int> trueUnsolveds;
+    public  List<int[,]> notFoundTrue;
+    public  List<int[,]> notFoundFalse;
+    public  List<List<string>> items;
 
-    public static bool draw;
-    public static bool criminalWin;
-    public static List<bool> playerWin;
-    public static List<bool> playerLost;
+    public  List<int> solvedFacts;
+    public  List<string> playerFact;
+    public  List<string> roleFact;
+    public  List<string> placeFact;
+
+    public  int targetPlace;
+    public  int currentTurn;
+    public  bool planted = false; // Variable fuer bio-terrorist wenn er seine bombe platziert hat
+    public  List<int> questPlaces;
+    public  int activatedQuestPlaces;
+    public  List<int> isDisabled;
+    public  List<bool> isManipulated;
+    public  bool bigTrapUsed;
+    public  List<bool> skillUsed;
+    public  List<bool> usedEnergyDrink;
 
 
 
+    public  List<int> infernoTraps;
+    public  List<int> drMortifierTraps;
+    public  List<int> phantomTraps;
+    public  List<int> fascultoTraps;
 
-    public List<int> solvedHintsView;
-    public List<int> unsolvedHintsView;
+    public  List<string> activeTraps;
 
-    public List<int> trueSolvedsView;
-    public List<int> solvedFactView;
 
-    public int targetPlaceView;
+    public  List<string> lastTransaction;
+    public  List<string> lastAction;
+    public  List<int> quarantined;
+    public  List<string> playerState;
+
+    public bool targetTime;
+
+    public  bool draw;
+    public  bool criminalWin;
+    public  List<bool> playerWin;
+    public  List<bool> playerLost;
+
+    public int elapsedSeconds;
+
+    public string elapsedTime;
+    public GameObject localPlayer;
+
+    public static GameState Instance;
     void Awake() {
+
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
+            Destroy(gameObject);
+        elapsedSeconds = 0;
+        elapsedTime = "";
+        targetTime = false;
         playerCount = 0;
+        connectedPlayer = 0;
         roles = new List<string>();
         board = new int[6, 7];
         currentTurn= 0;
@@ -113,14 +128,5 @@ public class GameState : MonoBehaviour {
             activeTraps.Add("Safe");
             quarantined.Add(0);
         }
-    }
-   
-	void Update () {
-
-        solvedHintsView = solvedHints;
-        unsolvedHintsView = unsolvedHints;
-        solvedFactView = solvedFacts;
-        trueSolvedsView = trueSolveds;
-        targetPlaceView = targetPlace;
     }
 }

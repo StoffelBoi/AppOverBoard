@@ -32,93 +32,93 @@ public class RoleSelection : MonoBehaviour
         System.Random rn = new System.Random();
         int Role = rn.Next(1, 5);
         int targetPlace = rn.Next(1, 4);
-        int player = rn.Next(0, GameState.playerCount);
-        GameState.criminal = GameState.roles[player];
+        int player = rn.Next(0, GameState.Instance.playerCount);
+        GameState.Instance.criminal = GameState.Instance.roles[player];
         switch (Role)
         {
             case 1:
-                GameState.criminalRole = "Inferno";
-                GameState.questPlaces.Add(13);
-                GameState.questPlaces.Add(12);
-                GameState.questPlaces.Add(11);
+                GameState.Instance.criminalRole = "Inferno";
+                GameState.Instance.questPlaces.Add(13);
+                GameState.Instance.questPlaces.Add(12);
+                GameState.Instance.questPlaces.Add(11);
                 switch (targetPlace)
                 {
                     case 1:
-                        GameState.targetPlace = 5;
+                        GameState.Instance.targetPlace = 5;
                         break;
                     case 2:
-                        GameState.targetPlace = 8;
+                        GameState.Instance.targetPlace = 8;
                         break;
                     case 3:
-                       GameState.targetPlace = 7;
+                       GameState.Instance.targetPlace = 7;
                         break;
                 }
                 break;
             case 2:
-               GameState.criminalRole = "Dr.Mortifier";
-                GameState.questPlaces.Add(15);
-                GameState.questPlaces.Add(12);
-                GameState.questPlaces.Add(14);
+               GameState.Instance.criminalRole = "Dr.Mortifier";
+                GameState.Instance.questPlaces.Add(15);
+                GameState.Instance.questPlaces.Add(12);
+                GameState.Instance.questPlaces.Add(14);
                 switch (targetPlace)
                 {
                     case 1:
-                        GameState.targetPlace = 1;
+                        GameState.Instance.targetPlace = 1;
                         break;
                     case 2:
-                        GameState.targetPlace = 17;
+                        GameState.Instance.targetPlace = 17;
                         break;
                     case 3:
-                        GameState.targetPlace = 12;
+                        GameState.Instance.targetPlace = 12;
                         break;
                 }
                 break;
             case 3:
-                GameState.criminalRole = "Phantom";
-                GameState.questPlaces.Add(9);
-                GameState.questPlaces.Add(11);
-                GameState.questPlaces.Add(18);
+                GameState.Instance.criminalRole = "Phantom";
+                GameState.Instance.questPlaces.Add(9);
+                GameState.Instance.questPlaces.Add(11);
+                GameState.Instance.questPlaces.Add(18);
                 switch (targetPlace)
                 {
                     case 1:
-                        GameState.targetPlace = 4;
+                        GameState.Instance.targetPlace = 4;
                         break;
                     case 2:
-                        GameState.targetPlace = 8;
+                        GameState.Instance.targetPlace = 8;
                         break;
                     case 3:
-                        GameState.targetPlace = 12;
+                        GameState.Instance.targetPlace = 12;
                         break;
                 }
                 break;
             case 4:
-                GameState.criminalRole = "Fasculto";
-                GameState.questPlaces.Add(18);
-                GameState.questPlaces.Add(14);
-                GameState.questPlaces.Add(17);
+                GameState.Instance.criminalRole = "Fasculto";
+                GameState.Instance.questPlaces.Add(18);
+                GameState.Instance.questPlaces.Add(14);
+                GameState.Instance.questPlaces.Add(17);
                 switch (targetPlace)
                 {
                     case 1:
-                        GameState.targetPlace = 6;
+                        GameState.Instance.targetPlace = 6;
                         break;
                     case 2:
-                        GameState.targetPlace = 7;
+                        GameState.Instance.targetPlace = 7;
                         break;
                     case 3:
-                        GameState.targetPlace = 5;
+                        GameState.Instance.targetPlace = 5;
                         break;
                 }
                 break;
         }
-        Debug.Log(GameState.criminalRole + " played by " + GameState.criminal);
+        Debug.Log(GameState.Instance.criminalRole + " played by " + GameState.Instance.criminal);
     }
     // Update is called once per frame
     void Update()
     {
-        if (selectedRoles == GameState.playerCount)
+        if (selectedRoles == GameState.Instance.playerCount)
         {
             setCriminalRole();
-            GameState.playerState[0] = "Movement";
-            UIManager.Instance.Waiting();
+            GameState.Instance.playerState[0] = "Movement";
+            UIManager.Instance.BoardAssembly();
             
         }
     }
@@ -130,7 +130,7 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_doctor.interactable = false;
-        GameState.roles.Add("Doctor");
+        GameState.Instance.roles.Add("Doctor");
         initializingPlayer();
 
         selectedRoles++;
@@ -141,7 +141,7 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_policeMan.interactable = false;
-        GameState.roles.Add("Police");
+        GameState.Instance.roles.Add("Police");
         initializingPlayer();
 
         selectedRoles++;
@@ -152,7 +152,7 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_privateDetective.interactable = false;
-        GameState.roles.Add("Detective");
+        GameState.Instance.roles.Add("Detective");
         initializingPlayer();
        
         selectedRoles++;
@@ -163,7 +163,7 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_psychic.interactable = false;
-        GameState.roles.Add("Psychic");
+        GameState.Instance.roles.Add("Psychic");
         initializingPlayer();
   
         selectedRoles++;
@@ -174,7 +174,7 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_psychologist.interactable = false;
-        GameState.roles.Add("Psychologist");
+        GameState.Instance.roles.Add("Psychologist");
         initializingPlayer();
   
         selectedRoles++;
@@ -185,32 +185,32 @@ public class RoleSelection : MonoBehaviour
         //string in gamestate setzen
         //player count erhöhen für waiting scene
         btn_reporter.interactable = false;
-        GameState.roles.Add("Reporter");
+        GameState.Instance.roles.Add("Reporter");
         initializingPlayer();
         selectedRoles++;
     }
     void initializingPlayer()
     {
-        GameState.currentPlace.Add(new int[] { 2, 3 });
-        GameState.money.Add(6);
-        GameState.trueUnsolveds.Add(0);
-        GameState.trueSolveds.Add(0);
-        GameState.unsolvedHints.Add(0);
-        GameState.solvedHints.Add(0);
-        GameState.isDisabled.Add(0);
-        GameState.isManipulated.Add(false);
-        GameState.skillUsed.Add(false);
-        GameState.items.Add(new List<string>());
-        GameState.lastTransaction.Add("Nichts");
-        GameState.lastAction.Add("Nichts");
-        GameState.playerState.Add("Waiting");
+        GameState.Instance.currentPlace.Add(new int[] { 2, 3 });
+        GameState.Instance.money.Add(6);
+        GameState.Instance.trueUnsolveds.Add(0);
+        GameState.Instance.trueSolveds.Add(0);
+        GameState.Instance.unsolvedHints.Add(0);
+        GameState.Instance.solvedHints.Add(0);
+        GameState.Instance.isDisabled.Add(0);
+        GameState.Instance.isManipulated.Add(false);
+        GameState.Instance.skillUsed.Add(false);
+        GameState.Instance.items.Add(new List<string>());
+        GameState.Instance.lastTransaction.Add("Nichts");
+        GameState.Instance.lastAction.Add("Nichts");
+        GameState.Instance.playerState.Add("Waiting");
 
-        GameState.solvedFacts.Add(0);
-        GameState.playerFact.Add("");
-        GameState.roleFact.Add("");
-        GameState.placeFact.Add("");
-        GameState.playerWin.Add(false);
-        GameState.playerLost.Add(false);
+        GameState.Instance.solvedFacts.Add(0);
+        GameState.Instance.playerFact.Add("");
+        GameState.Instance.roleFact.Add("");
+        GameState.Instance.placeFact.Add("");
+        GameState.Instance.playerWin.Add(false);
+        GameState.Instance.playerLost.Add(false);
         addingHintBoards();
     }
     void addingHintBoards()
@@ -225,7 +225,7 @@ public class RoleSelection : MonoBehaviour
                 notFoundFalse[i, j] = 0;
             }
         }
-        GameState.notFoundTrue.Add(notFoundTrue);
-        GameState.notFoundFalse.Add(notFoundFalse);
+        GameState.Instance.notFoundTrue.Add(notFoundTrue);
+        GameState.Instance.notFoundFalse.Add(notFoundFalse);
     }
 }
