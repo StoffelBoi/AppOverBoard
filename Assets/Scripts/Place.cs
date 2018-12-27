@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System;
 public class Place : MonoBehaviour
 {
     
@@ -62,8 +62,23 @@ public class Place : MonoBehaviour
     public Image dialoguePanel;
     public string leftOverDialogue;
     public string currentDialogue;
+
+    public static Place Instance;
+
+    public bool guessing;
+
+    void Awake()
+    {
+        guessing = false;
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
+            Destroy(gameObject);
+    }
     void OnEnable()
     {
+        currentBet = 0;
+        delayedTurns = 1;
         currentDialogue = "";
         leftOverDialogue = "";
         dialogueText.text = currentDialogue;
@@ -77,6 +92,8 @@ public class Place : MonoBehaviour
         btnInfo.onClick.AddListener(btnToInfo);
         currentPlace = GameState.board[GameState.currentPlace[GameState.currentTurn][0], GameState.currentPlace[GameState.currentTurn][1]];
         actionsTextField.gameObject.SetActive(false);
+
+        if (GameState.playerState[GameState.currentTurn]!= "Guessing") { 
         placeName.text = translatePlace(currentPlace);
         setPlaceImage(currentPlace);
         //menu if its a street
@@ -142,15 +159,16 @@ public class Place : MonoBehaviour
 
                         }
                     }
-                    else
+                }
+                if (GameState.activatedQuestPlaces >= 3)
+                {
+                    if (GameState.targetPlace == currentPlace)
                     {
-                        if (GameState.targetPlace == currentPlace)
-                        {
-                            btnEight.interactable = true;
-                            btnEightText.text = "Verbrechen ausführen";
-                        }
+                        btnEight.interactable = true;
+                        btnEightText.text = "Verbrechen ausführen";
                     }
                 }
+                    
                 //checking if theres already a trap on the current place
                 if (GameState.activeTraps[currentPlace] != "Safe")
                 {
@@ -228,11 +246,334 @@ public class Place : MonoBehaviour
         }
         //checking if player triggers a trap;
             Invoke("checkForTraps", 0.01f);
-        //resetting the current bet
-        currentBet = 0;
-        delayedTurns = 1;
+        }
+        else
+        {
+            playerButtons();
+            btnOne.onClick.AddListener(btnCheckPlayerOne);
+            btnTwo.onClick.AddListener(btnCheckPlayerTwo);
+            btnThree.onClick.AddListener(btnCheckPlayerThree);
+            btnFour.onClick.AddListener(btnCheckPlayerFour);
+            btnFive.onClick.AddListener(btnCheckPlayerFive);
+            btnSix.onClick.AddListener(btnCheckPlayerSix);
+        }
     }
- 
+
+#region Guessing
+    void btnCheckPlayerOne()
+    {
+        CheckPlayerFact(0);
+    }
+    void btnCheckPlayerTwo()
+    {
+        CheckPlayerFact(1);
+    }
+    void btnCheckPlayerThree()
+    {
+        CheckPlayerFact(2);
+    }
+    void btnCheckPlayerFour()
+    {
+        CheckPlayerFact(3);
+    }
+    void btnCheckPlayerFive()
+    {
+        CheckPlayerFact(4);
+    }
+    void btnCheckPlayerSix()
+    {
+        CheckPlayerFact(5);
+    }
+    void CheckPlayerFact(int player)
+    {
+        if (GameState.roles[player] == GameState.criminal)
+        {
+            fourButtons();
+            btnOneText.text = "Inferno";
+            btnTwoText.text = "Dr. Mortifier";
+            btnThreeText.text = "Phantom";
+            btnFourText.text = "Fasculto";
+            btnOne.onClick.AddListener(btnCheckRoleOne);
+            btnTwo.onClick.AddListener(btnCheckRoleTwo);
+            btnThree.onClick.AddListener(btnCheckRoleThree);
+            btnFour.onClick.AddListener(btnCheckRoleFour);
+        }
+        else
+        {
+            GameState.playerLost[GameState.currentTurn] = true;
+            endTurn();
+        }
+    }
+
+    void btnCheckRoleOne()
+    {
+        CheckRoleFact(0);
+    }
+    void btnCheckRoleTwo()
+    {
+        CheckRoleFact(1);
+    }
+    void btnCheckRoleThree()
+    {
+        CheckRoleFact(2);
+    }
+    void btnCheckRoleFour()
+    {
+        CheckRoleFact(3);
+    }
+    void CheckRoleFact(int role)
+    {
+        switch (role)
+        {
+            case 0:
+                if (GameState.criminalRole == "Inferno")
+                {
+                    CheckPlaceLayout();
+                }
+                else
+                {
+                    GameState.playerLost[GameState.currentTurn] = true;
+                    endTurn();
+                }
+                break;
+            case 1:
+                if(GameState.criminalRole == "Dr.Mortifier")
+                {
+                    CheckPlaceLayout();
+                }
+                else
+                {
+                    GameState.playerLost[GameState.currentTurn] = true;
+                    endTurn();
+                }
+                break;
+            case 2:
+                if (GameState.criminalRole == "Phantom")
+                {
+                    CheckPlaceLayout();
+                }
+                else
+                {
+                    GameState.playerLost[GameState.currentTurn] = true;
+                    endTurn();
+                }
+                break;
+            case 3:
+                if (GameState.criminalRole == "Fasculto")
+                {
+                    CheckPlaceLayout();
+                }
+                else
+                {
+                    GameState.playerLost[GameState.currentTurn] = true;
+                    endTurn();
+                }
+                break;
+        }
+    }
+    void CheckPlaceLayout()
+    {
+        threeButtons();
+        switch (GameState.criminalRole)
+        {
+            case "Inferno":
+                btnOneText.text = "Parlament";
+                btnTwoText.text = "Gefängnis";
+                btnThreeText.text = "Kasino";
+                break;
+            case "Dr.Mortifier":
+                btnOneText.text = "Stadtplatz";
+                btnTwoText.text = "Shopping Center";
+                btnThreeText.text = "Hafen";
+                break;
+            case "Phantom":
+                btnOneText.text = "Bank";
+                btnTwoText.text = "Kasino";
+                btnThreeText.text = "Shopping Center";
+                break;
+            case "Fasculto":
+                btnOneText.text = "Parlament";
+                btnTwoText.text = "Friedhof";
+                btnThreeText.text = "Gefängis";
+                break;
+        }
+        btnOne.onClick.AddListener(btnCheckPlaceOne);
+        btnTwo.onClick.AddListener(btnCheckPlaceTwo);
+        btnThree.onClick.AddListener(btnCheckPlaceThree);
+    }
+    void btnCheckPlaceOne()
+    {
+        CheckPlaceFact(0);
+    }
+    void btnCheckPlaceTwo()
+    {
+        CheckPlaceFact(1);
+    }
+    void btnCheckPlaceThree()
+    {
+        CheckPlaceFact(2);
+    }
+    void CheckPlaceFact(int place)
+    {
+        switch (GameState.criminalRole)
+        {
+            case "Inferno":
+                switch (place)
+                {
+                    case 0:
+                        if (GameState.targetPlace ==5)
+                        {
+                            GameState.playerWin[GameState.currentTurn] = true;
+                        }
+                        else
+                        {
+                            GameState.playerLost[GameState.currentTurn] = true;
+                            endTurn();
+                        }
+                        break;
+                    case 1:
+                        if (GameState.targetPlace ==7)
+                        {
+                            GameState.playerWin[GameState.currentTurn] = true;
+                        }
+                        else
+                        {
+                            GameState.playerLost[GameState.currentTurn] = true;
+                            endTurn();
+                        }
+                        break;
+                    case 2:
+                        if (GameState.targetPlace ==8)
+                        {
+                            GameState.playerWin[GameState.currentTurn] = true;
+                        }
+                        else
+                        {
+                            GameState.playerLost[GameState.currentTurn] = true;
+                            endTurn();
+                        }
+                        break;
+                }
+                break;
+            case "Dr.Mortifier":
+                switch (place)
+                {
+                    case 0:
+                        if (GameState.targetPlace ==1)
+                        {
+                            GameState.playerWin[GameState.currentTurn] = true;
+                        }
+                        else
+                        {
+                            GameState.playerLost[GameState.currentTurn] = true;
+                            endTurn();
+                        }
+                        break;
+                    case 1:
+                        if (GameState.targetPlace ==12)
+                        {
+                            GameState.playerWin[GameState.currentTurn] = true;
+                        }
+                        else
+                        {
+                            GameState.playerLost[GameState.currentTurn] = true;
+                            endTurn();
+                        }
+                        break;
+                    case 2:
+                        if (GameState.targetPlace ==17)
+                        {
+                            GameState.playerWin[GameState.currentTurn] = true;
+                        }
+                        else
+                        {
+                            GameState.playerLost[GameState.currentTurn] = true;
+                            endTurn();
+                        }
+                        break;
+                }
+                break;
+            case "Phantom":
+                switch (place)
+                {
+                    case 0:
+                        if (GameState.targetPlace ==4)
+                        {
+                            GameState.playerWin[GameState.currentTurn] = true;
+                        }
+                        else
+                        {
+                            GameState.playerLost[GameState.currentTurn] = true;
+                            endTurn();
+                        }
+                        break;
+                    case 1:
+                        if (GameState.targetPlace ==8)
+                        {
+                            GameState.playerWin[GameState.currentTurn] = true;
+                        }
+                        else
+                        {
+                            GameState.playerLost[GameState.currentTurn] = true;
+                            endTurn();
+                        }
+                        break;
+                    case 2:
+                        if (GameState.targetPlace ==12)
+                        {
+                            GameState.playerWin[GameState.currentTurn] = true;
+                        }
+                        else
+                        {
+                            GameState.playerLost[GameState.currentTurn] = true;
+                            endTurn();
+                        }
+                        break;
+                }
+                break;
+            case "Fasculto":
+                switch (place)
+                {
+                    case 0:
+                        if (GameState.targetPlace ==5)
+                        {
+                            GameState.playerWin[GameState.currentTurn] = true;
+                        }
+                        else
+                        {
+                            GameState.playerLost[GameState.currentTurn] = true;
+                            endTurn();
+                        }
+                        break;
+                    case 1:
+                        if (GameState.targetPlace ==6)
+                        {
+                            GameState.playerWin[GameState.currentTurn] = true;
+                        }
+                        else
+                        {
+                            GameState.playerLost[GameState.currentTurn] = true;
+                            endTurn();
+                        }
+                        break;
+                    case 2:
+                        if (GameState.targetPlace ==7)
+                        {
+                            GameState.playerWin[GameState.currentTurn] = true;
+                        }
+                        else
+                        {
+                            GameState.playerLost[GameState.currentTurn] = true;
+                            endTurn();
+                        }
+                        break;
+                }
+                break;
+        }
+    }
+
+#endregion
+
     void btnToInfo()
     {
         UIManager.Instance.PrivatePlayer();
@@ -370,6 +711,7 @@ public class Place : MonoBehaviour
         }
     }
 
+    //@TODO Messages for big trap and manipulation, and small trap
     void endTurn()
     {
         if (!GameState.usedEnergyDrink.Contains(true))
@@ -413,6 +755,11 @@ public class Place : MonoBehaviour
             {
                 Debug.Log(GameState.roles[GameState.currentTurn] + " is still disabled");
                 GameState.isDisabled[GameState.currentTurn]--;
+                endTurn();
+            }
+            if (GameState.playerLost[GameState.currentTurn])
+            {
+                Debug.Log(GameState.roles[GameState.currentTurn] + " has already lost");
                 endTurn();
             }
             if (GameState.isManipulated[GameState.currentTurn])
@@ -953,14 +1300,13 @@ public class Place : MonoBehaviour
     }
     #endregion
 
-    //@TODO: action for commiting the crime with time aspekt
     void btnActivateQuestPlaceClick()
     {
-        GameState.lastAction[GameState.currentTurn] = "Questort aktivieren";
-        GameState.money[GameState.currentTurn] -= 6;
         addTrueHint();
         if (GameState.activatedQuestPlaces < 3)
         {
+            GameState.lastAction[GameState.currentTurn] = "Questort aktivieren";
+            GameState.money[GameState.currentTurn] -= 6;
             GameState.questPlaces.Remove(currentPlace);
             GameState.activatedQuestPlaces++;
             string s = "";
@@ -1043,8 +1389,15 @@ public class Place : MonoBehaviour
         }
         else
         {
-            endTurn();
-            //TODO action for planted 
+            GameState.lastAction[GameState.currentTurn] = "Verbrechen ausführen";
+            if (GameState.criminalRole == "Inferno" || GameState.criminalRole == "Phantom" || GameState.criminalRole == "Fasculto")
+            {
+                GameState.criminalWin = true;
+            }
+            else if (GameState.criminalRole == "Dr.Mortifier") 
+            {
+                GameState.planted = true;
+            }
         }
         
     }
@@ -2724,6 +3077,8 @@ public class Place : MonoBehaviour
     }
     #endregion
 
+    
+
     //@TODO: Layout for 7 buttons
     #region LayoutFunctions
 
@@ -3058,6 +3413,24 @@ public class Place : MonoBehaviour
     #endregion
 
     #region Useful functions
+
+    public bool calculateGetAway()
+    {
+        int distance = 0;
+        int[] start = findPosition(GameState.targetPlace);
+        int criminalID=-1;
+        for (int i = 0; i < GameState.playerCount; i++)
+        {
+            if (GameState.roles[i] == GameState.criminal)
+            {
+                criminalID = i;
+            }
+        }
+        int[] end = GameState.currentPlace[criminalID];
+        distance += Math.Abs(start[0] - end[0]);
+        distance += Math.Abs(start[1] - end[1]);
+        return (distance >= 5);
+    }
 
     string translateName(int player)
     {

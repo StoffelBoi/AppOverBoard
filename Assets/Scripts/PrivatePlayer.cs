@@ -23,6 +23,8 @@ public class PrivatePlayer : MonoBehaviour {
     public Button btnTurn;
     public Text btnTurnText;
     public Button btnRules;
+    public Button btnGuess;
+
 
     public int playerID;
     private string character;
@@ -46,16 +48,17 @@ public class PrivatePlayer : MonoBehaviour {
 
     void OnEnable()
     {
+        btnGuess.onClick.RemoveAllListeners();
+        btnGuess.onClick.AddListener(btnToGuess);
         txt_villainPlain.enabled = false;
         txt_villain.enabled = false;
         txt_TargetPlain.enabled = false;
         txt_target.enabled = false;
-        txt_TimePlain.enabled = false;
-        txt_time.enabled = false;
+       
 
         playerID = GameState.currentTurn;
-
-        txt_char.text = GameState.roles[playerID]; ;
+        character = GameState.roles[playerID];
+        txt_char.text = character;
 
         txt_money.text = GameState.money[playerID].ToString();
 
@@ -67,8 +70,11 @@ public class PrivatePlayer : MonoBehaviour {
         txt_playerFact.text = GameState.playerFact[playerID];
         txt_roleFact.text = GameState.roleFact[playerID];
 
+        
+
         if (GameState.criminal == character)
         {
+            btnGuess.interactable = false;
             btnRules.onClick.RemoveAllListeners();
             btnRules.onClick.AddListener(btnToRules);
 
@@ -76,8 +82,7 @@ public class PrivatePlayer : MonoBehaviour {
             txt_villain.enabled = true;
             txt_TargetPlain.enabled = true;
             txt_target.enabled = true;
-            txt_TimePlain.enabled = true;
-            txt_time.enabled = true;
+            
 
             txt_villain.text = GameState.criminalRole;
 
@@ -132,7 +137,11 @@ public class PrivatePlayer : MonoBehaviour {
         }
 
     }
-
+    void btnToGuess()
+    {
+        GameState.playerState[GameState.currentTurn] = "Guessing";
+        UIManager.Instance.Place();
+    }
     void btnToRules()
     {
         UIManager.Instance.Rules();
@@ -140,7 +149,15 @@ public class PrivatePlayer : MonoBehaviour {
 
     void Update()
     {
-        if (GameState.playerState[playerID] == "Movement")
+        if(GameState.playerState[playerID]== "Guessing")
+        {
+            btnTurn.onClick.RemoveAllListeners();
+            btnTurn.onClick.AddListener(btnToGuess);
+            btnTurnText.text = "Verhaften";
+            btnTurn.interactable = true;
+            btnGuess.gameObject.SetActive(false);
+        }
+        else if (GameState.playerState[playerID] == "Movement")
         {
             btnTurnText.text = "Bewegung";
             btnTurn.interactable = true;
@@ -159,6 +176,11 @@ public class PrivatePlayer : MonoBehaviour {
             btnTurnText.text = "Warten";
             btnTurn.interactable = false;
             btnTurn.onClick.RemoveAllListeners();
+            btnGuess.interactable = false;
+        }
+        if (isActiveAndEnabled)
+        {
+            txt_time.text = TimeManager.Instance.elapsedTime;
         }
     }
 

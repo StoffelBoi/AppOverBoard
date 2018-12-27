@@ -34,7 +34,6 @@ public class RoleSelection : MonoBehaviour
         int targetPlace = rn.Next(1, 4);
         int player = rn.Next(0, GameState.playerCount);
         GameState.criminal = GameState.roles[player];
-
         switch (Role)
         {
             case 1:
@@ -210,6 +209,8 @@ public class RoleSelection : MonoBehaviour
         GameState.playerFact.Add("");
         GameState.roleFact.Add("");
         GameState.placeFact.Add("");
+        GameState.playerWin.Add(false);
+        GameState.playerLost.Add(false);
         addingHintBoards();
     }
     void addingHintBoards()

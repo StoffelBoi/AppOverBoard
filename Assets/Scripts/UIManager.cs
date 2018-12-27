@@ -27,6 +27,9 @@ public class UIManager : MonoBehaviour {
     public Canvas canvasRulesWinCondition;
     public Canvas canvasRulesHints;
     public Canvas canvasRulesMovement;
+    public Canvas canvasWin;
+    public Canvas canvasLoss;
+
 
     public GameObject StartUpController;
     public GameObject ConnectionController;
@@ -37,6 +40,9 @@ public class UIManager : MonoBehaviour {
     public GameObject MovementController;
     public GameObject PlaceController;
     public GameObject RulesController;
+    public GameObject WinController;
+    public GameObject LossController;
+
 
     public static UIManager Instance;
     // Use this for initialization
@@ -76,7 +82,8 @@ public class UIManager : MonoBehaviour {
         canvasRulesWinCondition.enabled = false;
         canvasRulesHints.enabled = false;
         canvasRulesMovement.enabled = false;
-
+        canvasWin.enabled = false;
+        canvasLoss.enabled = false;
         /*
         StartUpController.GetComponent<StartUp>().enabled = false;
         ConnectionController.GetComponent<Connection>().enabled = false;
@@ -99,6 +106,8 @@ public class UIManager : MonoBehaviour {
         MovementController.SetActive(false);
         PlaceController.SetActive(false);
         RulesController.SetActive(false);
+        WinController.SetActive(false);
+        LossController.SetActive(false);
     }
 
     public void StartUp()
@@ -172,6 +181,25 @@ public class UIManager : MonoBehaviour {
         PlaceController.SetActive(true);
         //PlaceController.GetComponent<Place>().enabled = true;
     }
+
+    public void Win()
+    {
+        DisableEverything();
+        canvasWin.gameObject.SetActive(true);
+        canvasWin.enabled = true;
+        WinController.SetActive(true);
+        //WinController.GetComponent<Place>().enabled = true;
+    }
+
+    public void Loss()
+    {
+        DisableEverything();
+        canvasLoss.gameObject.SetActive(true);
+        canvasLoss.enabled = true;
+        LossController.SetActive(true);
+        //LossController.GetComponent<Place>().enabled = true;
+    }
+
 
     //@TODO Make RulesLogic
     public void Rules()

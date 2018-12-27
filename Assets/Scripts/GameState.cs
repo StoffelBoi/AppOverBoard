@@ -49,6 +49,13 @@ public class GameState : MonoBehaviour {
     public static List<int> quarantined;
     public static List<string> playerState;
 
+    public static bool draw;
+    public static bool criminalWin;
+    public static List<bool> playerWin;
+    public static List<bool> playerLost;
+
+
+
 
     public List<int> solvedHintsView;
     public List<int> unsolvedHintsView;
@@ -56,6 +63,7 @@ public class GameState : MonoBehaviour {
     public List<int> trueSolvedsView;
     public List<int> solvedFactView;
 
+    public int targetPlaceView;
     void Awake() {
         playerCount = 0;
         roles = new List<string>();
@@ -92,8 +100,10 @@ public class GameState : MonoBehaviour {
         lastTransaction = new List<string>();
         lastAction = new List<string>();
         playerState = new List<string>();
-
-
+        draw = false;
+        criminalWin = false;
+        playerWin = new List<bool>();
+        playerLost = new List<bool>();
         for (int i = 0; i < 19; i++)
         {
             infernoTraps.Add(0);
@@ -111,5 +121,6 @@ public class GameState : MonoBehaviour {
         unsolvedHintsView = unsolvedHints;
         solvedFactView = solvedFacts;
         trueSolvedsView = trueSolveds;
+        targetPlaceView = targetPlace;
     }
 }
