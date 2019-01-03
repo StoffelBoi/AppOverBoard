@@ -8936,7 +8936,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &732978570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11498,6 +11498,7 @@ MonoBehaviour:
   infoPanel: {fileID: 1652170575}
   PlayerCountPanel: {fileID: 215121493}
   IPInputField: {fileID: 410511104}
+  playerCount: 0
 --- !u!4 &937288206
 Transform:
   m_ObjectHideFlags: 0
@@ -16181,20 +16182,14 @@ MonoBehaviour:
   targetPlace: 0
   currentTurn: 0
   planted: 0
-  questPlaces: 
   activatedQuestPlaces: 0
-  isDisabled: 
-  isManipulated: 
   bigTrapUsed: 0
-  skillUsed: 
   usedEnergyDrink: 
   infernoTraps: 
   drMortifierTraps: 
   phantomTraps: 
   fascultoTraps: 
   activeTraps: []
-  lastTransaction: []
-  lastAction: []
   quarantined: 
   playerState: []
   playerWin: 
