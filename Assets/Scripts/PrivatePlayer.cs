@@ -48,6 +48,9 @@ public class PrivatePlayer : MonoBehaviour {
 
     void OnEnable()
     {
+        Debug.Log("Enable");
+        btnRules.onClick.RemoveAllListeners();
+        btnRules.onClick.AddListener(btnToRules);
         btnGuess.onClick.RemoveAllListeners();
         btnGuess.onClick.AddListener(btnToGuess);
         txt_villainPlain.enabled = false;
@@ -75,8 +78,7 @@ public class PrivatePlayer : MonoBehaviour {
         if (GameState.Instance.criminal == character)
         {
             btnGuess.interactable = false;
-            btnRules.onClick.RemoveAllListeners();
-            btnRules.onClick.AddListener(btnToRules);
+            
 
             txt_villainPlain.enabled = true;
             txt_villain.enabled = true;
@@ -144,6 +146,7 @@ public class PrivatePlayer : MonoBehaviour {
     }
     void btnToRules()
     {
+        Debug.Log("hello");
         UIManager.Instance.Rules();
     }
 

@@ -8048,7 +8048,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &626111166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14102,6 +14102,7 @@ MonoBehaviour:
   winCon: {fileID: 1689918571}
   hints: {fileID: 1423839981}
   movement: {fileID: 1258338408}
+  testText: {fileID: 17219955}
 --- !u!4 &1136027252
 Transform:
   m_ObjectHideFlags: 0
@@ -16170,15 +16171,6 @@ MonoBehaviour:
   criminalWin: 0
   criminal: 
   criminalRole: 
-  roles: []
-  solvedHints: 
-  unsolvedHints: 
-  trueSolveds: 
-  trueUnsolveds: 
-  solvedFacts: 
-  playerFact: []
-  roleFact: []
-  placeFact: []
   targetPlace: 0
   currentTurn: 0
   planted: 0
@@ -16191,9 +16183,6 @@ MonoBehaviour:
   fascultoTraps: 
   activeTraps: []
   quarantined: 
-  playerState: []
-  playerWin: 
-  playerLost: 
 --- !u!114 &1358096518
 MonoBehaviour:
   m_ObjectHideFlags: 0

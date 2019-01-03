@@ -114,15 +114,15 @@ public class RoleSelection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int selectedRoles = 0;
-        for(int i = 0; i<6; i++)
-        {
-            if (GameState.Instance.roles[i] != "")
-            {
-                selectedRoles++;
-            }
-        }
-        player.SetSelectedRoles(selectedRoles);
+        //int selectedRoles = 0;
+        //for(int i = 0; i<6; i++)
+        //{
+        //    if (GameState.Instance.roles[i] != "")
+        //    {
+        //        selectedRoles++;
+        //    }
+        //}
+        //player.SetSelectedRoles(selectedRoles);
         if (GameState.Instance.selectedRoles == GameState.Instance.playerCount)
         {
             setCriminalRole();
@@ -237,6 +237,7 @@ public class RoleSelection : MonoBehaviour
         player.SetPlayerLost(player.id, false);
         player.SetCurrentPlace(player.id, new int[] { 2, 3 });
         addingHintBoards();
+        GameState.Instance.selectedRoles++;
     }
     void addingHintBoards()
     {
