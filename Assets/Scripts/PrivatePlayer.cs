@@ -48,6 +48,8 @@ public class PrivatePlayer : MonoBehaviour {
 
     void OnEnable()
     {
+        btnRules.onClick.AddListener(btnToRules);
+
         btnGuess.onClick.RemoveAllListeners();
         btnGuess.onClick.AddListener(btnToGuess);
         txt_villainPlain.enabled = false;
@@ -147,8 +149,9 @@ public class PrivatePlayer : MonoBehaviour {
         UIManager.Instance.Rules();
     }
 
+
     void Update()
-    {
+    { 
         if(GameState.Instance.playerState[playerID]== "Guessing")
         {
             btnTurn.onClick.RemoveAllListeners();
