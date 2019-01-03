@@ -6,18 +6,35 @@ using UnityEngine.Networking;
 
 public class GameState : NetworkBehaviour {
 
-    [SyncVar]
-    public  int playerCount;
-    [SyncVar]
-    public  int connectedPlayer;
+    public static GameState Instance;
 
+    public GameObject localPlayer;
 
+    [SyncVar]
+    public int playerCount;
+    [SyncVar]
+    public int connectedPlayer;
+    [SyncVar]
+    public int selectedRoles;
+    [SyncVar]
+    public bool targetTime;
+    [SyncVar]
+    public int elapsedSeconds;
+    [SyncVar]
+    public string elapsedTime;
+    [SyncVar]
+    public bool draw;
+    [SyncVar]
+    public bool criminalWin;
+    [SyncVar]
+    public string criminal;
+    [SyncVar]
+    public string criminalRole;
     public  List<string> roles;
     public  List<int[]> currentPlace;
     public  int[,] board;
-    public  string criminal;
-    public  string criminalRole;
-    public  List<int> money;
+   
+    public  SyncListInt money;
     public  List<int> solvedHints;
     public  List<int> unsolvedHints;
     public  List<int> trueSolveds;
@@ -57,25 +74,20 @@ public class GameState : NetworkBehaviour {
     public  List<int> quarantined;
     public  List<string> playerState;
 
-    public bool targetTime;
+    
 
-    public  bool draw;
-    public  bool criminalWin;
     public  List<bool> playerWin;
     public  List<bool> playerLost;
 
-    public int elapsedSeconds;
-
-    public string elapsedTime;
-    public GameObject localPlayer;
-
-    public static GameState Instance;
+   
+    
     void Awake() {
-
+  
         if (Instance == null)
             Instance = this;
         else if (Instance != this)
             Destroy(gameObject);
+        selectedRoles = 0;
         elapsedSeconds = 0;
         elapsedTime = "";
         targetTime = false;
@@ -85,7 +97,7 @@ public class GameState : NetworkBehaviour {
         board = new int[6, 7];
         currentTurn= 0;
         currentPlace = new List<int[]>();
-        money = new List<int>();
+        money = new SyncListInt();
         solvedHints = new List<int>();
         unsolvedHints = new List<int>();
         items = new List<List<string>>();
@@ -129,4 +141,7 @@ public class GameState : NetworkBehaviour {
             quarantined.Add(0);
         }
     }
+
+
+
 }

@@ -22,6 +22,9 @@ public class Waiting : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         playerCount.text=(GameState.Instance.connectedPlayer+"/" + GameState.Instance.playerCount);
+
+        ////////////////////////////////////////////////////////////
+        //DELETE THIS FOR FINAL PRODUCT
         if (Input.GetKeyDown(KeyCode.Space))
         {
             UIManager.Instance.RoleSelection();
@@ -33,6 +36,12 @@ public class Waiting : MonoBehaviour {
             {
                 UIManager.Instance.RoleSelection();
             }
+        }
+        ////////////////////////////////////////////////////////////
+      
+        if (GameState.Instance.connectedPlayer == GameState.Instance.playerCount)
+        {
+            UIManager.Instance.RoleSelection();
         }
     }
 }

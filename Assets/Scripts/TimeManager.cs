@@ -11,7 +11,7 @@ public class TimeManager : MonoBehaviour {
     private string criminalRole;
     public bool getAway;
     private Stopwatch getAwayTime;
-
+    private Player player;
     void Awake()
     {
         if (Instance == null)
@@ -23,8 +23,6 @@ public class TimeManager : MonoBehaviour {
     void Start () {
         started = false;
         stopwatch = new Stopwatch();
-        GameState.Instance.elapsedTime ="0:00:00";
-        GameState.Instance.targetTime = false;
         criminalRole = "";
         getAway = false;
         getAwayTime = new Stopwatch();
@@ -32,12 +30,13 @@ public class TimeManager : MonoBehaviour {
 
     public void startTimer()
     {
+        player = GameState.Instance.localPlayer.GetComponent<Player>();
         stopwatch.Start();
         started = true;
         criminalRole = GameState.Instance.criminalRole;
         if (criminalRole == "Inferno"||criminalRole=="Dr.Mortifier")
         {
-            GameState.Instance.targetTime = true;
+            player.SetTargetTime(true);
         }
     }
 	
@@ -45,7 +44,7 @@ public class TimeManager : MonoBehaviour {
 	void Update () {
         if (started)
         {
-            GameState.Instance.elapsedSeconds = (int)(stopwatch.ElapsedMilliseconds / 1000);
+           player.SetElapsedSeconds((int)(stopwatch.ElapsedMilliseconds / 1000));
             elapsedMinutes = GameState.Instance.elapsedSeconds / 60;
             elapsedHours = elapsedMinutes / 60;
             string seconds = "" + (GameState.Instance.elapsedSeconds % 60);
@@ -58,7 +57,7 @@ public class TimeManager : MonoBehaviour {
             {
                 minutes = "0" + minutes;
             }
-            GameState.Instance.elapsedTime = "" + elapsedHours + ":" + minutes + ":" + seconds;
+            player.SetElapsedTime("" + elapsedHours + ":" + minutes + ":" + seconds);
 
 
             //Inferno Test:
@@ -66,18 +65,18 @@ public class TimeManager : MonoBehaviour {
             {
                 if (GameState.Instance.elapsedSeconds > 3000)
                 {
-                    GameState.Instance.targetTime = false;
-                    GameState.Instance.draw = true;
+                    player.SetTargetTime(false);
+                    player.SetDraw(true);
                 }
             }
             //Dr.Mortifier Test:
-            if(criminalRole == "Dr.Mortifier")
+            if (criminalRole == "Dr.Mortifier")
             {
                 if (GameState.Instance.planted)
                 {
                     if (!getAway)
                     {
-                        GameState.Instance.targetTime = false;
+                        player.SetTargetTime(false);
                         getAway = true;
                         getAwayTime.Start();
                     }
@@ -85,11 +84,11 @@ public class TimeManager : MonoBehaviour {
                     {
                         if(Place.Instance.calculateGetAway())
                         {
-                            GameState.Instance.criminalWin = true;
+                            player.SetCriminalWin(true);
                         }
                         else
                         {
-                            GameState.Instance.draw = true;
+                            player.SetDraw(true);
                         }
                         
                     }
@@ -104,12 +103,12 @@ public class TimeManager : MonoBehaviour {
                 {
                     if ((i + 20 <= elapsedMinutes && i + 25 > elapsedMinutes) || (i + 45 <= (GameState.Instance.elapsedSeconds / 60) && i + 50 > (GameState.Instance.elapsedSeconds / 60)) || (i + 70 <= (GameState.Instance.elapsedSeconds / 60) && i + 75 > (GameState.Instance.elapsedSeconds / 60)) || (i + 95 <= (GameState.Instance.elapsedSeconds / 60) && i + 100 > (GameState.Instance.elapsedSeconds / 60)))
                     {
-                        GameState.Instance.targetTime = true;
+                        player.SetTargetTime(true);
                         hitTime = true;
                     }
                     else
                     {
-                        GameState.Instance.targetTime = false;
+                        player.SetTargetTime(false);
                     }
                 }
             }
@@ -119,12 +118,12 @@ public class TimeManager : MonoBehaviour {
             {
                 if (GameState.Instance.elapsedSeconds > 2400)
                 {
-                    GameState.Instance.targetTime = true;
+                    player.SetTargetTime(true);
                 }
                 if (GameState.Instance.elapsedSeconds > 3600)
                 {
-                    GameState.Instance.targetTime = false;
-                    GameState.Instance.draw = true;
+                    player.SetTargetTime(false);
+                    player.SetDraw(true);
                 }
             }
 
