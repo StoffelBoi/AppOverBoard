@@ -8412,7 +8412,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &732978570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10862,6 +10862,7 @@ MonoBehaviour:
   infoPanel: {fileID: 1652170575}
   PlayerCountPanel: {fileID: 215121493}
   IPInputField: {fileID: 410511104}
+  playerCount: 0
 --- !u!4 &937288206
 Transform:
   m_ObjectHideFlags: 0
@@ -15040,46 +15041,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83e2ec7c363d28047a30b3af10748f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  localPlayer: {fileID: 0}
   playerCount: 0
   connectedPlayer: 0
-  roles: []
+  selectedRoles: 0
+  targetTime: 0
+  elapsedSeconds: 0
+  elapsedTime: 
+  draw: 0
+  criminalWin: 0
   criminal: 
   criminalRole: 
-  solvedHints: 
-  unsolvedHints: 
-  trueSolveds: 
-  trueUnsolveds: 
-  solvedFacts: 
-  playerFact: []
-  roleFact: []
-  placeFact: []
   targetPlace: 0
   currentTurn: 0
   planted: 0
-  questPlaces: 
   activatedQuestPlaces: 0
-  isDisabled: 
-  isManipulated: 
   bigTrapUsed: 0
-  skillUsed: 
   usedEnergyDrink: 
   infernoTraps: 
   drMortifierTraps: 
   phantomTraps: 
   fascultoTraps: 
   activeTraps: []
-  lastTransaction: []
-  lastAction: []
   quarantined: 
-  playerState: []
-  targetTime: 0
-  draw: 0
-  criminalWin: 0
-  playerWin: 
-  playerLost: 
-  elapsedSeconds: 0
-  elapsedTime: 
-  localPlayer: {fileID: 0}
 --- !u!114 &1358096518
 MonoBehaviour:
   m_ObjectHideFlags: 0

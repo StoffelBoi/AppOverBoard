@@ -18,7 +18,7 @@ public class Connection : MonoBehaviour {
     public InputField IPInputField;
 
     public static Connection Instance;
-    private int playerCount;
+    public int playerCount;
 
     void Awake()
     {
@@ -122,8 +122,8 @@ public class Connection : MonoBehaviour {
 
     void btnHostClick()
     {
-        GameState.Instance.playerCount = playerCount;
         MyNetManager.Instance.StartGame();
+        GameState.Instance.playerCount = playerCount;
     }
     //@TODO add back button
     void btnJoinClick()

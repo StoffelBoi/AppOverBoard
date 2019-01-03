@@ -38,88 +38,144 @@ public class RoleSelection : MonoBehaviour
         {
             case 1:
                 player.SetCriminalRole("Inferno");
-                GameState.Instance.questPlaces.Add(13);
-                GameState.Instance.questPlaces.Add(12);
-                GameState.Instance.questPlaces.Add(11);
+                player.AddQuestPlace(13);
+                player.AddQuestPlace(12);
+                player.AddQuestPlace(11);
                 switch (targetPlace)
                 {
                     case 1:
-                        GameState.Instance.targetPlace = 5;
+                        player.SetTargetPlace(5);
                         break;
                     case 2:
-                        GameState.Instance.targetPlace = 8;
+                        player.SetTargetPlace(8);
                         break;
                     case 3:
-                       GameState.Instance.targetPlace = 7;
+                        player.SetTargetPlace(7);
                         break;
                 }
                 break;
             case 2:
-               GameState.Instance.criminalRole = "Dr.Mortifier";
-                GameState.Instance.questPlaces.Add(15);
-                GameState.Instance.questPlaces.Add(12);
-                GameState.Instance.questPlaces.Add(14);
+                player.SetCriminalRole("Dr.Mortifier");
+                player.AddQuestPlace(15);
+                player.AddQuestPlace(12);
+                player.AddQuestPlace(14);
                 switch (targetPlace)
                 {
                     case 1:
-                        GameState.Instance.targetPlace = 1;
+                        player.SetTargetPlace(1);
                         break;
                     case 2:
-                        GameState.Instance.targetPlace = 17;
+                        player.SetTargetPlace(17);
                         break;
                     case 3:
-                        GameState.Instance.targetPlace = 12;
+                        player.SetTargetPlace(12);
                         break;
                 }
                 break;
             case 3:
-                GameState.Instance.criminalRole = "Phantom";
-                GameState.Instance.questPlaces.Add(9);
-                GameState.Instance.questPlaces.Add(11);
-                GameState.Instance.questPlaces.Add(18);
+                player.SetCriminalRole("Phantom");
+                player.AddQuestPlace(9);
+                player.AddQuestPlace(11);
+                player.AddQuestPlace(18);
                 switch (targetPlace)
                 {
                     case 1:
-                        GameState.Instance.targetPlace = 4;
+                       player.SetTargetPlace(4);
                         break;
                     case 2:
-                        GameState.Instance.targetPlace = 8;
+                       player.SetTargetPlace(8);
                         break;
                     case 3:
-                        GameState.Instance.targetPlace = 12;
+                       player.SetTargetPlace(12);
                         break;
                 }
                 break;
             case 4:
-                GameState.Instance.criminalRole = "Fasculto";
-                GameState.Instance.questPlaces.Add(18);
-                GameState.Instance.questPlaces.Add(14);
-                GameState.Instance.questPlaces.Add(17);
+                player.SetCriminalRole("Fasculto");
+                player.AddQuestPlace(18);
+                player.AddQuestPlace(14);
+                player.AddQuestPlace(17);
                 switch (targetPlace)
                 {
                     case 1:
-                        GameState.Instance.targetPlace = 6;
+                        player.SetTargetPlace(6);
                         break;
                     case 2:
-                        GameState.Instance.targetPlace = 7;
+                        player.SetTargetPlace(7);
                         break;
                     case 3:
-                        GameState.Instance.targetPlace = 5;
+                        player.SetTargetPlace(5);
                         break;
                 }
                 break;
         }
-        Debug.Log(GameState.Instance.criminalRole + " played by " + GameState.Instance.criminal);
+        //Debug.Log(GameState.Instance.criminalRole + " played by " + GameState.Instance.criminal);
     }
     // Update is called once per frame
     void Update()
     {
+        int selectedRoles = 0;
+        for(int i = 0; i<6; i++)
+        {
+            if (GameState.Instance.roles[i] != "")
+            {
+                selectedRoles++;
+            }
+        }
+        player.SetSelectedRoles(selectedRoles);
         if (GameState.Instance.selectedRoles == GameState.Instance.playerCount)
         {
             setCriminalRole();
-            GameState.Instance.playerState[0] = "Movement";
+            player.SetPlayerState(0, "Movement");
             UIManager.Instance.BoardAssembly();
-            
+        }
+        if (GameState.Instance.roles.Contains("Doctor"))
+        {
+            btn_doctor.interactable = false;
+        }
+        else
+        {
+            btn_doctor.interactable = true;
+        }
+        if (GameState.Instance.roles.Contains("Police"))
+        {
+            btn_policeMan.interactable = false;
+        }
+        else
+        {
+            btn_policeMan.interactable = true;
+        }
+        if (GameState.Instance.roles.Contains("Detective"))
+        {
+            btn_privateDetective.interactable = false;
+        }
+        else
+        {
+            btn_privateDetective.interactable = true;
+        }
+        if (GameState.Instance.roles.Contains("Psychic"))
+        {
+            btn_psychic.interactable = false;
+        }
+        else
+        {
+            btn_psychic.interactable = true;
+        }
+        if (GameState.Instance.roles.Contains("Psychologist"))
+        {
+            btn_psychologist.interactable = false;
+        }
+        else
+        {
+            btn_psychologist.interactable = true;
+        }
+        if (GameState.Instance.roles.Contains("Reporter"))
+        {
+            btn_reporter.interactable = false;
+        }
+        else
+        {
+            btn_reporter.interactable = true;
         }
     }
 
@@ -127,81 +183,60 @@ public class RoleSelection : MonoBehaviour
 
     void DoctorClick()
     {
-        //string in gamestate setzen
-        //player count erhöhen für waiting scene
-        btn_doctor.interactable = false;
-        GameState.Instance.roles.Add("Doctor");
+        player.SetRole(player.id, "Doctor");
         initializingPlayer();
     }
 
     void PoliceClick()
     {
-        //string in gamestate setzen
-        //player count erhöhen für waiting scene
-        btn_policeMan.interactable = false;
-        GameState.Instance.roles.Add("Police");
+        player.SetRole(player.id, "Police");
         initializingPlayer();
     }
 
     void DetectiveClick()
     {
-        //string in gamestate setzen
-        //player count erhöhen für waiting scene
-        btn_privateDetective.interactable = false;
-        GameState.Instance.roles.Add("Detective");
+        player.SetRole(player.id, "Detective");
         initializingPlayer();
     }
 
     void PsychicClick()
     {
-        //string in gamestate setzen
-        //player count erhöhen für waiting scene
-        btn_psychic.interactable = false;
-        GameState.Instance.roles.Add("Psychic");
+        player.SetRole(player.id, "Psychic");
         initializingPlayer();
     }
 
     void PsychologistClick()
     {
-        //string in gamestate setzen
-        //player count erhöhen für waiting scene
-        btn_psychologist.interactable = false;
-        GameState.Instance.roles.Add("Psychologist");
+        player.SetRole(player.id, "Psychologist");
         initializingPlayer();
     }
 
     void ReporterClick()
     {
-        //string in gamestate setzen
-        //player count erhöhen für waiting scene
-        btn_reporter.interactable = false;
-        GameState.Instance.roles.Add("Reporter");
+        player.SetRole(player.id, "Reporter");
         initializingPlayer();
     }
     void initializingPlayer()
     {
-        GameState.Instance.currentPlace.Add(new int[] { 2, 3 });
-        GameState.Instance.money.Add(6);
-        GameState.Instance.trueUnsolveds.Add(0);
-        GameState.Instance.trueSolveds.Add(0);
-        GameState.Instance.unsolvedHints.Add(0);
-        GameState.Instance.solvedHints.Add(0);
-        GameState.Instance.isDisabled.Add(0);
-        GameState.Instance.isManipulated.Add(false);
-        GameState.Instance.skillUsed.Add(false);
-        GameState.Instance.items.Add(new List<string>());
-        GameState.Instance.lastTransaction.Add("Nichts");
-        GameState.Instance.lastAction.Add("Nichts");
-        GameState.Instance.playerState.Add("Waiting");
-
-        GameState.Instance.solvedFacts.Add(0);
-        GameState.Instance.playerFact.Add("");
-        GameState.Instance.roleFact.Add("");
-        GameState.Instance.placeFact.Add("");
-        GameState.Instance.playerWin.Add(false);
-        GameState.Instance.playerLost.Add(false);
+        player.SetMoney(player.id, 6);
+        player.SetTrueUnsolveds(player.id, 0);
+        player.SetTrueSolveds(player.id, 0);
+        player.SetUnsolvedHints(player.id, 0);
+        player.SetSolvedHints(player.id, 69);
+        player.SetIsDisabled(player.id, 0);
+        player.SetIsManipulated(player.id, false);
+        player.SetSkillUsed(player.id, false);
+        player.SetPlayerState(player.id, "Waiting");
+        player.SetLastTransaction(player.id, "Nichts");
+        player.SetLastAction(player.id, "Nichts");
+        player.SetSolvedFacts(player.id, 0);
+        player.SetPlayerFact(player.id, "");
+        player.SetRoleFact(player.id, "");
+        player.SetPlaceFact(player.id, "");
+        player.SetPlayerWin(player.id, false);
+        player.SetPlayerLost(player.id, false);
+        player.SetCurrentPlace(player.id, new int[] { 2, 3 });
         addingHintBoards();
-        GameState.Instance.localPlayer.GetComponent<Player>().SelectedRolesUp();
     }
     void addingHintBoards()
     {
