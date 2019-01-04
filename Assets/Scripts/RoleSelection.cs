@@ -241,8 +241,6 @@ public class RoleSelection : MonoBehaviour
     }
     void addingHintBoards()
     {
-        int[,] notFoundTrue = new int[6, 7];
-        int[,] notFoundFalse = new int[6, 7];
         for (int i = 0; i < 6; i++)
         {
             for (int j = 0; j < 7; j++)

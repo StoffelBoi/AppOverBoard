@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Player : NetworkBehaviour {
+public class Player : NetworkBehaviour
+{
     public int id;
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         id = GameState.Instance.connectedPlayer;
         if (isLocalPlayer)
         {
@@ -18,7 +20,8 @@ public class Player : NetworkBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
     }
 
@@ -28,6 +31,7 @@ public class Player : NetworkBehaviour {
         if (isServer)
         {
             GameState.Instance.connectedPlayer++;
+            RpcConnectedPlayerUp();
         }
         else
         {
@@ -39,6 +43,15 @@ public class Player : NetworkBehaviour {
     {
         ConnectedPlayerUp();
     }
+    [ClientRpc]
+    public void RpcConnectedPlayerUp()
+    {
+        if (!isServer)
+        {
+            GameState.Instance.connectedPlayer++;
+        }
+      
+    }
     #endregion
     #region SetSelectedRoles
     public void SetSelectedRoles(int selectedRoles)
@@ -46,6 +59,7 @@ public class Player : NetworkBehaviour {
         if (isServer)
         {
             GameState.Instance.selectedRoles = selectedRoles;
+            RpcSetSelectedRoles(selectedRoles);
         }
         else
         {
@@ -57,6 +71,14 @@ public class Player : NetworkBehaviour {
     {
         SetSelectedRoles(selectedRoles);
     }
+    [ClientRpc]
+    public void RpcSetSelectedRoles(int selectedRoles)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.selectedRoles = selectedRoles;
+        }
+    }
     #endregion
     #region SetTargetTime
     public void SetTargetTime(bool active)
@@ -64,6 +86,7 @@ public class Player : NetworkBehaviour {
         if (isServer)
         {
             GameState.Instance.targetTime = active;
+            RpcSetTargetTime(active);
         }
         else
         {
@@ -75,6 +98,14 @@ public class Player : NetworkBehaviour {
     {
         SetTargetTime(active);
     }
+    [ClientRpc]
+    public void RpcSetTargetTime(bool active)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.targetTime = active;
+        }
+    }
     #endregion
     #region SetElapsedSeconds
     public void SetElapsedSeconds(int elapsedSeconds)
@@ -82,6 +113,7 @@ public class Player : NetworkBehaviour {
         if (isServer)
         {
             GameState.Instance.elapsedSeconds = elapsedSeconds;
+            RpcSetElapsedSeconds(elapsedSeconds);
         }
         else
         {
@@ -93,6 +125,14 @@ public class Player : NetworkBehaviour {
     {
         SetElapsedSeconds(elapsedSeconds);
     }
+    [ClientRpc]
+    public void RpcSetElapsedSeconds(int elapsedSeconds)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.elapsedSeconds = elapsedSeconds;
+        }
+    }
     #endregion
     #region SetElapsedTime
     public void SetElapsedTime(string elapsedTime)
@@ -100,6 +140,7 @@ public class Player : NetworkBehaviour {
         if (isServer)
         {
             GameState.Instance.elapsedTime = elapsedTime;
+            RpcSetElapsedTime(elapsedTime);
         }
         else
         {
@@ -111,6 +152,14 @@ public class Player : NetworkBehaviour {
     {
         SetElapsedTime(elapsedTime);
     }
+    [ClientRpc]
+    public void RpcSetElapsedTime(string elapsedTime)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.elapsedTime = elapsedTime;
+        }
+    }
     #endregion
     #region SetDraw
     public void SetDraw(bool draw)
@@ -118,6 +167,7 @@ public class Player : NetworkBehaviour {
         if (isServer)
         {
             GameState.Instance.draw = draw;
+            RpcSetDraw(draw);
         }
         else
         {
@@ -129,6 +179,14 @@ public class Player : NetworkBehaviour {
     {
         SetDraw(draw);
     }
+    [ClientRpc]
+    public void RpcSetDraw(bool draw)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.draw = draw;
+        }
+    }
 
     #endregion
     #region SetCriminalWin
@@ -137,6 +195,7 @@ public class Player : NetworkBehaviour {
         if (isServer)
         {
             GameState.Instance.criminalWin = win;
+            RpcSetCriminalWin(win);
         }
         else
         {
@@ -148,7 +207,14 @@ public class Player : NetworkBehaviour {
     {
         SetCriminalWin(win);
     }
-
+    [ClientRpc]
+    public void RpcSetCriminalWin(bool win)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.criminalWin = win;
+        }
+    }
     #endregion
     #region SetCriminal
     public void SetCriminal(string role)
@@ -156,6 +222,7 @@ public class Player : NetworkBehaviour {
         if (isServer)
         {
             GameState.Instance.criminal = role;
+            RpcSetCriminal(role);
         }
         else
         {
@@ -167,6 +234,14 @@ public class Player : NetworkBehaviour {
     {
         SetCriminal(role);
     }
+    [ClientRpc]
+    public void RpcSetCriminal(string role)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.criminal = role;
+        }
+    }
     #endregion
     #region SetCriminalRole
     public void SetCriminalRole(string role)
@@ -174,6 +249,7 @@ public class Player : NetworkBehaviour {
         if (isServer)
         {
             GameState.Instance.criminalRole = role;
+            RpcSetCriminalRole(role);
         }
         else
         {
@@ -185,7 +261,151 @@ public class Player : NetworkBehaviour {
     {
         SetCriminalRole(role);
     }
+    [ClientRpc]
+    public void RpcSetCriminalRole(string role)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.criminalRole = role;
+        }
+    }
     #endregion
+    #region SetTargetPlace
+    public void SetTargetPlace(int place)
+    {
+        if (isServer)
+        {
+            GameState.Instance.targetPlace = place;
+            RpcSetTargetPlace(place);
+        }
+        else
+        {
+            CmdSetTargetPlace(place);
+        }
+    }
+    [Command]
+    public void CmdSetTargetPlace(int place)
+    {
+        SetTargetPlace(place);
+    }
+    [ClientRpc]
+    public void RpcSetTargetPlace(int place)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.targetPlace = place;
+        }
+    }
+    #endregion
+    #region SetCurrenTurn
+    public void SetCurrentTurn(int currentTurn)
+    {
+        if (isServer)
+        {
+            GameState.Instance.currentTurn = currentTurn;
+            RpcSetCurrenTurn(currentTurn);
+        }
+        else
+        {
+            CmdSetCurrentTurn(currentTurn);
+        }
+    }
+    [Command]
+    public void CmdSetCurrentTurn(int currentTurn)
+    {
+        SetCurrentTurn(currentTurn);
+    }
+    [ClientRpc]
+    public void RpcSetCurrenTurn(int currentTurn)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.currentTurn = currentTurn;
+        }
+    }
+    #endregion
+    #region SetActivatedQuestPlaces
+    public void SetActivatedQuestPlaces(int activatedPlaces)
+    {
+        if (isServer)
+        {
+            GameState.Instance.activatedQuestPlaces = activatedPlaces;
+            RpcSetActivatedQuestPlaces(activatedPlaces);
+        }
+        else
+        {
+            CmdSetActivatedQuestPlaces(activatedPlaces);
+        }
+    }
+    [Command]
+    public void CmdSetActivatedQuestPlaces(int activatedPlaces)
+    {
+        SetActivatedQuestPlaces(activatedPlaces);
+    }
+    [ClientRpc]
+    public void RpcSetActivatedQuestPlaces(int activatedPlaces)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.activatedQuestPlaces = activatedPlaces;
+        }
+    }
+    #endregion
+    #region SetPlanted
+    public void SetPlanted(bool planted)
+    {
+        if (isServer)
+        {
+            GameState.Instance.planted = planted;
+            RpcSetPlanted(planted);
+        }
+        else
+        {
+            CmdSetPlanted(planted);
+        }
+    }
+    [Command]
+    public void CmdSetPlanted(bool planted)
+    {
+        SetPlanted(planted);
+    }
+    [ClientRpc]
+    public void RpcSetPlanted(bool planted)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.planted = planted;
+        }
+    }
+    #endregion
+    #region SetBigTrapUsed
+    public void SetBigTrapUsed(bool bigTrapUsed)
+    {
+        if (isServer)
+        {
+            GameState.Instance.bigTrapUsed = bigTrapUsed;
+            RpcSetBigTrapUsed(bigTrapUsed);
+        }
+        else
+        {
+            CmdSetBigTrapUsed(bigTrapUsed);
+        }
+    }
+    [Command]
+    public void CmdSetBigTrapUsed(bool bigTrapUsed)
+    {
+        SetBigTrapUsed(bigTrapUsed);
+    }
+    [ClientRpc]
+    public void RpcSetBigTrapUsed(bool bigTrapUsed)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.bigTrapUsed = bigTrapUsed;
+        }
+    }
+    #endregion
+
     #region AddQuestPlace
     public void AddQuestPlace(int place)
     {
@@ -204,22 +424,22 @@ public class Player : NetworkBehaviour {
         AddQuestPlace(place);
     }
     #endregion
-    #region SetTargetPlace
-    public void SetTargetPlace(int place)
+    #region RemoveQuestPlace
+    public void RemoveQuestPlace(int place)
     {
         if (isServer)
         {
-            GameState.Instance.targetPlace = place;
+            GameState.Instance.questPlaces.Remove(place);
         }
         else
         {
-            CmdSetTargetPlace(place);
+            CmdRemoveQuestPlace(place);
         }
     }
     [Command]
-    public void CmdSetTargetPlace(int place)
+    public void CmdRemoveQuestPlace(int place)
     {
-        SetTargetPlace(place);
+        RemoveQuestPlace(place);
     }
     #endregion
     #region SetPlayerState
@@ -572,11 +792,12 @@ public class Player : NetworkBehaviour {
     [ClientRpc]
     public void RpcSetCurrentPlace(int index, int[] currentPlace)
     {
-        GameState.Instance.currentPlace[index] = currentPlace;
+        if (!isServer)
+        {
+            GameState.Instance.currentPlace[index] = currentPlace;
+        }
     }
     #endregion
-
-
     #region SetNotFoundTrue
     public void SetNotFoundTrue(int indexX, int indexY, int indexZ, int notFoundTrue)
     {
@@ -585,11 +806,12 @@ public class Player : NetworkBehaviour {
             GameState.Instance.notFoundTrue[indexX][indexY, indexZ] = notFoundTrue;
             RpcSetNotFoundTrue(indexX, indexY, indexZ, notFoundTrue);
         }
-        else{
+        else
+        {
             CmdSetNotFoundTrue(indexX, indexY, indexZ, notFoundTrue);
         }
     }
-    [Command] 
+    [Command]
     public void CmdSetNotFoundTrue(int indexX, int indexY, int indexZ, int notFoundTrue)
     {
         SetNotFoundTrue(indexX, indexY, indexZ, notFoundTrue);
@@ -597,7 +819,10 @@ public class Player : NetworkBehaviour {
     [ClientRpc]
     public void RpcSetNotFoundTrue(int indexX, int indexY, int indexZ, int notFoundTrue)
     {
-        GameState.Instance.notFoundTrue[indexX][indexY, indexZ] = notFoundTrue;
+        if (!isServer)
+        {
+            GameState.Instance.notFoundTrue[indexX][indexY, indexZ] = notFoundTrue;
+        }
     }
     #endregion
     #region SetNotFoundFalse
@@ -621,7 +846,10 @@ public class Player : NetworkBehaviour {
     [ClientRpc]
     public void RpcSetNotFoundFalse(int indexX, int indexY, int indexZ, int notFoundFalse)
     {
-        GameState.Instance.notFoundFalse[indexX][indexY, indexZ] = notFoundFalse;
+        if (!isServer)
+        {
+            GameState.Instance.notFoundFalse[indexX][indexY, indexZ] = notFoundFalse;
+        }
     }
     #endregion
     #region SetBoard
@@ -641,32 +869,216 @@ public class Player : NetworkBehaviour {
     [ClientRpc]
     public void RpcSetBoard(int indexX, int indexY, int place)
     {
-        GameState.Instance.board[indexX, indexY] = place;
+        if (!isServer)
+        {
+            GameState.Instance.board[indexX, indexY] = place;
+        }
     }
     #endregion
-    /*
-     
-    CommandSchematic for copying:
 
-     #region FunctionName
-    public void FunctionName()
+    #region SetActiveTraps
+    public void SetActiveTraps(int index, string activeTrap)
     {
         if (isServer)
         {
-            GameState.Instance.variable = value;
+            GameState.Instance.activeTraps[index] = activeTrap;
         }
         else
         {
-            CmdFunctionName();
+            CmdSetActiveTraps(index, activeTrap);
         }
     }
     [Command]
-    public void CmdFunctionName()
+    public void CmdSetActiveTraps(int index, string activeTrap)
     {
-        FunctionName;
+        SetActiveTraps(index, activeTrap);
     }
     #endregion
-     */
+    #region SetInfernoTraps
+    public void SetInfernoTraps(int index, int turns)
+    {
+        if (isServer)
+        {
+            GameState.Instance.infernoTraps[index] = turns;
+        }
+        else
+        {
+            CmdSetInfernoTraps(index, turns);
+        }
 
+    }
+    [Command]
+    public void CmdSetInfernoTraps(int index, int turns)
+    {
+        SetInfernoTraps(index, turns);
+    }
+    #endregion
+    #region SetDrMortifierTraps
+    public void SetDrMortifierTraps(int index, int turns)
+    {
+        if (isServer)
+        {
+            GameState.Instance.drMortifierTraps[index] = turns;
+        }
+        else
+        {
+            CmdSetDrMortifierTraps(index, turns);
+        }
+
+    }
+    [Command]
+    public void CmdSetDrMortifierTraps(int index, int turns)
+    {
+        SetDrMortifierTraps(index, turns);
+    }
+    #endregion
+    #region SetPhantomTraps
+    public void SetPhantomTraps(int index, int turns)
+    {
+        if (isServer)
+        {
+            GameState.Instance.phantomTraps[index] = turns;
+        }
+        else
+        {
+            CmdSetPhantomTraps(index, turns);
+        }
+
+    }
+    [Command]
+    public void CmdSetPhantomTraps(int index, int turns)
+    {
+        SetPhantomTraps(index, turns);
+    }
+    #endregion
+    #region SetFascultoTraps
+    public void SetFascultoTraps(int index, int turns)
+    {
+        if (isServer)
+        {
+            GameState.Instance.fascultoTraps[index] = turns;
+        }
+        else
+        {
+            CmdSetFascultoTraps(index, turns);
+        }
+
+    }
+    [Command]
+    public void CmdSetFascultoTraps(int index, int turns)
+    {
+        SetFascultoTraps(index, turns);
+    }
+    #endregion
+    #region RemoveItem
+    public void RemoveItem(int index, string item)
+    {
+        if (isServer)
+        {
+            GameState.Instance.items[index].Remove(item);
+            RpcRemoveItem(index, item);
+        }
+        else
+        {
+            CmdRemoveItem(index, item);
+        }
+
+    }
+    [Command]
+    public void CmdRemoveItem(int index, string item)
+    {
+        RemoveItem(index, item);
+    }
+    [ClientRpc]
+    public void RpcRemoveItem(int index, string item)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.items[index].Remove(item);
+        }
+    }
+    #endregion
+    #region AddItem
+    public void AddItem(int index, string item)
+    {
+        if (isServer)
+        {
+            GameState.Instance.items[index].Add(item);
+            RpcAddItem(index, item);
+        }
+        else
+        {
+            CmdAddItem(index, item);
+        }
+    }
+    [Command]
+    public void CmdAddItem(int index, string item)
+    {
+        AddItem(index, item);
+    }
+    [ClientRpc]
+    public void RpcAddItem(int index, string item)
+    {
+        if (!isServer)
+        {
+            GameState.Instance.items[index].Add(item);
+        }
+    }
+    #endregion
+
+    #region SetQuarantine
+    public void SetQuarantine(int index, int turns)
+    {
+        if (isServer)
+        {
+            GameState.Instance.quarantined[index] = turns;
+        }
+        else
+        {
+            CmdSetQuarantine(index, turns);
+        }
+    }
+    [Command]
+    public void CmdSetQuarantine(int index, int turns)
+    {
+        SetQuarantine(index, turns);
+    }
+    #endregion
+    #region RemoveUsedEnergyDrink
+    public void RemoveUsedEnergyDrink(bool usedEnergyDrink)
+    {
+        if (isServer)
+        {
+            GameState.Instance.usedEnergyDrink.Remove(usedEnergyDrink);
+        }
+        else
+        {
+            CmdRemoveEnergyDrink(usedEnergyDrink);
+        }
+    }
+    [Command]
+    public void CmdRemoveEnergyDrink(bool usedEnergyDrink)
+    {
+        RemoveUsedEnergyDrink(usedEnergyDrink);
+    }
+    #endregion
+    #region AddUsedEnergyDrink
+    public void AddUsedEnergyDrink(bool usedEnergyDrink)
+    {
+        if (isServer)
+        {
+            GameState.Instance.usedEnergyDrink.Add(usedEnergyDrink);
+        }
+        else
+        {
+            CmdAddUsedEnergyDrink(usedEnergyDrink);
+        }
+    }
+    [Command]
+    public void CmdAddUsedEnergyDrink(bool usedEnergyDrink)
+    {
+        AddUsedEnergyDrink(usedEnergyDrink);
+    }
+    #endregion
 
 }

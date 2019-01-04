@@ -38,7 +38,7 @@ public class Waiting : MonoBehaviour {
             }
         }
         ////////////////////////////////////////////////////////////
-      
+
         if (GameState.Instance.connectedPlayer == GameState.Instance.playerCount)
         {
             UIManager.Instance.RoleSelection();

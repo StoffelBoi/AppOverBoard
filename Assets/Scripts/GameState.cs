@@ -12,24 +12,6 @@ public class GameState : NetworkBehaviour {
 
     [SyncVar]
     public int playerCount;
-    [SyncVar]
-    public int connectedPlayer;
-    [SyncVar]
-    public int selectedRoles;
-    [SyncVar]
-    public bool targetTime;
-    [SyncVar]
-    public int elapsedSeconds;
-    [SyncVar]
-    public string elapsedTime;
-    [SyncVar]
-    public bool draw;
-    [SyncVar]
-    public bool criminalWin;
-    [SyncVar]
-    public string criminal;
-    [SyncVar]
-    public string criminalRole;
 
     public SyncListInt questPlaces = new SyncListInt();
 
@@ -68,27 +50,41 @@ public class GameState : NetworkBehaviour {
     public SyncListBool playerWin = new SyncListBool();
 
     public SyncListBool playerLost = new SyncListBool();
+
+    public SyncListString activeTraps = new SyncListString();
+
+    public SyncListInt infernoTraps = new SyncListInt();
+
+    public SyncListInt drMortifierTraps = new SyncListInt();
+
+    public SyncListInt phantomTraps = new SyncListInt();
+
+    public SyncListInt fascultoTraps = new SyncListInt();
+
+    public SyncListInt quarantined = new SyncListInt();
+
+    public SyncListBool usedEnergyDrink = new SyncListBool();
+
     //manually networked with rpcs
+    public int connectedPlayer;
+    public int selectedRoles;
+    public bool targetTime;
+    public int elapsedSeconds;
+    public string elapsedTime;
+    public bool draw;
+    public bool criminalWin;
+    public string criminal;
+    public string criminalRole;
+    public int targetPlace;
+    public int currentTurn;
+    public int activatedQuestPlaces;
+    public bool planted = false;
+    public bool bigTrapUsed;
     public List<int[]> currentPlace;
     public List<int[,]> notFoundTrue;
     public List<int[,]> notFoundFalse;
     public int[,] board;
-
-
-    public  int targetPlace;
-    public  int currentTurn;
-    public  bool planted = false; // Variable fuer bio-terrorist wenn er seine bombe platziert hat
-    public  int activatedQuestPlaces;
-    public  bool bigTrapUsed;
-    public  List<bool> usedEnergyDrink;
-    public  List<int> infernoTraps;
-    public  List<int> drMortifierTraps;
-    public  List<int> phantomTraps;
-    public  List<int> fascultoTraps;
-    public  List<string> activeTraps;
-    public List<int> quarantined;
-    public List<List<string>> items;
-    
+    public List<List<string>> items= new List<List<string>>();
 
     void Awake()
     {
@@ -102,18 +98,10 @@ public class GameState : NetworkBehaviour {
         board = new int[6, 7];
         currentTurn = 0;
         currentPlace = new List<int[]>();
-        items = new List<List<string>>();
         notFoundTrue = new List<int[,]>();
         notFoundFalse = new List<int[,]>();
         activatedQuestPlaces = 0;
         bigTrapUsed = false;
-        usedEnergyDrink = new List<bool>();
-        infernoTraps = new List<int>();
-        drMortifierTraps = new List<int>();
-        phantomTraps = new List<int>();
-        fascultoTraps = new List<int>();
-        activeTraps = new List<string>();
-        quarantined = new List<int>();
         draw = false;
         criminalWin = false;
         if (Instance == null)
