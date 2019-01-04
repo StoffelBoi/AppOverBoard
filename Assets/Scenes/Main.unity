@@ -2270,7 +2270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &196732563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4366,7 +4366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &353640535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8079,10 +8079,6 @@ MonoBehaviour:
   btnRules: {fileID: 310448163}
   btnGuess: {fileID: 1808581716}
   playerID: 0
-  trueSolved: 0
-  trueUnsolved: 0
-  timeWindowThief: 0
-  timeWindowCultist: 0
 --- !u!4 &626111167
 Transform:
   m_ObjectHideFlags: 0
@@ -11475,7 +11471,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &937288205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13280,7 +13276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1064203244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14064,7 +14060,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1136027251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15084,7 +15080,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1242280695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17242,7 +17238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1452475252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22073,7 +22069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1848420262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23786,7 +23782,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2010457516
 MonoBehaviour:
   m_ObjectHideFlags: 0

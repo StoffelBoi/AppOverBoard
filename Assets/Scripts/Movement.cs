@@ -31,7 +31,7 @@ public class Movement : MonoBehaviour {
     
     void Start()
     {
-        player = GameState.Instance.localPlayer.GetComponent<Player>();
+        
         btnInfo.onClick.AddListener(btnToInfo);
         btnRight.onClick.AddListener(rightClick);
         btnLeft.onClick.AddListener(leftClick);
@@ -48,6 +48,7 @@ public class Movement : MonoBehaviour {
 
     void OnEnable()
     {
+        player = GameState.Instance.localPlayer.GetComponent<Player>();
         newTurn();
     }
 
