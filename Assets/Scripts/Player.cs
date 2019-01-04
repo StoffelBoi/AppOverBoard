@@ -551,8 +551,6 @@ public class Player : NetworkBehaviour {
     #endregion
 
 
-
-
     #region SetCurrentPlace
     public void SetCurrentPlace(int index, int[] currentPlace)
     {
@@ -567,14 +565,83 @@ public class Player : NetworkBehaviour {
         }
     }
     [Command]
-    public void CmdSetCurrentPlace(int index, int [] currentPlace)
+    public void CmdSetCurrentPlace(int index, int[] currentPlace)
     {
         SetCurrentPlace(index, currentPlace);
     }
     [ClientRpc]
-    public void RpcSetCurrentPlace(int index, int [] currentPlace)
+    public void RpcSetCurrentPlace(int index, int[] currentPlace)
     {
         GameState.Instance.currentPlace[index] = currentPlace;
+    }
+    #endregion
+
+
+    #region SetNotFoundTrue
+    public void SetNotFoundTrue(int indexX, int indexY, int indexZ, int notFoundTrue)
+    {
+        if (isServer)
+        {
+            GameState.Instance.notFoundTrue[indexX][indexY, indexZ] = notFoundTrue;
+            RpcSetNotFoundTrue(indexX, indexY, indexZ, notFoundTrue);
+        }
+        else{
+            CmdSetNotFoundTrue(indexX, indexY, indexZ, notFoundTrue);
+        }
+    }
+    [Command] 
+    public void CmdSetNotFoundTrue(int indexX, int indexY, int indexZ, int notFoundTrue)
+    {
+        SetNotFoundTrue(indexX, indexY, indexZ, notFoundTrue);
+    }
+    [ClientRpc]
+    public void RpcSetNotFoundTrue(int indexX, int indexY, int indexZ, int notFoundTrue)
+    {
+        GameState.Instance.notFoundTrue[indexX][indexY, indexZ] = notFoundTrue;
+    }
+    #endregion
+    #region SetNotFoundFalse
+    public void SetNotFoundFalse(int indexX, int indexY, int indexZ, int notFoundFalse)
+    {
+        if (isServer)
+        {
+            GameState.Instance.notFoundFalse[indexX][indexY, indexZ] = notFoundFalse;
+            RpcSetNotFoundFalse(indexX, indexY, indexZ, notFoundFalse);
+        }
+        else
+        {
+            CmdSetNotFoundFalse(indexX, indexY, indexZ, notFoundFalse);
+        }
+    }
+    [Command]
+    public void CmdSetNotFoundFalse(int indexX, int indexY, int indexZ, int notFoundFalse)
+    {
+        SetNotFoundFalse(indexX, indexY, indexZ, notFoundFalse);
+    }
+    [ClientRpc]
+    public void RpcSetNotFoundFalse(int indexX, int indexY, int indexZ, int notFoundFalse)
+    {
+        GameState.Instance.notFoundFalse[indexX][indexY, indexZ] = notFoundFalse;
+    }
+    #endregion
+    #region SetBoard
+    public void SetBoard(int indexX, int indexY, int place)
+    {
+        if (isServer)
+        {
+            GameState.Instance.board[indexX, indexY] = place;
+            RpcSetBoard(indexX, indexY, place);
+        }
+    }
+    [Command]
+    public void CmdSetBoard(int indexX, int indexY, int place)
+    {
+        SetBoard(indexX, indexY, place);
+    }
+    [ClientRpc]
+    public void RpcSetBoard(int indexX, int indexY, int place)
+    {
+        GameState.Instance.board[indexX, indexY] = place;
     }
     #endregion
     /*

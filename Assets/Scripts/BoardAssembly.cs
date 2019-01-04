@@ -53,11 +53,11 @@ public class BoardAssembly : MonoBehaviour {
     private int place10;
     private int place11;
     private int place12;
-
+    private Player player; 
     // Use this for initialization
     
     void Start () {
-      
+        player = GameState.Instance.localPlayer.GetComponent<Player>();
         System.Random rn = new System.Random();
 
         skillplace1 = newNumber(rn, 2, 7);
@@ -89,7 +89,13 @@ public class BoardAssembly : MonoBehaviour {
             {0, 0, 0, 0, 0, 0, 0 },
             {0, place9, place10, 0, place11, place12, 0 }
         };
-        GameState.Instance.board = board;
+        for(int i = 0; i < 6; i++)
+        {
+            for(int j = 0; j<7; j++)
+            {
+                player.SetBoard(i, j, board[i, j]);
+            }
+        }
         for(int rows = 0; rows < board.GetLength(0); rows++)
         {
             for(int cols = 0; cols < board.GetLength(1); cols++)
