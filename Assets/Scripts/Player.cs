@@ -19,40 +19,7 @@ public class Player : NetworkBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    #region ConnectedPlayerUp
-    void ConnectedPlayerUp()
-    {
-        if (isServer)
-        {
-            GameState.Instance.connectedPlayer++;
-            RpcConnectedPlayerUp();
-        }
-        else
-        {
-            CmdConnectedPlayerUp();
-        }
-    }
-    [Command]
-    public void CmdConnectedPlayerUp()
-    {
-        ConnectedPlayerUp();
-    }
-    [ClientRpc]
-    public void RpcConnectedPlayerUp()
-    {
-        if (!isServer)
-        {
-            GameState.Instance.connectedPlayer++;
-        }
-      
-    }
-    #endregion
+    
     #region SetSelectedRoles
     public void SetSelectedRoles(int selectedRoles)
     {
@@ -90,7 +57,7 @@ public class Player : NetworkBehaviour
         }
         else
         {
-            CmdSetTargetTime(active);
+          // CmdSetTargetTime(active);
         }
     }
     [Command]
@@ -117,7 +84,7 @@ public class Player : NetworkBehaviour
         }
         else
         {
-            CmdSetElapsedSeconds(elapsedSeconds);
+           // CmdSetElapsedSeconds(elapsedSeconds);
         }
     }
     [Command]
@@ -144,7 +111,7 @@ public class Player : NetworkBehaviour
         }
         else
         {
-            CmdSetElapsedTime(elapsedTime);
+            //CmdSetElapsedTime(elapsedTime);
         }
     }
     [Command]
@@ -300,24 +267,29 @@ public class Player : NetworkBehaviour
     #region SetCurrenTurn
     public void SetCurrentTurn(int currentTurn)
     {
+        Debug.Log("SetCurrentTurn");
         if (isServer)
         {
+            Debug.Log("isServer");
             GameState.Instance.currentTurn = currentTurn;
             RpcSetCurrenTurn(currentTurn);
         }
         else
         {
+            Debug.Log("isNOTServer");
             CmdSetCurrentTurn(currentTurn);
         }
     }
     [Command]
     public void CmdSetCurrentTurn(int currentTurn)
     {
+        Debug.Log("CmdSetCurrenTurn");
         SetCurrentTurn(currentTurn);
     }
     [ClientRpc]
     public void RpcSetCurrenTurn(int currentTurn)
     {
+        Debug.Log("RpcSetCurrentTurn");
         if (!isServer)
         {
             GameState.Instance.currentTurn = currentTurn;
@@ -406,6 +378,24 @@ public class Player : NetworkBehaviour
     }
     #endregion
 
+    #region ConnectedPlayerUp
+    void ConnectedPlayerUp()
+    {
+        if (isServer)
+        {
+            GameState.Instance.connectedPlayer++;
+        }
+        else
+        {
+            CmdConnectedPlayerUp();
+        }
+    }
+    [Command]
+    public void CmdConnectedPlayerUp()
+    {
+        ConnectedPlayerUp();
+    }
+    #endregion
     #region AddQuestPlace
     public void AddQuestPlace(int place)
     {
@@ -481,10 +471,10 @@ public class Player : NetworkBehaviour
     #region SetMoney
     public void SetMoney(int index, int money)
     {
-        Debug.Log("index: " + index + " money: " + money);
+       
         if (isServer)
         {
-            Debug.Log("SETMONEY");
+         
             GameState.Instance.money[index] = money;
         }
         else
@@ -495,7 +485,6 @@ public class Player : NetworkBehaviour
     [Command]
     public void CmdSetMoney(int index, int money)
     {
-        Debug.Log("CMDSETMONEY");
         SetMoney(index, money);
     }
     #endregion

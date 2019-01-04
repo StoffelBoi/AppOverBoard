@@ -12,6 +12,8 @@ public class GameState : NetworkBehaviour {
 
     [SyncVar]
     public int playerCount;
+    [SyncVar]
+    public int connectedPlayer;
 
     public SyncListInt questPlaces = new SyncListInt();
 
@@ -66,7 +68,6 @@ public class GameState : NetworkBehaviour {
     public SyncListBool usedEnergyDrink = new SyncListBool();
 
     //manually networked with rpcs
-    public int connectedPlayer;
     public int selectedRoles;
     public bool targetTime;
     public int elapsedSeconds;
@@ -91,7 +92,7 @@ public class GameState : NetworkBehaviour {
 
         selectedRoles = 0;
         elapsedSeconds = 0;
-        elapsedTime = "";
+        elapsedTime = "0:00:00";
         targetTime = false;
         playerCount = 0;
         connectedPlayer = 0;

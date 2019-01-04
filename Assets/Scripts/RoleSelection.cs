@@ -123,7 +123,7 @@ public class RoleSelection : MonoBehaviour
             }
         }
         player.SetSelectedRoles(selectedRoles);
-        if (GameState.Instance.selectedRoles == 1)
+        if (GameState.Instance.selectedRoles == GameState.Instance.playerCount)
         {
             setCriminalRole();
             player.SetPlayerState(0, "Movement");
