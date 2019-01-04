@@ -19,13 +19,15 @@ public class Player : NetworkBehaviour
         }
     }
 
-    
+    ///////////////////////////////////////////////////////
+    //////////////Manually Synchronized Stuff//////////////
+    ///////////////////////////////////////////////////////
     #region SetSelectedRoles
     public void SetSelectedRoles(int selectedRoles)
     {
+        GameState.Instance.selectedRoles = selectedRoles;
         if (isServer)
         {
-            GameState.Instance.selectedRoles = selectedRoles;
             RpcSetSelectedRoles(selectedRoles);
         }
         else
@@ -57,7 +59,7 @@ public class Player : NetworkBehaviour
         }
         else
         {
-          // CmdSetTargetTime(active);
+            // CmdSetTargetTime(active);
         }
     }
     [Command]
@@ -84,7 +86,7 @@ public class Player : NetworkBehaviour
         }
         else
         {
-           // CmdSetElapsedSeconds(elapsedSeconds);
+            // CmdSetElapsedSeconds(elapsedSeconds);
         }
     }
     [Command]
@@ -131,9 +133,9 @@ public class Player : NetworkBehaviour
     #region SetDraw
     public void SetDraw(bool draw)
     {
+        GameState.Instance.draw = draw;
         if (isServer)
         {
-            GameState.Instance.draw = draw;
             RpcSetDraw(draw);
         }
         else
@@ -159,9 +161,9 @@ public class Player : NetworkBehaviour
     #region SetCriminalWin
     public void SetCriminalWin(bool win)
     {
+        GameState.Instance.criminalWin = win;
         if (isServer)
         {
-            GameState.Instance.criminalWin = win;
             RpcSetCriminalWin(win);
         }
         else
@@ -186,9 +188,9 @@ public class Player : NetworkBehaviour
     #region SetCriminal
     public void SetCriminal(string role)
     {
+        GameState.Instance.criminal = role;
         if (isServer)
         {
-            GameState.Instance.criminal = role;
             RpcSetCriminal(role);
         }
         else
@@ -213,9 +215,9 @@ public class Player : NetworkBehaviour
     #region SetCriminalRole
     public void SetCriminalRole(string role)
     {
+        GameState.Instance.criminalRole = role;
         if (isServer)
         {
-            GameState.Instance.criminalRole = role;
             RpcSetCriminalRole(role);
         }
         else
@@ -240,9 +242,9 @@ public class Player : NetworkBehaviour
     #region SetTargetPlace
     public void SetTargetPlace(int place)
     {
+        GameState.Instance.targetPlace = place;
         if (isServer)
         {
-            GameState.Instance.targetPlace = place;
             RpcSetTargetPlace(place);
         }
         else
@@ -267,11 +269,11 @@ public class Player : NetworkBehaviour
     #region SetCurrenTurn
     public void SetCurrentTurn(int currentTurn)
     {
-        Debug.Log("SetCurrentTurn");
+        GameState.Instance.currentTurn = currentTurn;
+        Debug.Log("SetCurrentTurn: " + currentTurn);
         if (isServer)
         {
             Debug.Log("isServer");
-            GameState.Instance.currentTurn = currentTurn;
             RpcSetCurrenTurn(currentTurn);
         }
         else
@@ -283,7 +285,7 @@ public class Player : NetworkBehaviour
     [Command]
     public void CmdSetCurrentTurn(int currentTurn)
     {
-        Debug.Log("CmdSetCurrenTurn");
+        Debug.Log("CmdSetCurrentTurn");
         SetCurrentTurn(currentTurn);
     }
     [ClientRpc]
@@ -299,9 +301,9 @@ public class Player : NetworkBehaviour
     #region SetActivatedQuestPlaces
     public void SetActivatedQuestPlaces(int activatedPlaces)
     {
+        GameState.Instance.activatedQuestPlaces = activatedPlaces;
         if (isServer)
         {
-            GameState.Instance.activatedQuestPlaces = activatedPlaces;
             RpcSetActivatedQuestPlaces(activatedPlaces);
         }
         else
@@ -326,9 +328,9 @@ public class Player : NetworkBehaviour
     #region SetPlanted
     public void SetPlanted(bool planted)
     {
+        GameState.Instance.planted = planted;
         if (isServer)
         {
-            GameState.Instance.planted = planted;
             RpcSetPlanted(planted);
         }
         else
@@ -353,9 +355,9 @@ public class Player : NetworkBehaviour
     #region SetBigTrapUsed
     public void SetBigTrapUsed(bool bigTrapUsed)
     {
+        GameState.Instance.bigTrapUsed = bigTrapUsed;
         if (isServer)
         {
-            GameState.Instance.bigTrapUsed = bigTrapUsed;
             RpcSetBigTrapUsed(bigTrapUsed);
         }
         else
@@ -377,422 +379,39 @@ public class Player : NetworkBehaviour
         }
     }
     #endregion
-
-    #region ConnectedPlayerUp
-    void ConnectedPlayerUp()
-    {
-        if (isServer)
-        {
-            GameState.Instance.connectedPlayer++;
-        }
-        else
-        {
-            CmdConnectedPlayerUp();
-        }
-    }
-    [Command]
-    public void CmdConnectedPlayerUp()
-    {
-        ConnectedPlayerUp();
-    }
-    #endregion
-    #region AddQuestPlace
-    public void AddQuestPlace(int place)
-    {
-        if (isServer)
-        {
-            GameState.Instance.questPlaces.Add(place);
-        }
-        else
-        {
-            CmdAddQuestPlace(place);
-        }
-    }
-    [Command]
-    public void CmdAddQuestPlace(int place)
-    {
-        AddQuestPlace(place);
-    }
-    #endregion
-    #region RemoveQuestPlace
-    public void RemoveQuestPlace(int place)
-    {
-        if (isServer)
-        {
-            GameState.Instance.questPlaces.Remove(place);
-        }
-        else
-        {
-            CmdRemoveQuestPlace(place);
-        }
-    }
-    [Command]
-    public void CmdRemoveQuestPlace(int place)
-    {
-        RemoveQuestPlace(place);
-    }
-    #endregion
-    #region SetPlayerState
-    public void SetPlayerState(int index, string state)
-    {
-        if (isServer)
-        {
-            GameState.Instance.playerState[index] = state;
-        }
-        else
-        {
-            CmdSetPlayerState(index, state);
-        }
-    }
-    [Command]
-    public void CmdSetPlayerState(int index, string state)
-    {
-        SetPlayerState(index, state);
-    }
-    #endregion
-    #region SetRole
-    public void SetRole(int index, string role)
-    {
-        if (isServer)
-        {
-            GameState.Instance.roles[index] = role;
-        }
-        else
-        {
-            CmdSetRole(index, role);
-        }
-    }
-    [Command]
-    public void CmdSetRole(int index, string role)
-    {
-        SetRole(index, role);
-    }
-    #endregion
-    #region SetMoney
-    public void SetMoney(int index, int money)
-    {
-       
-        if (isServer)
-        {
-         
-            GameState.Instance.money[index] = money;
-        }
-        else
-        {
-            CmdSetMoney(index, money);
-        }
-    }
-    [Command]
-    public void CmdSetMoney(int index, int money)
-    {
-        SetMoney(index, money);
-    }
-    #endregion
-    #region SetSolvedHints
-    public void SetSolvedHints(int index, int solvedHints)
-    {
-        if (isServer)
-        {
-            GameState.Instance.solvedHints[index] = solvedHints;
-        }
-        else
-        {
-            CmdSetSolvedHints(index, solvedHints);
-        }
-    }
-    [Command]
-    public void CmdSetSolvedHints(int index, int solvedHints)
-    {
-        SetSolvedHints(index, solvedHints);
-    }
-    #endregion
-    #region SetUnsolvedHints
-    public void SetUnsolvedHints(int index, int unsolvedHints)
-    {
-        if (isServer)
-        {
-            GameState.Instance.unsolvedHints[index] = unsolvedHints;
-        }
-        else
-        {
-            CmdSetUnsolvedHints(index, unsolvedHints);
-        }
-    }
-    [Command]
-    public void CmdSetUnsolvedHints(int index, int unsolvedHints)
-    {
-        SetUnsolvedHints(index, unsolvedHints);
-    }
-    #endregion
-    #region SetTrueSolveds
-    public void SetTrueSolveds(int index, int trueSolveds)
-    {
-        if (isServer)
-        {
-            GameState.Instance.trueSolveds[index] = trueSolveds;
-        }
-        else
-        {
-            CmdSetTrueSolveds(index, trueSolveds);
-        }
-    }
-    [Command]
-    public void CmdSetTrueSolveds(int index, int trueSolveds)
-    {
-        SetTrueSolveds(index, trueSolveds);
-    }
-    #endregion
-    #region SetTrueUnsolveds
-    public void SetTrueUnsolveds(int index, int trueUnsolveds)
-    {
-        if (isServer)
-        {
-            GameState.Instance.trueUnsolveds[index] = trueUnsolveds;
-        }
-        else
-        {
-            CmdSetTrueUnsolveds(index, trueUnsolveds);
-        }
-    }
-    [Command]
-    public void CmdSetTrueUnsolveds(int index, int trueUnsolveds)
-    {
-        SetTrueUnsolveds(index, trueUnsolveds);
-    }
-    #endregion
-    #region SetIsDisabled
-    public void SetIsDisabled(int index, int isDisabled)
-    {
-        if (isServer)
-        {
-            GameState.Instance.isDisabled[index] = isDisabled;
-        }
-        else
-        {
-            CmdSetIsDisabled(index, isDisabled);
-        }
-    }
-    [Command]
-    public void CmdSetIsDisabled(int index, int isDisabled)
-    {
-        SetIsDisabled(index, isDisabled);
-    }
-    #endregion
-    #region SetIsManipulated
-    public void SetIsManipulated(int index, bool isManipulated)
-    {
-        if (isServer)
-        {
-            GameState.Instance.isManipulated[index] = isManipulated;
-        }
-        else
-        {
-            CmdSetIsManipulated(index, isManipulated);
-        }
-    }
-    [Command]
-    public void CmdSetIsManipulated(int index, bool isManipulated)
-    {
-        SetIsManipulated(index, isManipulated);
-    }
-    #endregion
-    #region SetSkillUsed
-    public void SetSkillUsed(int index, bool skillUsed)
-    {
-        if (isServer)
-        {
-            GameState.Instance.skillUsed[index] = skillUsed;
-        }
-        else
-        {
-            CmdSetSkillUsed(index, skillUsed);
-        }
-    }
-    [Command]
-    public void CmdSetSkillUsed(int index, bool skillUsed)
-    {
-        SetSkillUsed(index, skillUsed);
-    }
-    #endregion
-    #region  SetLastTransaction
-    public void SetLastTransaction(int index, string lastTransaction)
-    {
-        if (isServer)
-        {
-            GameState.Instance.lastTransaction[index] = lastTransaction;
-        }
-        else
-        {
-            CmdSetLastTransaction(index, lastTransaction);
-        }
-    }
-    [Command]
-    public void CmdSetLastTransaction(int index, string lastTransaction)
-    {
-        SetLastTransaction(index, lastTransaction);
-    }
-    #endregion
-    #region  SetLastAction
-    public void SetLastAction(int index, string lastAction)
-    {
-        if (isServer)
-        {
-            GameState.Instance.lastAction[index] = lastAction;
-        }
-        else
-        {
-            CmdSetLastAction(index, lastAction);
-        }
-    }
-    [Command]
-    public void CmdSetLastAction(int index, string lastAction)
-    {
-        SetLastAction(index, lastAction);
-    }
-    #endregion
-    #region  SetSolvedFacts
-    public void SetSolvedFacts(int index, int solvedFacts)
-    {
-        if (isServer)
-        {
-            GameState.Instance.solvedFacts[index] = solvedFacts;
-        }
-        else
-        {
-            CmdSetSolvedFacts(index, solvedFacts);
-        }
-    }
-    [Command]
-    public void CmdSetSolvedFacts(int index, int solvedFacts)
-    {
-        SetSolvedFacts(index, solvedFacts);
-    }
-    #endregion
-    #region  SetPlaceFact
-    public void SetPlaceFact(int index, string placeFact)
-    {
-        if (isServer)
-        {
-            GameState.Instance.placeFact[index] = placeFact;
-        }
-        else
-        {
-            CmdSetPlaceFact(index, placeFact);
-        }
-    }
-    [Command]
-    public void CmdSetPlaceFact(int index, string placeFact)
-    {
-        SetPlaceFact(index, placeFact);
-    }
-    #endregion
-    #region  SetRoleFact
-    public void SetRoleFact(int index, string roleFact)
-    {
-        if (isServer)
-        {
-            GameState.Instance.roleFact[index] = roleFact;
-        }
-        else
-        {
-            CmdSetRoleFact(index, roleFact);
-        }
-    }
-    [Command]
-    public void CmdSetRoleFact(int index, string roleFact)
-    {
-        SetRoleFact(index, roleFact);
-    }
-    #endregion
-    #region  SetPlayerFact
-    public void SetPlayerFact(int index, string playerFact)
-    {
-        if (isServer)
-        {
-            GameState.Instance.playerFact[index] = playerFact;
-        }
-        else
-        {
-            CmdSetPlayerFact(index, playerFact);
-        }
-    }
-    [Command]
-    public void CmdSetPlayerFact(int index, string playerFact)
-    {
-        SetPlayerFact(index, playerFact);
-    }
-    #endregion
-    #region  SetPlayerWin
-    public void SetPlayerWin(int index, bool playerWin)
-    {
-        if (isServer)
-        {
-            GameState.Instance.playerWin[index] = playerWin;
-        }
-        else
-        {
-            CmdSetPlayerWin(index, playerWin);
-        }
-    }
-    [Command]
-    public void CmdSetPlayerWin(int index, bool playerWin)
-    {
-        SetPlayerWin(index, playerWin);
-    }
-    #endregion
-    #region  SetPlayerLost
-    public void SetPlayerLost(int index, bool playerLost)
-    {
-        if (isServer)
-        {
-            GameState.Instance.playerWin[index] = playerLost;
-        }
-        else
-        {
-            CmdSetPlayerLost(index, playerLost);
-        }
-    }
-    [Command]
-    public void CmdSetPlayerLost(int index, bool playerLost)
-    {
-        SetPlayerWin(index, playerLost);
-    }
-    #endregion
-
-
     #region SetCurrentPlace
-    public void SetCurrentPlace(int index, int[] currentPlace)
+    public void SetCurrentPlace(int index, int currentPlaceX, int currentPlaceY)
     {
+        GameState.Instance.currentPlace[index] = new int[] { currentPlaceX, currentPlaceY };
         if (isServer)
         {
-            GameState.Instance.currentPlace[index] = currentPlace;
-            RpcSetCurrentPlace(index, currentPlace);
+            RpcSetCurrentPlace(index, currentPlaceX, currentPlaceY);
         }
         else
         {
-            CmdSetCurrentPlace(index, currentPlace);
+            CmdSetCurrentPlace(index, currentPlaceX, currentPlaceY);
         }
     }
     [Command]
-    public void CmdSetCurrentPlace(int index, int[] currentPlace)
+    public void CmdSetCurrentPlace(int index, int currentPlaceX, int currentPlaceY)
     {
-        SetCurrentPlace(index, currentPlace);
+        SetCurrentPlace(index, currentPlaceX, currentPlaceY);
     }
     [ClientRpc]
-    public void RpcSetCurrentPlace(int index, int[] currentPlace)
+    public void RpcSetCurrentPlace(int index, int currentPlaceX, int currentPlaceY)
     {
         if (!isServer)
         {
-            GameState.Instance.currentPlace[index] = currentPlace;
+            GameState.Instance.currentPlace[index] = new int[] { currentPlaceX, currentPlaceY };
         }
     }
     #endregion
     #region SetNotFoundTrue
     public void SetNotFoundTrue(int indexX, int indexY, int indexZ, int notFoundTrue)
     {
+        GameState.Instance.notFoundTrue[indexX][indexY, indexZ] = notFoundTrue;
         if (isServer)
         {
-            GameState.Instance.notFoundTrue[indexX][indexY, indexZ] = notFoundTrue;
             RpcSetNotFoundTrue(indexX, indexY, indexZ, notFoundTrue);
         }
         else
@@ -817,9 +436,9 @@ public class Player : NetworkBehaviour
     #region SetNotFoundFalse
     public void SetNotFoundFalse(int indexX, int indexY, int indexZ, int notFoundFalse)
     {
+        GameState.Instance.notFoundFalse[indexX][indexY, indexZ] = notFoundFalse;
         if (isServer)
         {
-            GameState.Instance.notFoundFalse[indexX][indexY, indexZ] = notFoundFalse;
             RpcSetNotFoundFalse(indexX, indexY, indexZ, notFoundFalse);
         }
         else
@@ -844,9 +463,9 @@ public class Player : NetworkBehaviour
     #region SetBoard
     public void SetBoard(int indexX, int indexY, int place)
     {
+        GameState.Instance.board[indexX, indexY] = place;
         if (isServer)
         {
-            GameState.Instance.board[indexX, indexY] = place;
             RpcSetBoard(indexX, indexY, place);
         }
     }
@@ -864,13 +483,495 @@ public class Player : NetworkBehaviour
         }
     }
     #endregion
+    #region AddQuestPlace
+    public void AddQuestPlace(int place)
+    {
+        GameState.Instance.questPlaces.Add(place);
+        if (isServer)
+        {
+            RpcAddQuestPlace(place);
+        }
+        else
+        {
+            CmdAddQuestPlace(place);
+        }
+    }
+    [Command]
+    public void CmdAddQuestPlace(int place)
+    {
+        AddQuestPlace(place);
+    }
+    [ClientRpc]
+    public void RpcAddQuestPlace(int place)
+    {
+        GameState.Instance.questPlaces.Add(place);
+    }
+    #endregion
+    #region RemoveQuestPlace
+    public void RemoveQuestPlace(int place)
+    {
+        GameState.Instance.questPlaces.Remove(place);
+        if (isServer)
+        {
+            RpcRemoveQuestPlace(place);
+        }
+        else
+        {
+            CmdRemoveQuestPlace(place);
+        }
+    }
+    [Command]
+    public void CmdRemoveQuestPlace(int place)
+    {
+        RemoveQuestPlace(place);
+    }
+    [ClientRpc]
+    public void RpcRemoveQuestPlace(int place)
+    {
+        GameState.Instance.questPlaces.Remove(place);
+    }
+    #endregion
+    #region SetPlayerState
+    public void SetPlayerState(int index, string state)
+    {
+        GameState.Instance.playerState[index] = state;
+        if (isServer)
+        {
+            RpcSetPlayerState(index, state);
+        }
+        else
+        {
+            CmdSetPlayerState(index, state);
+        }
+    }
+    [Command]
+    public void CmdSetPlayerState(int index, string state)
+    {
+        SetPlayerState(index, state);
+    }
+    [ClientRpc]
+    public void RpcSetPlayerState(int index, string state)
+    {
+        GameState.Instance.playerState[index] = state;
+    }
+    #endregion
+    #region SetRole
+    public void SetRole(int index, string role)
+    {
+        GameState.Instance.roles[index] = role;
+        if (isServer)
+        {
+            RpcSetRole(index, role);
+        }
+        else
+        {
+            CmdSetRole(index, role);
+        }
+    }
+    [Command]
+    public void CmdSetRole(int index, string role)
+    {
+        SetRole(index, role);
+    }
+    [ClientRpc]
+    public void RpcSetRole(int index, string role)
+    {
+        GameState.Instance.roles[index] = role;
+    }
+    #endregion
+    #region SetMoney
+    public void SetMoney(int index, int money)
+    {
 
+        GameState.Instance.money[index] = money;
+        if (isServer)
+        {
+            RpcSetMoney(index, money);
+
+        }
+        else
+        {
+            CmdSetMoney(index, money);
+        }
+    }
+    [Command]
+    public void CmdSetMoney(int index, int money)
+    {
+        SetMoney(index, money);
+    }
+    [ClientRpc]
+    public void RpcSetMoney(int index, int money)
+    {
+        GameState.Instance.money[index] = money;
+    }
+    #endregion
+    #region SetSolvedHints
+    public void SetSolvedHints(int index, int solvedHints)
+    {
+        GameState.Instance.solvedHints[index] = solvedHints;
+        if (isServer)
+        {
+            RpcSetSolvedHints(index, solvedHints);
+        }
+        else
+        {
+            CmdSetSolvedHints(index, solvedHints);
+        }
+    }
+    [Command]
+    public void CmdSetSolvedHints(int index, int solvedHints)
+    {
+        SetSolvedHints(index, solvedHints);
+    }
+    [ClientRpc]
+    public void RpcSetSolvedHints(int index, int solvedHints)
+    {
+        GameState.Instance.solvedHints[index] = solvedHints;
+    }
+    #endregion
+    #region SetUnsolvedHints
+    public void SetUnsolvedHints(int index, int unsolvedHints)
+    {
+        GameState.Instance.unsolvedHints[index] = unsolvedHints;
+        if (isServer)
+        {
+            RpcSetUnsolvedHints(index, unsolvedHints);
+        }
+        else
+        {
+            CmdSetUnsolvedHints(index, unsolvedHints);
+        }
+    }
+    [Command]
+    public void CmdSetUnsolvedHints(int index, int unsolvedHints)
+    {
+        SetUnsolvedHints(index, unsolvedHints);
+    }
+    [ClientRpc]
+    public void RpcSetUnsolvedHints(int index, int unsolvedHints)
+    {
+        GameState.Instance.unsolvedHints[index] = unsolvedHints;
+    }
+    #endregion
+    #region SetTrueSolveds
+    public void SetTrueSolveds(int index, int trueSolveds)
+    {
+        GameState.Instance.trueSolveds[index] = trueSolveds;
+        if (isServer)
+        {
+            RpcSetTrueSolveds(index, trueSolveds);
+        }
+        else
+        {
+            CmdSetTrueSolveds(index, trueSolveds);
+        }
+    }
+    [Command]
+    public void CmdSetTrueSolveds(int index, int trueSolveds)
+    {
+        SetTrueSolveds(index, trueSolveds);
+    }
+    [ClientRpc]
+    public void RpcSetTrueSolveds(int index, int trueSolveds)
+    {
+        GameState.Instance.trueSolveds[index] = trueSolveds;
+    }
+    #endregion
+    #region SetTrueUnsolveds
+    public void SetTrueUnsolveds(int index, int trueUnsolveds)
+    {
+        GameState.Instance.trueUnsolveds[index] = trueUnsolveds;
+        if (isServer)
+        {
+            RpcSetTrueUnsolveds(index, trueUnsolveds);
+        }
+        else
+        {
+            CmdSetTrueUnsolveds(index, trueUnsolveds);
+        }
+    }
+    [Command]
+    public void CmdSetTrueUnsolveds(int index, int trueUnsolveds)
+    {
+        SetTrueUnsolveds(index, trueUnsolveds);
+    }
+    [ClientRpc]
+    public void RpcSetTrueUnsolveds(int index, int trueUnsolveds)
+    {
+        GameState.Instance.trueUnsolveds[index] = trueUnsolveds;
+    }
+    #endregion
+    #region SetIsDisabled
+    public void SetIsDisabled(int index, int isDisabled)
+    {
+        GameState.Instance.isDisabled[index] = isDisabled;
+        if (isServer)
+        {
+            RpcSetIsDisabled(index, isDisabled);
+        }
+        else
+        {
+            CmdSetIsDisabled(index, isDisabled);
+        }
+    }
+    [Command]
+    public void CmdSetIsDisabled(int index, int isDisabled)
+    {
+        SetIsDisabled(index, isDisabled);
+    }
+    [ClientRpc]
+    public void RpcSetIsDisabled(int index, int isDisabled)
+    {
+        GameState.Instance.isDisabled[index] = isDisabled;
+    }
+    #endregion
+    #region SetIsManipulated
+    public void SetIsManipulated(int index, bool isManipulated)
+    {
+        GameState.Instance.isManipulated[index] = isManipulated;
+        if (isServer)
+        {
+            RpcSetIsManipulated(index, isManipulated);
+        }
+        else
+        {
+            CmdSetIsManipulated(index, isManipulated);
+        }
+    }
+    [Command]
+    public void CmdSetIsManipulated(int index, bool isManipulated)
+    {
+        SetIsManipulated(index, isManipulated);
+    }
+    [ClientRpc]
+    public void RpcSetIsManipulated(int index, bool isManipulated)
+    {
+        GameState.Instance.isManipulated[index] = isManipulated;
+    }
+    #endregion
+    #region SetSkillUsed
+    public void SetSkillUsed(int index, bool skillUsed)
+    {
+        GameState.Instance.skillUsed[index] = skillUsed;
+        if (isServer)
+        {
+            RpcSetSkillUsed(index, skillUsed);
+        }
+        else
+        {
+            CmdSetSkillUsed(index, skillUsed);
+        }
+    }
+    [Command]
+    public void CmdSetSkillUsed(int index, bool skillUsed)
+    {
+        SetSkillUsed(index, skillUsed);
+    }
+    [ClientRpc]
+    public void RpcSetSkillUsed(int index, bool skillUsed)
+    {
+        GameState.Instance.skillUsed[index] = skillUsed;
+    }
+    #endregion
+    #region  SetLastTransaction
+    public void SetLastTransaction(int index, string lastTransaction)
+    {
+        GameState.Instance.lastTransaction[index] = lastTransaction;
+        if (isServer)
+        {
+            RpcSetLastTransaction(index, lastTransaction);
+        }
+        else
+        {
+            CmdSetLastTransaction(index, lastTransaction);
+        }
+    }
+    [Command]
+    public void CmdSetLastTransaction(int index, string lastTransaction)
+    {
+        SetLastTransaction(index, lastTransaction);
+    }
+    [ClientRpc]
+    public void RpcSetLastTransaction(int index, string lastTransaction)
+    {
+        GameState.Instance.lastTransaction[index] = lastTransaction;
+    }
+    #endregion
+    #region  SetLastAction
+    public void SetLastAction(int index, string lastAction)
+    {
+        GameState.Instance.lastAction[index] = lastAction;
+        if (isServer)
+        {
+            RpcSetLastAction(index, lastAction);
+        }
+        else
+        {
+            CmdSetLastAction(index, lastAction);
+        }
+    }
+    [Command]
+    public void CmdSetLastAction(int index, string lastAction)
+    {
+        SetLastAction(index, lastAction);
+    }
+    [ClientRpc]
+    public void RpcSetLastAction(int index, string lastAction)
+    {
+        GameState.Instance.lastAction[index] = lastAction;
+    }
+    #endregion
+    #region  SetSolvedFacts
+    public void SetSolvedFacts(int index, int solvedFacts)
+    {
+        GameState.Instance.solvedFacts[index] = solvedFacts;
+        if (isServer)
+        {
+            RpcSetSolvedFacts(index, solvedFacts);
+        }
+        else
+        {
+            CmdSetSolvedFacts(index, solvedFacts);
+        }
+    }
+    [Command]
+    public void CmdSetSolvedFacts(int index, int solvedFacts)
+    {
+        SetSolvedFacts(index, solvedFacts);
+    }
+    [ClientRpc]
+    public void RpcSetSolvedFacts(int index, int solvedFacts)
+    {
+        GameState.Instance.solvedFacts[index] = solvedFacts;
+    }
+    #endregion
+    #region  SetPlaceFact
+    public void SetPlaceFact(int index, string placeFact)
+    {
+        GameState.Instance.placeFact[index] = placeFact;
+        if (isServer)
+        {
+            RpcSetPlaceFact(index, placeFact);
+        }
+        else
+        {
+            CmdSetPlaceFact(index, placeFact);
+        }
+    }
+    [Command]
+    public void CmdSetPlaceFact(int index, string placeFact)
+    {
+        SetPlaceFact(index, placeFact);
+    }
+    [ClientRpc]
+    public void RpcSetPlaceFact(int index, string placeFact)
+    {
+        GameState.Instance.placeFact[index] = placeFact;
+    }
+    #endregion
+    #region  SetRoleFact
+    public void SetRoleFact(int index, string roleFact)
+    {
+        GameState.Instance.roleFact[index] = roleFact;
+        if (isServer)
+        {
+            RpcSetRoleFact(index, roleFact);
+        }
+        else
+        {
+            CmdSetRoleFact(index, roleFact);
+        }
+    }
+    [Command]
+    public void CmdSetRoleFact(int index, string roleFact)
+    {
+        SetRoleFact(index, roleFact);
+    }
+    [ClientRpc]
+    public void RpcSetRoleFact(int index, string roleFact)
+    {
+        GameState.Instance.roleFact[index] = roleFact;
+    }
+    #endregion
+    #region  SetPlayerFact
+    public void SetPlayerFact(int index, string playerFact)
+    {
+        GameState.Instance.playerFact[index] = playerFact;
+        if (isServer)
+        {
+            RpcSetPlayerFact(index, playerFact);
+        }
+        else
+        {
+            CmdSetPlayerFact(index, playerFact);
+        }
+    }
+    [Command]
+    public void CmdSetPlayerFact(int index, string playerFact)
+    {
+        SetPlayerFact(index, playerFact);
+    }
+    [ClientRpc]
+    public void RpcSetPlayerFact(int index, string playerFact)
+    {
+        GameState.Instance.playerFact[index] = playerFact;
+    }
+    #endregion
+    #region  SetPlayerWin
+    public void SetPlayerWin(int index, bool playerWin)
+    {
+        GameState.Instance.playerWin[index] = playerWin;
+        if (isServer)
+        {
+            RpcSetPlayerWin(index, playerWin);
+        }
+        else
+        {
+            CmdSetPlayerWin(index, playerWin);
+        }
+    }
+    [Command]
+    public void CmdSetPlayerWin(int index, bool playerWin)
+    {
+        SetPlayerWin(index, playerWin);
+    }
+    [ClientRpc]
+    public void RpcSetPlayerWin(int index, bool playerWin)
+    {
+        GameState.Instance.playerWin[index] = playerWin;
+    }
+    #endregion
+    #region  SetPlayerLost
+    public void SetPlayerLost(int index, bool playerLost)
+    {
+        GameState.Instance.playerWin[index] = playerLost;
+        if (isServer)
+        {
+            RpcSetPlayerLost(index, playerLost);
+        }
+        else
+        {
+            CmdSetPlayerLost(index, playerLost);
+        }
+    }
+    [Command]
+    public void CmdSetPlayerLost(int index, bool playerLost)
+    {
+        SetPlayerWin(index, playerLost);
+    }
+    [ClientRpc]
+    public void RpcSetPlayerLost(int index, bool playerLost)
+    {
+        GameState.Instance.playerWin[index] = playerLost;
+    }
+    #endregion
     #region SetActiveTraps
     public void SetActiveTraps(int index, string activeTrap)
     {
+        GameState.Instance.activeTraps[index] = activeTrap;
         if (isServer)
         {
-            GameState.Instance.activeTraps[index] = activeTrap;
+            RpcSetActiveTraps(index, activeTrap);
         }
         else
         {
@@ -882,13 +983,19 @@ public class Player : NetworkBehaviour
     {
         SetActiveTraps(index, activeTrap);
     }
+    [ClientRpc]
+    public void RpcSetActiveTraps(int index, string activeTrap)
+    {
+        GameState.Instance.activeTraps[index] = activeTrap;
+    }
     #endregion
     #region SetInfernoTraps
     public void SetInfernoTraps(int index, int turns)
     {
+        GameState.Instance.infernoTraps[index] = turns;
         if (isServer)
         {
-            GameState.Instance.infernoTraps[index] = turns;
+            RpcSetInfernoTraps(index, turns);
         }
         else
         {
@@ -901,13 +1008,19 @@ public class Player : NetworkBehaviour
     {
         SetInfernoTraps(index, turns);
     }
+    [ClientRpc]
+    public void RpcSetInfernoTraps(int index, int turns)
+    {
+        GameState.Instance.infernoTraps[index] = turns;
+    }
     #endregion
     #region SetDrMortifierTraps
     public void SetDrMortifierTraps(int index, int turns)
     {
+        GameState.Instance.drMortifierTraps[index] = turns;
         if (isServer)
         {
-            GameState.Instance.drMortifierTraps[index] = turns;
+            RpcSetDrMortifierTraps(index, turns);
         }
         else
         {
@@ -920,13 +1033,19 @@ public class Player : NetworkBehaviour
     {
         SetDrMortifierTraps(index, turns);
     }
+    [ClientRpc]
+    public void RpcSetDrMortifierTraps(int index, int turns)
+    {
+        GameState.Instance.drMortifierTraps[index] = turns;
+    }
     #endregion
     #region SetPhantomTraps
     public void SetPhantomTraps(int index, int turns)
     {
+        GameState.Instance.phantomTraps[index] = turns;
         if (isServer)
         {
-            GameState.Instance.phantomTraps[index] = turns;
+            RpcSetPhantomTraps(index, turns);
         }
         else
         {
@@ -939,13 +1058,19 @@ public class Player : NetworkBehaviour
     {
         SetPhantomTraps(index, turns);
     }
+    [ClientRpc]
+    public void RpcSetPhantomTraps(int index, int turns)
+    {
+        GameState.Instance.phantomTraps[index] = turns;
+    }
     #endregion
     #region SetFascultoTraps
     public void SetFascultoTraps(int index, int turns)
     {
+        GameState.Instance.fascultoTraps[index] = turns;
         if (isServer)
         {
-            GameState.Instance.fascultoTraps[index] = turns;
+            RpcSetFascultoTraps(index, turns);
         }
         else
         {
@@ -957,6 +1082,11 @@ public class Player : NetworkBehaviour
     public void CmdSetFascultoTraps(int index, int turns)
     {
         SetFascultoTraps(index, turns);
+    }
+    [ClientRpc]
+    public void RpcSetFascultoTraps(int index, int turns)
+    {
+        GameState.Instance.fascultoTraps[index] = turns;
     }
     #endregion
     #region RemoveItem
@@ -1014,13 +1144,13 @@ public class Player : NetworkBehaviour
         }
     }
     #endregion
-
     #region SetQuarantine
     public void SetQuarantine(int index, int turns)
     {
+        GameState.Instance.quarantined[index] = turns;
         if (isServer)
         {
-            GameState.Instance.quarantined[index] = turns;
+            RpcSetQuarantine(index, turns);
         }
         else
         {
@@ -1032,13 +1162,19 @@ public class Player : NetworkBehaviour
     {
         SetQuarantine(index, turns);
     }
+    [ClientRpc]
+    public void RpcSetQuarantine(int index, int turns)
+    {
+        GameState.Instance.quarantined[index] = turns;
+    }
     #endregion
     #region RemoveUsedEnergyDrink
     public void RemoveUsedEnergyDrink(bool usedEnergyDrink)
     {
+        GameState.Instance.usedEnergyDrink.Remove(usedEnergyDrink);
         if (isServer)
         {
-            GameState.Instance.usedEnergyDrink.Remove(usedEnergyDrink);
+            RpcRemoveEnergyDrink(usedEnergyDrink);
         }
         else
         {
@@ -1050,13 +1186,19 @@ public class Player : NetworkBehaviour
     {
         RemoveUsedEnergyDrink(usedEnergyDrink);
     }
+    [ClientRpc]
+    public void RpcRemoveEnergyDrink(bool usedEnergyDrink)
+    {
+        GameState.Instance.usedEnergyDrink.Remove(usedEnergyDrink);
+    }
     #endregion
     #region AddUsedEnergyDrink
     public void AddUsedEnergyDrink(bool usedEnergyDrink)
     {
+        GameState.Instance.usedEnergyDrink.Add(usedEnergyDrink);
         if (isServer)
         {
-            GameState.Instance.usedEnergyDrink.Add(usedEnergyDrink);
+            RpcAddUsedEnergyDrink(usedEnergyDrink);
         }
         else
         {
@@ -1068,6 +1210,36 @@ public class Player : NetworkBehaviour
     {
         AddUsedEnergyDrink(usedEnergyDrink);
     }
+    [ClientRpc]
+    public void RpcAddUsedEnergyDrink(bool usedEnergyDrink)
+    {
+        GameState.Instance.usedEnergyDrink.Add(usedEnergyDrink);
+    }
     #endregion
+    ///////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+    #region ConnectedPlayerUp
+    public void ConnectedPlayerUp()
+    {
+
+        if (isServer)
+        {
+            GameState.Instance.connectedPlayer++;
+        }
+        else
+        {
+            CmdConnectedPlayerUp();
+        }
+    }
+    [Command]
+    public void CmdConnectedPlayerUp()
+    {
+        ConnectedPlayerUp();
+    }
+    #endregion
+
+
+   
 
 }

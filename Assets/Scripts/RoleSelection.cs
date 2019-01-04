@@ -236,7 +236,7 @@ public class RoleSelection : MonoBehaviour
         player.SetPlaceFact(player.id, "");
         player.SetPlayerWin(player.id, false);
         player.SetPlayerLost(player.id, false);
-        player.SetCurrentPlace(player.id, new int[] { 2, 3 });
+        player.SetCurrentPlace(player.id, 2, 3 );
         addingHintBoards();
     }
     void addingHintBoards()

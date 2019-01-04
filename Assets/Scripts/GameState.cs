@@ -7,7 +7,6 @@ using UnityEngine.Networking;
 public class GameState : NetworkBehaviour {
 
     public static GameState Instance;
-
     public GameObject localPlayer;
 
     [SyncVar]
@@ -15,59 +14,59 @@ public class GameState : NetworkBehaviour {
     [SyncVar]
     public int connectedPlayer;
 
-    public SyncListInt questPlaces = new SyncListInt();
-
-    public SyncListString playerState = new SyncListString();
-
-    public SyncListString roles=new SyncListString();
-
-    public SyncListInt money= new SyncListInt();
-
-    public SyncListInt solvedHints = new SyncListInt();
-
-    public SyncListInt unsolvedHints = new SyncListInt();
-
-    public SyncListInt trueSolveds = new SyncListInt();
-
-    public SyncListInt trueUnsolveds = new SyncListInt();
-
-    public SyncListInt isDisabled = new SyncListInt();
-
-    public SyncListBool isManipulated = new SyncListBool();
-   
-    public SyncListBool skillUsed = new SyncListBool();
-
-    public SyncListString lastTransaction = new SyncListString();
-
-    public SyncListString lastAction = new SyncListString();
- 
-    public SyncListInt solvedFacts = new SyncListInt();
-
-    public SyncListString playerFact = new SyncListString();
-
-    public SyncListString roleFact = new SyncListString();
-
-    public SyncListString placeFact = new SyncListString();
-
-    public SyncListBool playerWin = new SyncListBool();
-
-    public SyncListBool playerLost = new SyncListBool();
-
-    public SyncListString activeTraps = new SyncListString();
-
-    public SyncListInt infernoTraps = new SyncListInt();
-
-    public SyncListInt drMortifierTraps = new SyncListInt();
-
-    public SyncListInt phantomTraps = new SyncListInt();
-
-    public SyncListInt fascultoTraps = new SyncListInt();
-
-    public SyncListInt quarantined = new SyncListInt();
-
-    public SyncListBool usedEnergyDrink = new SyncListBool();
-
     //manually networked with rpcs
+    public List<int> questPlaces = new List<int>();
+
+    public List<string> playerState = new List<string>();
+
+    public List<string> roles =new List<string>();
+
+    public List<int> money = new List<int>();
+
+    public List<int> solvedHints = new List<int>();
+
+    public List<int> unsolvedHints = new List<int>();
+
+    public List<int> trueSolveds = new List<int>();
+
+    public List<int> trueUnsolveds = new List<int>();
+
+    public List<int> isDisabled = new List<int>();
+
+    public List<bool> isManipulated = new List<bool>();
+   
+    public List<bool> skillUsed = new List<bool>();
+
+    public List<string> lastTransaction = new List<string>();
+
+    public List<string> lastAction = new List<string>();
+ 
+    public List<int> solvedFacts = new List<int>();
+
+    public List<string> playerFact = new List<string>();
+
+    public List<string> roleFact = new List<string>();
+
+    public List<string> placeFact = new List<string>();
+
+    public List<bool> playerWin = new List<bool>();
+
+    public List<bool> playerLost = new List<bool>();
+
+    public List<string> activeTraps = new List<string>();
+
+    public List<int> infernoTraps = new List<int>();
+
+    public List<int> drMortifierTraps = new List<int>();
+
+    public List<int> phantomTraps = new List<int>();
+
+    public List<int> fascultoTraps = new List<int>();
+
+    public List<int> quarantined = new List<int>();
+
+    public List<bool> usedEnergyDrink = new List<bool>();
+
     public int selectedRoles;
     public bool targetTime;
     public int elapsedSeconds;

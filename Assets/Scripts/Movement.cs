@@ -203,25 +203,25 @@ public class Movement : MonoBehaviour {
     void rightClick()
     {
         currentPlace[1] += 1;
-        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace);
+        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace[0],currentPlace[1]);
         endClick();
     }
     void leftClick()
     {
         currentPlace[1] -= 1;
-        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace);
+        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace[0], currentPlace[1]);
         endClick();
     }
     void downClick()
     {
         currentPlace[0] += 1;
-        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace);
+        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace[0], currentPlace[1]);
         endClick();
     }
     void upClick()
     {
         currentPlace[0] -= 1;
-        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace);
+        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace[0], currentPlace[1]);
         endClick();
     }
     void stayClick()

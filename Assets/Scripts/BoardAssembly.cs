@@ -119,147 +119,250 @@ public class BoardAssembly : MonoBehaviour {
     private Player player; 
     // Use this for initialization
     
-    void Start () {
+    void OnEnable () {
+        
         player = GameState.Instance.localPlayer.GetComponent<Player>();
-        System.Random rn = new System.Random();
-
-        skillplace1 = newNumber(rn, 2, 7);
-        skillplace2 = newNumber(rn, 2, 7);
-        skillplace3 = newNumber(rn, 2, 7);
-        skillplace4 = newNumber(rn, 2, 7);
-        skillplace5 = newNumber(rn, 2, 7);
-
-        place1 = newNumber(rn, 7, 19);
-        place2 = newNumber(rn, 7, 19);
-        place3 = newNumber(rn, 7, 19);
-        place4 = newNumber(rn, 7, 19);
-        place5 = newNumber(rn, 7, 19);
-        place6 = newNumber(rn, 7, 19);
-        place7 = newNumber(rn, 7, 19);
-        place8 = newNumber(rn, 7, 19);
-        place9 = newNumber(rn, 7, 19);
-        place10 = newNumber(rn, 7, 19);
-        place11 = newNumber(rn, 7, 19);
-        place12 = newNumber(rn, 7, 19);
-
-
         board = new int[6, 7]
+            {
+            {0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 0, 0 },
+            {0, 0, 0, 0, 0, 0, 0 }
+            };
+        if (player.isServer)
         {
+
+
+            System.Random rn = new System.Random();
+
+            skillplace1 = newNumber(rn, 2, 7);
+            skillplace2 = newNumber(rn, 2, 7);
+            skillplace3 = newNumber(rn, 2, 7);
+            skillplace4 = newNumber(rn, 2, 7);
+            skillplace5 = newNumber(rn, 2, 7);
+
+            place1 = newNumber(rn, 7, 19);
+            place2 = newNumber(rn, 7, 19);
+            place3 = newNumber(rn, 7, 19);
+            place4 = newNumber(rn, 7, 19);
+            place5 = newNumber(rn, 7, 19);
+            place6 = newNumber(rn, 7, 19);
+            place7 = newNumber(rn, 7, 19);
+            place8 = newNumber(rn, 7, 19);
+            place9 = newNumber(rn, 7, 19);
+            place10 = newNumber(rn, 7, 19);
+            place11 = newNumber(rn, 7, 19);
+            place12 = newNumber(rn, 7, 19);
+
+
+            board = new int[6, 7]
+            {
             {0, place1, place2, 0, place3, place4, 0 },
             {0, 0, 0, 0, 0, 0, 0 },
             {place5, 0, skillplace1, mainsquare, skillplace2, 0, place6 },
             {place7, 0, skillplace3, skillplace4, skillplace5, 0, place8 },
             {0, 0, 0, 0, 0, 0, 0 },
             {0, place9, place10, 0, place11, place12, 0 }
-        };
-        GameState.Instance.board = board;
-
-        setImage(tile1_1, 0, 0);
-        setImage(tile1_2, 0, 1);
-        setImage(tile1_3, 0, 2);
-        setImage(tile1_4, 0, 3);
-        setImage(tile1_5, 0, 4);
-        setImage(tile1_6, 0, 5);
-        setImage(tile1_7, 0, 6);
-        setImage(tile2_1, 1, 0);
-        setImage(tile2_2, 1, 1);
-        setImage(tile2_3, 1, 2);
-        setImage(tile2_4, 1, 3);
-        setImage(tile2_5, 1, 4);
-        setImage(tile2_6, 1, 5);
-        setImage(tile2_7, 1, 6);
-        setImage(tile3_1, 2, 0);
-        setImage(tile3_2, 2, 1);
-        setImage(tile3_3, 2, 2);
-        setImage(tile3_4, 2, 3);
-        setImage(tile3_5, 2, 4);
-        setImage(tile3_6, 2, 5);
-        setImage(tile3_7, 2, 6);
-        setImage(tile4_1, 3, 0);
-        setImage(tile4_2, 3, 1);
-        setImage(tile4_3, 3, 2);
-        setImage(tile4_4, 3, 3);
-        setImage(tile4_5, 3, 4);
-        setImage(tile4_6, 3, 5);
-        setImage(tile4_7, 3, 6);
-        setImage(tile5_1, 4, 0);
-        setImage(tile5_2, 4, 1);
-        setImage(tile5_3, 4, 2);
-        setImage(tile5_4, 4, 3);
-        setImage(tile5_5, 4, 4);
-        setImage(tile5_6, 4, 5);
-        setImage(tile5_7, 4, 6);
-        setImage(tile6_1, 5, 0);
-        setImage(tile6_2, 5, 1);
-        setImage(tile6_3, 5, 2);
-        setImage(tile6_4, 5, 3);
-        setImage(tile6_5, 5, 4);
-        setImage(tile6_6, 5, 5);
-        setImage(tile6_7, 5, 6);
+            };
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    player.SetBoard(i, j, board[i, j]);
+                }
+            }
+            StartCoroutine("FillBoard");
+        }
+        else
+        {
+            StartCoroutine("GetBoard");
+        }
 
     }
-
-    private void setImage(RawImage tile, int row, int col)
+    IEnumerator GetBoard()
+    {
+        Debug.Log("GetBoard Start");
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < 6; i++)
+        {
+            for (int j = 0; j < 7; j++)
+            {
+                
+                board[i, j] = GameState.Instance.board[i, j];
+                Debug.Log("place: " + board[i, j]);
+            }
+        }
+        StartCoroutine("FillBoard");
+    }
+    IEnumerator FillBoard()
+    {
+        Debug.Log("FillBoard");
+        setImage(tile1_1, 0, 0);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile1_2, 0, 1);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile1_3, 0, 2);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile1_4, 0, 3);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile1_5, 0, 4);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile1_6, 0, 5);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile1_7, 0, 6);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile2_1, 1, 0);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile2_2, 1, 1);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile2_3, 1, 2);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile2_4, 1, 3);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile2_5, 1, 4);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile2_6, 1, 5);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile2_7, 1, 6);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile3_1, 2, 0);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile3_2, 2, 1);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile3_3, 2, 2);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile3_4, 2, 3);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile3_5, 2, 4);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile3_6, 2, 5);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile3_7, 2, 6);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile4_1, 3, 0);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile4_2, 3, 1);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile4_3, 3, 2);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile4_4, 3, 3);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile4_5, 3, 4);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile4_6, 3, 5);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile4_7, 3, 6);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile5_1, 4, 0);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile5_2, 4, 1);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile5_3, 4, 2);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile5_4, 4, 3);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile5_5, 4, 4);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile5_6, 4, 5);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile5_7, 4, 6);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile6_1, 5, 0);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile6_2, 5, 1);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile6_3, 5, 2);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile6_4, 5, 3);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile6_5, 5, 4);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile6_6, 5, 5);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile6_7, 5, 6);
+    }
+        private void setImage(RawImage tile, int row, int col)
     {
 
         switch (board[row, col])
         {
             case 0:
                 tile.texture = street;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 1:
                 tile.texture = mainsquareTexture;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 2:
                 tile.texture = park;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 3:
                 tile.texture = hospital;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 4:
                 tile.texture = bank;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 5:
                 tile.texture = parliament;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 6:
                 tile.texture = cemetary;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 7:
                 tile.texture = prison;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 8:
                 tile.texture = casino;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 9:
                 tile.texture = internetCafe;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 10:
                 tile.texture = trainstation;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 11:
                 tile.texture = armyshop;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 12:
                 tile.texture = shoppingcenter;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 13:
                 tile.texture = junkyard;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 14:
                 tile.texture = library;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 15:
                 tile.texture = laboratory;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 16:
                 tile.texture = italienRest;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 17:
                 tile.texture = harbor;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
             case 18:
                 tile.texture = bar;
+                tile.color = new Color(255, 255, 255, 255);
                 break;
         }
     }
