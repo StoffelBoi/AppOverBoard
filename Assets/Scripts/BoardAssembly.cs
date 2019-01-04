@@ -30,8 +30,71 @@ public class BoardAssembly : MonoBehaviour {
      */
 
     public LinkedList<int> places = new LinkedList<int>();
-    public Text txt_board;
-    
+    public Canvas canvas;
+
+    public RawImage tile1_1;
+    public RawImage tile1_2;
+    public RawImage tile1_3;
+    public RawImage tile1_4;
+    public RawImage tile1_5;
+    public RawImage tile1_6;
+    public RawImage tile1_7;
+    public RawImage tile2_1;
+    public RawImage tile2_2;
+    public RawImage tile2_3;
+    public RawImage tile2_4;
+    public RawImage tile2_5;
+    public RawImage tile2_6;
+    public RawImage tile2_7;
+    public RawImage tile3_1;
+    public RawImage tile3_2;
+    public RawImage tile3_3;
+    public RawImage tile3_4;
+    public RawImage tile3_5;
+    public RawImage tile3_6;
+    public RawImage tile3_7;
+    public RawImage tile4_1;
+    public RawImage tile4_2;
+    public RawImage tile4_3;
+    public RawImage tile4_4;
+    public RawImage tile4_5;
+    public RawImage tile4_6;
+    public RawImage tile4_7;
+    public RawImage tile5_1;
+    public RawImage tile5_2;
+    public RawImage tile5_3;
+    public RawImage tile5_4;
+    public RawImage tile5_5;
+    public RawImage tile5_6;
+    public RawImage tile5_7;
+    public RawImage tile6_1;
+    public RawImage tile6_2;
+    public RawImage tile6_3;
+    public RawImage tile6_4;
+    public RawImage tile6_5;
+    public RawImage tile6_6;
+    public RawImage tile6_7;
+
+    public Texture armyshop;
+    public Texture bank;
+    public Texture bar;
+    public Texture casino;
+    public Texture cemetary;
+    public Texture harbor;
+    public Texture hospital;
+    public Texture internetCafe;
+    public Texture italienRest;
+    public Texture junkyard;
+    public Texture laboratory;
+    public Texture library;
+    public Texture mainsquareTexture;
+    public Texture park;
+    public Texture parliament;
+    public Texture prison;
+    public Texture shoppingcenter;
+    public Texture street;
+    public Texture trainstation;
+
 
     public int[,] board;
 
@@ -90,81 +153,115 @@ public class BoardAssembly : MonoBehaviour {
             {0, place9, place10, 0, place11, place12, 0 }
         };
         GameState.Instance.board = board;
-        for(int rows = 0; rows < board.GetLength(0); rows++)
+
+        setImage(tile1_1, 0, 0);
+        setImage(tile1_2, 0, 1);
+        setImage(tile1_3, 0, 2);
+        setImage(tile1_4, 0, 3);
+        setImage(tile1_5, 0, 4);
+        setImage(tile1_6, 0, 5);
+        setImage(tile1_7, 0, 6);
+        setImage(tile2_1, 1, 0);
+        setImage(tile2_2, 1, 1);
+        setImage(tile2_3, 1, 2);
+        setImage(tile2_4, 1, 3);
+        setImage(tile2_5, 1, 4);
+        setImage(tile2_6, 1, 5);
+        setImage(tile2_7, 1, 6);
+        setImage(tile3_1, 2, 0);
+        setImage(tile3_2, 2, 1);
+        setImage(tile3_3, 2, 2);
+        setImage(tile3_4, 2, 3);
+        setImage(tile3_5, 2, 4);
+        setImage(tile3_6, 2, 5);
+        setImage(tile3_7, 2, 6);
+        setImage(tile4_1, 3, 0);
+        setImage(tile4_2, 3, 1);
+        setImage(tile4_3, 3, 2);
+        setImage(tile4_4, 3, 3);
+        setImage(tile4_5, 3, 4);
+        setImage(tile4_6, 3, 5);
+        setImage(tile4_7, 4, 6);
+        setImage(tile5_1, 4, 0);
+        setImage(tile5_2, 4, 1);
+        setImage(tile5_3, 4, 2);
+        setImage(tile5_4, 4, 3);
+        setImage(tile5_5, 4, 4);
+        setImage(tile5_6, 4, 5);
+        setImage(tile5_7, 4, 6);
+        setImage(tile6_1, 5, 0);
+        setImage(tile6_2, 5, 1);
+        setImage(tile6_3, 5, 2);
+        setImage(tile6_4, 5, 3);
+        setImage(tile6_5, 5, 4);
+        setImage(tile6_6, 5, 5);
+        setImage(tile6_7, 5, 6);
+
+    }
+
+    private void setImage(RawImage tile, int row, int col)
+    {
+
+        switch (board[row, col])
         {
-            for(int cols = 0; cols < board.GetLength(1); cols++)
-            {
-                //txt_board.text += " " + board[rows, cols] + " ";
-                txt_board.text += " ";
-
-                switch(board[rows, cols])
-                {
-                    case 0:
-                        txt_board.text += "Straße";
-                        break;
-                    case 1:
-                        txt_board.text += "Stadtplatz";
-                        break;
-                    case 2:
-                        txt_board.text += "Park";
-                        break;
-                    case 3:
-                        txt_board.text += "Krankenhaus";
-                        break;
-                    case 4:
-                        txt_board.text += "Bank";
-                        break;
-                    case 5:
-                        txt_board.text += "Parlament";
-                        break;
-                    case 6:
-                        txt_board.text += "Friedhof";
-                        break;
-                    case 7:
-                        txt_board.text += "Gefängnis";
-                        break;
-                    case 8:
-                        txt_board.text += "Kasino";
-                        break;
-                    case 9:
-                        txt_board.text += "Internet Cafe";
-                        break;
-                    case 10:
-                        txt_board.text += "Bahnhof";
-                        break;
-                    case 11:
-                        txt_board.text += "Armee Laden";
-                        break;
-                    case 12:
-                        txt_board.text += "Shopping Center";
-                        break;
-                    case 13:
-                        txt_board.text += "Schrottplatz";
-                        break;
-                    case 14:
-                        txt_board.text += "Bibliothek";
-                        break;
-                    case 15:
-                        txt_board.text += "Labor";
-                        break;
-                    case 16:
-                        txt_board.text += "Italiener";
-                        break;
-                    case 17:
-                        txt_board.text += "Hafen";
-                        break;
-                    case 18:
-                        txt_board.text += "Bar";
-                        break;
-                }
-                txt_board.text += " ";
-            }
-            txt_board.text += "\n";
+            case 0:
+                tile.texture = street;
+                break;
+            case 1:
+                tile.texture = mainsquareTexture;
+                break;
+            case 2:
+                tile.texture = park;
+                break;
+            case 3:
+                tile.texture = hospital;
+                break;
+            case 4:
+                tile.texture = bank;
+                break;
+            case 5:
+                tile.texture = parliament;
+                break;
+            case 6:
+                tile.texture = cemetary;
+                break;
+            case 7:
+                tile.texture = prison;
+                break;
+            case 8:
+                tile.texture = casino;
+                break;
+            case 9:
+                tile.texture = internetCafe;
+                break;
+            case 10:
+                tile.texture = trainstation;
+                break;
+            case 11:
+                tile.texture = armyshop;
+                break;
+            case 12:
+                tile.texture = shoppingcenter;
+                break;
+            case 13:
+                tile.texture = junkyard;
+                break;
+            case 14:
+                tile.texture = library;
+                break;
+            case 15:
+                tile.texture = laboratory;
+                break;
+            case 16:
+                tile.texture = italienRest;
+                break;
+            case 17:
+                tile.texture = harbor;
+                break;
+            case 18:
+                tile.texture = bar;
+                break;
         }
-
-        
-       
-
     }
 	
 	// Update is called once per frame
@@ -178,6 +275,7 @@ public class BoardAssembly : MonoBehaviour {
         {
             if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
+                TimeManager.Instance.startTimer();
                 UIManager.Instance.PrivatePlayer();
             }
         }
