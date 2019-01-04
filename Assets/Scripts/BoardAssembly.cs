@@ -181,7 +181,7 @@ public class BoardAssembly : MonoBehaviour {
         setImage(tile4_4, 3, 3);
         setImage(tile4_5, 3, 4);
         setImage(tile4_6, 3, 5);
-        setImage(tile4_7, 4, 6);
+        setImage(tile4_7, 3, 6);
         setImage(tile5_1, 4, 0);
         setImage(tile5_2, 4, 1);
         setImage(tile5_3, 4, 2);

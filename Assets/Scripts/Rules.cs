@@ -157,250 +157,256 @@ public class Rules : MonoBehaviour
         bool inputGiven = true;
         Touch touch = Input.GetTouch(0);
 
-        if (places1.enabled&&inputGiven&&touch.position.x!=lastTouch.position.x)
+        if (Input.GetTouch(0).phase == TouchPhase.Ended)
         {
-            if (touch.position.x <= 540)
+
+            if (places1.enabled && inputGiven && touch.position.x != lastTouch.position.x)
             {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-            else if (touch.position.x > 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesPlace2();
-            }
+                if (touch.position.x <= 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+                else if (touch.position.x > 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesPlace2();
+                }
 
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesPlace2();
-            }
-        }
-
-        if (places2.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-        {
-            if (touch.position.x <= 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesPlace1();
-            }
-            else if (touch.position.x > 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesPlace3();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesPlace3();
-            }
-        }
-
-        if (places3.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-        {
-            if (touch.position.x <= 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesPlace2();
-            }
-            else if (touch.position.x > 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesPlace4();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesPlace4();
-            }
-        }
-        
-        if (places4.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-        {
-            if (touch.position.x <= 540)
-            {inputGiven = false;
-                UIManager.Instance.RulesPlace3();
-            }
-            else if (touch.position.x > 540)
-            {inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-        }
-        if (evil1.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-        {
-            if (touch.position.x <= 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-            else if (touch.position.x > 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesEvil2();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesEvil2();
-            }
-        }
-
-        if (evil2.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-        {
-            if (touch.position.x <= 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesEvil1();
-            }
-            else if (touch.position.x > 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesEvil3();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesEvil3();
-            }
-        }
-
-        if (evil3.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-        {
-            if (touch.position.x <= 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesEvil2();
-            }
-            else if (touch.position.x > 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesEvil4();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesEvil4();
-            }
-        }
-
-        if (evil4.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-        {
-            if (touch.position.x <= 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesEvil3();
-            }
-            else if (touch.position.x > 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-        }
-
-        if (good1.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-        {
-            if (touch.position.x <= 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-            else if (touch.position.x > 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesGood2();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesGood2();
-            }
-        }
-
-        if (good2.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-        {
-            if (touch.position.x <= 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.RulesGood1();
-            }
-            else if (touch.position.x > 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-        }
-
-        if (winCon.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-        {
-            if (touch.position.x <= 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-            else if (touch.position.x > 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-        }
-
-        if (hints.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-        {
-            if (touch.position.x <= 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-            else if (touch.position.x > 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-        }
-        
-        if (movement.enabled&&inputGiven && touch.position.x != lastTouch.position.x)
-        {
-            if (touch.position.x <= 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
-            }
-            else if (touch.position.x > 540)
-            {
-                inputGiven = false;
-                UIManager.Instance.Rules();
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesPlace2();
+                }
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (places2.enabled && inputGiven && touch.position.x != lastTouch.position.x)
             {
-                inputGiven = false;
-                UIManager.Instance.Rules();
+                if (touch.position.x <= 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesPlace1();
+                }
+                else if (touch.position.x > 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesPlace3();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesPlace3();
+                }
+            }
+
+            if (places3.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+            {
+                if (touch.position.x <= 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesPlace2();
+                }
+                else if (touch.position.x > 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesPlace4();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesPlace4();
+                }
+            }
+
+            if (places4.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+            {
+                if (touch.position.x <= 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesPlace3();
+                }
+                else if (touch.position.x > 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+            }
+            if (evil1.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+            {
+                if (touch.position.x <= 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+                else if (touch.position.x > 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesEvil2();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesEvil2();
+                }
+            }
+
+            if (evil2.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+            {
+                if (touch.position.x <= 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesEvil1();
+                }
+                else if (touch.position.x > 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesEvil3();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesEvil3();
+                }
+            }
+
+            if (evil3.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+            {
+                if (touch.position.x <= 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesEvil2();
+                }
+                else if (touch.position.x > 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesEvil4();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesEvil4();
+                }
+            }
+
+            if (evil4.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+            {
+                if (touch.position.x <= 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesEvil3();
+                }
+                else if (touch.position.x > 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+            }
+
+            if (good1.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+            {
+                if (touch.position.x <= 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+                else if (touch.position.x > 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesGood2();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesGood2();
+                }
+            }
+
+            if (good2.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+            {
+                if (touch.position.x <= 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.RulesGood1();
+                }
+                else if (touch.position.x > 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+            }
+
+            if (winCon.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+            {
+                if (touch.position.x <= 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+                else if (touch.position.x > 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+            }
+
+            if (hints.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+            {
+                if (touch.position.x <= 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+                else if (touch.position.x > 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+            }
+
+            if (movement.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+            {
+                if (touch.position.x <= 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+                else if (touch.position.x > 540)
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    inputGiven = false;
+                    UIManager.Instance.Rules();
+                }
             }
         }
         lastTouch = touch;

@@ -442,8 +442,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Schafft der Verbrecher seine Gewinn Bedingung nicht ist ein Unentschieden
-    zwischen den guten Spielern \r\n"
+  m_Text: "Schafft der Verbrecher seine Gewinn Bedingung nicht zu erf\xFCllen gibt
+    es ein Unentschieden zwischen den guten Spielern \r\n"
 --- !u!222 &22213993
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2623,67 +2623,67 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1981497997}
-  tile1_1: {fileID: 0}
-  tile1_2: {fileID: 0}
-  tile1_3: {fileID: 0}
-  tile1_4: {fileID: 0}
-  tile1_5: {fileID: 0}
-  tile1_6: {fileID: 0}
-  tile1_7: {fileID: 0}
-  tile2_1: {fileID: 0}
-  tile2_2: {fileID: 0}
-  tile2_3: {fileID: 0}
-  tile2_4: {fileID: 0}
-  tile2_5: {fileID: 0}
-  tile2_6: {fileID: 0}
-  tile2_7: {fileID: 0}
-  tile3_1: {fileID: 0}
-  tile3_2: {fileID: 0}
-  tile3_3: {fileID: 0}
-  tile3_4: {fileID: 0}
-  tile3_5: {fileID: 0}
-  tile3_6: {fileID: 0}
-  tile3_7: {fileID: 0}
-  tile4_1: {fileID: 0}
-  tile4_2: {fileID: 0}
-  tile4_3: {fileID: 0}
-  tile4_4: {fileID: 0}
-  tile4_5: {fileID: 0}
-  tile4_6: {fileID: 0}
-  tile4_7: {fileID: 0}
-  tile5_1: {fileID: 0}
-  tile5_2: {fileID: 0}
-  tile5_3: {fileID: 0}
-  tile5_4: {fileID: 0}
-  tile5_5: {fileID: 0}
-  tile5_6: {fileID: 0}
-  tile5_7: {fileID: 0}
-  tile6_1: {fileID: 0}
-  tile6_2: {fileID: 0}
-  tile6_3: {fileID: 0}
-  tile6_4: {fileID: 0}
-  tile6_5: {fileID: 0}
-  tile6_6: {fileID: 0}
-  tile6_7: {fileID: 0}
-  armyshop: {fileID: 0}
-  bank: {fileID: 0}
-  bar: {fileID: 0}
-  casino: {fileID: 0}
-  cemetary: {fileID: 0}
-  harbor: {fileID: 0}
-  hospital: {fileID: 0}
-  internetCafe: {fileID: 0}
-  italienRest: {fileID: 0}
-  junkyard: {fileID: 0}
-  laboratory: {fileID: 0}
-  library: {fileID: 0}
-  mainsquareTexture: {fileID: 0}
-  park: {fileID: 0}
-  parliament: {fileID: 0}
-  prison: {fileID: 0}
-  shoppingcenter: {fileID: 0}
-  street: {fileID: 0}
-  trainstation: {fileID: 0}
+  tile1_1: {fileID: 85313795}
+  tile1_2: {fileID: 1940971851}
+  tile1_3: {fileID: 1093391983}
+  tile1_4: {fileID: 234357538}
+  tile1_5: {fileID: 465415629}
+  tile1_6: {fileID: 2077834761}
+  tile1_7: {fileID: 1543639979}
+  tile2_1: {fileID: 362839668}
+  tile2_2: {fileID: 1803641009}
+  tile2_3: {fileID: 2083224310}
+  tile2_4: {fileID: 789372141}
+  tile2_5: {fileID: 477910131}
+  tile2_6: {fileID: 1140496632}
+  tile2_7: {fileID: 1066245931}
+  tile3_1: {fileID: 440738015}
+  tile3_2: {fileID: 1853240807}
+  tile3_3: {fileID: 1829905191}
+  tile3_4: {fileID: 874658287}
+  tile3_5: {fileID: 83756859}
+  tile3_6: {fileID: 998710288}
+  tile3_7: {fileID: 2013543867}
+  tile4_1: {fileID: 1882725019}
+  tile4_2: {fileID: 181842463}
+  tile4_3: {fileID: 1928738507}
+  tile4_4: {fileID: 1658674476}
+  tile4_5: {fileID: 658224629}
+  tile4_6: {fileID: 206475994}
+  tile4_7: {fileID: 1406692470}
+  tile5_1: {fileID: 119035747}
+  tile5_2: {fileID: 1788360908}
+  tile5_3: {fileID: 1210248556}
+  tile5_4: {fileID: 128612299}
+  tile5_5: {fileID: 1490462569}
+  tile5_6: {fileID: 1547687154}
+  tile5_7: {fileID: 862950685}
+  tile6_1: {fileID: 1465976926}
+  tile6_2: {fileID: 226569623}
+  tile6_3: {fileID: 268175488}
+  tile6_4: {fileID: 1711295832}
+  tile6_5: {fileID: 932030185}
+  tile6_6: {fileID: 728048465}
+  tile6_7: {fileID: 1249147958}
+  armyshop: {fileID: 2800000, guid: 77f8c7b28d827cc49936f3e9031d1d0d, type: 3}
+  bank: {fileID: 2800000, guid: c73c28ff8ec355447aec48e595a63408, type: 3}
+  bar: {fileID: 2800000, guid: 1d2b98a10bd98d14d976632a7b450a5d, type: 3}
+  casino: {fileID: 2800000, guid: 9d8c9b407de2a27418365fd3b525ff58, type: 3}
+  cemetary: {fileID: 2800000, guid: 116a594e7bcb50945bd022f1a1c350c8, type: 3}
+  harbor: {fileID: 2800000, guid: 94970344afd8100409299a4708c93bb1, type: 3}
+  hospital: {fileID: 2800000, guid: 0287d6f2c74affe4ca7727bb12905bf5, type: 3}
+  internetCafe: {fileID: 2800000, guid: 2c4c99b1eccdd7d40be714fba064d52d, type: 3}
+  italienRest: {fileID: 2800000, guid: 58706090d924b3b488a9f4fabf9bbc79, type: 3}
+  junkyard: {fileID: 2800000, guid: 162543594061d124eade090efabe14cf, type: 3}
+  laboratory: {fileID: 2800000, guid: 812840c4a83dded4fb198ae68c3ce6ff, type: 3}
+  library: {fileID: 2800000, guid: 164a12e6cca5a0746ab506a75cc59a8a, type: 3}
+  mainsquareTexture: {fileID: 2800000, guid: bace3bed34ada5b48b661182cb2d6df1, type: 3}
+  park: {fileID: 2800000, guid: 5f5f638825ba0c24db3d557cf7632f85, type: 3}
+  parliament: {fileID: 2800000, guid: 1c004c63096ebee47998a4142efaea8e, type: 3}
+  prison: {fileID: 2800000, guid: 58adb2685e237534e832c83fcba069f9, type: 3}
+  shoppingcenter: {fileID: 2800000, guid: 9aa773b11ac450e458eeed52f495457d, type: 3}
+  street: {fileID: 2800000, guid: ea4a2e855e18afc479cf39e4740b9b46, type: 3}
+  trainstation: {fileID: 2800000, guid: 910b4d3eaedcc28489e454359ed39fe5, type: 3}
 --- !u!4 &196732564
 Transform:
   m_ObjectHideFlags: 0
@@ -10638,25 +10638,25 @@ MonoBehaviour:
   placeName: {fileID: 877101947}
   image: {fileID: 1551898955}
   actionsTextField: {fileID: 1495822008}
-  street: {fileID: 21300000, guid: 13dd4cb19f4e46e44872bb0332998cd7, type: 3}
-  mainsquare: {fileID: 21300000, guid: a8568577cf2264844b1ad6b15bc88c51, type: 3}
-  park: {fileID: 21300000, guid: 6cf894be9035c844eabb95f4bba7dd3e, type: 3}
-  hospital: {fileID: 21300000, guid: fe315a4e7d15c774b8a9502f0b4e4cdc, type: 3}
-  bank: {fileID: 21300000, guid: 1f7458f89f0282b4f84fc89cd2dde06a, type: 3}
-  parliament: {fileID: 21300000, guid: fe9c60e02f95e9d48aede3e6850729f5, type: 3}
-  cementary: {fileID: 21300000, guid: 1d091d43159253c41940b34417b1b57f, type: 3}
-  prison: {fileID: 21300000, guid: 44ad870fb0fad6543a1f4492f9d7c8f0, type: 3}
-  casino: {fileID: 21300000, guid: ffc447a363b2dcb45a1c0e6164b22873, type: 3}
-  internetcafe: {fileID: 21300000, guid: 44a2879e1a6792e4a9b89960456cb5c4, type: 3}
-  trainstation: {fileID: 21300000, guid: cbc25ba49d5b158478d7769fd5b4cc9f, type: 3}
-  armyshop: {fileID: 21300000, guid: 879e875d830815e4dbe44a0e018224f7, type: 3}
-  shoppingcenter: {fileID: 21300000, guid: 02841acc651dbe04087286bf57c37843, type: 3}
-  junkyard: {fileID: 21300000, guid: 61cc7171a6f9d644e97c109a78aa26f2, type: 3}
-  library: {fileID: 21300000, guid: 9d3c0ea6bbc6bb7489779eeaa50f481b, type: 3}
-  laboratory: {fileID: 21300000, guid: d7cc6aca9f409114bb866b51c8519362, type: 3}
-  italienrestaurant: {fileID: 21300000, guid: b1788b5efb98d5e498dced7a6cdc9dbc, type: 3}
-  harbor: {fileID: 21300000, guid: 1474e139f7cf3e04da53de78f407362a, type: 3}
-  bar: {fileID: 21300000, guid: 6fea6d437e075114d8eb09ee650bae2f, type: 3}
+  street: {fileID: 21300000, guid: ea4a2e855e18afc479cf39e4740b9b46, type: 3}
+  mainsquare: {fileID: 21300000, guid: bace3bed34ada5b48b661182cb2d6df1, type: 3}
+  park: {fileID: 21300000, guid: 5f5f638825ba0c24db3d557cf7632f85, type: 3}
+  hospital: {fileID: 21300000, guid: 0287d6f2c74affe4ca7727bb12905bf5, type: 3}
+  bank: {fileID: 21300000, guid: c73c28ff8ec355447aec48e595a63408, type: 3}
+  parliament: {fileID: 21300000, guid: 1c004c63096ebee47998a4142efaea8e, type: 3}
+  cementary: {fileID: 21300000, guid: 116a594e7bcb50945bd022f1a1c350c8, type: 3}
+  prison: {fileID: 21300000, guid: 58adb2685e237534e832c83fcba069f9, type: 3}
+  casino: {fileID: 21300000, guid: 9d8c9b407de2a27418365fd3b525ff58, type: 3}
+  internetcafe: {fileID: 21300000, guid: 2c4c99b1eccdd7d40be714fba064d52d, type: 3}
+  trainstation: {fileID: 21300000, guid: 910b4d3eaedcc28489e454359ed39fe5, type: 3}
+  armyshop: {fileID: 21300000, guid: 77f8c7b28d827cc49936f3e9031d1d0d, type: 3}
+  shoppingcenter: {fileID: 21300000, guid: 9aa773b11ac450e458eeed52f495457d, type: 3}
+  junkyard: {fileID: 21300000, guid: 162543594061d124eade090efabe14cf, type: 3}
+  library: {fileID: 21300000, guid: 164a12e6cca5a0746ab506a75cc59a8a, type: 3}
+  laboratory: {fileID: 21300000, guid: 812840c4a83dded4fb198ae68c3ce6ff, type: 3}
+  italienrestaurant: {fileID: 21300000, guid: 58706090d924b3b488a9f4fabf9bbc79, type: 3}
+  harbor: {fileID: 21300000, guid: 94970344afd8100409299a4708c93bb1, type: 3}
+  bar: {fileID: 21300000, guid: 1d2b98a10bd98d14d976632a7b450a5d, type: 3}
   btnOne: {fileID: 433071191}
   btnTwo: {fileID: 428046497}
   btnThree: {fileID: 1896415745}
@@ -17182,8 +17182,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 627.62}
-  m_SizeDelta: {x: 1000, y: 650}
+  m_AnchoredPosition: {x: 0, y: 706.6}
+  m_SizeDelta: {x: 1000, y: 492}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1255611931
 MonoBehaviour:
@@ -20562,8 +20562,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 551.6}
-  m_SizeDelta: {x: 1080, y: 816}
+  m_AnchoredPosition: {x: -0.5, y: 539.22}
+  m_SizeDelta: {x: 1000, y: 840}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1551898955
 MonoBehaviour:
@@ -21797,8 +21797,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 627.6199}
-  m_SizeDelta: {x: -80, y: -1270}
+  m_AnchoredPosition: {x: 0, y: 706.60986}
+  m_SizeDelta: {x: -80, y: -1428}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1652170575
 MonoBehaviour:
@@ -26103,7 +26103,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1981497994
 RectTransform:
   m_ObjectHideFlags: 0
