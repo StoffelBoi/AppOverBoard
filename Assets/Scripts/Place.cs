@@ -94,13 +94,15 @@ public class Place : MonoBehaviour
         currentPlace = GameState.Instance.board[GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]];
         actionsTextField.gameObject.SetActive(false);
 
-        if (GameState.Instance.playerState[GameState.Instance.currentTurn]!= "Guessing") { 
-        placeName.text = translatePlace(currentPlace);
-        setPlaceImage(currentPlace);
-        //menu if its a street
-        if (currentPlace == 0)
+        if (GameState.Instance.playerState[GameState.Instance.currentTurn] != "Guessing")
         {
-            twoButtons();
+            placeName.text = translatePlace(currentPlace);
+            setPlaceImage(currentPlace);
+            setDescription(currentPlace);
+            //menu if its a street
+            if (currentPlace == 0)
+            {
+                twoButtons();
             btnOneText.text = "Umschauen";
             btnOne.onClick.AddListener(btnLookAroundClick);
             btnTwoText.text = "Item benutzen";
@@ -1430,6 +1432,7 @@ public class Place : MonoBehaviour
 
     //@TODO add description for all places
     #region placeactions
+
     void btnPlaceOptionClick()
     {
         btnBack.gameObject.SetActive(true);
@@ -1521,8 +1524,8 @@ public class Place : MonoBehaviour
     }
     void solveHint()
     {
-        int tempUnsolvedHints= GameState.Instance.unsolvedHints[GameState.Instance.currentTurn];
-        localPlayer.SetTrueSolveds(GameState.Instance.currentTurn,(GameState.Instance.trueSolveds[GameState.Instance.currentTurn] + GameState.Instance.trueUnsolveds[GameState.Instance.currentTurn]));
+        int tempUnsolvedHints = GameState.Instance.unsolvedHints[GameState.Instance.currentTurn];
+        localPlayer.SetTrueSolveds(GameState.Instance.currentTurn, (GameState.Instance.trueSolveds[GameState.Instance.currentTurn] + GameState.Instance.trueUnsolveds[GameState.Instance.currentTurn]));
         localPlayer.SetSolvedHints(GameState.Instance.currentTurn, (GameState.Instance.solvedHints[GameState.Instance.currentTurn] + GameState.Instance.unsolvedHints[GameState.Instance.currentTurn]));
         localPlayer.SetTrueUnsolveds(GameState.Instance.currentTurn, 0);
         localPlayer.SetUnsolvedHints(GameState.Instance.currentTurn, 0);
@@ -1538,7 +1541,7 @@ public class Place : MonoBehaviour
             {
                 setDialogue("Du hast " + tempUnsolvedHints + " Hinweise entschlüsselt und hast dadurch eine wichtige Information herausfinden können.");
             }
-            
+
         }
         else
         {
@@ -3482,6 +3485,7 @@ public class Place : MonoBehaviour
 
     void simpleDialogue(string simpleMessage, int fontsize)
     {
+        Debug.Log("hello");
         StopCoroutine("SimpleTypeWriter");
 
 
@@ -3704,7 +3708,66 @@ public class Place : MonoBehaviour
         }
         image.sprite = pic;
     }
-
+    void setDescription(int place)
+    {
+        switch (place)
+        {
+            case 1:
+                simpleDialogue("Du befindest dich am Hauptplatz, wie an den meisten Tagen herrscht reges Geschehen doch jeder scheint sich nur auf sich selbst zu konzentrieren.", 50);
+                break;
+            case 2:
+                simpleDialogue("Du befindest dich im Park, als du dich umsiehst siehst du nur ein altes Ehepaar welches die Enten füttert und ein paar Obdachlose die in einem Kreis um eine Mülltonne stehen.", 50);
+                break;
+            case 3:
+                simpleDialogue("Du befindest dich im Krankenhaus, es sieht alles sehr steril aus und um dich herum siehst du Ärzte und Krankenpfleger welche hektisch von Raum zu Raum gehen.", 50);
+                break;
+            case 4:
+                simpleDialogue("Du befindest dich in der Bank, um dich herum ist nur ein Angestellter welcher am Schalter steht und zwei Kunden welche gerade etwas Geld am Automaten abheben.", 50);
+                break;
+            case 5:
+                simpleDialogue("Du befindest dich im Parlamentsgebäude, um dich herum siehst du einige Politiker und Politikerinnen die sich rege miteinander unterhalten.", 50);
+                break;
+            case 6:
+                simpleDialogue("Du befindest dich auf dem Friedhof, obwohl dich die Atmosphere an diesem Ort etwas verunsichert weist du, dass du nicht ohne Grund hier bist.", 50);
+                break;
+            case 7:
+                simpleDialogue("Du befindest dich im Gefängnis, als du dich umsiehst siehst du ein Paar Häftlinge in orangenen Jumpsuits und geglegentlich eine Wache.", 50);
+                break;
+            case 8:
+                simpleDialogue("Du befindest dich im Kasino, als du dich umsiehst siehst du einige Leute in Abendgardrobe, außerdem hörst du das klingen von Spielchips und deine Nase nimmt die vermischten Gerüchen von Perfume und Zigarren auf.", 50);
+                break;
+            case 9:
+                simpleDialogue("Du befindest dich im Internetcafe, um dich herum hörst du das klacken von Tastaturen und du siehst einen Typen der etwas auf seinem Laptop zu schreiben scheint.", 50);
+                break;
+            case 10:
+                simpleDialogue("Du befindest dich auf dem Bahnhof, du siehst dich um und siehst einige rennende Menschen die Versuchen ihren Zug noch zu erwischen.", 50);
+                break;
+            case 11:
+                simpleDialogue("Du befindest dich im Armeeladen, als du den Laden betrittst siehst du verschiedenste Waffen an der hängen und der Verkäufer begrüßt dich.", 50);
+                break;
+            case 12:
+                simpleDialogue("Du befindest dich im Einkauszentrum, um dich herum sind Leute die hektisch mit ihren Einkaustaschen von Laden zu Laden laufen als wollten sie so schnell wie möglich hier raus.", 50);
+                break;
+            case 13:
+                simpleDialogue("Du befindest dich auf dem Schrottplatz, um dich herum siehst du alte verschrottete Autos und diverse andere altes Zeig welches so aussieht als würdes es schon seit Jahren hier herumliegen.", 50);
+                break;
+            case 14:
+                simpleDialogue("Du befindest dich in der Bibliothek, du siehst nur ein Paar junge Mensche die so aussehen als würden sie Informationen, für eine Arbeit die sie schreiben müssen, suchen. Außerdem hört man ein gelegentliches \"Psst\" der Bibliothekarin.", 50);
+                break;
+            case 15:
+                simpleDialogue("Du befindest dich im Labor, um dich herum ist der Geruch von Chemekalien und einige Leute in weißen Labormänteln.", 50);
+                break;
+            case 16:
+                simpleDialogue("Du befindest dich im italienischen Restaurant, der Geruch von Tomatensoße liegt in der Luft und der Besitzer ruft dir schon durch das Restaurant ein \"Willkommen\" zu.", 50);
+                break;
+            case 17:
+                simpleDialogue("Du befindest dich am Hafen, du richst den Geruch des Meeres und siehst eine Gruppe von Hafenarbeitern bei den Docks stehen.", 50);
+                break;
+            case 18:
+                simpleDialogue("Du befindest dich in der Bar, als du sie betritts siehst du einige Leute an der Bar sitzen mit ihren Gesichtern tief in ihren Glässern vergraben.", 50);
+                break;
+        }
+    }
     void addTrueHint()
     {
         for (int i = 0; i < GameState.Instance.playerCount; i++)

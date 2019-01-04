@@ -108,48 +108,26 @@ public class Rules : MonoBehaviour
     {
         UIManager.Instance.Rules();
     }
-
-    private void OnEnable()
+    void Start()
+    {
+        btn_places.onClick.AddListener(btnToRulesPlace1);
+        btn_evil.onClick.AddListener(btnToRulesEvil1);
+        btn_good.onClick.AddListener(btnToRulesGood1);
+        btn_winCon.onClick.AddListener(btnToRulesWinCon);
+        btn_hints.onClick.AddListener(btnToRulesHints);
+        btn_movement.onClick.AddListener(btnToRulesMovement);
+        btn_player.onClick.AddListener(btnToPrivatePlayer);
+        btn_backPlace.onClick.AddListener(btnToContents);
+        btn_backGood.onClick.AddListener(btnToContents);
+        btn_backEvil.onClick.AddListener(btnToContents);
+        btn_backHints.onClick.AddListener(btnToContents);
+        btn_backMovement.onClick.AddListener(btnToContents);
+        btn_backWinCon.onClick.AddListener(btnToContents);
+    }
+    void OnEnable()
     {
         lastTouch = Input.GetTouch(0);
-        btn_places.onClick.RemoveAllListeners();
-        btn_places.onClick.AddListener(btnToRulesPlace1);
-
-        btn_evil.onClick.RemoveAllListeners();
-        btn_evil.onClick.AddListener(btnToRulesEvil1);
-
-        btn_good.onClick.RemoveAllListeners();
-        btn_good.onClick.AddListener(btnToRulesGood1);
-
-        btn_winCon.onClick.RemoveAllListeners();
-        btn_winCon.onClick.AddListener(btnToRulesWinCon);
-
-        btn_hints.onClick.RemoveAllListeners();
-        btn_hints.onClick.AddListener(btnToRulesHints);
-
-        btn_movement.onClick.RemoveAllListeners();
-        btn_movement.onClick.AddListener(btnToRulesMovement);
-
-        btn_player.onClick.RemoveAllListeners();
-        btn_player.onClick.AddListener(btnToPrivatePlayer);
-
-        btn_backPlace.onClick.RemoveAllListeners();
-        btn_backPlace.onClick.AddListener(btnToContents);
-
-        btn_backGood.onClick.RemoveAllListeners();
-        btn_backGood.onClick.AddListener(btnToContents);
-
-        btn_backEvil.onClick.RemoveAllListeners();
-        btn_backEvil.onClick.AddListener(btnToContents);
-
-        btn_backHints.onClick.RemoveAllListeners();
-        btn_backHints.onClick.AddListener(btnToContents);
-
-        btn_backMovement.onClick.RemoveAllListeners();
-        btn_backMovement.onClick.AddListener(btnToContents);
-
-        btn_backWinCon.onClick.RemoveAllListeners();
-        btn_backWinCon.onClick.AddListener(btnToContents);
+       
     }
 
     private void Update()
