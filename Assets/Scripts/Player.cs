@@ -294,7 +294,7 @@ public class Player : NetworkBehaviour {
     [Command]
     public void CmdSetSolvedHints(int index, int solvedHints)
     {
-        SetMoney(index, solvedHints);
+        SetSolvedHints(index, solvedHints);
     }
     #endregion
     #region SetUnsolvedHints
@@ -312,7 +312,7 @@ public class Player : NetworkBehaviour {
     [Command]
     public void CmdSetUnsolvedHints(int index, int unsolvedHints)
     {
-        SetMoney(index, unsolvedHints);
+        SetUnsolvedHints(index, unsolvedHints);
     }
     #endregion
     #region SetTrueSolveds
@@ -330,7 +330,7 @@ public class Player : NetworkBehaviour {
     [Command]
     public void CmdSetTrueSolveds(int index, int trueSolveds)
     {
-        SetMoney(index, trueSolveds);
+        SetTrueSolveds(index, trueSolveds);
     }
     #endregion
     #region SetTrueUnsolveds
