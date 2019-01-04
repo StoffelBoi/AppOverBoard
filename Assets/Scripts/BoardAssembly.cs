@@ -116,11 +116,11 @@ public class BoardAssembly : MonoBehaviour {
     private int place10;
     private int place11;
     private int place12;
-
+    private Player player; 
     // Use this for initialization
     
     void Start () {
-      
+        player = GameState.Instance.localPlayer.GetComponent<Player>();
         System.Random rn = new System.Random();
 
         skillplace1 = newNumber(rn, 2, 7);

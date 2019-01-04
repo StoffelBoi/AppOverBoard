@@ -68,35 +68,27 @@ public class GameState : NetworkBehaviour {
     public SyncListBool playerWin = new SyncListBool();
 
     public SyncListBool playerLost = new SyncListBool();
+    //manually networked with rpcs
+    public List<int[]> currentPlace;
+    public List<int[,]> notFoundTrue;
+    public List<int[,]> notFoundFalse;
+    public int[,] board;
 
-    
-    
 
     public  int targetPlace;
     public  int currentTurn;
     public  bool planted = false; // Variable fuer bio-terrorist wenn er seine bombe platziert hat
     public  int activatedQuestPlaces;
-
     public  bool bigTrapUsed;
     public  List<bool> usedEnergyDrink;
-
-
-
     public  List<int> infernoTraps;
     public  List<int> drMortifierTraps;
     public  List<int> phantomTraps;
     public  List<int> fascultoTraps;
-
     public  List<string> activeTraps;
-
-    public  List<int> quarantined;
-
-
-    public List<int[]> currentPlace;
-    public List<int[,]> notFoundTrue;
-    public List<int[,]> notFoundFalse;
+    public List<int> quarantined;
     public List<List<string>> items;
-    public int[,] board;
+    
 
     void Awake()
     {
@@ -130,7 +122,8 @@ public class GameState : NetworkBehaviour {
             Destroy(gameObject);
     }
     void Start() {
-        for(int i = 0; i<6; i++)
+        
+        for (int i = 0; i<6; i++)
         {
             playerState.Add(""); 
             roles.Add("");
@@ -152,7 +145,22 @@ public class GameState : NetworkBehaviour {
             playerLost.Add(false);
             currentPlace.Add(new int[] { 2, 3 });
             items.Add(new List<string>());
-}
+            int[,] notFoundTrueArray = new int[6, 7];
+            int[,] notFoundFalseArray = new int[6, 7];
+            int[,] boardArray = new int[6, 7];
+            for (int j = 0; j < 6; j++)
+            {
+                for (int k = 0; k < 7; k++)
+                {
+                    notFoundTrueArray[j, k] = 0;
+                    notFoundFalseArray[j, k] = 0;
+                    boardArray[j, k] = 0;
+                }
+            }
+            notFoundTrue.Add(notFoundTrueArray);
+            notFoundFalse.Add(notFoundFalseArray);
+            board = boardArray;
+        }
         for (int i = 0; i < 19; i++)
         {
             infernoTraps.Add(0);

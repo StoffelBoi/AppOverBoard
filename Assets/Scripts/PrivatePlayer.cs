@@ -25,13 +25,13 @@ public class PrivatePlayer : MonoBehaviour {
     public Button btnRules;
     public Button btnGuess;
 
-
+    private Player player;
     public int playerID;
     private string character;
     private string villainRole = "";
     private string target = "";
     private int targetTime = -1;
-    private int money;
+    /*rivate int money;
     private int solved;
     private int unsolved;
     private List<string> items;
@@ -44,11 +44,10 @@ public class PrivatePlayer : MonoBehaviour {
     private List<int> knownFacts;
 
     public bool timeWindowThief = false; //boolean fuer Meisterdieb ob er sein objektiv ausfuehren kann
-    public bool timeWindowCultist = false; //boolean fuer Kultist ob er sein objektiv ausfuehren kann
+    public bool timeWindowCultist = false; //boolean fuer Kultist ob er sein objektiv ausfuehren kann*/
 
     void OnEnable()
     {
-        Debug.Log("Enable");
         btnRules.onClick.RemoveAllListeners();
         btnRules.onClick.AddListener(btnToRules);
         btnGuess.onClick.RemoveAllListeners();
@@ -57,9 +56,9 @@ public class PrivatePlayer : MonoBehaviour {
         txt_villain.enabled = false;
         txt_TargetPlain.enabled = false;
         txt_target.enabled = false;
-       
+        player = GameState.Instance.localPlayer.GetComponent<Player>();
 
-        playerID = GameState.Instance.currentTurn;
+        playerID = player.id;
         character = GameState.Instance.roles[playerID];
         txt_char.text = character;
 
@@ -197,7 +196,7 @@ public class PrivatePlayer : MonoBehaviour {
         UIManager.Instance.Movement();
     }
 
-    public void UpdateTime()
+    /*public void UpdateTime()
     {
         targetTime--;
         txt_time.text = targetTime.ToString();
@@ -376,5 +375,5 @@ public class PrivatePlayer : MonoBehaviour {
 
         txt_placeFact.text = placeFact;
     }
-	
+	*/
 }

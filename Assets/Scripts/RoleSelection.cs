@@ -223,7 +223,7 @@ public class RoleSelection : MonoBehaviour
         player.SetTrueUnsolveds(player.id, 0);
         player.SetTrueSolveds(player.id, 0);
         player.SetUnsolvedHints(player.id, 0);
-        player.SetSolvedHints(player.id, 69);
+        player.SetSolvedHints(player.id, 0);
         player.SetIsDisabled(player.id, 0);
         player.SetIsManipulated(player.id, false);
         player.SetSkillUsed(player.id, false);
@@ -247,11 +247,9 @@ public class RoleSelection : MonoBehaviour
         {
             for (int j = 0; j < 7; j++)
             {
-                notFoundTrue[i, j] = 0;
-                notFoundFalse[i, j] = 0;
+                player.SetNotFoundTrue(player.id, i, j, 0);
+                player.SetNotFoundFalse(player.id, i, j, 0);
             }
         }
-        GameState.Instance.notFoundTrue.Add(notFoundTrue);
-        GameState.Instance.notFoundFalse.Add(notFoundFalse);
     }
 }

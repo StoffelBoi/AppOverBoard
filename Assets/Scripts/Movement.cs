@@ -27,10 +27,11 @@ public class Movement : MonoBehaviour {
 
     public Button btnInfo;
     // Use this for initialization
-
+    private Player player;
     
     void Start()
     {
+        
         btnInfo.onClick.AddListener(btnToInfo);
         btnRight.onClick.AddListener(rightClick);
         btnLeft.onClick.AddListener(leftClick);
@@ -47,6 +48,7 @@ public class Movement : MonoBehaviour {
 
     void OnEnable()
     {
+        player = GameState.Instance.localPlayer.GetComponent<Player>();
         newTurn();
     }
 
@@ -194,28 +196,32 @@ public class Movement : MonoBehaviour {
         else
         {
             firstMove = true;
-            GameState.Instance.playerState[GameState.Instance.currentTurn] = "Action";
+            player.SetPlayerState(GameState.Instance.currentTurn , "Action");
             UIManager.Instance.Place();
         }
     }
     void rightClick()
     {
-        GameState.Instance.currentPlace[GameState.Instance.currentTurn][1] += 1;
+        currentPlace[1] += 1;
+        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace);
         endClick();
     }
     void leftClick()
     {
-        GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]-=1;
+        currentPlace[1] -= 1;
+        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace);
         endClick();
     }
     void downClick()
     {
-        GameState.Instance.currentPlace[GameState.Instance.currentTurn][0]+=1;
+        currentPlace[0] += 1;
+        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace);
         endClick();
     }
     void upClick()
     {
-        GameState.Instance.currentPlace[GameState.Instance.currentTurn][0]-=1;
+        currentPlace[0] -= 1;
+        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace);
         endClick();
     }
     void stayClick()
