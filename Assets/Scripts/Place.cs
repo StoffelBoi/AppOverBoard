@@ -1826,9 +1826,9 @@ public class Place : MonoBehaviour
     {
         localPlayer.SetLastAction(GameState.Instance.currentTurn, "Fähigkeit");
         localPlayer.SetSkillUsed(GameState.Instance.currentTurn, true);
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 7; i++)
         {
-            for (int j = 0; j < 7; j++)
+            for (int j = 0; j < 6; j++)
             {
                 localPlayer.SetNotFoundFalse(GameState.Instance.currentTurn, i, j, 0);
             }
@@ -2571,12 +2571,12 @@ public class Place : MonoBehaviour
         chanceToGetTrueHint(4);
 
         System.Random rn = new System.Random();
-        int randOne = rn.Next(0, 6);
-        int randTwo = rn.Next(0, 7);
+        int randOne = rn.Next(0, 7);
+        int randTwo = rn.Next(0, 6);
         while (GameState.Instance.board[randOne, randTwo] == 0)
         {
-            randOne = rn.Next(0, 6);
-            randTwo = rn.Next(0, 7);
+            randOne = rn.Next(0, 7);
+            randTwo = rn.Next(0, 6);
         }
         localPlayer.SetCurrentPlace(GameState.Instance.currentTurn, randOne, randTwo );
         string place = "";
@@ -2721,7 +2721,7 @@ public class Place : MonoBehaviour
             btnOne.interactable = false;
             btnOneText.text = "Stadtrand";
         }
-        if (currentPlayerPlace[1] < 6)
+        if (currentPlayerPlace[1] < 5)
         {
             if (GameState.Instance.quarantined[GameState.Instance.board[currentPlayerPlace[0], currentPlayerPlace[1] + 1]] > 0)
             {
@@ -2741,7 +2741,7 @@ public class Place : MonoBehaviour
             btnTwoText.text = "Stadtrand";
         }
 
-        if (currentPlayerPlace[0] < 5)
+        if (currentPlayerPlace[0] < 6)
         {
             if (GameState.Instance.quarantined[GameState.Instance.board[currentPlayerPlace[0] + 1, currentPlayerPlace[1]]] > 0)
             {
@@ -3501,9 +3501,9 @@ public class Place : MonoBehaviour
         int[] targetPosition = new int[2];
         if (criminalRole == "Phantom")
         {
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 7; i++)
             {
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < 6; j++)
                 {
                     if (GameState.Instance.board[i, j] == 7)
                     {
@@ -3515,9 +3515,9 @@ public class Place : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 7; i++)
             {
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < 6; j++)
                 {
                     if (GameState.Instance.board[i, j] == 3)
                     {
@@ -3789,9 +3789,9 @@ public class Place : MonoBehaviour
     int[] findPosition(int place)
     {
         int[] position = new int[2];
-        for (int i = 0; i<6; i++)
+        for (int i = 0; i<7; i++)
         {
-            for (int j = 0; j < 7; j++)
+            for (int j = 0; j < 6; j++)
             {
                 if (GameState.Instance.board[i, j] == place)
                 {

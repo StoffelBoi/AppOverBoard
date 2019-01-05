@@ -236,14 +236,14 @@ public class RoleSelection : MonoBehaviour
         player.SetPlaceFact(player.id, "");
         player.SetPlayerWin(player.id, false);
         player.SetPlayerLost(player.id, false);
-        player.SetCurrentPlace(player.id, 2, 3 );
+        player.SetCurrentPlace(player.id, 3, 2 );
         addingHintBoards();
     }
     void addingHintBoards()
     {
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 7; i++)
         {
-            for (int j = 0; j < 7; j++)
+            for (int j = 0; j < 6; j++)
             {
                 player.SetNotFoundTrue(player.id, i, j, 0);
                 player.SetNotFoundFalse(player.id, i, j, 0);

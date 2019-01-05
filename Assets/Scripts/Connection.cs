@@ -98,7 +98,7 @@ public class Connection : MonoBehaviour {
         btnBack.onClick.AddListener(OnEnable);
         btnUp.interactable = true;
         btnDown.interactable = true;
-        if (playerCount <= 2)
+        if (playerCount <= 1)
         {
             btnDown.interactable = false;
         }

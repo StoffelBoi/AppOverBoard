@@ -38,42 +38,49 @@ public class BoardAssembly : MonoBehaviour {
     public RawImage tile1_4;
     public RawImage tile1_5;
     public RawImage tile1_6;
-    public RawImage tile1_7;
+  
     public RawImage tile2_1;
     public RawImage tile2_2;
     public RawImage tile2_3;
     public RawImage tile2_4;
     public RawImage tile2_5;
     public RawImage tile2_6;
-    public RawImage tile2_7;
+  
     public RawImage tile3_1;
     public RawImage tile3_2;
     public RawImage tile3_3;
     public RawImage tile3_4;
     public RawImage tile3_5;
     public RawImage tile3_6;
-    public RawImage tile3_7;
+   
     public RawImage tile4_1;
     public RawImage tile4_2;
     public RawImage tile4_3;
     public RawImage tile4_4;
     public RawImage tile4_5;
     public RawImage tile4_6;
-    public RawImage tile4_7;
+
     public RawImage tile5_1;
     public RawImage tile5_2;
     public RawImage tile5_3;
     public RawImage tile5_4;
     public RawImage tile5_5;
     public RawImage tile5_6;
-    public RawImage tile5_7;
+
     public RawImage tile6_1;
     public RawImage tile6_2;
     public RawImage tile6_3;
     public RawImage tile6_4;
     public RawImage tile6_5;
     public RawImage tile6_6;
-    public RawImage tile6_7;
+ 
+    public RawImage tile7_1;
+    public RawImage tile7_2;
+    public RawImage tile7_3;
+    public RawImage tile7_4;
+    public RawImage tile7_5;
+    public RawImage tile7_6;
+
 
     public Texture armyshop;
     public Texture bank;
@@ -122,14 +129,15 @@ public class BoardAssembly : MonoBehaviour {
     void OnEnable () {
         
         player = GameState.Instance.localPlayer.GetComponent<Player>();
-        board = new int[6, 7]
+        board = new int[7, 6]
             {
-            {0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0 },
-            {0, 0, 0, 0, 0, 0, 0 }
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0}
             };
         if (player.isServer)
         {
@@ -157,18 +165,19 @@ public class BoardAssembly : MonoBehaviour {
             place12 = newNumber(rn, 7, 19);
 
 
-            board = new int[6, 7]
+            board = new int[7, 6]
             {
-            {0, place1, place2, 0, place3, place4, 0 },
-            {0, 0, 0, 0, 0, 0, 0 },
-            {place5, 0, skillplace1, mainsquare, skillplace2, 0, place6 },
-            {place7, 0, skillplace3, skillplace4, skillplace5, 0, place8 },
-            {0, 0, 0, 0, 0, 0, 0 },
-            {0, place9, place10, 0, place11, place12, 0 }
+            {0,0,place1,place2,0,0 },
+            {place3,0,0,0,0,place4 },
+            {place5,0,skillplace1,skillplace2,0,place6 },
+            {0,0,mainsquare,skillplace3,0,0 },
+            {place7,0,skillplace4,skillplace5,0,place8 },
+            {place9,0,0,0,0,place10 },
+            {0,0,place11,place12,0,0 }
             };
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 7; i++)
             {
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < 6; j++)
                 {
                     player.SetBoard(i, j, board[i, j]);
                 }
@@ -185,13 +194,12 @@ public class BoardAssembly : MonoBehaviour {
     {
         Debug.Log("GetBoard Start");
         yield return new WaitForSeconds(0.5f);
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 7; i++)
         {
-            for (int j = 0; j < 7; j++)
+            for (int j = 0; j <6; j++)
             {
                 
                 board[i, j] = GameState.Instance.board[i, j];
-                Debug.Log("place: " + board[i, j]);
             }
         }
         StartCoroutine("FillBoard");
@@ -211,8 +219,7 @@ public class BoardAssembly : MonoBehaviour {
         yield return new WaitForSeconds(0.001f);
         setImage(tile1_6, 0, 5);
         yield return new WaitForSeconds(0.001f);
-        setImage(tile1_7, 0, 6);
-        yield return new WaitForSeconds(0.001f);
+      
         setImage(tile2_1, 1, 0);
         yield return new WaitForSeconds(0.001f);
         setImage(tile2_2, 1, 1);
@@ -225,8 +232,7 @@ public class BoardAssembly : MonoBehaviour {
         yield return new WaitForSeconds(0.001f);
         setImage(tile2_6, 1, 5);
         yield return new WaitForSeconds(0.001f);
-        setImage(tile2_7, 1, 6);
-        yield return new WaitForSeconds(0.001f);
+       
         setImage(tile3_1, 2, 0);
         yield return new WaitForSeconds(0.001f);
         setImage(tile3_2, 2, 1);
@@ -239,8 +245,7 @@ public class BoardAssembly : MonoBehaviour {
         yield return new WaitForSeconds(0.001f);
         setImage(tile3_6, 2, 5);
         yield return new WaitForSeconds(0.001f);
-        setImage(tile3_7, 2, 6);
-        yield return new WaitForSeconds(0.001f);
+      
         setImage(tile4_1, 3, 0);
         yield return new WaitForSeconds(0.001f);
         setImage(tile4_2, 3, 1);
@@ -253,8 +258,7 @@ public class BoardAssembly : MonoBehaviour {
         yield return new WaitForSeconds(0.001f);
         setImage(tile4_6, 3, 5);
         yield return new WaitForSeconds(0.001f);
-        setImage(tile4_7, 3, 6);
-        yield return new WaitForSeconds(0.001f);
+       
         setImage(tile5_1, 4, 0);
         yield return new WaitForSeconds(0.001f);
         setImage(tile5_2, 4, 1);
@@ -267,8 +271,7 @@ public class BoardAssembly : MonoBehaviour {
         yield return new WaitForSeconds(0.001f);
         setImage(tile5_6, 4, 5);
         yield return new WaitForSeconds(0.001f);
-        setImage(tile5_7, 4, 6);
-        yield return new WaitForSeconds(0.001f);
+       
         setImage(tile6_1, 5, 0);
         yield return new WaitForSeconds(0.001f);
         setImage(tile6_2, 5, 1);
@@ -281,7 +284,19 @@ public class BoardAssembly : MonoBehaviour {
         yield return new WaitForSeconds(0.001f);
         setImage(tile6_6, 5, 5);
         yield return new WaitForSeconds(0.001f);
-        setImage(tile6_7, 5, 6);
+        
+
+        setImage(tile7_1, 6, 0);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile7_2, 6, 1);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile7_3, 6, 2);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile7_4, 6, 3);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile7_5, 6, 4);
+        yield return new WaitForSeconds(0.001f);
+        setImage(tile7_6, 6, 5);
     }
         private void setImage(RawImage tile, int row, int col)
     {

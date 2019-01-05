@@ -129,7 +129,7 @@ public class Movement : MonoBehaviour {
             btnUp.interactable = false;
             txtUp.text = "Stadtrand";
         }
-        if (currentPlace[0] < 5)
+        if (currentPlace[0] < 6)
         {
             if (GameState.Instance.quarantined[GameState.Instance.board[currentPlace[0] + 1, currentPlace[1]]] > 0)
             {
@@ -169,7 +169,7 @@ public class Movement : MonoBehaviour {
             btnLeft.interactable = false;
             txtLeft.text = "Stadtrand";
         }
-        if (currentPlace[1] < 6)
+        if (currentPlace[1] < 5)
         {
 
             if (GameState.Instance.quarantined[GameState.Instance.board[currentPlace[0], currentPlace[1] + 1]] > 0)

@@ -105,7 +105,7 @@ public class GameState : NetworkBehaviour {
         targetTime = false;
         playerCount = 0;
         connectedPlayer = 0;
-        board = new int[6, 7];
+        board = new int[7, 6];
         currentTurn = 0;
         activatedQuestPlaces = 0;
         bigTrapUsed = false;
@@ -140,14 +140,14 @@ public class GameState : NetworkBehaviour {
             playerWin.Add(false);
             playerLost.Add(false);
             isGuessing.Add(false);
-            currentPlace.Add(new int[] { 2, 3 });
+            currentPlace.Add(new int[] { 3, 2 });
             items.Add(new List<string>());
-            int[,] notFoundTrueArray = new int[6, 7];
-            int[,] notFoundFalseArray = new int[6, 7];
-            int[,] boardArray = new int[6, 7];
-            for (int j = 0; j < 6; j++)
+            int[,] notFoundTrueArray = new int[7, 6];
+            int[,] notFoundFalseArray = new int[7, 6];
+            int[,] boardArray = new int[7, 6];
+            for (int j = 0; j < 7; j++)
             {
-                for (int k = 0; k < 7; k++)
+                for (int k = 0; k < 6; k++)
                 {
                     notFoundTrueArray[j, k] = 0;
                     notFoundFalseArray[j, k] = 0;
