@@ -1240,6 +1240,30 @@ public class Player : NetworkBehaviour
         GameState.Instance.usedEnergyDrink.Add(usedEnergyDrink);
     }
     #endregion
+    #region SetIsGuessing
+    public void SetIsGuessing(int index, bool isGuessing)
+    {
+        GameState.Instance.isGuessing[index] = isGuessing;
+        if (isServer)
+        {
+            RpcSetIsGuessing(index, isGuessing);
+        }
+        else
+        {
+            CmdSetIsGuessing(index, isGuessing);
+        }
+    }
+    [Command]
+    public void CmdSetIsGuessing(int index, bool isGuessing)
+    {
+        SetIsGuessing(index, isGuessing);
+    }
+    [ClientRpc]
+    public void RpcSetIsGuessing(int index, bool isGuessing)
+    {
+        GameState.Instance.isGuessing[index] = isGuessing;
+    }
+    #endregion
     ///////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////

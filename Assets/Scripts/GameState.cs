@@ -77,6 +77,8 @@ public class GameState : NetworkBehaviour {
 
     public List<List<string>> items = new List<List<string>>();
 
+    public List<bool> isGuessing = new List<bool>();
+
     public int selectedRoles;
     public bool targetTime;
     public int elapsedSeconds;
@@ -137,6 +139,7 @@ public class GameState : NetworkBehaviour {
             playerFact.Add("");
             playerWin.Add(false);
             playerLost.Add(false);
+            isGuessing.Add(false);
             currentPlace.Add(new int[] { 2, 3 });
             items.Add(new List<string>());
             int[,] notFoundTrueArray = new int[6, 7];

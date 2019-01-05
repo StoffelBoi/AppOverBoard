@@ -65,11 +65,13 @@ public class Place : MonoBehaviour
 
     public static Place Instance;
 
-    public bool guessing;
+    private bool guessedCorrectly;
+    private string guessedPlayer;
+    private string guessedCriminal;
+    private string guessedPlace;
     private Player localPlayer;
     void Awake()
     {
-        guessing = false;
         if (Instance == null)
             Instance = this;
         else if (Instance != this)
@@ -77,6 +79,7 @@ public class Place : MonoBehaviour
     }
     void OnEnable()
     {
+        guessedCorrectly = true;
         localPlayer = GameState.Instance.localPlayer.GetComponent<Player>();
         currentBet = 0;
         delayedTurns = 1;
@@ -126,7 +129,7 @@ public class Place : MonoBehaviour
             }
             return;
         }
-        if (GameState.Instance.playerState[GameState.Instance.currentTurn] != "Guessing")
+        if (!GameState.Instance.isGuessing[GameState.Instance.currentTurn])
         {
             if (GameState.Instance.isMovementManipulated[GameState.Instance.currentTurn])
             {
@@ -308,6 +311,7 @@ public class Place : MonoBehaviour
         }
         else
         {
+            localPlayer.SetIsGuessing(GameState.Instance.currentTurn, false);
             playerButtons();
             simpleDialogue("Wer ist der Verbrecher?", 70);
             btnOne.onClick.AddListener(btnCheckPlayerOne);
@@ -347,24 +351,22 @@ public class Place : MonoBehaviour
     }
     void CheckPlayerFact(int player)
     {
-        if (GameState.Instance.roles[player] == GameState.Instance.criminal)
+        if (GameState.Instance.roles[player] != GameState.Instance.criminal)
         {
-            simpleDialogue("Um welchen Verbrecher handelt es sich?", 70);
-            fourButtons();
-            btnOneText.text = "Inferno";
-            btnTwoText.text = "Dr. Mortifier";
-            btnThreeText.text = "Phantom";
-            btnFourText.text = "Fasculto";
-            btnOne.onClick.AddListener(btnCheckRoleOne);
-            btnTwo.onClick.AddListener(btnCheckRoleTwo);
-            btnThree.onClick.AddListener(btnCheckRoleThree);
-            btnFour.onClick.AddListener(btnCheckRoleFour);
+       
+            guessedCorrectly = false;
         }
-        else
-        {
-            localPlayer.SetPlayerLost(localPlayer.id, true);
-            endTurn();
-        }
+        guessedPlayer = translateName(player);
+        simpleDialogue("Um welchen Verbrecher handelt es sich?", 70);
+        fourButtons();
+        btnOneText.text = "Inferno";
+        btnTwoText.text = "Dr. Mortifier";
+        btnThreeText.text = "Phantom";
+        btnFourText.text = "Fasculto";
+        btnOne.onClick.AddListener(btnCheckRoleOne);
+        btnTwo.onClick.AddListener(btnCheckRoleTwo);
+        btnThree.onClick.AddListener(btnCheckRoleThree);
+        btnFour.onClick.AddListener(btnCheckRoleFour);
     }
 
     void btnCheckRoleOne()
@@ -385,54 +387,41 @@ public class Place : MonoBehaviour
     }
     void CheckRoleFact(int role)
     {
-        simpleDialogue("Wo wird das Verbrechen stattfinden?", 70);
+        
         switch (role)
         {
             case 0:
-                if (GameState.Instance.criminalRole == "Inferno")
+                guessedCriminal = "Inferno";
+                if (GameState.Instance.criminalRole != "Inferno")
                 {
-                    CheckPlaceLayout();
-                }
-                else
-                {
-                    localPlayer.SetPlayerLost(localPlayer.id, true);
-                    endTurn();
+                    guessedCorrectly = false;
                 }
                 break;
             case 1:
-                if (GameState.Instance.criminalRole == "Dr.Mortifier")
+                guessedCriminal = "Dr.Mortifier";
+                if (GameState.Instance.criminalRole != "Dr.Mortifier")
                 {
-                    CheckPlaceLayout();
-                }
-                else
-                {
-                    localPlayer.SetPlayerLost(localPlayer.id, true);
-                    endTurn();
+                    guessedCorrectly = false;
                 }
                 break;
             case 2:
-                if (GameState.Instance.criminalRole == "Phantom")
+                guessedCriminal = "Phantom";
+                if (GameState.Instance.criminalRole != "Phantom")
                 {
-                    CheckPlaceLayout();
-                }
-                else
-                {
-                    localPlayer.SetPlayerLost(localPlayer.id, true);
-                    endTurn();
+                    guessedCorrectly = false;
                 }
                 break;
             case 3:
-                if (GameState.Instance.criminalRole == "Fasculto")
+                guessedCriminal = "Fasculto";
+                if (GameState.Instance.criminalRole != "Fasculto")
                 {
-                    CheckPlaceLayout();
-                }
-                else
-                {
-                    localPlayer.SetPlayerLost(localPlayer.id, true);
-                    endTurn();
+                    guessedCorrectly = false;
                 }
                 break;
         }
+        simpleDialogue("Wo wird das Verbrechen stattfinden?", 70);
+        CheckPlaceLayout();
+
     }
     void CheckPlaceLayout()
     {
@@ -484,36 +473,24 @@ public class Place : MonoBehaviour
                 switch (place)
                 {
                     case 0:
-                        if (GameState.Instance.targetPlace == 5)
+                        guessedPlace = translatePlace(5);
+                        if (GameState.Instance.targetPlace != 5)
                         {
-                            localPlayer.SetPlayerWin(localPlayer.id, true);
-                        }
-                        else
-                        {
-                            localPlayer.SetPlayerLost(localPlayer.id, true);
-                            endTurn();
+                            guessedCorrectly = false;
                         }
                         break;
                     case 1:
-                        if (GameState.Instance.targetPlace == 7)
+                        guessedPlace = translatePlace(7);
+                        if (GameState.Instance.targetPlace != 7)
                         {
-                            localPlayer.SetPlayerWin(localPlayer.id, true);
-                        }
-                        else
-                        {
-                            localPlayer.SetPlayerLost(localPlayer.id, true);
-                            endTurn();
+                            guessedCorrectly = false;
                         }
                         break;
                     case 2:
-                        if (GameState.Instance.targetPlace == 8)
+                        guessedPlace = translatePlace(8);
+                        if (GameState.Instance.targetPlace != 8)
                         {
-                            localPlayer.SetPlayerWin(localPlayer.id, true);
-                        }
-                        else
-                        {
-                            localPlayer.SetPlayerLost(localPlayer.id, true);
-                            endTurn();
+                            guessedCorrectly = false;
                         }
                         break;
                 }
@@ -522,36 +499,24 @@ public class Place : MonoBehaviour
                 switch (place)
                 {
                     case 0:
-                        if (GameState.Instance.targetPlace == 1)
+                        guessedPlace = translatePlace(1);
+                        if (GameState.Instance.targetPlace != 1)
                         {
-                            localPlayer.SetPlayerWin(localPlayer.id, true);
-                        }
-                        else
-                        {
-                            localPlayer.SetPlayerLost(localPlayer.id, true);
-                            endTurn();
+                            guessedCorrectly = false;
                         }
                         break;
                     case 1:
-                        if (GameState.Instance.targetPlace == 12)
+                        guessedPlace = translatePlace(12);
+                        if (GameState.Instance.targetPlace != 12)
                         {
-                            localPlayer.SetPlayerWin(localPlayer.id, true);
-                        }
-                        else
-                        {
-                            localPlayer.SetPlayerLost(localPlayer.id, true);
-                            endTurn();
+                            guessedCorrectly = false;
                         }
                         break;
                     case 2:
-                        if (GameState.Instance.targetPlace == 17)
+                        guessedPlace = translatePlace(17);
+                        if (GameState.Instance.targetPlace != 17)
                         {
-                            localPlayer.SetPlayerWin(localPlayer.id, true);
-                        }
-                        else
-                        {
-                            localPlayer.SetPlayerLost(localPlayer.id, true);
-                            endTurn();
+                            guessedCorrectly = false;
                         }
                         break;
                 }
@@ -560,36 +525,24 @@ public class Place : MonoBehaviour
                 switch (place)
                 {
                     case 0:
-                        if (GameState.Instance.targetPlace == 4)
+                        guessedPlace = translatePlace(4);
+                        if (GameState.Instance.targetPlace != 4)
                         {
-                            localPlayer.SetPlayerWin(localPlayer.id, true);
-                        }
-                        else
-                        {
-                            localPlayer.SetPlayerLost(localPlayer.id, true);
-                            endTurn();
+                            guessedCorrectly = false;
                         }
                         break;
                     case 1:
-                        if (GameState.Instance.targetPlace == 8)
+                        guessedPlace = translatePlace(8);
+                        if (GameState.Instance.targetPlace != 8)
                         {
-                            localPlayer.SetPlayerWin(localPlayer.id, true);
-                        }
-                        else
-                        {
-                            localPlayer.SetPlayerLost(localPlayer.id, true);
-                            endTurn();
+                            guessedCorrectly = false;
                         }
                         break;
                     case 2:
-                        if (GameState.Instance.targetPlace == 12)
+                        guessedPlace = translatePlace(12);
+                        if (GameState.Instance.targetPlace != 12)
                         {
-                            localPlayer.SetPlayerWin(localPlayer.id, true);
-                        }
-                        else
-                        {
-                            localPlayer.SetPlayerLost(localPlayer.id, true);
-                            endTurn();
+                            guessedCorrectly = false;
                         }
                         break;
                 }
@@ -598,43 +551,51 @@ public class Place : MonoBehaviour
                 switch (place)
                 {
                     case 0:
-                        if (GameState.Instance.targetPlace == 5)
+                        guessedPlace = translatePlace(5);
+                        if (GameState.Instance.targetPlace != 5)
                         {
-                            localPlayer.SetPlayerWin(localPlayer.id, true);
-                        }
-                        else
-                        {
-                            localPlayer.SetPlayerLost(localPlayer.id, true);
-                            endTurn();
+                            guessedCorrectly = false;
                         }
                         break;
                     case 1:
-                        if (GameState.Instance.targetPlace == 6)
+                        guessedPlace = translatePlace(6);
+                        if (GameState.Instance.targetPlace != 6)
                         {
-                            localPlayer.SetPlayerWin(localPlayer.id, true);
-                        }
-                        else
-                        {
-                            localPlayer.SetPlayerLost(localPlayer.id, true);
-                            endTurn();
+                            guessedCorrectly = false;
                         }
                         break;
                     case 2:
-                        if (GameState.Instance.targetPlace == 7)
+                        guessedPlace = translatePlace(7);
+                        if (GameState.Instance.targetPlace != 7)
                         {
-                            localPlayer.SetPlayerWin(localPlayer.id, true);
-                        }
-                        else
-                        {
-                            localPlayer.SetPlayerLost(localPlayer.id, true);
-                            endTurn();
+                            guessedCorrectly = false;
                         }
                         break;
                 }
                 break;
         }
-    }
 
+        checkGuess();
+    }
+    void checkGuess()
+    {
+        oneButton();
+        btnOneText.text = "OK";
+        btnOne.onClick.AddListener(checkGuessClick);
+        simpleDialogue("Spieler: "+guessedPlayer+"\nVerbrecher: "+guessedCriminal+"\nZielort: " +guessedPlace+"\nKorrekt?", 60);
+    }
+    void checkGuessClick()
+    {
+        if (guessedCorrectly)
+        {
+            localPlayer.SetPlayerWin(localPlayer.id, true);
+        }
+        else
+        {
+            localPlayer.SetPlayerLost(localPlayer.id, true);
+            endTurn();
+        }
+    }
     #endregion
 
     void btnToInfo()

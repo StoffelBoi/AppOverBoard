@@ -60,7 +60,29 @@ public class PrivatePlayer : MonoBehaviour {
 
         playerID = player.id;
         character = GameState.Instance.roles[playerID];
-        txt_char.text = character;
+
+        switch (character)
+        {
+            case "Doctor":
+                txt_char.text = "Moe McKay";
+                break;
+            case "Police":
+                txt_char.text = "Felicity Fields";
+                break;
+            case "Detective":
+                txt_char.text = "Collin Cooper";
+                break;
+            case "Psychic":
+                txt_char.text = "Olivia Osswald";
+                break;
+            case "Psychologist":
+                txt_char.text = "Laura Larsen";
+                break;
+            case "Reporter":
+                txt_char.text = "Eric Edmond";
+                break;
+        }
+        
 
         txt_money.text = GameState.Instance.money[playerID].ToString();
 
@@ -140,7 +162,7 @@ public class PrivatePlayer : MonoBehaviour {
     }
     void btnToGuess()
     {
-        GameState.Instance.playerState[GameState.Instance.currentTurn] = "Guessing";
+        GameState.Instance.localPlayer.GetComponent<Player>().SetIsGuessing(GameState.Instance.localPlayer.GetComponent<Player>().id, true);
         UIManager.Instance.Place();
     }
     void btnToRules()
