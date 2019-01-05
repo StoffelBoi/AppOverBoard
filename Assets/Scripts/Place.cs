@@ -89,54 +89,99 @@ public class Place : MonoBehaviour
         btnBack.gameObject.SetActive(false);
         btnBack.onClick.RemoveAllListeners();
         btnBack.onClick.AddListener(btnGoBack);
+        btnInfo.gameObject.SetActive(true);
         btnInfo.onClick.RemoveAllListeners();
         btnInfo.onClick.AddListener(btnToInfo);
         currentPlace = GameState.Instance.board[GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]];
         actionsTextField.gameObject.SetActive(false);
+        placeName.text = translatePlace(currentPlace);
+        setPlaceImage(currentPlace);
+        setDescription(currentPlace);
+        if (GameState.Instance.isDisabled[GameState.Instance.currentTurn] > 0)
+        {
+            if (GameState.Instance.isDisabled[GameState.Instance.currentTurn] == 2)
+            {
+                localPlayer.SetIsDisabled(GameState.Instance.currentTurn, (GameState.Instance.isDisabled[GameState.Instance.currentTurn] - 1));
+                switch (GameState.Instance.criminalRole)
+                {
+                    case "Inferno":
+                        setDialogue("Du hast bist aus heiterem Himmel von einer kleinen Rakete getroffen worden und befindest dich nun im Krankenhaus.");
+                        break;
+                    case "Dr.Mortifier":
+                        setDialogue("Du hast dich auf einmal mit einer starken Grippe infiziert und befindest dich nun im Krankenhaus.");
+                        break;
+                    case "Phantom":
+                        setDialogue("Aus irgeneinem Grund wurde Diebesgut in deiner Wohnung gefunden. Du befindest dich num im Gefängnis.");
+                        break;
+                    case "Fasculto":
+                        setDialogue("Plötzlich hattest du eine unglaubliche Pechsträhne und nach mehreren kleinen Unfällen befindest du dich nun im Krankenhaus.");
+                        break;
+                }
 
+            }
+            else
+            {
+                localPlayer.SetIsDisabled(GameState.Instance.currentTurn, (GameState.Instance.isDisabled[GameState.Instance.currentTurn] - 1));
+                setDialogue("Du bist immer noch im " + translatePlace(currentPlace));
+            }
+            return;
+        }
         if (GameState.Instance.playerState[GameState.Instance.currentTurn] != "Guessing")
         {
-            placeName.text = translatePlace(currentPlace);
-            setPlaceImage(currentPlace);
-            setDescription(currentPlace);
-            //menu if its a street
-            if (currentPlace == 0)
+            if (GameState.Instance.isMovementManipulated[GameState.Instance.currentTurn])
             {
-                twoButtons();
-            btnOneText.text = "Umschauen";
-            btnOne.onClick.AddListener(btnLookAroundClick);
-            btnTwoText.text = "Item benutzen";
-            btnTwo.onClick.AddListener(btnUseItemClick);
-        }
-        //menu if its not a street
-        else
-        {
+                simpleDialogue("Du wurdest gezwungen dich hier her zu bewegen.", 60);
+                localPlayer.SetIsMovementManipulated(GameState.Instance.currentTurn, false);
+            }
+            if (GameState.Instance.isHintManipulated[GameState.Instance.currentTurn])
+            {
+                simpleDialogue("Jemand hat dich gezwungen Beweismaterial zu vernichten.", 60);
+                localPlayer.SetIsHintManipulated(GameState.Instance.currentTurn, false);
+            }
+
             //menu if its a criminal
             if (GameState.Instance.criminal == GameState.Instance.roles[GameState.Instance.currentTurn])
             {
+                if (currentPlace == 0)
+                {
+                    fourButtons();
+                    btnOneText.text = "Umschauen";
+                    btnOne.onClick.AddListener(btnLookAroundClick);
+                    btnTwoText.text = "Item benutzen";
+                    btnTwo.onClick.AddListener(btnUseItemClick);
+                    btnThreeText.text = "große Falle";
+                    btnThree.onClick.AddListener(btnBigTrapClick);
+                    btnFourText.text = "Manipulation";
+                    btnFour.onClick.AddListener(btnManipulationClick);
+                    btnThree.interactable = false;
+                    btnFour.interactable = false;
+                }
+                else
+                {
+                    eightButtons();
+                    btnOneText.text = "Ortsoption";
+                    btnTwoText.text = "Hinweis finden";
+                    btnThreeText.text = "Item benutzen";
+                    btnFourText.text = "falscher Hinweis";
+                    btnFiveText.text = "kleine Falle";
+                    btnSixText.text = "große Falle";
+                    btnSevenText.text = "Manipulation";
+                    btnEightText.text = "Questort aktivieren";
 
-                eightButtons();
-                btnOneText.text = "Ortsoption";
-                btnTwoText.text = "Hinweis finden";
-                btnThreeText.text = "Item benutzen";
-                btnFourText.text = "falscher Hinweis";
-                btnFiveText.text = "kleine Falle";
-                btnSixText.text = "große Falle";
-                btnSevenText.text = "Manipulation";
-                btnEightText.text = "Questort aktivieren";
+                    btnOne.onClick.AddListener(btnPlaceOptionClick);
+                    btnTwo.onClick.AddListener(btnFindHintClick);
+                    btnThree.onClick.AddListener(btnUseItemClick);
+                    btnFour.onClick.AddListener(btnFalseHintClick);
+                    btnFive.onClick.AddListener(btnSmallTrapClick);
+                    btnSix.onClick.AddListener(btnBigTrapClick);
+                    btnSeven.onClick.AddListener(btnManipulationClick);
+                    btnEight.onClick.AddListener(btnActivateQuestPlaceClick);
 
-                btnOne.onClick.AddListener(btnPlaceOptionClick);
-                btnTwo.onClick.AddListener(btnFindHintClick);
-                btnThree.onClick.AddListener(btnUseItemClick);
-                btnFour.onClick.AddListener(btnFalseHintClick);
-                btnFive.onClick.AddListener(btnSmallTrapClick);
-                btnSix.onClick.AddListener(btnBigTrapClick);
-                btnSeven.onClick.AddListener(btnManipulationClick);
-                btnEight.onClick.AddListener(btnActivateQuestPlaceClick);
+                    btnSix.interactable = false;
+                    btnSeven.interactable = false;
+                    btnEight.interactable = false;
+                }
 
-                btnSix.interactable = false;
-                btnSeven.interactable = false;
-                btnEight.interactable = false;
                 //checking if big Trap can be used
                 if (!GameState.Instance.bigTrapUsed)
                 {
@@ -157,21 +202,21 @@ public class Place : MonoBehaviour
                         if (GameState.Instance.questPlaces.Contains(currentPlace))
                         {
                             btnEight.interactable = true;
-                            {
-                            }
-
                         }
                     }
                 }
                 if (GameState.Instance.activatedQuestPlaces >= 3)
                 {
+                    btnEightText.text = "Verbrechen ausführen";
                     if (GameState.Instance.targetPlace == currentPlace)
                     {
-                        btnEight.interactable = true;
-                        btnEightText.text = "Verbrechen ausführen";
+                        if (GameState.Instance.targetTime)
+                        {
+                            btnEight.interactable = true;
+                        }
                     }
                 }
-                    
+
                 //checking if theres already a trap on the current place
                 if (GameState.Instance.activeTraps[currentPlace] != "Safe")
                 {
@@ -181,15 +226,26 @@ public class Place : MonoBehaviour
             //menu if its a good guy
             else
             {
+                if (currentPlace == 0)
+                {
+                    twoButtons();
+                    btnOneText.text = "Umschauen";
+                    btnOne.onClick.AddListener(btnLookAroundClick);
+                    btnTwoText.text = "Item benutzen";
+                    btnTwo.onClick.AddListener(btnUseItemClick);
+                }
+                else
+                {
 
-                threeButtons();
-                btnOneText.text = "Ortsoption";
-                btnTwoText.text = "Hinweis finden";
-                btnThreeText.text = "Item benutzen";
-                btnOne.onClick.AddListener(btnPlaceOptionClick);
-                btnTwo.onClick.AddListener(btnFindHintClick);
-                btnThree.onClick.AddListener(btnUseItemClick);
+                    threeButtons();
+                    btnOneText.text = "Ortsoption";
+                    btnTwoText.text = "Hinweis finden";
+                    btnThreeText.text = "Item benutzen";
+                    btnOne.onClick.AddListener(btnPlaceOptionClick);
+                    btnTwo.onClick.AddListener(btnFindHintClick);
+                    btnThree.onClick.AddListener(btnUseItemClick);
 
+                }
             }
             //checking if a skillplace can be used
             if (currentPlace == 2)
@@ -246,13 +302,14 @@ public class Place : MonoBehaviour
                     btnOne.interactable = true;
                 }
             }
-        }
-        //checking if player triggers a trap;
+
+            //checking if player triggers a trap;
             Invoke("checkForTraps", 0.01f);
         }
         else
         {
             playerButtons();
+            simpleDialogue("Wer ist der Verbrecher?", 70);
             btnOne.onClick.AddListener(btnCheckPlayerOne);
             btnTwo.onClick.AddListener(btnCheckPlayerTwo);
             btnThree.onClick.AddListener(btnCheckPlayerThree);
@@ -260,9 +317,10 @@ public class Place : MonoBehaviour
             btnFive.onClick.AddListener(btnCheckPlayerFive);
             btnSix.onClick.AddListener(btnCheckPlayerSix);
         }
+
     }
 
-#region Guessing
+    #region Guessing
     void btnCheckPlayerOne()
     {
         CheckPlayerFact(0);
@@ -291,6 +349,7 @@ public class Place : MonoBehaviour
     {
         if (GameState.Instance.roles[player] == GameState.Instance.criminal)
         {
+            simpleDialogue("Um welchen Verbrecher handelt es sich?", 70);
             fourButtons();
             btnOneText.text = "Inferno";
             btnTwoText.text = "Dr. Mortifier";
@@ -303,7 +362,7 @@ public class Place : MonoBehaviour
         }
         else
         {
-            localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+            localPlayer.SetPlayerLost(localPlayer.id, true);
             endTurn();
         }
     }
@@ -326,6 +385,7 @@ public class Place : MonoBehaviour
     }
     void CheckRoleFact(int role)
     {
+        simpleDialogue("Wo wird das Verbrechen stattfinden?", 70);
         switch (role)
         {
             case 0:
@@ -335,18 +395,18 @@ public class Place : MonoBehaviour
                 }
                 else
                 {
-                    localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                    localPlayer.SetPlayerLost(localPlayer.id, true);
                     endTurn();
                 }
                 break;
             case 1:
-                if(GameState.Instance.criminalRole == "Dr.Mortifier")
+                if (GameState.Instance.criminalRole == "Dr.Mortifier")
                 {
                     CheckPlaceLayout();
                 }
                 else
                 {
-                    localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                    localPlayer.SetPlayerLost(localPlayer.id, true);
                     endTurn();
                 }
                 break;
@@ -357,7 +417,7 @@ public class Place : MonoBehaviour
                 }
                 else
                 {
-                    localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                    localPlayer.SetPlayerLost(localPlayer.id, true);
                     endTurn();
                 }
                 break;
@@ -368,7 +428,7 @@ public class Place : MonoBehaviour
                 }
                 else
                 {
-                    localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                    localPlayer.SetPlayerLost(localPlayer.id, true);
                     endTurn();
                 }
                 break;
@@ -424,35 +484,35 @@ public class Place : MonoBehaviour
                 switch (place)
                 {
                     case 0:
-                        if (GameState.Instance.targetPlace ==5)
+                        if (GameState.Instance.targetPlace == 5)
                         {
-                            localPlayer.SetPlayerWin(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerWin(localPlayer.id, true);
                         }
                         else
                         {
-                            localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerLost(localPlayer.id, true);
                             endTurn();
                         }
                         break;
                     case 1:
-                        if (GameState.Instance.targetPlace ==7)
+                        if (GameState.Instance.targetPlace == 7)
                         {
-                            localPlayer.SetPlayerWin(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerWin(localPlayer.id, true);
                         }
                         else
                         {
-                            localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerLost(localPlayer.id, true);
                             endTurn();
                         }
                         break;
                     case 2:
-                        if (GameState.Instance.targetPlace ==8)
+                        if (GameState.Instance.targetPlace == 8)
                         {
-                            localPlayer.SetPlayerWin(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerWin(localPlayer.id, true);
                         }
                         else
                         {
-                            localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerLost(localPlayer.id, true);
                             endTurn();
                         }
                         break;
@@ -462,35 +522,35 @@ public class Place : MonoBehaviour
                 switch (place)
                 {
                     case 0:
-                        if (GameState.Instance.targetPlace ==1)
+                        if (GameState.Instance.targetPlace == 1)
                         {
-                            localPlayer.SetPlayerWin(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerWin(localPlayer.id, true);
                         }
                         else
                         {
-                            localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerLost(localPlayer.id, true);
                             endTurn();
                         }
                         break;
                     case 1:
-                        if (GameState.Instance.targetPlace ==12)
+                        if (GameState.Instance.targetPlace == 12)
                         {
-                            localPlayer.SetPlayerWin(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerWin(localPlayer.id, true);
                         }
                         else
                         {
-                            localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerLost(localPlayer.id, true);
                             endTurn();
                         }
                         break;
                     case 2:
-                        if (GameState.Instance.targetPlace ==17)
+                        if (GameState.Instance.targetPlace == 17)
                         {
-                            localPlayer.SetPlayerWin(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerWin(localPlayer.id, true);
                         }
                         else
                         {
-                            localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerLost(localPlayer.id, true);
                             endTurn();
                         }
                         break;
@@ -500,35 +560,35 @@ public class Place : MonoBehaviour
                 switch (place)
                 {
                     case 0:
-                        if (GameState.Instance.targetPlace ==4)
+                        if (GameState.Instance.targetPlace == 4)
                         {
-                            localPlayer.SetPlayerWin(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerWin(localPlayer.id, true);
                         }
                         else
                         {
-                            localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerLost(localPlayer.id, true);
                             endTurn();
                         }
                         break;
                     case 1:
-                        if (GameState.Instance.targetPlace ==8)
+                        if (GameState.Instance.targetPlace == 8)
                         {
-                            localPlayer.SetPlayerWin(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerWin(localPlayer.id, true);
                         }
                         else
                         {
-                            localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerLost(localPlayer.id, true);
                             endTurn();
                         }
                         break;
                     case 2:
-                        if (GameState.Instance.targetPlace ==12)
+                        if (GameState.Instance.targetPlace == 12)
                         {
-                            localPlayer.SetPlayerWin(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerWin(localPlayer.id, true);
                         }
                         else
                         {
-                            localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerLost(localPlayer.id, true);
                             endTurn();
                         }
                         break;
@@ -538,35 +598,35 @@ public class Place : MonoBehaviour
                 switch (place)
                 {
                     case 0:
-                        if (GameState.Instance.targetPlace ==5)
+                        if (GameState.Instance.targetPlace == 5)
                         {
-                            localPlayer.SetPlayerWin(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerWin(localPlayer.id, true);
                         }
                         else
                         {
-                            localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerLost(localPlayer.id, true);
                             endTurn();
                         }
                         break;
                     case 1:
-                        if (GameState.Instance.targetPlace ==6)
+                        if (GameState.Instance.targetPlace == 6)
                         {
-                            localPlayer.SetPlayerWin(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerWin(localPlayer.id, true);
                         }
                         else
                         {
-                            localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerLost(localPlayer.id, true);
                             endTurn();
                         }
                         break;
                     case 2:
-                        if (GameState.Instance.targetPlace ==7)
+                        if (GameState.Instance.targetPlace == 7)
                         {
-                            localPlayer.SetPlayerWin(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerWin(localPlayer.id, true);
                         }
                         else
                         {
-                            localPlayer.SetPlayerLost(GameState.Instance.currentTurn, true);
+                            localPlayer.SetPlayerLost(localPlayer.id, true);
                             endTurn();
                         }
                         break;
@@ -575,7 +635,7 @@ public class Place : MonoBehaviour
         }
     }
 
-#endregion
+    #endregion
 
     void btnToInfo()
     {
@@ -594,7 +654,7 @@ public class Place : MonoBehaviour
                     {
                         localPlayer.SetActiveTraps(i, "Bomb");
                     }
-                    localPlayer.SetInfernoTraps(i, (GameState.Instance.infernoTraps[i]-1));
+                    localPlayer.SetInfernoTraps(i, (GameState.Instance.infernoTraps[i] - 1));
                 }
                 if (GameState.Instance.drMortifierTraps[i] > 0)
                 {
@@ -602,8 +662,8 @@ public class Place : MonoBehaviour
                     {
                         localPlayer.SetActiveTraps(i, "PetriDish");
                     }
-                    localPlayer.SetDrMortifierTraps(i, (GameState.Instance.drMortifierTraps[i]-1));
-                    
+                    localPlayer.SetDrMortifierTraps(i, (GameState.Instance.drMortifierTraps[i] - 1));
+
                 }
                 if (GameState.Instance.phantomTraps[i] > 0)
                 {
@@ -619,7 +679,7 @@ public class Place : MonoBehaviour
                     {
                         localPlayer.SetActiveTraps(i, "CursedArtifact");
                     }
-                    localPlayer.SetFascultoTraps(i,(GameState.Instance.fascultoTraps[i] - 1));
+                    localPlayer.SetFascultoTraps(i, (GameState.Instance.fascultoTraps[i] - 1));
                 }
             }
         }
@@ -633,19 +693,20 @@ public class Place : MonoBehaviour
                     {
                         if (!GameState.Instance.items[GameState.Instance.currentTurn].Contains("ProtectiveVest"))
                         {
-                            Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " has triggered a " + GameState.Instance.activeTraps[currentPlace]);
+
                             activatedTrap(GameState.Instance.currentTurn, findTargetPosition("Inferno"));
                             localPlayer.SetIsDisabled(GameState.Instance.currentTurn, 1);
+                            setDialogue("Du hast eine Bombe ausgelöst und musst die nächsten zwei Züge im Krankenhaus verbringen.");
                         }
                         else
                         {
-                            Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " was protected by a protective vest");
+                            simpleDialogue("Du hast eine Bombe ausgelöst aber deine Schutzweste hat dich beschützt.", 60);
                             localPlayer.RemoveItem(GameState.Instance.currentTurn, "ProtectiveVest");
                         }
                     }
                     else
                     {
-                        Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " was protected by a fire proof coat");
+                        simpleDialogue("Du hast eine Bombe ausgelöst aber dein feuerfester Mantel hat dich beschützt.", 60);
                     }
                     break;
                 case "PetriDish":
@@ -653,19 +714,20 @@ public class Place : MonoBehaviour
                     {
                         if (!GameState.Instance.items[GameState.Instance.currentTurn].Contains("ProtectiveVest"))
                         {
-                            Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " has triggered a " + GameState.Instance.activeTraps[currentPlace]);
+
                             activatedTrap(GameState.Instance.currentTurn, findTargetPosition("Dr.Mortifier"));
                             localPlayer.SetIsDisabled(GameState.Instance.currentTurn, 1);
+                            setDialogue("Du hast dich aus mysteriösen Gründen mit der Grippe angesteckt, und musst die nächsten 2 Züge im Krankenhaus verbringen,");
                         }
                         else
                         {
-                            Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " was protected by a protective vest");
+                            simpleDialogue("Du hättest dich fast mit der Grippe angesteckt aber deine Schutzweste hat dich beschützt.", 60);
                             localPlayer.RemoveItem(GameState.Instance.currentTurn, "ProtectiveVest");
                         }
                     }
                     else
                     {
-                        Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " was protected by a Gasmask");
+                        simpleDialogue("Du hättest dich fast mit der Grippe angesteckt aber deine Gasmaske hat dich beschützt.", 60);
                     }
                     break;
                 case "StolenGoods":
@@ -673,19 +735,20 @@ public class Place : MonoBehaviour
                     {
                         if (!GameState.Instance.items[GameState.Instance.currentTurn].Contains("ProtectiveVest"))
                         {
-                            Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " has triggered a " + GameState.Instance.activeTraps[currentPlace]);
+                           
                             activatedTrap(GameState.Instance.currentTurn, findTargetPosition("Phantom"));
                             localPlayer.SetIsDisabled(GameState.Instance.currentTurn, 1);
+                            setDialogue("Dir wurde leider ein Verbrechen angehängt das du nicht begangen hast. Deshalb verbringst du die nächsten zwei Züge im Gefängnis.");
                         }
                         else
                         {
-                            Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " was protected by a protective vest");
+                            simpleDialogue("Dir wurde fast ein Verbrechen angehängt aber deine Schutzweste hat dich beschützt.",60);
                             localPlayer.RemoveItem(GameState.Instance.currentTurn, "ProtectiveVest");
                         }
                     }
                     else
                     {
-                        Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " was protected by a Bodycam");
+                        simpleDialogue("Dir wurde fast ein Verbrechen angehängt aber deine Bodycam hat dich beschützt.", 60);
                     }
                     break;
                 case "CursedArtifact":
@@ -693,28 +756,28 @@ public class Place : MonoBehaviour
                     {
                         if (!GameState.Instance.items[GameState.Instance.currentTurn].Contains("ProtectiveVest"))
                         {
-                            Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " has triggered a " + GameState.Instance.activeTraps[currentPlace]);
+                            
                             activatedTrap(GameState.Instance.currentTurn, findTargetPosition("Fasculto"));
                             localPlayer.SetIsDisabled(GameState.Instance.currentTurn, 1);
+                            setDialogue("Du hast einen komischen Gegenstand angegriffen und hast dich nach einer langen Pechsträhne schwer verletzt. Du muss die nächsten 2 Züge im Krankenhaus verbringen.");
                         }
                         else
                         {
-                            Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " was protected by a protective vest");
+                            simpleDialogue("Du wärst beinahe verflucht worden, doch deine Schutzweste hat dich beschützt.",60);
                             localPlayer.RemoveItem(GameState.Instance.currentTurn, "ProtectiveVest");
                         }
                     }
                     else
                     {
-                        Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " was protected by a Talisman");
+                        simpleDialogue("Du wärst beinahe verflucht worden, doch dein Talisman hat dich beschützt.", 60);
                     }
                     break;
             }
             localPlayer.SetActiveTraps(currentPlace, "Safe");
-            endTurn();
+            return;
         }
     }
 
-    //@TODO Messages for big trap and manipulation, and small trap
     void endTurn()
     {
         if (!GameState.Instance.usedEnergyDrink.Contains(true))
@@ -732,11 +795,8 @@ public class Place : MonoBehaviour
                     addFalseHint();
                 }
             }
-            Debug.Log("Turn for Waiting: " + GameState.Instance.currentTurn);
-            Debug.Log("PlayerCount: " + GameState.Instance.playerCount);
             localPlayer.SetPlayerState(GameState.Instance.currentTurn, "Waiting");
             localPlayer.SetCurrentTurn(((GameState.Instance.currentTurn + 1)%GameState.Instance.playerCount));
-            Debug.Log("Turn for Movement: " + GameState.Instance.currentTurn);
             localPlayer.SetPlayerState(GameState.Instance.currentTurn, "Movement");
             //counting down quarantine time
             if (GameState.Instance.roles[GameState.Instance.currentTurn] == "Doctor")
@@ -749,22 +809,10 @@ public class Place : MonoBehaviour
                     }
                 }
             }
-            if (GameState.Instance.isDisabled[GameState.Instance.currentTurn] > 0)
-            {
-                Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " is still disabled");
-                localPlayer.SetIsDisabled(GameState.Instance.currentTurn, (GameState.Instance.isDisabled[GameState.Instance.currentTurn] - 1));
-                endTurn();
-            }
             if (GameState.Instance.playerLost[GameState.Instance.currentTurn])
             {
                 Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " has already lost");
                 endTurn();
-            }
-            if (GameState.Instance.isManipulated[GameState.Instance.currentTurn])
-            {
-                Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " was forced to move here");
-                localPlayer.SetIsManipulated(GameState.Instance.currentTurn, false);
-                OnEnable();
             }
             else
             {
@@ -1297,7 +1345,7 @@ public class Place : MonoBehaviour
         setDialogue("Du hinterlässt ein verfluchtes Artifakt");
     }
     #endregion
-    //@TODO check for targettime;
+  
     void btnActivateQuestPlaceClick()
     {
         addTrueHint();
@@ -1395,6 +1443,7 @@ public class Place : MonoBehaviour
             else if (GameState.Instance.criminalRole == "Dr.Mortifier") 
             {
                 localPlayer.SetPlanted(true);
+                setDialogue("Du hast deine Biowaffe platziert. Begib dich schnell in Sicherheit.");
             }
         }
         
@@ -1422,7 +1471,7 @@ public class Place : MonoBehaviour
         }
         else
         {
-            setDialogue("Du schaust dich genauer um, findest aber nicht was auf den Verbrecher hinweisen könnte.");
+            setDialogue("Du schaust dich genauer um, findest aber nichts was auf den Verbrecher hinweisen könnte.");
         }
     }
 
@@ -1433,7 +1482,6 @@ public class Place : MonoBehaviour
         setDialogue("Du platzierst einen falschen Hinweis.");
     }
 
-    //@TODO add description for all places
     #region placeactions
 
     void btnPlaceOptionClick()
@@ -2459,19 +2507,31 @@ public class Place : MonoBehaviour
         btnTwo.onClick.AddListener(btnItalienThirtyPercentChance);
         btnThree.onClick.AddListener(btnItalienFiftyPercentChance);
         btnFour.onClick.AddListener(btnItalienSixtyPercentChance);
+        btnOne.interactable = false;
+        btnTwo.interactable = false;
+        btnThree.interactable = false;
+        btnFour.interactable = false;
         switch (GameState.Instance.money[GameState.Instance.currentTurn])
         {
+            case 0:
+                break;
             case 1:
-                btnTwo.interactable = false;
-                btnThree.interactable = false;
-                btnFour.interactable = false;
+                btnOne.interactable = true;
                 break;
             case 2:
-                btnThree.interactable = false;
-                btnFour.interactable = false;
+                btnOne.interactable = true;
+                btnTwo.interactable = true;
                 break;
             case 3:
-                btnFour.interactable = false;
+                btnOne.interactable = true;
+                btnTwo.interactable = true;
+                btnThree.interactable = true;
+                break;
+            default:
+                btnOne.interactable = true;
+                btnTwo.interactable = true;
+                btnThree.interactable = true;
+                btnFour.interactable = true;
                 break;
         }
         simpleDialogue("Wieviel zahlst du für deine Spaghetti?", 60);
@@ -2782,7 +2842,7 @@ public class Place : MonoBehaviour
     void btnManipulationUp()
     {
         btnBack.gameObject.SetActive(false);
-        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[GameState.Instance.currentTurn][0]-1, GameState.Instance.currentPlace[GameState.Instance.currentTurn][1] );
+        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0]-1, GameState.Instance.currentPlace[manipulatedPlayer][1] );
         if (firstMovementManipulation && GameState.Instance.board[GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]] == 0)
         {
             btnBack.gameObject.SetActive(false);
@@ -2793,7 +2853,7 @@ public class Place : MonoBehaviour
         {
             localPlayer.SetLastAction(GameState.Instance.currentTurn, "Manipulation");
             localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 10));
-            localPlayer.SetIsManipulated(manipulatedPlayer, true);
+            localPlayer.SetIsMovementManipulated(manipulatedPlayer, true);
             firstMovementManipulation = false;
             MovementManipulationDialogue();
         }
@@ -2801,7 +2861,7 @@ public class Place : MonoBehaviour
     void btnManipulationRight()
     {
         btnBack.gameObject.SetActive(false);
-        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]+1 );
+        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]+1 );
         if (firstMovementManipulation && GameState.Instance.board[GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]] == 0)
         {
             btnBack.gameObject.SetActive(false);
@@ -2812,7 +2872,7 @@ public class Place : MonoBehaviour
         {
             localPlayer.SetLastAction(GameState.Instance.currentTurn, "Manipulation");
             localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 10));
-            localPlayer.SetIsManipulated(manipulatedPlayer, true);
+            localPlayer.SetIsMovementManipulated(manipulatedPlayer, true);
             firstMovementManipulation = false;
             MovementManipulationDialogue();
         }
@@ -2820,7 +2880,7 @@ public class Place : MonoBehaviour
     void btnManipulationDown()
     {
         btnBack.gameObject.SetActive(false);
-        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[GameState.Instance.currentTurn][0] + 1, GameState.Instance.currentPlace[GameState.Instance.currentTurn][1] );
+        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0] + 1, GameState.Instance.currentPlace[manipulatedPlayer][1] );
         if (firstMovementManipulation && GameState.Instance.board[GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]] == 0)
         {
             btnBack.gameObject.SetActive(false);
@@ -2831,7 +2891,7 @@ public class Place : MonoBehaviour
         {
             localPlayer.SetLastAction(GameState.Instance.currentTurn, "Manipulation");
             localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 10));
-            localPlayer.SetIsManipulated(manipulatedPlayer, true);
+            localPlayer.SetIsMovementManipulated(manipulatedPlayer, true);
             firstMovementManipulation = false;
             MovementManipulationDialogue();
         }
@@ -2839,7 +2899,7 @@ public class Place : MonoBehaviour
     void btnManipulationLeft()
     {
         btnBack.gameObject.SetActive(false);
-        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1] - 1 );
+        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1] - 1 );
         if (firstMovementManipulation && GameState.Instance.board[GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]] == 0)
         {
             btnBack.gameObject.SetActive(false);
@@ -2850,7 +2910,7 @@ public class Place : MonoBehaviour
         {
             localPlayer.SetLastAction(GameState.Instance.currentTurn, "Manipulation");
             localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 10));
-            localPlayer.SetIsManipulated(manipulatedPlayer, true);
+            localPlayer.SetIsMovementManipulated(manipulatedPlayer, true);
             firstMovementManipulation = false;
             MovementManipulationDialogue();
         }
@@ -2859,7 +2919,7 @@ public class Place : MonoBehaviour
     {
         localPlayer.SetLastAction(GameState.Instance.currentTurn, "Manipulation");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 10));
-        localPlayer.SetIsManipulated(manipulatedPlayer, true);
+        localPlayer.SetIsMovementManipulated(manipulatedPlayer, true);
         btnBack.gameObject.SetActive(false);
         firstMovementManipulation = false;
         MovementManipulationDialogue();
@@ -2883,7 +2943,7 @@ public class Place : MonoBehaviour
                 setDialogue("Mit einer ferngesteuerten Bombe hast du " + name + " dazu gezwungen " + place + " zu gehen.");
                 break;
             case "Dr.Mortifier":
-                setDialogue("Mit einem spezielen Virus hast du " + name + " dazu gezwunden " + place + "zu gehen.");
+                setDialogue("Mit einem spezielen Virus hast du " + name + " dazu gezwunden " + place + " zu gehen.");
                 break;
             case "Phantom":
                 setDialogue("Indem du dich als verlässliche Quelle ausgegeben hast, hast du " + name + " dazu gebracht " + place + " zu gehen");
@@ -2975,7 +3035,7 @@ public class Place : MonoBehaviour
 
     void HintManipulationDialogue(int player) {
         string name = translateName(player);
-
+        localPlayer.SetIsHintManipulated(player, true);
         switch (GameState.Instance.criminalRole)
         {
             case "Inferno":
@@ -3084,9 +3144,6 @@ public class Place : MonoBehaviour
     }
     #endregion
 
-    
-
-    //@TODO: Layout for 7 buttons
     #region LayoutFunctions
 
     void oneButton()
@@ -3254,25 +3311,6 @@ public class Place : MonoBehaviour
         btnFour.interactable = true;
         btnFive.interactable = true;
         btnSix.interactable = true;
-    }
-    void sevenButtons()
-    {
-        disableButtons();
-        btnOne.gameObject.SetActive(true);
-        btnTwo.gameObject.SetActive(true);
-        btnThree.gameObject.SetActive(true);
-        btnFour.gameObject.SetActive(true);
-        btnFive.gameObject.SetActive(true);
-        btnSix.gameObject.SetActive(true);
-        btnSeven.gameObject.SetActive(true);
-
-        btnOne.interactable = true;
-        btnTwo.interactable = true;
-        btnThree.interactable = true;
-        btnFour.interactable = true;
-        btnFive.interactable = true;
-        btnSix.interactable = true;
-        btnSeven.interactable = true;
     }
     void eightButtons()
     {

@@ -725,28 +725,52 @@ public class Player : NetworkBehaviour
         GameState.Instance.isDisabled[index] = isDisabled;
     }
     #endregion
-    #region SetIsManipulated
-    public void SetIsManipulated(int index, bool isManipulated)
+    #region SetIsMovementManipulated
+    public void SetIsMovementManipulated(int index, bool isMovementManipulated)
     {
-        GameState.Instance.isManipulated[index] = isManipulated;
+        GameState.Instance.isMovementManipulated[index] = isMovementManipulated;
         if (isServer)
         {
-            RpcSetIsManipulated(index, isManipulated);
+            RpcSetIsMovmentManipulated(index, isMovementManipulated);
         }
         else
         {
-            CmdSetIsManipulated(index, isManipulated);
+            CmdSetIsMovementManipulated(index, isMovementManipulated);
         }
     }
     [Command]
-    public void CmdSetIsManipulated(int index, bool isManipulated)
+    public void CmdSetIsMovementManipulated(int index, bool isMovementManipulated)
     {
-        SetIsManipulated(index, isManipulated);
+        SetIsMovementManipulated(index, isMovementManipulated);
     }
     [ClientRpc]
-    public void RpcSetIsManipulated(int index, bool isManipulated)
+    public void RpcSetIsMovmentManipulated(int index, bool isMovementManipulated)
     {
-        GameState.Instance.isManipulated[index] = isManipulated;
+        GameState.Instance.isMovementManipulated[index] = isMovementManipulated;
+    }
+    #endregion
+    #region SetIsHintManipulated
+    public void SetIsHintManipulated(int index, bool isHintManipulated)
+    {
+        GameState.Instance.isHintManipulated[index] = isHintManipulated;
+        if (isServer)
+        {
+            RpcSetIsHintManipulated(index, isHintManipulated);
+        }
+        else
+        {
+            CmdSetIsHintManipulated(index, isHintManipulated);
+        }
+    }
+    [Command]
+    public void CmdSetIsHintManipulated(int index, bool isHintManipulated)
+    {
+        SetIsHintManipulated(index, isHintManipulated);
+    }
+    [ClientRpc]
+    public void RpcSetIsHintManipulated(int index, bool isHintManipulated)
+    {
+        GameState.Instance.isHintManipulated[index] = isHintManipulated;
     }
     #endregion
     #region SetSkillUsed
@@ -944,7 +968,7 @@ public class Player : NetworkBehaviour
     #region  SetPlayerLost
     public void SetPlayerLost(int index, bool playerLost)
     {
-        GameState.Instance.playerWin[index] = playerLost;
+        GameState.Instance.playerLost[index] = playerLost;
         if (isServer)
         {
             RpcSetPlayerLost(index, playerLost);
@@ -957,12 +981,12 @@ public class Player : NetworkBehaviour
     [Command]
     public void CmdSetPlayerLost(int index, bool playerLost)
     {
-        SetPlayerWin(index, playerLost);
+        SetPlayerLost(index, playerLost);
     }
     [ClientRpc]
     public void RpcSetPlayerLost(int index, bool playerLost)
     {
-        GameState.Instance.playerWin[index] = playerLost;
+        GameState.Instance.playerLost[index] = playerLost;
     }
     #endregion
     #region SetActiveTraps

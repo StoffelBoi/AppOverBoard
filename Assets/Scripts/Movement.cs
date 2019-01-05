@@ -49,7 +49,16 @@ public class Movement : MonoBehaviour {
     void OnEnable()
     {
         player = GameState.Instance.localPlayer.GetComponent<Player>();
-        newTurn();
+        if (GameState.Instance.isMovementManipulated[GameState.Instance.currentTurn] || GameState.Instance.isDisabled[GameState.Instance.currentTurn] > 0)
+        {
+            firstMove = false;
+            endClick();
+        }
+        else
+        {
+            newTurn();
+        }
+        
     }
 
 	void newTurn()

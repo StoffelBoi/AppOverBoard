@@ -2665,25 +2665,25 @@ MonoBehaviour:
   tile6_5: {fileID: 932030185}
   tile6_6: {fileID: 728048465}
   tile6_7: {fileID: 1249147958}
-  armyshop: {fileID: 2800000, guid: 77f8c7b28d827cc49936f3e9031d1d0d, type: 3}
-  bank: {fileID: 2800000, guid: c73c28ff8ec355447aec48e595a63408, type: 3}
-  bar: {fileID: 2800000, guid: 1d2b98a10bd98d14d976632a7b450a5d, type: 3}
-  casino: {fileID: 2800000, guid: 9d8c9b407de2a27418365fd3b525ff58, type: 3}
-  cemetary: {fileID: 2800000, guid: 116a594e7bcb50945bd022f1a1c350c8, type: 3}
-  harbor: {fileID: 2800000, guid: 94970344afd8100409299a4708c93bb1, type: 3}
-  hospital: {fileID: 2800000, guid: 0287d6f2c74affe4ca7727bb12905bf5, type: 3}
-  internetCafe: {fileID: 2800000, guid: 2c4c99b1eccdd7d40be714fba064d52d, type: 3}
-  italienRest: {fileID: 2800000, guid: 58706090d924b3b488a9f4fabf9bbc79, type: 3}
-  junkyard: {fileID: 2800000, guid: 162543594061d124eade090efabe14cf, type: 3}
-  laboratory: {fileID: 2800000, guid: 812840c4a83dded4fb198ae68c3ce6ff, type: 3}
-  library: {fileID: 2800000, guid: 164a12e6cca5a0746ab506a75cc59a8a, type: 3}
-  mainsquareTexture: {fileID: 2800000, guid: bace3bed34ada5b48b661182cb2d6df1, type: 3}
-  park: {fileID: 2800000, guid: 5f5f638825ba0c24db3d557cf7632f85, type: 3}
-  parliament: {fileID: 2800000, guid: 1c004c63096ebee47998a4142efaea8e, type: 3}
-  prison: {fileID: 2800000, guid: 58adb2685e237534e832c83fcba069f9, type: 3}
-  shoppingcenter: {fileID: 2800000, guid: 9aa773b11ac450e458eeed52f495457d, type: 3}
-  street: {fileID: 2800000, guid: ea4a2e855e18afc479cf39e4740b9b46, type: 3}
-  trainstation: {fileID: 2800000, guid: 910b4d3eaedcc28489e454359ed39fe5, type: 3}
+  armyshop: {fileID: 2800000, guid: 250bd489d51384340ab00ffafd3d23a8, type: 3}
+  bank: {fileID: 2800000, guid: da43b62f8caff6345a9e9e5ec71ba953, type: 3}
+  bar: {fileID: 2800000, guid: 225e801bde6d4e545b80f1d877a26cc1, type: 3}
+  casino: {fileID: 2800000, guid: c0fcc7f5eed7ce34f82e3eb0b812926f, type: 3}
+  cemetary: {fileID: 2800000, guid: c289ed63dae052445b4414c9fcb1b958, type: 3}
+  harbor: {fileID: 2800000, guid: 82de89ffd6f70bc4b9305bff45a830bc, type: 3}
+  hospital: {fileID: 2800000, guid: cce4aa2b9ef3fc44c953b825b78c0650, type: 3}
+  internetCafe: {fileID: 2800000, guid: d910523cb591ae541ab815ef99cf00c4, type: 3}
+  italienRest: {fileID: 2800000, guid: b04ced219dbd0e940bd725a64ac5f599, type: 3}
+  junkyard: {fileID: 2800000, guid: 2b2cbf75606c8e94eb9f6a0b71360cae, type: 3}
+  laboratory: {fileID: 2800000, guid: dde2ea95187663a4ba31ffd05a8b4bfc, type: 3}
+  library: {fileID: 2800000, guid: 715f1f353addbc24790587007d2d3443, type: 3}
+  mainsquareTexture: {fileID: 2800000, guid: e772e3067fc0e8642a67e3a130870e95, type: 3}
+  park: {fileID: 2800000, guid: 7baf4662e7175ce4c8e2d59c3c45ddab, type: 3}
+  parliament: {fileID: 2800000, guid: 24b4d33d232735d409529f6b4437e894, type: 3}
+  prison: {fileID: 2800000, guid: 83e4f4344c7b66c418fd5b6d33574909, type: 3}
+  shoppingcenter: {fileID: 2800000, guid: bead261adfaa2b342ab79b3431a56024, type: 3}
+  street: {fileID: 2800000, guid: 6f97f883e1032154d840a9dd87739fc6, type: 3}
+  trainstation: {fileID: 2800000, guid: 7c29481c9592ab54a8bcbfd5e423bd35, type: 3}
 --- !u!4 &196732564
 Transform:
   m_ObjectHideFlags: 0
@@ -17920,6 +17920,33 @@ MonoBehaviour:
   localPlayer: {fileID: 0}
   playerCount: 0
   connectedPlayer: 0
+  questPlaces: 
+  playerState: []
+  roles: []
+  money: 
+  solvedHints: 
+  unsolvedHints: 
+  trueSolveds: 
+  trueUnsolveds: 
+  isDisabled: 
+  isHintManipulated: 
+  isMovementManipulated: 
+  skillUsed: 
+  lastTransaction: []
+  lastAction: []
+  solvedFacts: 
+  playerFact: []
+  roleFact: []
+  placeFact: []
+  playerWin: 
+  playerLost: 
+  activeTraps: []
+  infernoTraps: 
+  drMortifierTraps: 
+  phantomTraps: 
+  fascultoTraps: 
+  quarantined: 
+  usedEnergyDrink: 
   selectedRoles: 0
   targetTime: 0
   elapsedSeconds: 0

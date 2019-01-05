@@ -151,20 +151,21 @@ public class PrivatePlayer : MonoBehaviour {
 
     void Update()
     {
-        if(GameState.Instance.playerState[playerID]== "Guessing")
-        {
-            btnTurn.onClick.RemoveAllListeners();
-            btnTurn.onClick.AddListener(btnToGuess);
-            btnTurnText.text = "Verhaften";
-            btnTurn.interactable = true;
-            btnGuess.gameObject.SetActive(false);
-        }
-        else if (GameState.Instance.playerState[playerID] == "Movement")
+        if (GameState.Instance.playerState[playerID] == "Movement")
         {
             btnTurnText.text = "Bewegung";
             btnTurn.interactable = true;
             btnTurn.onClick.RemoveAllListeners();
             btnTurn.onClick.AddListener(btnToMovement);
+            if (GameState.Instance.criminal != GameState.Instance.roles[GameState.Instance.localPlayer.GetComponent<Player>().id])
+            {
+                btnGuess.interactable = true;
+            }
+            else
+            {
+                btnGuess.interactable = false;
+            }
+           
         }
         else if(GameState.Instance.playerState[playerID] == "Action")
         {

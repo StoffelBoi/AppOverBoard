@@ -225,7 +225,7 @@ public class RoleSelection : MonoBehaviour
         player.SetUnsolvedHints(player.id, 0);
         player.SetSolvedHints(player.id, 0);
         player.SetIsDisabled(player.id, 0);
-        player.SetIsManipulated(player.id, false);
+        player.SetIsMovementManipulated(player.id, false);
         player.SetSkillUsed(player.id, false);
         player.SetPlayerState(player.id, "Waiting");
         player.SetLastTransaction(player.id, "Nichts");

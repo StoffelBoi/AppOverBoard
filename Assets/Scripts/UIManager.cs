@@ -58,6 +58,55 @@ public class UIManager : MonoBehaviour {
         StartUp();
 	}
 
+    void Update()
+    {
+        if (GameState.Instance.criminalWin == true)
+        {
+            if (GameState.Instance.criminal == GameState.Instance.roles[GameState.Instance.localPlayer.GetComponent<Player>().id])
+            {
+                Win();
+            }
+            else
+            {
+                Loss();
+            }
+        }
+        if (GameState.Instance.playerWin.Contains(true))
+        {
+            if (GameState.Instance.playerWin[GameState.Instance.localPlayer.GetComponent<Player>().id])
+            {
+                Win();
+            }
+            else
+            {
+                Loss();
+            }
+        }
+        if (GameState.Instance.criminal == GameState.Instance.roles[GameState.Instance.localPlayer.GetComponent<Player>().id])
+        {
+            if (GameState.Instance.playerLost.Contains(true))
+            {
+                int lostPlayers = 0;
+                for (int i = 0; i < GameState.Instance.playerCount; i++)
+                {
+                    if (GameState.Instance.playerLost[i])
+                    {
+                        lostPlayers++;
+                    }
+                }
+                if (lostPlayers == GameState.Instance.playerCount - 1)
+                {
+                    GameState.Instance.localPlayer.GetComponent<Player>().SetCriminalWin(true);
+                }
+            }
+        }
+        if (GameState.Instance.playerLost[GameState.Instance.localPlayer.GetComponent<Player>().id])
+        {
+            Loss();
+        }
+
+
+    }
     public void DisableEverything()
     {
         canvasStartUp.enabled = false;
@@ -188,7 +237,7 @@ public class UIManager : MonoBehaviour {
         canvasWin.gameObject.SetActive(true);
         canvasWin.enabled = true;
         WinController.SetActive(true);
-        //WinController.GetComponent<Place>().enabled = true;
+        //WinController.GetComponent<Win>().enabled = true;
     }
 
     public void Loss()
@@ -197,7 +246,7 @@ public class UIManager : MonoBehaviour {
         canvasLoss.gameObject.SetActive(true);
         canvasLoss.enabled = true;
         LossController.SetActive(true);
-        //LossController.GetComponent<Place>().enabled = true;
+        //LossController.GetComponent<Loss>().enabled = true;
     }
 
     public void Rules()

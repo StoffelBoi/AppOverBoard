@@ -33,7 +33,9 @@ public class GameState : NetworkBehaviour {
 
     public List<int> isDisabled = new List<int>();
 
-    public List<bool> isManipulated = new List<bool>();
+    public List<bool> isHintManipulated = new List<bool>();
+
+    public List<bool> isMovementManipulated = new List<bool>();
    
     public List<bool> skillUsed = new List<bool>();
 
@@ -67,6 +69,14 @@ public class GameState : NetworkBehaviour {
 
     public List<bool> usedEnergyDrink = new List<bool>();
 
+    public List<int[]> currentPlace = new List<int[]>();
+
+    public List<int[,]> notFoundTrue = new List<int[,]>();
+
+    public List<int[,]> notFoundFalse = new List<int[,]>();
+
+    public List<List<string>> items = new List<List<string>>();
+
     public int selectedRoles;
     public bool targetTime;
     public int elapsedSeconds;
@@ -80,11 +90,9 @@ public class GameState : NetworkBehaviour {
     public int activatedQuestPlaces;
     public bool planted = false;
     public bool bigTrapUsed;
-    public List<int[]> currentPlace;
-    public List<int[,]> notFoundTrue;
-    public List<int[,]> notFoundFalse;
+
     public int[,] board;
-    public List<List<string>> items= new List<List<string>>();
+   
 
     void Awake()
     {
@@ -97,9 +105,6 @@ public class GameState : NetworkBehaviour {
         connectedPlayer = 0;
         board = new int[6, 7];
         currentTurn = 0;
-        currentPlace = new List<int[]>();
-        notFoundTrue = new List<int[,]>();
-        notFoundFalse = new List<int[,]>();
         activatedQuestPlaces = 0;
         bigTrapUsed = false;
         draw = false;
@@ -121,7 +126,8 @@ public class GameState : NetworkBehaviour {
             trueSolveds.Add(0);
             trueUnsolveds.Add(0);
             isDisabled.Add(0);
-            isManipulated.Add(false);
+            isMovementManipulated.Add(false);
+            isHintManipulated.Add(false);
             skillUsed.Add(false);
             lastTransaction.Add("Nichts");
             lastAction.Add("Nichts");
