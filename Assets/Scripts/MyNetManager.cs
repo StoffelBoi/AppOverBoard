@@ -44,7 +44,7 @@ public class MyNetManager : NetworkManager
     {
         Debug.Log("CheckConnection");
         MyNetDiscovery.Initialize();
-        Connection.Instance.txtInfo.text = "Searching... Please Wait.";
+        Connection.Instance.txtInfo.text = "Suche nach Spiel ...";
         yield return new WaitForSeconds(.5f);
         MyNetDiscovery.StartAsClient();
         yield return new WaitForSeconds(4.5f);
@@ -52,12 +52,12 @@ public class MyNetManager : NetworkManager
         {
             MyNetDiscovery.StopBroadcast();
             isClient = true;
-            Connection.Instance.txtInfo.text = "Connected!";
+            Connection.Instance.txtInfo.text = "Verbunden!";
             yield return new WaitForSeconds(1f);
         }
         else
         {
-            Connection.Instance.txtInfo.text = "Nothing found. Trying manual input...";
+            Connection.Instance.txtInfo.text = "Nichts gefunden. Versuche es manuell.";
             StopClient();
             MyNetDiscovery.StopBroadcast();
             yield return new WaitForSeconds(.1f);
@@ -67,33 +67,33 @@ public class MyNetManager : NetworkManager
     }
     public void ManualConnect()
     {
-        Debug.Log("ManualConnect");
+        
         StartCoroutine(ManualConnectEnter());
     }
 
     IEnumerator ManualConnectEnter()
     {
-        Debug.Log("ManualConnectEnter");
+        
         if (Connection.Instance.IPInputField.text != "")
         {
-            Connection.Instance.txtInfo.text = "Manually connecting...please wait.";
+            Connection.Instance.txtInfo.text = "Manuelles verbinden ...";
             networkAddress = Connection.Instance.IPInputField.text;
             StartClient();
             yield return new WaitForSeconds(3f);
             if (IsClientConnected())
             {
                 isClient = true;
-                Connection.Instance.txtInfo.text = "Connected!";
+                Connection.Instance.txtInfo.text = "Verbunden!";
             }
             else
             {
-                Connection.Instance.txtInfo.text = "Nothing found. Try again.";
+                Connection.Instance.txtInfo.text = "Nichts gefunden, probiers nochmal.";
                 StopClient();
             }
         }
         else
         {
-            Connection.Instance.txtInfo.text = "Please enter an Ip.";
+            Connection.Instance.txtInfo.text = "Gib eine Ip-Adresse ein.";
         }
     }
 

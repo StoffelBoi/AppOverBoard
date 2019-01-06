@@ -151,7 +151,7 @@ public class Connection : MonoBehaviour {
 
     public void ManualConnectLayout()
     {
-        btnJoin.GetComponentInChildren<Text>().text = "Manual Connect";
+        btnJoin.GetComponentInChildren<Text>().text = "Bestätigen";
         btnJoin.GetComponentInChildren<Text>().fontSize = 130;
         btnJoin.onClick.RemoveAllListeners();
         btnJoin.onClick.AddListener(MyNetManager.Instance.ManualConnect);

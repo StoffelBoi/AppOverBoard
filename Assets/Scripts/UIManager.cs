@@ -60,6 +60,7 @@ public class UIManager : MonoBehaviour {
 
     void Update()
     {
+        if (GameState.Instance.localPlayer != null) { 
         if (GameState.Instance.criminalWin == true)
         {
             if (GameState.Instance.criminal == GameState.Instance.roles[GameState.Instance.localPlayer.GetComponent<Player>().id])
@@ -105,7 +106,7 @@ public class UIManager : MonoBehaviour {
             Loss();
         }
 
-
+        }
     }
     public void DisableEverything()
     {
