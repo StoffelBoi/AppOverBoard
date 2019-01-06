@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour {
     public Canvas canvasRulesMovement;
     public Canvas canvasWin;
     public Canvas canvasLoss;
-
+    public Canvas canvasDraw;
 
     public GameObject StartUpController;
     public GameObject ConnectionController;
@@ -42,12 +42,13 @@ public class UIManager : MonoBehaviour {
     public GameObject RulesController;
     public GameObject WinController;
     public GameObject LossController;
-
+    public GameObject DrawController;
 
     public static UIManager Instance;
     // Use this for initialization
 
-    void Awake () {
+    void Awake()
+    {
 
         if (Instance == null)
             Instance = this;
@@ -56,56 +57,67 @@ public class UIManager : MonoBehaviour {
 
         DisableEverything();
         StartUp();
-	}
+    }
 
     void Update()
     {
-        if (GameState.Instance.localPlayer != null) { 
-        if (GameState.Instance.criminalWin == true)
+        if (GameState.Instance.localPlayer != null)
         {
+            if (GameState.Instance.criminalWin == true)
+            {
+                if (GameState.Instance.criminal == GameState.Instance.roles[GameState.Instance.localPlayer.GetComponent<Player>().id])
+                {
+                    Win();
+                    return;
+                }
+                else
+                {
+                    Loss();
+                    return;
+                }
+            }
+            if (GameState.Instance.playerWin.Contains(true))
+            {
+                if (GameState.Instance.playerWin[GameState.Instance.localPlayer.GetComponent<Player>().id])
+                {
+                    Win();
+                    return;
+                }
+                else
+                {
+                    Loss();
+                    return;
+                }
+            }
             if (GameState.Instance.criminal == GameState.Instance.roles[GameState.Instance.localPlayer.GetComponent<Player>().id])
             {
-                Win();
-            }
-            else
-            {
-                Loss();
-            }
-        }
-        if (GameState.Instance.playerWin.Contains(true))
-        {
-            if (GameState.Instance.playerWin[GameState.Instance.localPlayer.GetComponent<Player>().id])
-            {
-                Win();
-            }
-            else
-            {
-                Loss();
-            }
-        }
-        if (GameState.Instance.criminal == GameState.Instance.roles[GameState.Instance.localPlayer.GetComponent<Player>().id])
-        {
-            if (GameState.Instance.playerLost.Contains(true))
-            {
-                int lostPlayers = 0;
-                for (int i = 0; i < GameState.Instance.playerCount; i++)
+                if (GameState.Instance.playerLost.Contains(true))
                 {
-                    if (GameState.Instance.playerLost[i])
+                    int lostPlayers = 0;
+                    for (int i = 0; i < GameState.Instance.playerCount; i++)
                     {
-                        lostPlayers++;
+                        if (GameState.Instance.playerLost[i])
+                        {
+                            lostPlayers++;
+                        }
+                    }
+                    if (lostPlayers == GameState.Instance.playerCount - 1)
+                    {
+                        GameState.Instance.localPlayer.GetComponent<Player>().SetCriminalWin(true);
+                        return;
                     }
                 }
-                if (lostPlayers == GameState.Instance.playerCount - 1)
-                {
-                    GameState.Instance.localPlayer.GetComponent<Player>().SetCriminalWin(true);
-                }
             }
-        }
-        if (GameState.Instance.playerLost[GameState.Instance.localPlayer.GetComponent<Player>().id])
-        {
-            Loss();
-        }
-
+            if (GameState.Instance.playerLost[GameState.Instance.localPlayer.GetComponent<Player>().id])
+            {
+                Loss();
+                return;
+            }
+            if (GameState.Instance.draw)
+            {
+                Draw();
+                return;
+            }
         }
     }
     public void DisableEverything()
@@ -248,6 +260,15 @@ public class UIManager : MonoBehaviour {
         canvasLoss.enabled = true;
         LossController.SetActive(true);
         //LossController.GetComponent<Loss>().enabled = true;
+    }
+
+    public void Draw()
+    {
+        DisableEverything();
+        canvasDraw.gameObject.SetActive(true);
+        canvasDraw.enabled = true;
+        DrawController.SetActive(true);
+        //DrawController.GetComponent<Loss>().enabled = true;
     }
 
     public void Rules()
