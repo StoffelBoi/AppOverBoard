@@ -19,7 +19,8 @@ public class Connection : MonoBehaviour {
 
     public static Connection Instance;
     public int playerCount;
-
+    public Sprite infoPanelSprite;
+    public Sprite invertedInfoPanelSprite;
     void Awake()
     {
         if (Instance == null)
@@ -41,6 +42,8 @@ public class Connection : MonoBehaviour {
         btnHost.onClick.AddListener(btnSelectPlayerCount);
         btnJoin.onClick.AddListener(btnJoinClick);
         btnBack.onClick.AddListener(btnToStart);
+        infoPanel.gameObject.GetComponent<Image>().sprite = infoPanelSprite;
+        txtInfo.GetComponent<RectTransform>().anchoredPosition = new Vector3(-110, 569, 0);
     }
     void disableEverything()
     {
@@ -90,6 +93,8 @@ public class Connection : MonoBehaviour {
         txtInfo.text = "Leg die Spieleranzahl fest.";
         txtPlayerCount.gameObject.SetActive(true);
         infoPanel.gameObject.SetActive(true);
+        txtInfo.GetComponent<RectTransform>().anchoredPosition = new Vector3(110, 569, 0);
+        infoPanel.gameObject.GetComponent<Image>().sprite = invertedInfoPanelSprite;
         PlayerCountPanel.gameObject.SetActive(true);
         txtPlayerCount.text = "" + playerCount;
         btnUp.onClick.AddListener(btnUpClick);
@@ -137,6 +142,8 @@ public class Connection : MonoBehaviour {
         IPInputField.gameObject.SetActive(true);
         IPInputField.interactable = false;
         btnBack.onClick.AddListener(btnStopHost);
+        infoPanel.gameObject.GetComponent<Image>().sprite = invertedInfoPanelSprite;
+        txtInfo.GetComponent<RectTransform>().anchoredPosition = new Vector3(110, 569, 0);
         MyNetManager.Instance.SearchGame();
         
 

@@ -5,27 +5,19 @@ using UnityEngine.UI;
 
 public class StartUp : MonoBehaviour
 {
+    public Button btnTapToStart;
     // Use this for initialization
     void Start()
     {
+        btnTapToStart.onClick.AddListener(btnToConnection);
     }
-
-    // Update is called once per frame
-    void Update()
+    void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            UIManager.Instance.Connection();
-        }
-
-
-          
-        if (Input.touchCount > 0)
-        {
-            if (Input.GetTouch(0).phase == TouchPhase.Ended)
-           {
-                UIManager.Instance.Connection();
-            }
-        }
+        btnTapToStart.gameObject.GetComponent<Animation>().Play();
+    }
+   
+    void btnToConnection()
+    {
+        UIManager.Instance.Connection();
     }
 }
