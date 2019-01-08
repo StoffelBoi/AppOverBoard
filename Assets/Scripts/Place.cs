@@ -158,6 +158,18 @@ public class Place : MonoBehaviour
                     btnFour.onClick.AddListener(btnManipulationClick);
                     btnThree.interactable = false;
                     btnFour.interactable = false;
+
+                    //checking if big Trap can be used
+                    if (!GameState.Instance.bigTrapUsed)
+                    {
+                        btnThree.interactable = true;
+                    }
+
+                    //checking if manipulation can be used
+                    if (GameState.Instance.money[GameState.Instance.currentTurn] >= 10)
+                    {
+                        btnFour.interactable = true;
+                    }
                 }
                 else
                 {
@@ -183,47 +195,43 @@ public class Place : MonoBehaviour
                     btnSix.interactable = false;
                     btnSeven.interactable = false;
                     btnEight.interactable = false;
-                }
 
-                //checking if big Trap can be used
-                if (!GameState.Instance.bigTrapUsed)
-                {
-                    btnSix.interactable = true;
-                }
 
-                //checking if manipulation can be used
-                if (GameState.Instance.money[GameState.Instance.currentTurn] >= 10)
-                {
-                    btnSeven.interactable = true;
-                }
-
-                //checking if a questplace can be activated
-                if (GameState.Instance.money[GameState.Instance.currentTurn] >= 6)
-                {
-                    if (GameState.Instance.activatedQuestPlaces < 3)
+                    //checking if big Trap can be used
+                    if (!GameState.Instance.bigTrapUsed)
                     {
-                        if (GameState.Instance.questPlaces.Contains(currentPlace))
+                        btnSix.interactable = true;
+                    }
+
+                    //checking if manipulation can be used
+                    if (GameState.Instance.money[GameState.Instance.currentTurn] >= 10)
+                    {
+                        btnSeven.interactable = true;
+                    }
+
+                    //checking if a questplace can be activated
+                    if (GameState.Instance.money[GameState.Instance.currentTurn] >= 6)
+                    {
+                        if (GameState.Instance.activatedQuestPlaces < 3)
                         {
-                            btnEight.interactable = true;
+                            if (GameState.Instance.questPlaces.Contains(currentPlace))
+                            {
+                                btnEight.interactable = true;
+                            }
                         }
                     }
-                }
-                if (GameState.Instance.activatedQuestPlaces >= 3)
-                {
-                    btnEightText.text = "Verbrechen ausführen";
-                    if (GameState.Instance.targetPlace == currentPlace)
+                    if (GameState.Instance.activatedQuestPlaces >= 3)
                     {
-                        if (GameState.Instance.targetTime)
+                        btnEightText.text = "Verbrechen ausführen";
+                        if (GameState.Instance.targetPlace == currentPlace)
                         {
-                            btnEight.interactable = true;
+                            if (GameState.Instance.targetTime)
+                            {
+                                btnEight.interactable = true;
+                            }
                         }
                     }
-                }
 
-                //checking if theres already a trap on the current place
-                if (GameState.Instance.activeTraps[currentPlace] != "Safe")
-                {
-                    btnFive.interactable = false;
                 }
             }
             //menu if its a good guy
@@ -986,11 +994,11 @@ public class Place : MonoBehaviour
         {
             if (tempFoundHints == 1)
             {
-                simpleDialogue("Mit dem Fingerprintset findest und entschlüsselst du 1 Hinweis und hast dadurch eine wichtige Information herausfinden können.", 60);
+                simpleDialogue("Mit dem Fingerprintset findest und entschlüsselst du 1 Hinweis und hast dadurch wichtige Informationen herausfinden können.", 60);
             }
             else
             {
-                simpleDialogue("Mit dem Fingerprintset findest und entschlüsselst du " + tempFoundHints + " Hinweise und hast dadurch eine wichtige Information herausfinden können.", 60);
+                simpleDialogue("Mit dem Fingerprintset findest und entschlüsselst du " + tempFoundHints + " Hinweise und hast dadurch wichtige Informationen herausfinden können.", 60);
             }
             
         }
@@ -1529,11 +1537,11 @@ public class Place : MonoBehaviour
         {
             if (tempUnsolvedHints == 1)
             {
-                setDialogue("Du hast einen Hinweis entschlüsselt und hast dadurch eine wichtige Information herausfinden können.");
+                setDialogue("Du hast einen Hinweis entschlüsselt und hast dadurch wichtige Informationen herausfinden können.");
             }
             else
             {
-                setDialogue("Du hast " + tempUnsolvedHints + " Hinweise entschlüsselt und hast dadurch eine wichtige Information herausfinden können.");
+                setDialogue("Du hast " + tempUnsolvedHints + " Hinweise entschlüsselt und hast dadurch wichtige Informationen herausfinden können.");
             }
 
         }
@@ -3096,7 +3104,7 @@ public class Place : MonoBehaviour
                 s = "Du hast Diebesgut in der Wohnung von " + name + " platziert.";
                 break;
             case "Fasculto":
-                s = "Du hast " + name + " mit einem Unglücksfluch belegt und dadurch eine schweren Unfall ausgelöst.";
+                s = "Du hast " + name + " mit einem Unglücksfluch belegt und dadurch eine einige kleine Unfälle ausgelöst.";
                 break;
         }
         
@@ -3817,9 +3825,24 @@ public class Place : MonoBehaviour
                     case 0:
                         if (GameState.Instance.playerFact[GameState.Instance.currentTurn] == "")
                         {
-                            localPlayer.SetPlayerFact(GameState.Instance.currentTurn, GameState.Instance.criminal);
+                            string playerFact = "";
+                            for(int i  =0;i<GameState.Instance.playerCount; i++)
+                            {
+                                if (GameState.Instance.roles[i] == GameState.Instance.criminal)
+                                {
+                                    playerFact = translateName(i);
+                                }
+                            }
+                            localPlayer.SetPlayerFact(GameState.Instance.currentTurn, playerFact);
                             localPlayer.SetSolvedFacts(GameState.Instance.currentTurn, (GameState.Instance.solvedFacts[GameState.Instance.currentTurn] + 1));
-                            return true;
+                            if ((GameState.Instance.trueSolveds[GameState.Instance.currentTurn] - (GameState.Instance.solvedFacts[GameState.Instance.currentTurn] * 3)) >= 3)
+                            {
+                                return checkForFact();
+                            }
+                            else
+                            {
+                                return true;
+                            }
                         }
                         else
                         {
@@ -3829,8 +3852,15 @@ public class Place : MonoBehaviour
                         if (GameState.Instance.placeFact[GameState.Instance.currentTurn] == "")
                         {
                             localPlayer.SetPlaceFact(GameState.Instance.currentTurn, translatePlace(GameState.Instance.targetPlace));
-                            localPlayer.SetSolvedFacts(GameState.Instance.currentTurn, (GameState.Instance.solvedFacts[GameState.Instance.currentTurn] + 1)); 
-                            return true;
+                            localPlayer.SetSolvedFacts(GameState.Instance.currentTurn, (GameState.Instance.solvedFacts[GameState.Instance.currentTurn] + 1));
+                            if ((GameState.Instance.trueSolveds[GameState.Instance.currentTurn] - (GameState.Instance.solvedFacts[GameState.Instance.currentTurn] * 3)) >= 3)
+                            {
+                                return checkForFact();
+                            }
+                            else
+                            {
+                                return true;
+                            }
                         }
                         else
                         {
@@ -3841,7 +3871,14 @@ public class Place : MonoBehaviour
                         {
                             localPlayer.SetRoleFact(GameState.Instance.currentTurn, GameState.Instance.criminalRole);
                             localPlayer.SetSolvedFacts(GameState.Instance.currentTurn, (GameState.Instance.solvedFacts[GameState.Instance.currentTurn] + 1));
-                            return true;
+                            if ((GameState.Instance.trueSolveds[GameState.Instance.currentTurn] - (GameState.Instance.solvedFacts[GameState.Instance.currentTurn] * 3)) >= 3)
+                            {
+                                return checkForFact();
+                            }
+                            else
+                            {
+                                return true;
+                            }
                         }
                         else
                         {

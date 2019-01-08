@@ -7,7 +7,9 @@ public class Waiting : MonoBehaviour {
 
     public Text playerCount;
     public Text txtWaiting;
+    public Text ipAdress;
     public static Waiting Instance;
+    private bool waiting;
 	void Awake()
     {
         if (Instance == null)
@@ -17,31 +19,33 @@ public class Waiting : MonoBehaviour {
     }
     void OnEnable()
     {
-        txtWaiting.text = "IP Adress: " + MyNetManager.Instance.LocalIPAddress()+"\nWaiting for Players:";
+        ipAdress.text = "Deine IP-Adresse:\n" + MyNetManager.Instance.LocalIPAddress();
+        waiting = true;
+        StartCoroutine("AnimateDots");
     }
 	// Update is called once per frame
 	void Update () {
         playerCount.text=(GameState.Instance.connectedPlayer+"/" + GameState.Instance.playerCount);
 
-        ////////////////////////////////////////////////////////////
-        //DELETE THIS FOR FINAL PRODUCT
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            UIManager.Instance.RoleSelection();
-        }
-
-        if (Input.touchCount > 0)
-        {
-            if (Input.GetTouch(0).phase == TouchPhase.Ended)
-            {
-                UIManager.Instance.RoleSelection();
-            }
-        }
-        ////////////////////////////////////////////////////////////
-
         if (GameState.Instance.connectedPlayer == GameState.Instance.playerCount)
         {
+            waiting = false;
             UIManager.Instance.RoleSelection();
+        }
+    }
+    IEnumerator AnimateDots()
+    {
+        while (waiting)
+        {
+            txtWaiting.text = "IP Adress: " + MyNetManager.Instance.LocalIPAddress() + "\nWaiting for\nPlayers    ";
+            yield return new WaitForSeconds(0.3f);
+            txtWaiting.text = "IP Adress: " + MyNetManager.Instance.LocalIPAddress() + "\nWaiting for\nPlayers .  ";
+            yield return new WaitForSeconds(0.3f);
+            txtWaiting.text = "IP Adress: " + MyNetManager.Instance.LocalIPAddress() + "\nWaiting for\nPlayers .. ";
+            yield return new WaitForSeconds(0.3f);
+            txtWaiting.text = "IP Adress: " + MyNetManager.Instance.LocalIPAddress() + "\nWaiting for\nPlayers ...";
+            yield return new WaitForSeconds(0.3f);
+
         }
     }
 }

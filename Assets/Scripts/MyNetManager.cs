@@ -12,7 +12,7 @@ public class MyNetManager : NetworkManager
     public NetworkDiscovery MyNetDiscovery;
     public bool isServer;
     public bool isClient;
-
+    public bool waiting;
     void Awake()
     {
         if (Instance == null)
@@ -42,18 +42,20 @@ public class MyNetManager : NetworkManager
 
     IEnumerator CheckConnection()
     {
-        Debug.Log("CheckConnection");
         MyNetDiscovery.Initialize();
-        Connection.Instance.txtInfo.text = "Suche nach Spiel ...";
+        waiting = true;
+        StartCoroutine("animateLookingForGame");
         yield return new WaitForSeconds(.5f);
         MyNetDiscovery.StartAsClient();
         yield return new WaitForSeconds(4.5f);
+        waiting = false;
+        yield return new WaitForSeconds(1f);
         if (IsClientConnected())
         {
             MyNetDiscovery.StopBroadcast();
             isClient = true;
             Connection.Instance.txtInfo.text = "Verbunden!";
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.2f);
         }
         else
         {
@@ -63,6 +65,21 @@ public class MyNetManager : NetworkManager
             yield return new WaitForSeconds(.1f);
             Connection.Instance.ManualConnectLayout();
 
+        }
+    }
+    IEnumerator animateLookingForGame()
+    {
+
+        while (waiting)
+        {
+            Connection.Instance.txtInfo.text = "Suche nach \nSpiel    ";
+            yield return new WaitForSeconds(0.3f);
+            Connection.Instance.txtInfo.text = "Suche nach \nSpiel .  ";
+            yield return new WaitForSeconds(0.3f);
+            Connection.Instance.txtInfo.text = "Suche nach \nSpiel .. ";
+            yield return new WaitForSeconds(0.3f);
+            Connection.Instance.txtInfo.text = "Suche nach \nSpiel ...";
+            yield return new WaitForSeconds(0.3f);
         }
     }
     public void ManualConnect()
@@ -76,10 +93,13 @@ public class MyNetManager : NetworkManager
         
         if (Connection.Instance.IPInputField.text != "")
         {
-            Connection.Instance.txtInfo.text = "Manuelles verbinden ...";
+            waiting = true;
+            StartCoroutine("animateManualConnection");
             networkAddress = Connection.Instance.IPInputField.text;
             StartClient();
             yield return new WaitForSeconds(3f);
+            waiting = false;
+            yield return new WaitForSeconds(1.2f);
             if (IsClientConnected())
             {
                 isClient = true;
@@ -96,7 +116,21 @@ public class MyNetManager : NetworkManager
             Connection.Instance.txtInfo.text = "Gib eine Ip-Adresse ein.";
         }
     }
+    IEnumerator animateManualConnection()
+    {
+        while (waiting)
+        {
+            Connection.Instance.txtInfo.text = "Manuelles verbinden    ";
+            yield return new WaitForSeconds(0.3f);
+            Connection.Instance.txtInfo.text = "Manuelles verbinden .  ";
+            yield return new WaitForSeconds(0.3f);
+            Connection.Instance.txtInfo.text = "Manuelles verbinden .. ";
+            yield return new WaitForSeconds(0.3f);
+            Connection.Instance.txtInfo.text = "Manuelles verbinden ...";
+            yield return new WaitForSeconds(0.3f);
 
+        }
+    }
 
     public void StopHosting()
     {

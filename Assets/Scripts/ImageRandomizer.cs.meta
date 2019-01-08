@@ -1,0 +1,34 @@
+fileFormatVersion: 2
+guid: d0e6fc3597a8af845b1bf260af192ac1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - imgStreet: {fileID: 21300000, guid: ea4a2e855e18afc479cf39e4740b9b46, type: 3}
+  - imgCitysquare: {fileID: 21300000, guid: bace3bed34ada5b48b661182cb2d6df1, type: 3}
+  - imgPark: {fileID: 21300000, guid: 5f5f638825ba0c24db3d557cf7632f85, type: 3}
+  - imgHospital: {fileID: 21300000, guid: 0287d6f2c74affe4ca7727bb12905bf5, type: 3}
+  - imgBank: {fileID: 21300000, guid: c73c28ff8ec355447aec48e595a63408, type: 3}
+  - imgParliament: {fileID: 21300000, guid: 1c004c63096ebee47998a4142efaea8e, type: 3}
+  - imgCemetary: {fileID: 21300000, guid: 116a594e7bcb50945bd022f1a1c350c8, type: 3}
+  - imgPrison: {fileID: 21300000, guid: 58adb2685e237534e832c83fcba069f9, type: 3}
+  - imgCasino: {fileID: 21300000, guid: 9d8c9b407de2a27418365fd3b525ff58, type: 3}
+  - imgInternetCafe: {fileID: 21300000, guid: 2c4c99b1eccdd7d40be714fba064d52d, type: 3}
+  - imgTrainstation: {fileID: 21300000, guid: 910b4d3eaedcc28489e454359ed39fe5, type: 3}
+  - imgArmyshop: {fileID: 21300000, guid: 77f8c7b28d827cc49936f3e9031d1d0d, type: 3}
+  - imgShoppingCenter: {fileID: 21300000, guid: 9aa773b11ac450e458eeed52f495457d,
+      type: 3}
+  - imgJunkYard: {fileID: 21300000, guid: 162543594061d124eade090efabe14cf, type: 3}
+  - imgLibrary: {fileID: 21300000, guid: 164a12e6cca5a0746ab506a75cc59a8a, type: 3}
+  - imgLaboratory: {fileID: 21300000, guid: 812840c4a83dded4fb198ae68c3ce6ff, type: 3}
+  - imgItalienRestaurant: {fileID: 21300000, guid: 58706090d924b3b488a9f4fabf9bbc79,
+      type: 3}
+  - imgHarbor: {fileID: 21300000, guid: 94970344afd8100409299a4708c93bb1, type: 3}
+  - imgBar: {fileID: 21300000, guid: 1d2b98a10bd98d14d976632a7b450a5d, type: 3}
+  - imgWhite: {fileID: 21300000, guid: 90de1f101c52c2740bbadffc84250f38, type: 3}
+  - tileTurn: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

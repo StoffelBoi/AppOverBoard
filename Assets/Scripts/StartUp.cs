@@ -11,11 +11,6 @@ public class StartUp : MonoBehaviour
     {
         btnTapToStart.onClick.AddListener(btnToConnection);
     }
-    void OnEnable()
-    {
-        btnTapToStart.gameObject.GetComponent<Animation>().Play();
-    }
-   
     void btnToConnection()
     {
         UIManager.Instance.Connection();

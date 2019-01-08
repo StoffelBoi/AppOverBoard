@@ -19,8 +19,6 @@ public class Connection : MonoBehaviour {
 
     public static Connection Instance;
     public int playerCount;
-    public Sprite infoPanelSprite;
-    public Sprite invertedInfoPanelSprite;
     void Awake()
     {
         if (Instance == null)
@@ -42,8 +40,7 @@ public class Connection : MonoBehaviour {
         btnHost.onClick.AddListener(btnSelectPlayerCount);
         btnJoin.onClick.AddListener(btnJoinClick);
         btnBack.onClick.AddListener(btnToStart);
-        infoPanel.gameObject.GetComponent<Image>().sprite = infoPanelSprite;
-        txtInfo.GetComponent<RectTransform>().anchoredPosition = new Vector3(-110, 569, 0);
+        btnJoin.GetComponent<RectTransform>().anchoredPosition = new Vector3(-118, -409.5f, 0);
     }
     void disableEverything()
     {
@@ -55,8 +52,7 @@ public class Connection : MonoBehaviour {
         btnOK.interactable = true;
         IPInputField.interactable = true;
 
-        btnJoin.GetComponentInChildren<Text>().text = "Join";
-        btnJoin.GetComponentInChildren<Text>().fontSize = 190;
+        btnJoin.GetComponentInChildren<Text>().text = "Verbinden";
         btnHost.onClick.RemoveAllListeners();
         btnJoin.onClick.RemoveAllListeners();
         btnBack.onClick.RemoveAllListeners();
@@ -93,8 +89,6 @@ public class Connection : MonoBehaviour {
         txtInfo.text = "Leg die Spieleranzahl fest.";
         txtPlayerCount.gameObject.SetActive(true);
         infoPanel.gameObject.SetActive(true);
-        txtInfo.GetComponent<RectTransform>().anchoredPosition = new Vector3(110, 569, 0);
-        infoPanel.gameObject.GetComponent<Image>().sprite = invertedInfoPanelSprite;
         PlayerCountPanel.gameObject.SetActive(true);
         txtPlayerCount.text = "" + playerCount;
         btnUp.onClick.AddListener(btnUpClick);
@@ -142,8 +136,7 @@ public class Connection : MonoBehaviour {
         IPInputField.gameObject.SetActive(true);
         IPInputField.interactable = false;
         btnBack.onClick.AddListener(btnStopHost);
-        infoPanel.gameObject.GetComponent<Image>().sprite = invertedInfoPanelSprite;
-        txtInfo.GetComponent<RectTransform>().anchoredPosition = new Vector3(110, 569, 0);
+        btnJoin.GetComponent<RectTransform>().anchoredPosition = new Vector3(116, -59.5f, 0);
         MyNetManager.Instance.SearchGame();
         
 
@@ -152,7 +145,6 @@ public class Connection : MonoBehaviour {
     public void ManualConnectLayout()
     {
         btnJoin.GetComponentInChildren<Text>().text = "Bestätigen";
-        btnJoin.GetComponentInChildren<Text>().fontSize = 130;
         btnJoin.onClick.RemoveAllListeners();
         btnJoin.onClick.AddListener(MyNetManager.Instance.ManualConnect);
         btnJoin.interactable = true;
