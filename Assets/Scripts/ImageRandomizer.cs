@@ -98,11 +98,8 @@ public class ImageRandomizer : MonoBehaviour
         }
     }
     IEnumerator ChangeImage()
-    {
-        this.gameObject.GetComponent<Image>().color = new Color(255, 255, 255, 0);
-        yield return new WaitForSeconds(0.6f);
-
-        this.gameObject.GetComponent<Image>().color = new Color(255, 255, 255, 255);
+    { 
+        yield return new WaitForSeconds(0.3f);
         int xPosition = rn.Next(-xBorder, xBorder);
         int yPosition = rn.Next(-yBorder, yBorder);
         this.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(xPosition, yPosition, 0);
@@ -169,7 +166,7 @@ public class ImageRandomizer : MonoBehaviour
                 break;
         }
         this.gameObject.GetComponent<Image>().sprite = imgPlace;
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(1f);
 
         changing = false;
     }
