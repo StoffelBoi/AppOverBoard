@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
 public class MyNetManager : NetworkManager
@@ -162,21 +164,22 @@ public class MyNetManager : NetworkManager
     }
     
     public string LocalIPAddress()
-
     {
-        IPHostEntry host;
-        string localIP = "0.0.0.0";
-        host = Dns.GetHostEntry(Dns.GetHostName());
-        foreach (IPAddress ip in host.AddressList)
+        foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
         {
-            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            if(ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
             {
-
-                localIP = ip.ToString();
-                break;
-            }
+                Console.WriteLine(ni.Name);
+                foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+                {
+                    if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        return ip.Address.ToString();
+                    }
+                }
+            }  
         }
-        return localIP;
+        return "Unknown";
     }
 
 
