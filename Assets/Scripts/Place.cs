@@ -2540,11 +2540,11 @@ public class Place : MonoBehaviour
     void harborAction()
     {
         twoButtons();
-        btnOneText.text = "Hinweis - 5 Geld";
+        btnOneText.text = "Hinweis - 3 Geld";
         btnTwoText.text = "fremde Falle kaufen";
         btnOne.onClick.AddListener(btnHarborHint);
         btnTwo.onClick.AddListener(btnBuyTrap);
-        if (GameState.Instance.money[GameState.Instance.currentTurn] < 5)
+        if (GameState.Instance.money[GameState.Instance.currentTurn] < 3)
         {
             btnOne.interactable = false;
         }
@@ -2561,7 +2561,7 @@ public class Place : MonoBehaviour
     {
         localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "\"Hafenequipment\"");
-        localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 5));
+        localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 3));
         chanceToGetTrueHint(5);
         setDialogue("Du hast den Hafenarbeitern etwas Equipment abgekauft und dabei einige interessanten Dinge erfahren. Du bist dir aber nicht sicher ob sie dir nicht vielleicht nur Seemannsgarn erzählt haben.");
     }

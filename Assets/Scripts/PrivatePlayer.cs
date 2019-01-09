@@ -167,7 +167,6 @@ public class PrivatePlayer : MonoBehaviour {
     }
     void btnToRules()
     {
-        Debug.Log("hello");
         UIManager.Instance.Rules();
     }
 
