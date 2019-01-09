@@ -123,11 +123,18 @@ public class BoardAssembly : MonoBehaviour {
     private int place10;
     private int place11;
     private int place12;
-    private Player player; 
+    private Player player;
+    public Button btnOk;
+    public Button btnBack;
+    public Button btnMenu;
     // Use this for initialization
     
     void OnEnable () {
-        
+        btnBack.interactable = false;
+        btnOk.onClick.RemoveAllListeners();
+        btnOk.onClick.AddListener(btnReadyToPlay);
+        btnBack.onClick.RemoveAllListeners();
+        btnBack.onClick.AddListener(btnNotReady);
         player = GameState.Instance.localPlayer.GetComponent<Player>();
         board = new int[7, 6]
             {
@@ -206,97 +213,133 @@ public class BoardAssembly : MonoBehaviour {
     }
     IEnumerator FillBoard()
     {
+        
         Debug.Log("FillBoard");
         setImage(tile1_1, 0, 0);
+        tile1_1.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile1_2, 0, 1);
+        tile1_2.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile1_3, 0, 2);
+        tile1_3.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile1_4, 0, 3);
+        tile1_4.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile1_5, 0, 4);
+        tile1_5.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile1_6, 0, 5);
+        tile1_6.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
-      
         setImage(tile2_1, 1, 0);
+        tile2_1.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile2_2, 1, 1);
+        tile2_2.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile2_3, 1, 2);
+        tile2_3.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile2_4, 1, 3);
+        tile2_4.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile2_5, 1, 4);
+        tile2_5.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile2_6, 1, 5);
+        tile2_6.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
-       
         setImage(tile3_1, 2, 0);
+        tile3_1.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile3_2, 2, 1);
+        tile3_2.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile3_3, 2, 2);
+        tile3_3.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile3_4, 2, 3);
+        tile3_4.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile3_5, 2, 4);
+        tile3_5.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile3_6, 2, 5);
+        tile3_6.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
-      
         setImage(tile4_1, 3, 0);
+        tile4_1.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile4_2, 3, 1);
+        tile4_2.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile4_3, 3, 2);
+        tile4_3.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile4_4, 3, 3);
+        tile4_4.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile4_5, 3, 4);
+        tile4_5.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile4_6, 3, 5);
+        tile4_6.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
-       
         setImage(tile5_1, 4, 0);
+        tile5_1.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile5_2, 4, 1);
+        tile5_2.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile5_3, 4, 2);
+        tile5_3.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile5_4, 4, 3);
+        tile5_4.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile5_5, 4, 4);
+        tile5_5.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile5_6, 4, 5);
+        tile5_6.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
-       
         setImage(tile6_1, 5, 0);
+        tile6_1.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile6_2, 5, 1);
+        tile6_2.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile6_3, 5, 2);
+        tile6_3.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile6_4, 5, 3);
+        tile6_4.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile6_5, 5, 4);
+        tile6_5.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile6_6, 5, 5);
+        tile6_6.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
-        
-
         setImage(tile7_1, 6, 0);
+        tile7_1.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile7_2, 6, 1);
+        tile7_2.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile7_3, 6, 2);
+        tile7_3.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile7_4, 6, 3);
+        tile7_4.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile7_5, 6, 4);
+        tile7_5.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);
         setImage(tile7_6, 6, 5);
+        tile7_6.gameObject.GetComponent<Animator>().SetTrigger("Turning");
     }
         private void setImage(RawImage tile, int row, int col)
     {
@@ -382,23 +425,35 @@ public class BoardAssembly : MonoBehaviour {
         }
     }
 	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.Space))
+    void btnReadyToPlay()
+    {
+        GameState.Instance.localPlayer.GetComponent<Player>().SetReadyToPlay(GameState.Instance.localPlayer.GetComponent<Player>().id, true);
+        btnBack.interactable = true;
+        btnOk.interactable = false;
+    }
+    void btnNotReady()
+    {
+        btnOk.interactable = true;
+        GameState.Instance.localPlayer.GetComponent<Player>().SetReadyToPlay(GameState.Instance.localPlayer.GetComponent<Player>().id, false);
+        btnBack.interactable = false;
+    }
+    void Update()
+    {
+        int readyCount = 0;
+            for(int i = 0; i<GameState.Instance.playerCount; i++)
+            {
+                if (GameState.Instance.readyToPlay[i])
+                {
+                readyCount++;
+                }
+            }
+        if (readyCount == GameState.Instance.playerCount)
         {
             TimeManager.Instance.startTimer();
             UIManager.Instance.PrivatePlayer();
         }
-        if (Input.touchCount > 0)
-        {
-            if (Input.GetTouch(0).phase == TouchPhase.Ended)
-            {
-                TimeManager.Instance.startTimer();
-                UIManager.Instance.PrivatePlayer();
-            }
-        }
+        
     }
-
     int newNumber(System.Random rn, int under, int upper)
     {
         int number = 0;

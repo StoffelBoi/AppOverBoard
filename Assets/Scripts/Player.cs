@@ -1264,6 +1264,30 @@ public class Player : NetworkBehaviour
         GameState.Instance.isGuessing[index] = isGuessing;
     }
     #endregion
+    #region  SetReadyToPlay
+    public void SetReadyToPlay(int index, bool readyToPlay)
+    {
+        GameState.Instance.readyToPlay[index] = readyToPlay;
+        if (isServer)
+        {
+            RpcSetReadyToPlay(index, readyToPlay);
+        }
+        else
+        {
+            CmdSetReadyToPlay(index, readyToPlay);
+        }
+    }
+    [Command]
+    public void CmdSetReadyToPlay(int index, bool readyToPlay)
+    {
+        SetPlayerLost(index, readyToPlay);
+    }
+    [ClientRpc]
+    public void RpcSetReadyToPlay(int index, bool readyToPlay)
+    {
+        GameState.Instance.readyToPlay[index] = readyToPlay;
+    }
+    #endregion
     ///////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////

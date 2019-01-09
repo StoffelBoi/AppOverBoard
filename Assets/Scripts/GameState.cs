@@ -79,6 +79,8 @@ public class GameState : NetworkBehaviour {
 
     public List<bool> isGuessing = new List<bool>();
 
+    public List<bool> readyToPlay = new List<bool>();
+
     public int selectedRoles;
     public bool targetTime;
     public int elapsedSeconds;
@@ -92,13 +94,12 @@ public class GameState : NetworkBehaviour {
     public int activatedQuestPlaces;
     public bool planted = false;
     public bool bigTrapUsed;
-
+   
     public int[,] board;
    
 
     void Awake()
     {
-
         selectedRoles = 0;
         elapsedSeconds = 0;
         elapsedTime = "0:00:00";
@@ -120,6 +121,7 @@ public class GameState : NetworkBehaviour {
         
         for (int i = 0; i<6; i++)
         {
+            readyToPlay.Add(false);
             playerState.Add(""); 
             roles.Add("");
             money.Add(0);
