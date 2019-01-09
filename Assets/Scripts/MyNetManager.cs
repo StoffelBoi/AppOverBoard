@@ -1,10 +1,12 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Net;
 using System.Net.Sockets;
+using System.Net.NetworkInformation;
 
 public class MyNetManager : NetworkManager
 {
