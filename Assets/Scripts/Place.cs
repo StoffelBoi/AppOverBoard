@@ -9,6 +9,7 @@ public class Place : MonoBehaviour
     public Text placeName;
     public Image image;
     public Text actionsTextField;
+    public Image actionsTextFieldPanel;
 
     public Sprite street;
     public Sprite mainsquare;
@@ -37,6 +38,7 @@ public class Place : MonoBehaviour
     public Sprite edmond;
     public Sprite larson;
 
+    public Sprite twoByTwo;
     public Sprite twoByFour;
     public Sprite twoByFive;
     public Sprite twoBySeven;
@@ -1241,12 +1243,7 @@ public class Place : MonoBehaviour
     void delayTrapMenu()
     {
         simpleDialogue("Nach wievielen Runden ist die Falle scharf?", 60);
-        threeButtons();
-        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(700, 300);
-        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(+150, -400);
-        actionsTextField.gameObject.SetActive(true);
-        actionsTextField.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
-        actionsTextField.GetComponent<RectTransform>().anchoredPosition = new Vector2(-350, -400);
+        actionTextFieldNumber();
         actionsTextField.fontSize = 130;
         actionsTextField.text = "" + delayedTurns;
         btnOneText.text = "+";
@@ -1643,12 +1640,7 @@ public class Place : MonoBehaviour
     }
     void hospitalAction()
     {
-        threeButtons();
-        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300);
-        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(250, -400);
-        actionsTextField.gameObject.SetActive(true);
-        actionsTextField.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300);
-        actionsTextField.GetComponent<RectTransform>().anchoredPosition = new Vector2(-250, -400);
+        actionTextFieldString();
         actionsTextField.fontSize = 100;
         actionsTextField.text = "Stadtplatz";
         btnOneText.text = "+";
@@ -1893,12 +1885,7 @@ public class Place : MonoBehaviour
 
     void casinoAction()
     {
-        threeButtons();
-        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(700, 300);
-        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(+150, -400);
-        actionsTextField.gameObject.SetActive(true);
-        actionsTextField.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
-        actionsTextField.GetComponent<RectTransform>().anchoredPosition = new Vector2(-350, -400);
+        actionTextFieldNumber();
         actionsTextField.fontSize = 130;
         actionsTextField.text = "" + currentBet;
         btnOneText.text = "+";
@@ -2032,12 +2019,7 @@ public class Place : MonoBehaviour
 
     void trainstationAction()
     {
-        threeButtons();
-        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300);
-        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(250, -400);
-        actionsTextField.gameObject.SetActive(true);
-        actionsTextField.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300);
-        actionsTextField.GetComponent<RectTransform>().anchoredPosition = new Vector2(-250, -400);
+        actionTextFieldString();
         actionsTextField.fontSize = 100;
         actionsTextField.text = "Stadtplatz";
         btnOneText.text = "+";
@@ -3490,6 +3472,9 @@ public class Place : MonoBehaviour
         btnSix.targetGraphic = btnSix.GetComponent<Image>();
 
         actionsTextField.gameObject.SetActive(false);
+
+        actionsTextFieldPanel.gameObject.SetActive(false);
+        actionsTextFieldPanel.color = new Color(255, 255, 255, 255);
     }
     void playerButtons()
     {
@@ -3653,6 +3638,34 @@ public class Place : MonoBehaviour
            btnSixImage.color = new Color(255, 255, 255, 255);
            break;
    }
+    }
+    void actionTextFieldNumber()
+    {
+        threeButtons();
+        actionsTextField.gameObject.SetActive(true);
+        actionsTextFieldPanel.gameObject.SetActive(true);
+
+        actionsTextFieldPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(214, 214);
+        actionsTextFieldPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(-411, -233);
+        actionsTextFieldPanel.GetComponent<Image>().sprite = twoByTwo;
+
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(800, 214);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(116, -233);
+        btnTwo.GetComponent<Image>().sprite = twoBySeven;
+    }
+    void actionTextFieldString()
+    {
+        threeButtons();
+        actionsTextField.gameObject.SetActive(true);
+        actionsTextFieldPanel.gameObject.SetActive(true);
+
+        actionsTextFieldPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(566, 214);
+        actionsTextFieldPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(-235, -233);
+        actionsTextFieldPanel.GetComponent<Image>().sprite = twoByFive;
+
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(448, 214);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(290, -233);
+        btnTwo.GetComponent<Image>().sprite = twoByFour;
     }
     #endregion
 

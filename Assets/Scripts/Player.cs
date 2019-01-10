@@ -1280,7 +1280,7 @@ public class Player : NetworkBehaviour
     [Command]
     public void CmdSetReadyToPlay(int index, bool readyToPlay)
     {
-        SetPlayerLost(index, readyToPlay);
+        SetReadyToPlay(index, readyToPlay);
     }
     [ClientRpc]
     public void RpcSetReadyToPlay(int index, bool readyToPlay)
