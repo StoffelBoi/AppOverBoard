@@ -141,20 +141,22 @@ public class MyNetManager : NetworkManager
             StopHost();
             NetworkServer.ClearLocalObjects();
             NetworkServer.ClearSpawners();
-            MyNetDiscovery.StopBroadcast();
+            //MyNetDiscovery.StopBroadcast();
         }
         if (isClient)
         {
             StopHost();
             StopClient();
-            MyNetDiscovery.StopBroadcast();
+            //MyNetDiscovery.StopBroadcast();
             
         }
         StopAllCoroutines();
-        NetworkTransport.Shutdown();
         NetworkServer.Reset();
+        NetworkTransport.Init();
+        NetworkTransport.Shutdown();
         isServer = false;
         isClient = false;
+        TimeManager.Instance.gameObject.SetActive(false);
         UIManager.Instance.Connection();
     }
 

@@ -100,6 +100,13 @@ public class GameState : NetworkBehaviour {
 
     void Awake()
     {
+        restartAwake();
+    }
+    void Start() {
+        restartStart();
+    }
+    void restartAwake()
+    {
         selectedRoles = 0;
         elapsedSeconds = 0;
         elapsedTime = "0:00:00";
@@ -117,12 +124,13 @@ public class GameState : NetworkBehaviour {
         else if (Instance != this)
             Destroy(gameObject);
     }
-    void Start() {
-        
-        for (int i = 0; i<6; i++)
+    void restartStart()
+    {
+
+        for (int i = 0; i < 6; i++)
         {
             readyToPlay.Add(false);
-            playerState.Add(""); 
+            playerState.Add("");
             roles.Add("");
             money.Add(0);
             solvedHints.Add(0);
@@ -170,7 +178,5 @@ public class GameState : NetworkBehaviour {
             quarantined.Add(0);
         }
     }
-
-
 
 }

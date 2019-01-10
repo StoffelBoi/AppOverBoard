@@ -449,6 +449,7 @@ public class BoardAssembly : MonoBehaviour {
             }
         if (readyCount == GameState.Instance.playerCount)
         {
+            TimeManager.Instance.gameObject.SetActive(true);
             TimeManager.Instance.startTimer();
             UIManager.Instance.Draw();
         }
