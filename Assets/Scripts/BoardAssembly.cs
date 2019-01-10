@@ -451,7 +451,7 @@ public class BoardAssembly : MonoBehaviour {
         {
             TimeManager.Instance.gameObject.SetActive(true);
             TimeManager.Instance.startTimer();
-            UIManager.Instance.Draw();
+            UIManager.Instance.PrivatePlayer();
         }
         
     }
