@@ -2876,11 +2876,11 @@ public class Place : MonoBehaviour
     }
     void btnManipulationRight()
     {
-        btnBack.gameObject.SetActive(false);
+        btnBack.interactable = false;
         localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]+1 );
         if (firstMovementManipulation && GameState.Instance.board[GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]] == 0)
         {
-            btnBack.gameObject.SetActive(false);
+            btnBack.interactable = false;
             firstMovementManipulation = false;
             MovementManipulation(manipulatedPlayer);
         }
@@ -2895,11 +2895,11 @@ public class Place : MonoBehaviour
     }
     void btnManipulationDown()
     {
-        btnBack.gameObject.SetActive(false);
+        btnBack.interactable = false;
         localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0] + 1, GameState.Instance.currentPlace[manipulatedPlayer][1] );
         if (firstMovementManipulation && GameState.Instance.board[GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]] == 0)
         {
-            btnBack.gameObject.SetActive(false);
+            btnBack.interactable = false;
             firstMovementManipulation = false;
             MovementManipulation(manipulatedPlayer);
         }
@@ -2914,11 +2914,11 @@ public class Place : MonoBehaviour
     }
     void btnManipulationLeft()
     {
-        btnBack.gameObject.SetActive(false);
+        btnBack.interactable = false;
         localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1] - 1 );
         if (firstMovementManipulation && GameState.Instance.board[GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]] == 0)
         {
-            btnBack.gameObject.SetActive(false);
+            btnBack.interactable = false;
             firstMovementManipulation = false;
             MovementManipulation(manipulatedPlayer);
         }
@@ -2936,7 +2936,7 @@ public class Place : MonoBehaviour
         localPlayer.SetLastAction(GameState.Instance.currentTurn, "Manipulation");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 10));
         localPlayer.SetIsMovementManipulated(manipulatedPlayer, true);
-        btnBack.gameObject.SetActive(false);
+        btnBack.interactable = false;
         firstMovementManipulation = false;
         MovementManipulationDialogue();
     }
@@ -3074,8 +3074,8 @@ public class Place : MonoBehaviour
     #region Big Trap
     void btnBigTrapClick()
     {
-        btnBack.gameObject.SetActive(true);
-        
+        btnBack.interactable = true;
+
         playerButtons();
         btnOne.onClick.AddListener(btnPlayerOneClickBigTrap);
         btnTwo.onClick.AddListener(btnPlayerTwoClickBigTrap);
