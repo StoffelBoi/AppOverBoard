@@ -142,15 +142,16 @@ public class MyNetManager : NetworkManager
             NetworkServer.ClearLocalObjects();
             NetworkServer.ClearSpawners();
             MyNetDiscovery.StopBroadcast();
-            
         }
         if (isClient)
         {
             StopHost();
             StopClient();
             MyNetDiscovery.StopBroadcast();
+            
         }
         StopAllCoroutines();
+        NetworkTransport.Shutdown();
         NetworkServer.Reset();
         isServer = false;
         isClient = false;
