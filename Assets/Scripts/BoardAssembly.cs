@@ -214,7 +214,7 @@ public class BoardAssembly : MonoBehaviour {
     IEnumerator FillBoard()
     {
         
-        Debug.Log("FillBoard");
+
         setImage(tile1_1, 0, 0);
         tile1_1.gameObject.GetComponent<Animator>().SetTrigger("Turning");
         yield return new WaitForSeconds(0.001f);

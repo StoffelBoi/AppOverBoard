@@ -61,11 +61,9 @@ public class ImageRandomizer : MonoBehaviour
     private int xBorder;
     private int yBorder;
     public static System.Random rn = new System.Random();
-    private bool start;
     // Use this for initialization
     void Start()
     {
-        start = true;
         switch (aspectX)
         {
             case 2:

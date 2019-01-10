@@ -5,167 +5,126 @@ using UnityEngine.UI;
 
 public class PrivatePlayer : MonoBehaviour {
 
-    public Text txt_char;
-    public Text txt_villainPlain;
-    public Text txt_villain;
-    public Text txt_TargetPlain;
-    public Text txt_target;
-    public Text txt_TimePlain;
-    public Text txt_time;
-    public Text txt_money;
-    public Text txt_solved;
-    public Text txt_unsolved;
-    public Text txt_items;
-    public Text txt_playerFact;
-    public Text txt_roleFact;
-    public Text txt_placeFact;
+    public Text txtFacts;
+    public Text txtChar;
+    public Text txtTime;
+    public Text txtMoney;
+    public Text txtSolved;
+    public Text txtUnsolved;
+    public Image imgChar;
 
     public Button btnTurn;
     public Text btnTurnText;
-    public Button btnRules;
+    public Button btnMenu;
     public Button btnGuess;
+    public Button btnItems;
+
+    public Sprite mcay;
+    public Sprite fields;
+    public Sprite cooper;
+    public Sprite osswald;
+    public Sprite larsen;
+    public Sprite edmond;
 
     private Player player;
     public int playerID;
     private string character;
-    private string villainRole = "";
-    private string target = "";
-    private int targetTime = -1;
-    /*rivate int money;
-    private int solved;
-    private int unsolved;
-    private List<string> items;
-    private string playerFact;
-    private string roleFact;
-    private string placeFact;
-    public int trueSolved;
-    public int trueUnsolved;
-
-    private List<int> knownFacts;
-
-    public bool timeWindowThief = false; //boolean fuer Meisterdieb ob er sein objektiv ausfuehren kann
-    public bool timeWindowCultist = false; //boolean fuer Kultist ob er sein objektiv ausfuehren kann*/
-
+    private string villain;
     void OnEnable()
     {
-        btnRules.onClick.RemoveAllListeners();
-        btnRules.onClick.AddListener(btnToRules);
+        txtFacts.fontSize = 69;
+        btnMenu.onClick.RemoveAllListeners();
+        btnMenu.onClick.AddListener(btnToMenu);
         btnGuess.onClick.RemoveAllListeners();
         btnGuess.onClick.AddListener(btnToGuess);
-        txt_villainPlain.enabled = false;
-        txt_villain.enabled = false;
-        txt_TargetPlain.enabled = false;
-        txt_target.enabled = false;
+
         player = GameState.Instance.localPlayer.GetComponent<Player>();
-
         playerID = player.id;
-        character = GameState.Instance.roles[playerID];
 
+        character = GameState.Instance.roles[playerID];
+        villain = GameState.Instance.criminalRole;
+        Sprite portrait=mcay;
+        string name = "";
         switch (character)
         {
             case "Doctor":
-                txt_char.text = "Moe McKay";
+                portrait = mcay;
+                name+= "Dr.Moe McKay\nDoktor";
                 break;
             case "Police":
-                txt_char.text = "Felicity Fields";
+                portrait = fields;
+                name += "Felicity Fields\nPolizistin";
                 break;
             case "Detective":
-                txt_char.text = "Collin Cooper";
+                portrait = cooper;
+                name += "Collin Cooper\nDetektiv";
                 break;
             case "Psychic":
-                txt_char.text = "Olivia Osswald";
+                portrait = osswald;
+                name += "Olivia Osswald\nWahrsagerin";
                 break;
             case "Psychologist":
-                txt_char.text = "Laura Larsen";
+                portrait = larsen;
+                name += "Laura Larsen\nPsychologin";
                 break;
             case "Reporter":
-                txt_char.text = "Eric Edmond";
+                portrait = edmond;
+                name += "Eric Edmond\nReporter";
                 break;
         }
         
 
-        txt_money.text = GameState.Instance.money[playerID].ToString();
-
-        txt_solved.text = GameState.Instance.solvedHints[playerID].ToString();
-
-        txt_unsolved.text = GameState.Instance.unsolvedHints[playerID].ToString();
-
-        txt_placeFact.text = GameState.Instance.placeFact[playerID];
-        txt_playerFact.text = GameState.Instance.playerFact[playerID];
-        txt_roleFact.text = GameState.Instance.roleFact[playerID];
-
         
+
+        string infos = "";
+        infos +=
+            "Fakten:\n\nPerson:\t"+ GameState.Instance.placeFact[playerID] +
+            "\n\nVerbrecher:\t"+ GameState.Instance.playerFact[playerID]+
+            "\n\nZielort:\t"+ GameState.Instance.roleFact[playerID];
 
         if (GameState.Instance.criminal == character)
         {
+            txtFacts.fontSize = 53;
             btnGuess.interactable = false;
-            
-
-            txt_villainPlain.enabled = true;
-            txt_villain.enabled = true;
-            txt_TargetPlain.enabled = true;
-            txt_target.enabled = true;
-            
-
-            txt_villain.text = GameState.Instance.criminalRole;
-
-            switch (GameState.Instance.targetPlace)
+            name += "\n" + villain;
+            infos = "Nicht aktivierte Zielorte:\n\n";
+            for (int i = 0; i<3-GameState.Instance.activatedQuestPlaces; i++)
             {
-                case 1:
-                    target = "Stadtplatz";
-                    break;
-                case 2:
-                    target = "Park";
-                    break;
-                case 4:
-                    target = "Bank";
-                    break;
-                case 5:
-                    target = "Parlament";
-                    break;
-                case 6:
-                    target = "Friedhof";
-                    break;
-                case 7:
-                    target = "Gefängnis";
-                    break;
-                case 8:
-                    target = "Kasino";
-                    break;
-                case 12:
-                    target = "Shopping Center";
-                    break;
+                infos += (i+1)+". Zielort:" + translatePlace(GameState.Instance.questPlaces[i]) + "\n\n";
             }
-
-            txt_target.text = target;
-
-            switch (villainRole)
-            {
-                case "Inferno":
-                    targetTime = 50;
-                    break;
-                case "Dr.Mortifier":
-                    targetTime = 10;
-                    break;
-                case "Phantom":
-                    targetTime = 20;
-                    break;
-                case "Fasculto":
-                    targetTime = 40;
-                    break;
-            }
-
-            //InvokeRepeating("UpdateTime", 60, 60);
-            //txt_time.text = targetTime.ToString();
+            infos += "Verbrechensort:" + translatePlace(GameState.Instance.targetPlace);
         }
-
+        string money = "";
+        string solveds = "";
+        string unsolveds = "";
+        if (GameState.Instance.money[playerID]<10)
+        {
+            money += "0";
+        }
+        if (GameState.Instance.solvedHints[playerID] < 10)
+        {
+            solveds += "0";
+        }
+        if (GameState.Instance.unsolvedHints[playerID] < 10)
+        {
+            unsolveds += "0";
+        }
+        money += GameState.Instance.money[playerID];
+        solveds += GameState.Instance.solvedHints[playerID];
+        unsolveds += GameState.Instance.unsolvedHints[playerID].ToString();
+        txtMoney.text = money;
+        txtSolved.text = solveds;
+        txtUnsolved.text = unsolveds;
+        txtFacts.text = infos;
+        txtChar.text = name;
+        imgChar.sprite = portrait;
     }
     void btnToGuess()
     {
         GameState.Instance.localPlayer.GetComponent<Player>().SetIsGuessing(GameState.Instance.localPlayer.GetComponent<Player>().id, true);
         UIManager.Instance.Place();
     }
-    void btnToRules()
+    void btnToMenu()
     {
         UIManager.Instance.Rules();
     }
@@ -204,7 +163,7 @@ public class PrivatePlayer : MonoBehaviour {
         }
         if (isActiveAndEnabled)
         {
-            txt_time.text = GameState.Instance.elapsedTime;
+            txtTime.text = GameState.Instance.elapsedTime;
         }
     }
 
@@ -218,184 +177,84 @@ public class PrivatePlayer : MonoBehaviour {
         UIManager.Instance.Movement();
     }
 
-    /*public void UpdateTime()
+    string translatePlace(int place)
     {
-        targetTime--;
-        txt_time.text = targetTime.ToString();
-    
-        if(targetTime == 0 && villainRole == "Inferno")
-        {
-            //umleitung zu unentschieden screen
-        }
-
-        else if(villainRole == "Dr.Mortifier")
-        {
-            if(GameState.Instance.planted)
-            {
-                if(targetTime == 0)
-                {
-                    //umleitung zu unentschieden
-                }
-            }
-            else
-            {
-                targetTime++;
-            }
-        }
-
-        else if(villainRole == "Phantom")
-        { 
-            if(targetTime == 0 && !timeWindowThief)
-            {
-                targetTime = 5;
-                timeWindowThief = true;
-            }
-
-            else if(targetTime == 0 && timeWindowThief)
-            {
-                targetTime = 20;
-                timeWindowThief = false;
-            }
-        }
-
-        else if(villainRole == "Fasculto")
-        {
-            if(targetTime == 0 && !timeWindowCultist)
-            {
-                timeWindowCultist = true;
-                targetTime = 20;
-            }
-            else if(targetTime == 0 && timeWindowCultist)
-            {
-                //umleitung zu unentschieden
-            }
-        }
-    }
-
-    //Methode zu updaten des Geldes schickt Geld dass hinzugefuegt wird (bzw negativer Wert wenn Geld abgezogen wird
-    public void UpdateMoney(int money)
-    {
-        this.money += money;
-        txt_money.text = this.money.ToString();
-    }
-
-    public void UpdateSolved(int amount)
-    {
-        solved += amount;
-        txt_solved.text = solved.ToString();
-    } 
-
-    public void UpdateUnsolved(int amount)
-    {
-        unsolved += amount;
-        txt_unsolved.text = unsolved.ToString();
-    }
-
-    public void UpdateTrueSolved(int amount)
-    {
-        System.Random rn = new System.Random();
-
-        for(int i = 0; i < amount; i++)
-        {
-            trueSolved += 1;
-            if(trueSolved % 3 == 0)
-            {
-                int next = rn.Next(1, 4);
-
-                while(knownFacts.Contains(next))
-                {
-                    next = rn.Next(1, 4);
-                }
-
-                switch(next)
-                {
-                    case 1:
-                        UpdatePlayerFact();
-                        knownFacts.Add(next);
-                        break;
-                    case 2:
-                        UpdateRoleFact();
-                        knownFacts.Add(next);
-                        break;
-                    case 3:
-                        UpdatePlaceFact();
-                        knownFacts.Add(next);
-                        break;
-                }
-            }
-        }
-    }
-
-    public void UpdateTrueUnsolved(int amount)
-    {
-        trueUnsolved += amount;
-    }
-
-    public void AddItem(string itemToAdd)
-    {
-        items.Add(itemToAdd);
-
-        foreach(string item in items)
-        {
-            txt_items.text += item;
-            txt_items.text += "\n"; 
-        }
-    }
-
-    public void RemoveItem(string itemToRemove)
-    {
-        items.Remove(itemToRemove);
-
-        foreach (string item in items)
-        {
-            txt_items.text += item;
-            txt_items.text += "\n";
-        }
-    }
-
-    private void UpdatePlayerFact()
-    {
-        playerFact = GameState.Instance.criminal;
-        txt_playerFact.text = playerFact;
-    }
-
-    private void UpdateRoleFact()
-    {
-        roleFact = GameState.Instance.criminalRole;
-        txt_roleFact.text = roleFact;
-    }
-
-    private void UpdatePlaceFact()
-    {
-        switch (GameState.Instance.targetPlace)
+        string s = "Straße";
+        switch (place)
         {
             case 1:
-                placeFact = "Stadtplatz";
+                s = "Stadtplatz";
+
                 break;
             case 2:
-                placeFact = "Park";
+                s = "Park";
+
+                break;
+            case 3:
+                s = "Krankenhaus";
+
                 break;
             case 4:
-                placeFact = "Bank";
+                s = "Bank";
+
                 break;
             case 5:
-                placeFact = "Parlament";
+                s = "Parlament";
+
                 break;
             case 6:
-                placeFact = "Friedhof";
+                s = "Friedhof";
+
                 break;
             case 7:
-                placeFact = "Gefängnis";
+                s = "Gefängnis";
+
                 break;
             case 8:
-                placeFact = "Kasino";
+                s = "Kasino";
+
+                break;
+            case 9:
+                s = "Internet Cafe";
+
+                break;
+            case 10:
+                s = "Bahnhof";
+
+                break;
+            case 11:
+                s = "Armee Laden";
+
                 break;
             case 12:
-                placeFact = "Shopping Center";
+                s = "Shopping Center";
+
+                break;
+            case 13:
+                s = "Schrottplatz";
+
+                break;
+            case 14:
+                s = "Bibliothek";
+
+                break;
+            case 15:
+                s = "Labor";
+
+                break;
+            case 16:
+                s = "Italiener";
+
+                break;
+            case 17:
+                s = "Hafen";
+
+                break;
+            case 18:
+                s = "Bar";
+
                 break;
         }
-
-        txt_placeFact.text = placeFact;
+        return s;
     }
-	*/
 }

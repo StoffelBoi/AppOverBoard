@@ -30,6 +30,27 @@ public class Place : MonoBehaviour
     public Sprite harbor;
     public Sprite bar;
 
+    public Sprite mckay;
+    public Sprite fields;
+    public Sprite cooper;
+    public Sprite osswald;
+    public Sprite edmond;
+    public Sprite larson;
+
+    public Sprite twoByFour;
+    public Sprite twoByFive;
+    public Sprite twoBySeven;
+    public Sprite twoByNine;
+    public Sprite threeByFour;
+    public Sprite threeByFive;
+    public Sprite threeBySeven;
+    public Sprite fourByThree;
+    public Sprite fourByThree_Border;
+    public Sprite fourByFive;
+    public Sprite fourBySeven;
+
+
+
     public Button btnOne;
     public Button btnTwo;
     public Button btnThree;
@@ -50,6 +71,32 @@ public class Place : MonoBehaviour
     public Text btnSixText;
     public Text btnSevenText;
     public Text btnEightText;
+
+    public Image btnOneMask;
+    public Image btnOneImage;
+    public Image btnOneBorder;
+    public Image btnTwoMask;
+    public Image btnTwoImage;
+    public Image btnTwoBorder;
+    public Image btnThreeMask;
+    public Image btnThreeImage;
+    public Image btnThreeBorder;
+    public Image btnFourMask;
+    public Image btnFourImage;
+    public Image btnFourBorder;
+    public Image btnFiveMask;
+    public Image btnFiveImage;
+    public Image btnFiveBorder;
+    public Image btnSixMask;
+    public Image btnSixImage;
+    public Image btnSixBorder;
+    public Image btnSevenMask;
+    public Image btnSevenImage;
+    public Image btnSevenBorder;
+    public Image btnEightMask;
+    public Image btnEightImage;
+    public Image btnEightBorder;
+
 
     private int currentBet;
     private int currentPlace;
@@ -89,7 +136,7 @@ public class Place : MonoBehaviour
         dialogueText.gameObject.SetActive(false);
         dialoguePanel.gameObject.SetActive(false);
 
-        btnBack.gameObject.SetActive(false);
+        btnBack.interactable = false;
         btnBack.onClick.RemoveAllListeners();
         btnBack.onClick.AddListener(btnGoBack);
         btnInfo.gameObject.SetActive(true);
@@ -799,7 +846,7 @@ public class Place : MonoBehaviour
     void setDialogue(string newDialogue)
     {
         btnInfo.gameObject.SetActive(false);
-        btnBack.gameObject.SetActive(false);
+        btnBack.interactable = false;
         oneButton();
         btnOneText.text = "Weiter";
         btnOne.onClick.AddListener(stopTypeWriter);
@@ -808,7 +855,7 @@ public class Place : MonoBehaviour
         dialoguePanel.gameObject.SetActive(true);
         dialogueText.gameObject.SetActive(true);
         dialogueText.text = currentDialogue;
-        dialogueText.fontSize = 60;
+        dialogueText.fontSize = 49;
 
         if (newDialogue.Length <= 130)
         {
@@ -826,7 +873,7 @@ public class Place : MonoBehaviour
                 {
                     if (char.IsWhiteSpace(c))
                     {
-                        if (currentString.Length + currentWord.Length > 120)
+                        if (currentString.Length + currentWord.Length > 130)
                         {
                             currentDialogue = currentString;
                             firstLine = false;
@@ -907,7 +954,7 @@ public class Place : MonoBehaviour
     #region Use Item
     void btnUseItemClick()
     {
-        btnBack.gameObject.SetActive(true);
+        btnBack.interactable = true;
         int trainersCount = 0;
         int FingerprintKitCount = 0;
         int EnergyDrinkCount = 0;
@@ -1066,7 +1113,7 @@ public class Place : MonoBehaviour
     #region Small Trap
     void btnSmallTrapClick()
     {
-        btnBack.gameObject.SetActive(true);
+        btnBack.interactable = true;
         int bombCount = 0;
         int petriDishCount = 0;
         int stoleGoodsCount = 0;
@@ -1189,7 +1236,7 @@ public class Place : MonoBehaviour
                 calibrateFascultoTrap();
                 break;
         }
-        btnBack.gameObject.SetActive(false);
+        btnBack.interactable = true;
     }
     void delayTrapMenu()
     {
@@ -1455,7 +1502,7 @@ public class Place : MonoBehaviour
 
     void btnPlaceOptionClick()
     {
-        btnBack.gameObject.SetActive(true);
+        btnBack.interactable = true;
         switch (currentPlace)
         {
             case 1:
@@ -2468,10 +2515,10 @@ public class Place : MonoBehaviour
     void italienrestaurantAction()
     {
         fourButtons();
-        btnOneText.text = "1 Geld";
-        btnTwoText.text = "2 Geld";
-        btnThreeText.text = "3 Geld";
-        btnFourText.text = "4 Geld";
+        btnOneText.text = "1$";
+        btnTwoText.text = "2$";
+        btnThreeText.text = "3$";
+        btnFourText.text = "4$";
         btnOne.onClick.AddListener(btnItalienTwentyPercentChance);
         btnTwo.onClick.AddListener(btnItalienThirtyPercentChance);
         btnThree.onClick.AddListener(btnItalienFiftyPercentChance);
@@ -2540,7 +2587,7 @@ public class Place : MonoBehaviour
     void harborAction()
     {
         twoButtons();
-        btnOneText.text = "Hinweis - 3 Geld";
+        btnOneText.text = "Hinweis - 3$";
         btnTwoText.text = "fremde Falle kaufen";
         btnOne.onClick.AddListener(btnHarborHint);
         btnTwo.onClick.AddListener(btnBuyTrap);
@@ -2653,7 +2700,7 @@ public class Place : MonoBehaviour
     #region manipulation
     void btnManipulationClick()
     {
-        btnBack.gameObject.SetActive(true);
+        btnBack.interactable = true;
         addTrueHint();
         twoButtons();
         btnOneText.text = "Bewegung";
@@ -2810,11 +2857,11 @@ public class Place : MonoBehaviour
 
     void btnManipulationUp()
     {
-        btnBack.gameObject.SetActive(false);
+        btnBack.interactable = false;
         localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0]-1, GameState.Instance.currentPlace[manipulatedPlayer][1] );
         if (firstMovementManipulation && GameState.Instance.board[GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]] == 0)
         {
-            btnBack.gameObject.SetActive(false);
+            btnBack.interactable = false;
             firstMovementManipulation = false;
             MovementManipulation(manipulatedPlayer);
         }
@@ -3119,9 +3166,9 @@ public class Place : MonoBehaviour
     {
         disableButtons();
         btnOne.gameObject.SetActive(true);
-        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 1000);
-        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -400);
-
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(565, 450);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1.5f, -233f);
+        btnOne.GetComponent<Image>().sprite = fourByFive;
         btnOneText.fontSize = 180;
         btnOne.interactable = true;
     }
@@ -3131,11 +3178,13 @@ public class Place : MonoBehaviour
         btnOne.gameObject.SetActive(true);
         btnTwo.gameObject.SetActive(true);
 
-        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 475);
-        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -138);
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(799, 450);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(-118.5f, 0);
+        btnOne.GetComponent<Image>().sprite = fourBySeven;
 
-        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 475);
-        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -663);
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(799, 450);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(116.5f, -468);
+        btnOne.GetComponent<Image>().sprite = fourBySeven;
 
         btnOneText.fontSize = 150;
         btnTwoText.fontSize = 150;
@@ -3151,14 +3200,17 @@ public class Place : MonoBehaviour
         btnTwo.gameObject.SetActive(true);
         btnThree.gameObject.SetActive(true);
 
-        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 300);
-        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -50);
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(800, 333);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(-118, 58.5f);
+        btnOne.GetComponent<Image>().sprite = threeBySeven;
 
-        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 300);
-        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -400);
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(1034, 214);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1, -233);
+        btnTwo.GetComponent<Image>().sprite = twoByNine;
 
-        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 300);
-        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -750);
+        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(800, 333);
+        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(115, -526.5f);
+        btnThree.GetComponent<Image>().sprite = threeBySeven;
 
         btnOneText.fontSize = 130;
         btnTwoText.fontSize = 130;
@@ -3177,17 +3229,21 @@ public class Place : MonoBehaviour
         btnThree.gameObject.SetActive(true);
         btnFour.gameObject.SetActive(true);
 
-        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 213);
-        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -6);
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(800, 215);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(-118, 118.5f);
+        btnOne.GetComponent<Image>().sprite = twoBySeven;
 
-        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 213);
-        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -269);
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(800, 215);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(117, -115.5f);
+        btnTwo.GetComponent<Image>().sprite = twoBySeven;
 
-        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 213);
-        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -531);
+        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(800, 215);
+        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(-118, -351.5f);
+        btnThree.GetComponent<Image>().sprite = twoBySeven;
 
-        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(1000, 213);
-        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -793);
+        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(800, 215);
+        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(117, -584.5f);
+        btnFour.GetComponent<Image>().sprite = twoBySeven;
 
         btnOneText.fontSize = 100;
         btnTwoText.fontSize = 100;
@@ -3209,20 +3265,25 @@ public class Place : MonoBehaviour
         btnFour.gameObject.SetActive(true);
         btnFive.gameObject.SetActive(true);
 
-        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
-        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -50);
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(566, 333);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(-235, 58.5f);
+        btnOne.GetComponent<Image>().sprite = threeByFive;
 
-        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
-        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(350, -400);
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(449, 333);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(290.5f, 58.5f);
+        btnTwo.GetComponent<Image>().sprite = threeByFour;
 
-        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
-        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(-0, -750);
+        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(1034, 214);
+        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1, -233);
+        btnThree.GetComponent<Image>().sprite = twoByNine;
 
-        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
-        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(-350, -400);
+        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(449, 333);
+        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(-293.5f, -525.5f);
+        btnFour.GetComponent<Image>().sprite = threeByFour;
 
-        btnFive.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 300);
-        btnFive.GetComponent<RectTransform>().anchoredPosition = new Vector2(-0, -400);
+        btnFive.GetComponent<RectTransform>().sizeDelta = new Vector2(566, 333);
+        btnFive.GetComponent<RectTransform>().anchoredPosition = new Vector2(233, -525.5f);
+        btnFive.GetComponent<Image>().sprite = threeByFive;
 
         btnOneText.fontSize = 60;
         btnTwoText.fontSize = 60;
@@ -3248,23 +3309,29 @@ public class Place : MonoBehaviour
         btnFive.gameObject.SetActive(true);
         btnSix.gameObject.SetActive(true);
 
-        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 300);
-        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -50);
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(566, 333);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(-235, 58.5f);
+        btnOne.GetComponent<Image>().sprite = threeByFive;
 
-        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 300);
-        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -50);
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(449, 333);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(290.5f, 58.5f);
+        btnTwo.GetComponent<Image>().sprite = threeByFour;
 
-        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 300);
-        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -400);
+        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(449, 215);
+        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(-293.5f, -233);
+        btnThree.GetComponent<Image>().sprite = twoByFour;
 
-        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 300);
-        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -400);
+        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(566, 215);
+        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(233, -233);
+        btnFour.GetComponent<Image>().sprite = twoByFive;
 
-        btnFive.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 300);
-        btnFive.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -750);
+        btnFive.GetComponent<RectTransform>().sizeDelta = new Vector2(566, 333);
+        btnFive.GetComponent<RectTransform>().anchoredPosition = new Vector2(-235, -525.5f);
+        btnFive.GetComponent<Image>().sprite = threeByFive;
 
-        btnSix.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 300);
-        btnSix.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -750);
+        btnSix.GetComponent<RectTransform>().sizeDelta = new Vector2(449, 333);
+        btnSix.GetComponent<RectTransform>().anchoredPosition = new Vector2(290.5f, -525.5f);
+        btnSix.GetComponent<Image>().sprite = threeByFour;
 
         btnOneText.fontSize = 75;
         btnTwoText.fontSize = 75;
@@ -3293,29 +3360,37 @@ public class Place : MonoBehaviour
         btnSeven.gameObject.SetActive(true);
         btnEight.gameObject.SetActive(true);
 
-        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
-        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -6);
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(566, 217);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(-235, 116.5f);
+        btnOne.GetComponent<Image>().sprite = twoByFive;
 
-        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
-        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -6);
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(448, 217);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(290.5f, 116.5f);
+        btnTwo.GetComponent<Image>().sprite = twoByFour;
 
-        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
-        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -269);
+        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(448, 217);
+        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(-294, -117.5f);
+        btnThree.GetComponent<Image>().sprite = twoByFour;
 
-        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
-        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -269);
+        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(566, 217);
+        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(233, -117.5f);
+        btnFour.GetComponent<Image>().sprite = twoByFive;
 
-        btnFive.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
-        btnFive.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -531);
+        btnFive.GetComponent<RectTransform>().sizeDelta = new Vector2(566, 217);
+        btnFive.GetComponent<RectTransform>().anchoredPosition = new Vector2(-235, -351.5f);
+        btnFive.GetComponent<Image>().sprite = twoByFive;
 
-        btnSix.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
-        btnSix.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -531);
+        btnSix.GetComponent<RectTransform>().sizeDelta = new Vector2(448, 217);
+        btnSix.GetComponent<RectTransform>().anchoredPosition = new Vector2(290.5f, -351.5f);
+        btnSix.GetComponent<Image>().sprite = twoByFour;
 
-        btnSeven.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
-        btnSeven.GetComponent<RectTransform>().anchoredPosition = new Vector2(-263, -794);
+        btnSeven.GetComponent<RectTransform>().sizeDelta = new Vector2(448, 217);
+        btnSeven.GetComponent<RectTransform>().anchoredPosition = new Vector2(-294, -585.5f);
+        btnSeven.GetComponent<Image>().sprite = twoByFour;
 
-        btnEight.GetComponent<RectTransform>().sizeDelta = new Vector2(475, 213);
-        btnEight.GetComponent<RectTransform>().anchoredPosition = new Vector2(263, -794);
+        btnEight.GetComponent<RectTransform>().sizeDelta = new Vector2(566, 217);
+        btnEight.GetComponent<RectTransform>().anchoredPosition = new Vector2(233, -585.5f);
+        btnEight.GetComponent<Image>().sprite = twoByFive;
 
         btnOneText.fontSize = 65;
         btnTwoText.fontSize = 65;
@@ -3375,59 +3450,291 @@ public class Place : MonoBehaviour
         btnSeven.gameObject.SetActive(false);
         btnEight.gameObject.SetActive(false);
 
+        btnOneImage.color = new Color(255,255,255,255);
+        btnTwoImage.color = new Color(255, 255, 255, 255);
+        btnThreeImage.color = new Color(255, 255, 255, 255);
+        btnFourImage.color = new Color(255, 255, 255, 255);
+        btnFiveImage.color = new Color(255, 255, 255, 255);
+        btnSixImage.color = new Color(255, 255, 255, 255);
+
+        btnOneMask.gameObject.SetActive(false);
+        btnOneImage.gameObject.SetActive(false);
+        btnOneBorder.gameObject.SetActive(false);
+        btnTwoMask.gameObject.SetActive(false);
+        btnTwoImage.gameObject.SetActive(false);
+        btnTwoBorder.gameObject.SetActive(false);
+        btnThreeMask.gameObject.SetActive(false);
+        btnThreeImage.gameObject.SetActive(false);
+        btnThreeBorder.gameObject.SetActive(false);
+        btnFourMask.gameObject.SetActive(false);
+        btnFourImage.gameObject.SetActive(false);
+        btnFourBorder.gameObject.SetActive(false);
+        btnFiveMask.gameObject.SetActive(false);
+        btnFiveImage.gameObject.SetActive(false);
+        btnFiveBorder.gameObject.SetActive(false);
+        btnSixMask.gameObject.SetActive(false);
+        btnSixImage.gameObject.SetActive(false);
+        btnSixBorder.gameObject.SetActive(false);
+        btnSevenMask.gameObject.SetActive(false);
+        btnSevenImage.gameObject.SetActive(false);
+        btnSevenBorder.gameObject.SetActive(false);
+        btnEightMask.gameObject.SetActive(false);
+        btnEightImage.gameObject.SetActive(false);
+        btnEightBorder.gameObject.SetActive(false);
+
+        btnOne.targetGraphic = btnOne.GetComponent<Image>();
+        btnTwo.targetGraphic = btnTwo.GetComponent<Image>();
+        btnThree.targetGraphic = btnThree.GetComponent<Image>();
+        btnFour.targetGraphic = btnFour.GetComponent<Image>();
+        btnFive.targetGraphic = btnFive.GetComponent<Image>();
+        btnSix.targetGraphic = btnSix.GetComponent<Image>();
+
         actionsTextField.gameObject.SetActive(false);
     }
     void playerButtons()
     {
         sixButtons();
 
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(-351.5f, 1.5f);
+        btnOne.GetComponent<Image>().sprite = fourByThree;
+
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(-0.5f, 1.5f);
+        btnTwo.GetComponent<Image>().sprite = fourByThree;
+
+        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(349.5f, 1.5f);
+        btnThree.GetComponent<Image>().sprite = fourByThree;
+
+        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(-351.5f, -466.5f);
+        btnFour.GetComponent<Image>().sprite = fourByThree;
+
+        btnFive.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnFive.GetComponent<RectTransform>().anchoredPosition = new Vector2(-0.5f, -466.5f);
+        btnFive.GetComponent<Image>().sprite = fourByThree;
+
+        btnSix.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnSix.GetComponent<RectTransform>().anchoredPosition = new Vector2(349.5f, -466.5f);
+        btnSix.GetComponent<Image>().sprite = fourByThree;
+
+        btnOne.targetGraphic = btnOneImage;
+        btnTwo.targetGraphic = btnTwoImage;
+        btnThree.targetGraphic = btnThreeImage;
+        btnFour.targetGraphic = btnFourImage;
+        btnFive.targetGraphic = btnFiveImage;
+        btnSix.targetGraphic = btnSixImage;
+
         btnFour.interactable = false;
         btnFive.interactable = false;
         btnSix.interactable = false;
-
-        btnOneText.text = translateName(0);
-        btnTwoText.text = translateName(1);
-        btnThreeText.text = translateName(2);
-        btnFourText.text = "nicht verfügbar";
-        btnFiveText.text = "nicht verfügbar";
-        btnSixText.text = "nicht verfügbar";
+        btnFourImage.color = new Color(0, 0, 0, 255);
+        btnFiveImage.color = new Color(0, 0, 0, 255);
+        btnSixImage.color = new Color(0, 0, 0, 255);
 
 
-        switch (GameState.Instance.playerCount)
-        {
-            case 4:
-                btnFour.interactable = true;
+        btnOneText.text = "";
+        btnTwoText.text = "";
+        btnThreeText.text = "";
+        btnFourText.text = "";
+        btnFiveText.text = "";
+        btnSixText.text = "";
 
-                btnFourText.text = translateName(3);
+        btnOneMask.gameObject.SetActive(true);
+        btnOneImage.gameObject.SetActive(true);
+        btnOneBorder.gameObject.SetActive(true);
+        btnTwoMask.gameObject.SetActive(true);
+        btnTwoImage.gameObject.SetActive(true);
+        btnTwoBorder.gameObject.SetActive(true);
+        btnThreeMask.gameObject.SetActive(true);
+        btnThreeImage.gameObject.SetActive(true);
+        btnThreeBorder.gameObject.SetActive(true);
+        btnFourMask.gameObject.SetActive(true);
+        btnFourImage.gameObject.SetActive(true);
+        btnFourBorder.gameObject.SetActive(true);
+        btnFiveMask.gameObject.SetActive(true);
+        btnFiveImage.gameObject.SetActive(true);
+        btnFiveBorder.gameObject.SetActive(true);
+        btnSixMask.gameObject.SetActive(true);
+        btnSixImage.gameObject.SetActive(true);
+        btnSixBorder.gameObject.SetActive(true);
+   
+        btnOneMask.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnOneMask.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        btnOneMask.sprite = fourByThree;
 
-                break;
-            case 5:
-                btnFour.interactable = true;
-                btnFive.interactable = true;
+        btnTwoMask.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnTwoMask.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        btnTwoMask.sprite = fourByThree;
+
+        btnThreeMask.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnThreeMask.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        btnThreeMask.sprite = fourByThree;
+
+        btnFourMask.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnFourMask.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        btnFourMask.sprite = fourByThree;
+
+        btnFiveMask.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnFiveMask.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        btnFiveMask.sprite = fourByThree;
+
+        btnSixMask.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnSixMask.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        btnSixMask.sprite = fourByThree;
+
+        btnOneBorder.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnOneBorder.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        btnOneBorder.sprite = fourByThree_Border;
+
+        btnTwoBorder.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnTwoBorder.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        btnTwoBorder.sprite = fourByThree_Border;
+
+        btnThreeBorder.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnThreeBorder.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        btnThreeBorder.sprite = fourByThree_Border;
+
+        btnFourBorder.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnFourBorder.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        btnFourBorder.sprite = fourByThree_Border;
+
+        btnFiveBorder.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnFiveBorder.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        btnFiveBorder.sprite = fourByThree_Border;
+
+        btnSixBorder.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnSixBorder.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        btnSixBorder.sprite = fourByThree_Border;
+   btnOneImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
+   btnOneImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
+   btnOneImage.GetComponent<Image>().sprite = getPlayerPic(0);
+
+   btnTwoImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
+   btnTwoImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
+   btnTwoImage.GetComponent<Image>().sprite = getPlayerPic(1);
+
+   btnThreeImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
+   btnThreeImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
+   btnThreeImage.GetComponent<Image>().sprite = getPlayerPic(2);
+
+   btnFourImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
+   btnFourImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
+   btnFourImage.GetComponent<Image>().sprite = getPlayerPic(3);
+
+   btnFiveImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
+   btnFiveImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
+   btnFiveImage.GetComponent<Image>().sprite = getPlayerPic(4);
+
+   btnSixImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
+   btnSixImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
+   btnSixImage.GetComponent<Image>().sprite = getPlayerPic(5);
 
 
-                btnFourText.text = translateName(3);
-                btnFiveText.text = translateName(4);
-
-                break;
-            case 6:
-                btnFour.interactable = true;
-                btnFive.interactable = true;
-                btnSix.interactable = true;
-
-                btnFourText.text = translateName(3);
-                btnFiveText.text = translateName(4);
-                btnSixText.text = translateName(5);
-                break;
-        }
-
-
-
+   switch (GameState.Instance.playerCount)
+   {
+       case 4:
+           btnFour.interactable = true;
+           btnFourImage.color = new Color(255, 255, 255, 255);
+           break;
+       case 5:
+           btnFour.interactable = true;
+           btnFive.interactable = true;
+           btnFourImage.color = new Color(255, 255, 255, 255);
+           btnFiveImage.color = new Color(255, 255, 255, 255);
+           break;
+       case 6:
+           btnFour.interactable = true;
+           btnFive.interactable = true;
+           btnSix.interactable = true;
+           btnFourImage.color = new Color(255, 255, 255, 255);
+           btnFiveImage.color = new Color(255, 255, 255, 255);
+           btnSixImage.color = new Color(255, 255, 255, 255);
+           break;
+   }
     }
     #endregion
 
     #region Useful functions
-
+    Sprite getPlayerPic(int player)
+    {
+        Sprite s = mckay;
+        if (player < GameState.Instance.playerCount)
+        {
+            switch (GameState.Instance.roles[player])
+            {
+                case "Doctor":
+                    s = mckay;
+                    break;
+                case "Police":
+                    s = fields;
+                    break;
+                case "Detective":
+                    s = cooper;
+                    break;
+                case "Psychic":
+                    s = osswald;
+                    break;
+                case "Psychologist":
+                    s = larson;
+                    break;
+                case "Reporter":
+                    s = edmond;
+                    break;
+            }
+        }
+        else
+        {
+            List<string> leftOverPlayers = new List<string>();
+            if (!GameState.Instance.roles.Contains("Doctor"))
+            {
+                leftOverPlayers.Add("Doctor");
+            }
+            if (!GameState.Instance.roles.Contains("Police"))
+            {
+                leftOverPlayers.Add("Police");
+            }
+            if (!GameState.Instance.roles.Contains("Detective"))
+            {
+                leftOverPlayers.Add("Detective");
+            }
+            if (!GameState.Instance.roles.Contains("Psychic"))
+            {
+                leftOverPlayers.Add("Psychic");
+            }
+            if (!GameState.Instance.roles.Contains("Psychologist"))
+            {
+                leftOverPlayers.Add("Psychologist");
+            }
+            if (!GameState.Instance.roles.Contains("Reporter"))
+            {
+                leftOverPlayers.Add("Reporter");
+            }
+            switch (leftOverPlayers[player-GameState.Instance.playerCount])
+            {
+                case "Doctor":
+                    s = mckay;
+                    break;
+                case "Police":
+                    s = fields;
+                    break;
+                case "Detective":
+                    s = cooper;
+                    break;
+                case "Psychic":
+                    s = osswald;
+                    break;
+                case "Psychologist":
+                    s = larson;
+                    break;
+                case "Reporter":
+                    s = edmond;
+                    break;
+            }
+        }
+        return s;
+    }
     public bool calculateGetAway()
     {
         int distance = 0;
@@ -3710,7 +4017,7 @@ public class Place : MonoBehaviour
         switch (place)
         {
             case 1:
-                simpleDialogue("Du befindest dich am Hauptplatz, wie an den meisten Tagen herrscht reges Geschehen doch jeder scheint sich nur auf sich selbst zu konzentrieren.", 50);
+                simpleDialogue("Du befindest dich am Hauptplatz, wie an den meisten Tagen herrscht reges Geschehen doch jeder scheint sich nur auf sich selbst zu konzentrieren.", 45);
                 break;
             case 2:
                 simpleDialogue("Du befindest dich im Park, als du dich umsiehst siehst du nur ein altes Ehepaar welches die Enten füttert und ein paar Obdachlose die in einem Kreis um eine Mülltonne stehen.", 50);
@@ -3731,7 +4038,7 @@ public class Place : MonoBehaviour
                 simpleDialogue("Du befindest dich im Gefängnis, als du dich umsiehst siehst du ein Paar Häftlinge in orangenen Jumpsuits und geglegentlich eine Wache.", 50);
                 break;
             case 8:
-                simpleDialogue("Du befindest dich im Kasino, als du dich umsiehst siehst du einige Leute in Abendgardrobe, außerdem hörst du das klingen von Spielchips und deine Nase nimmt die vermischten Gerüchen von Perfume und Zigarren auf.", 50);
+                simpleDialogue("Du befindest dich im Kasino, als du dich umsiehst siehst du einige Leute in Abendgardrobe, außerdem hörst du das klingen und klirren von Spielchips und Sektflöten", 50);
                 break;
             case 9:
                 simpleDialogue("Du befindest dich im Internetcafe, um dich herum hörst du das klacken von Tastaturen und du siehst einen Typen der etwas auf seinem Laptop zu schreiben scheint.", 50);
@@ -3749,7 +4056,7 @@ public class Place : MonoBehaviour
                 simpleDialogue("Du befindest dich auf dem Schrottplatz, um dich herum siehst du alte verschrottete Autos und diverse andere altes Zeig welches so aussieht als würdes es schon seit Jahren hier herumliegen.", 50);
                 break;
             case 14:
-                simpleDialogue("Du befindest dich in der Bibliothek, du siehst nur ein Paar junge Mensche die so aussehen als würden sie Informationen, für eine Arbeit die sie schreiben müssen, suchen. Außerdem hört man ein gelegentliches \"Psst\" der Bibliothekarin.", 50);
+                simpleDialogue("Du befindest dich in der Bibliothek, du siehst nur ein Paar junge Studenten die in ihre Bücher vertieft sind, suchen. Gelegentlich hört man ein verärgertes \"Psst\".", 50);
                 break;
             case 15:
                 simpleDialogue("Du befindest dich im Labor, um dich herum ist der Geruch von Chemekalien und einige Leute in weißen Labormänteln.", 50);

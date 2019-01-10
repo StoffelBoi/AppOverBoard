@@ -220,9 +220,9 @@ public class RoleSelection : MonoBehaviour
     void initializingPlayer()
     {
         player.SetMoney(player.id, 6);
-        player.SetTrueUnsolveds(player.id, 6);
+        player.SetTrueUnsolveds(player.id, 0);
         player.SetTrueSolveds(player.id, 0);
-        player.SetUnsolvedHints(player.id, 6);
+        player.SetUnsolvedHints(player.id, 0);
         player.SetSolvedHints(player.id, 0);
         player.SetIsDisabled(player.id, 0);
         player.SetIsMovementManipulated(player.id, false);

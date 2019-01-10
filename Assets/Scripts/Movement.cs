@@ -11,21 +11,70 @@ public class Movement : MonoBehaviour {
     public Button btnDown;
     public Button btnLeft;
     public Button btnUp;
-    public Text txtStay;
-    public Text txtRight;
-    public Text txtDown;
-    public Text txtLeft;
-    public Text txtUp;
-    private bool firstMove;
-    public Image img;
-    public Sprite Doctor;
-    public Sprite Detective;
-    public Sprite Police;
-    public Sprite Psychic;
-    public Sprite Reporter;
-    public Sprite Psychologist;
 
     public Button btnInfo;
+
+    public Image imgChar;
+    public Image imgPlace;
+    public Image imgUp;
+    public Image imgRight;
+    public Image imgDown;
+    public Image imgLeft;
+    public Image imgStay;
+
+    public Sprite mckay;
+    public Sprite cooper;
+    public Sprite fields;
+    public Sprite osswald;
+    public Sprite edmond;
+    public Sprite larson;
+
+    public Sprite imgStreet;
+    public Sprite imgMainsquare;
+    public Sprite imgPark;
+    public Sprite imgHospital;
+    public Sprite imgBank;
+    public Sprite imgParliament;
+    public Sprite imgCemetary;
+    public Sprite imgPrison;
+    public Sprite imgCasino;
+    public Sprite imgInternetcafe;
+    public Sprite imgTrainstation;
+    public Sprite imgArmyshop;
+    public Sprite imgShoppingcenter;
+    public Sprite imgJunkyard;
+    public Sprite imgLibrary;
+    public Sprite imgLaboratory;
+    public Sprite imgItalienrestaurant;
+    public Sprite imgHarbor;
+    public Sprite imgBar;
+
+    public Sprite imgStreet_Symbol;
+    public Sprite imgMainsquare_Symbol;
+    public Sprite imgPark_Symbol;
+    public Sprite imgHospital_Symbol;
+    public Sprite imgBank_Symbol;
+    public Sprite imgParliament_Symbol;
+    public Sprite imgCemetary_Symbol;
+    public Sprite imgPrison_Symbol;
+    public Sprite imgCasino_Symbol;
+    public Sprite imgInternetcafe_Symbol;
+    public Sprite imgTrainstation_Symbol;
+    public Sprite imgArmyshop_Symbol;
+    public Sprite imgShoppingcenter_Symbol;
+    public Sprite imgJunkyard_Symbol;
+    public Sprite imgLibrary_Symbol;
+    public Sprite imgLaboratory_Symbol;
+    public Sprite imgItalienrestaurant_Symbol;
+    public Sprite imgHarbor_Symbol;
+    public Sprite imgBar_Symbol;
+    public Sprite imgQuarantine_Symbol;
+    public Sprite imgEdge_Symbol;
+
+    public Text txtMoney;
+    public Text txtSolveds;
+    public Text txtUnsolveds;
+    private bool firstMove;
     // Use this for initialization
     private Player player;
     
@@ -58,96 +107,106 @@ public class Movement : MonoBehaviour {
         {
             newTurn();
         }
-        
+
     }
 
-	void newTurn()
+    void newTurn()
     {
         switch (GameState.Instance.roles[GameState.Instance.currentTurn])
         {
             case "Detective":
-                img.GetComponent<Image>().sprite = Detective;
+                imgChar.GetComponent<Image>().sprite = cooper;
                 break;
             case "Doctor":
-                img.GetComponent<Image>().sprite = Doctor;
+                imgChar.GetComponent<Image>().sprite = mckay;
                 break;
             case "Police":
-                img.GetComponent<Image>().sprite = Police;
+                imgChar.GetComponent<Image>().sprite = fields;
                 break;
             case "Psychic":
-                img.GetComponent<Image>().sprite = Psychic;
+                imgChar.GetComponent<Image>().sprite = osswald;
                 break;
             case "Reporter":
-                img.GetComponent<Image>().sprite = Reporter;
+                imgChar.GetComponent<Image>().sprite = edmond;
                 break;
             case "Psychologist":
-                img.GetComponent<Image>().sprite = Psychologist;
+                imgChar.GetComponent<Image>().sprite = larson;
                 break;
         }
         currentPlace = GameState.Instance.currentPlace[GameState.Instance.currentTurn];
-        setButtons(currentPlace);
+
         
+        setButtons(currentPlace);
+
+        txtMoney.text = "";
+        txtSolveds.text = "";
+        txtUnsolveds.text = "";
+
+        if (GameState.Instance.money[player.id] < 10)
+        {
+            txtMoney.text += "0";
+        }
+        if (GameState.Instance.solvedHints[player.id] < 10)
+        {
+            txtSolveds.text += "0";
+        }
+        if (GameState.Instance.unsolvedHints[player.id] < 10)
+        {
+            txtUnsolveds.text += "0";
+        }
+        txtMoney.text += ""+GameState.Instance.money[player.id];
+        txtSolveds.text += "" + GameState.Instance.solvedHints[player.id];
+        txtUnsolveds.text += "" + GameState.Instance.unsolvedHints[player.id];
     }
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     void setButtons(int[] currentPlace)
     {
-        txtDown.fontSize = 60;
-        txtUp.fontSize = 60;
-        txtLeft.fontSize = 60;
-        txtRight.fontSize = 60;
-        txtStay.fontSize = 60;
         if (GameState.Instance.quarantined[GameState.Instance.board[currentPlace[0], currentPlace[1]]] > 0)
         {
             btnStay.interactable = false;
-            txtStay.fontSize = 50;
-            txtStay.text = "Quarantäne";
+            imgStay.sprite = imgQuarantine_Symbol;
         }
         else
         {
-            txtStay.text = translatePlace(GameState.Instance.board[currentPlace[0], currentPlace[1]]);
+            imgStay.sprite = Symbol(GameState.Instance.board[currentPlace[0], currentPlace[1]]);
         }
         if (currentPlace[0] > 0)
         {
-            if(GameState.Instance.quarantined[GameState.Instance.board[currentPlace[0] - 1, currentPlace[1]]] > 0){
+            if (GameState.Instance.quarantined[GameState.Instance.board[currentPlace[0] - 1, currentPlace[1]]] > 0)
+            {
                 btnUp.interactable = false;
-                txtUp.fontSize = 50;
-                txtUp.text = "Quarantäne";
+                imgUp.sprite = imgQuarantine_Symbol;
             }
             else
             {
                 btnUp.interactable = true;
-                txtUp.text = translatePlace(GameState.Instance.board[currentPlace[0] - 1, currentPlace[1]]);
+                imgUp.sprite=Symbol(GameState.Instance.board[currentPlace[0] - 1, currentPlace[1]]);
             }
-           
+
         }
         else
         {
             btnUp.interactable = false;
-            txtUp.text = "Stadtrand";
+            imgUp.sprite = imgEdge_Symbol;
         }
         if (currentPlace[0] < 6)
         {
             if (GameState.Instance.quarantined[GameState.Instance.board[currentPlace[0] + 1, currentPlace[1]]] > 0)
             {
                 btnDown.interactable = false;
-                txtDown.fontSize = 50;
-                txtDown.text = "Quarantäne";
+                imgDown.sprite = imgQuarantine_Symbol;
             }
             else
             {
                 btnDown.interactable = true;
-                txtDown.text = translatePlace(GameState.Instance.board[currentPlace[0] + 1, currentPlace[1]]);
+                imgDown.sprite = Symbol(GameState.Instance.board[currentPlace[0] + 1, currentPlace[1]]);
             }
-                
+
         }
         else
         {
             btnDown.interactable = false;
-            txtDown.text = "Stadtrand";
+            imgDown.sprite = imgEdge_Symbol;
         }
         if (currentPlace[1] > 0)
         {
@@ -155,19 +214,18 @@ public class Movement : MonoBehaviour {
             if (GameState.Instance.quarantined[GameState.Instance.board[currentPlace[0], currentPlace[1] - 1]] > 0)
             {
                 btnLeft.interactable = false;
-                txtLeft.fontSize = 50;
-                txtLeft.text = "Quarantäne";
+                imgLeft.sprite = imgQuarantine_Symbol;
             }
             else
             {
                 btnLeft.interactable = true;
-                txtLeft.text = translatePlace(GameState.Instance.board[currentPlace[0], currentPlace[1] - 1]);
+                imgLeft.sprite = Symbol(GameState.Instance.board[currentPlace[0], currentPlace[1] - 1]);
             }
         }
         else
         {
             btnLeft.interactable = false;
-            txtLeft.text = "Stadtrand";
+            imgLeft.sprite = imgEdge_Symbol;
         }
         if (currentPlace[1] < 5)
         {
@@ -175,44 +233,44 @@ public class Movement : MonoBehaviour {
             if (GameState.Instance.quarantined[GameState.Instance.board[currentPlace[0], currentPlace[1] + 1]] > 0)
             {
                 btnRight.interactable = false;
-                txtRight.fontSize = 50;
-                txtRight.text = "Quarantäne";
+                imgRight.sprite = imgQuarantine_Symbol;
             }
             else
             {
                 btnRight.interactable = true;
-                txtRight.text = translatePlace(GameState.Instance.board[currentPlace[0], currentPlace[1] + 1]);
+                imgRight.sprite = Symbol(GameState.Instance.board[currentPlace[0], currentPlace[1] + 1]);
             }
         }
         else
         {
             btnRight.interactable = false;
-            txtRight.text = "Stadtrand";
+            imgRight.sprite = imgEdge_Symbol;
         }
 
     }
-    
+
     void endClick()
     {
-        
+
 
         if (firstMove && GameState.Instance.board[GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]] == 0)
         {
             firstMove = false;
             currentPlace = GameState.Instance.currentPlace[GameState.Instance.currentTurn];
             setButtons(currentPlace);
+            imgPlace.sprite = Place(GameState.Instance.board[currentPlace[0], currentPlace[1]]);
         }
         else
         {
             firstMove = true;
-            player.SetPlayerState(GameState.Instance.currentTurn , "Action");
+            player.SetPlayerState(GameState.Instance.currentTurn, "Action");
             UIManager.Instance.Place();
         }
     }
     void rightClick()
     {
         currentPlace[1] += 1;
-        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace[0],currentPlace[1]);
+        player.SetCurrentPlace(GameState.Instance.currentTurn, currentPlace[0], currentPlace[1]);
         endClick();
     }
     void leftClick()
@@ -239,66 +297,169 @@ public class Movement : MonoBehaviour {
         endClick();
     }
 
-    string translatePlace(int place)
+    Sprite Symbol(int place)
     {
-        string s = "Straße";
+        Sprite s = imgStreet_Symbol;
         switch (place)
         {
+            case 0:
+                s = imgStreet_Symbol;
+                break;
             case 1:
-                s = "Stadtplatz";
+                s = imgMainsquare_Symbol;
                 break;
             case 2:
-                s = "Park";
+                s = imgPark_Symbol;
                 break;
             case 3:
-                s = "Krankenhaus";
+                s = imgHospital_Symbol;
                 break;
             case 4:
-                s = "Bank";
+
+                s = imgBank_Symbol;
                 break;
             case 5:
-                s = "Parlament";
+
+                s = imgParliament_Symbol;
                 break;
             case 6:
-                s = "Friedhof";
+
+                s = imgCemetary_Symbol;
                 break;
             case 7:
-                s = "Gefängnis";
+
+                s = imgPrison_Symbol;
                 break;
             case 8:
-                s = "Kasino";
+
+                s = imgCasino_Symbol;
                 break;
             case 9:
-                s = "Internet Cafe";
+
+                s = imgInternetcafe_Symbol;
                 break;
             case 10:
-                s = "Bahnhof";
+
+                s = imgTrainstation_Symbol;
                 break;
             case 11:
-                s = "Armee Laden";
+
+                s = imgArmyshop_Symbol;
                 break;
             case 12:
-                s = "Shopping Center";
+
+                s = imgShoppingcenter_Symbol;
                 break;
             case 13:
-                s = "Schrottplatz";
+
+                s = imgJunkyard_Symbol;
                 break;
             case 14:
-                s = "Bibliothek";
+
+                s = imgLibrary_Symbol;
                 break;
             case 15:
-                s = "Labor";
+
+                s = imgLaboratory_Symbol;
                 break;
             case 16:
-                s = "Italiener";
+
+                s = imgItalienrestaurant_Symbol;
                 break;
             case 17:
-                s = "Hafen";
+
+                s = imgHarbor_Symbol;
                 break;
             case 18:
-                s = "Bar";
+
+                s = imgBar_Symbol;
                 break;
         }
         return s;
     }
+    Sprite Place(int place)
+    {
+        Sprite s = imgStreet;
+        switch (place)
+        {
+            case 0:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -2.33f, 0);
+                s = imgStreet;
+                break;
+            case 1:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -2.33f, 0);
+                s = imgMainsquare;
+                break;
+            case 2:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -2.33f, 0);
+                s = imgPark;
+                break;
+            case 3:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -2.33f, 0);
+                s = imgHospital;
+                break;
+            case 4:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 17.33f, 0);
+                s = imgBank;
+                break;
+            case 5:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -2.33f, 0);
+                s = imgParliament;
+                break;
+            case 6:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0,58.6f, 0);
+                s = imgCemetary;
+                break;
+            case 7:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -58.94f, 0);
+                s = imgPrison;
+                break;
+            case 8:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -59.02f, 0);
+                s = imgCasino;
+                break;
+            case 9:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -27.89f, 0);
+                s = imgInternetcafe;
+                break;
+            case 10:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -50.4f, 0);
+                s = imgTrainstation;
+                break;
+            case 11:
+                s = imgArmyshop;
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -2.33f, 0);
+                break;
+            case 12:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 6.58f, 0);
+                s = imgShoppingcenter;
+                break;
+            case 13:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 15.8f, 0);
+                s = imgJunkyard;
+                break;
+            case 14:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 54.12f, 0);
+                s = imgLibrary;
+                break;
+            case 15:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -50.37f, 0);
+                s = imgLaboratory;
+                break;
+            case 16:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 38.18f, 0);
+                s = imgItalienrestaurant;
+                break;
+            case 17:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -51.58f, 0);
+                s = imgHarbor;
+                break;
+            case 18:
+                imgPlace.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 24.65f, 0);
+                s = imgBar;
+                break;
+        }
+        return s;
+    }
+
 }
