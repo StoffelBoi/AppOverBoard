@@ -37,13 +37,13 @@ public class Waiting : MonoBehaviour {
     {
         while (waiting)
         {
-            txtWaiting.text = "IP Adress: " + MyNetManager.Instance.LocalIPAddress() + "\nWaiting for\nPlayers    ";
+            txtWaiting.text = "Waiting for\nPlayers    ";
             yield return new WaitForSeconds(0.3f);
-            txtWaiting.text = "IP Adress: " + MyNetManager.Instance.LocalIPAddress() + "\nWaiting for\nPlayers .  ";
+            txtWaiting.text = "Waiting for\nPlayers .  ";
             yield return new WaitForSeconds(0.3f);
-            txtWaiting.text = "IP Adress: " + MyNetManager.Instance.LocalIPAddress() + "\nWaiting for\nPlayers .. ";
+            txtWaiting.text = "Waiting for\nPlayers .. ";
             yield return new WaitForSeconds(0.3f);
-            txtWaiting.text = "IP Adress: " + MyNetManager.Instance.LocalIPAddress() + "\nWaiting for\nPlayers ...";
+            txtWaiting.text = "Waiting for\nPlayers ...";
             yield return new WaitForSeconds(0.3f);
 
         }

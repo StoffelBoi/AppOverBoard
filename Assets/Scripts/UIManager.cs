@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
@@ -120,6 +121,14 @@ public class UIManager : MonoBehaviour {
             }
         }
     }
+
+    public void RestartScene()
+    {
+        MyNetManager.Instance.StopHosting();
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
+    }
+
     public void DisableEverything()
     {
         canvasStartUp.enabled = false;
@@ -146,6 +155,7 @@ public class UIManager : MonoBehaviour {
         canvasRulesMovement.enabled = false;
         canvasWin.enabled = false;
         canvasLoss.enabled = false;
+        canvasDraw.enabled = false;
         /*
         StartUpController.GetComponent<StartUp>().enabled = false;
         ConnectionController.GetComponent<Connection>().enabled = false;
@@ -170,6 +180,7 @@ public class UIManager : MonoBehaviour {
         RulesController.SetActive(false);
         WinController.SetActive(false);
         LossController.SetActive(false);
+        DrawController.SetActive(false);
     }
 
     public void StartUp()

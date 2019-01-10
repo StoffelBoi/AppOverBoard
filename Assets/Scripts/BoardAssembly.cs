@@ -447,12 +447,10 @@ public class BoardAssembly : MonoBehaviour {
                 readyCount++;
                 }
             }
-        Debug.Log(readyCount);
         if (readyCount == GameState.Instance.playerCount)
         {
-            Debug.Log("ready");
             TimeManager.Instance.startTimer();
-            UIManager.Instance.PrivatePlayer();
+            UIManager.Instance.Draw();
         }
         
     }

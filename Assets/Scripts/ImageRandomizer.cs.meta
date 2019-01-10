@@ -25,7 +25,11 @@ MonoImporter:
       type: 3}
   - imgHarbor: {fileID: 21300000, guid: 94970344afd8100409299a4708c93bb1, type: 3}
   - imgBar: {fileID: 21300000, guid: 1d2b98a10bd98d14d976632a7b450a5d, type: 3}
-  - imgWhite: {fileID: 21300000, guid: 90de1f101c52c2740bbadffc84250f38, type: 3}
+  - imgRed: {fileID: 21300000, guid: cc8a2773bc6178b449706ba127c27338, type: 3}
+  - imgYellow: {fileID: 21300000, guid: 36248efcd63c5bb429adb5da02a9c632, type: 3}
+  - imgBlue: {fileID: 21300000, guid: 3cada9f808026d542a994db8dad79975, type: 3}
+  - imgGreen: {fileID: 21300000, guid: 2484053ee42b5654687c290ac34fd3d0, type: 3}
+  - imgPink: {fileID: 21300000, guid: e3a6325b99a854a44a6c922ad52e0435, type: 3}
   - tileTurn: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
