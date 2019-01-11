@@ -37,7 +37,8 @@ public class PrivatePlayer : MonoBehaviour {
         btnMenu.onClick.AddListener(btnToMenu);
         btnGuess.onClick.RemoveAllListeners();
         btnGuess.onClick.AddListener(btnToGuess);
-
+        btnItems.onClick.RemoveAllListeners();
+        btnItems.onClick.AddListener(UIManager.Instance.OpenItems);
         player = GameState.Instance.localPlayer.GetComponent<Player>();
         playerID = player.id;
 

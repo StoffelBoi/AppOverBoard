@@ -997,7 +997,7 @@ public class Place : MonoBehaviour
         {
             btnOne.interactable = false;
         }
-        if (FingerprintKitCount == 0)
+        if (FingerprintKitCount == 0||currentPlace==0)
         {
             btnTwo.interactable = false;
         }

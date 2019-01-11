@@ -134,8 +134,8 @@ public class Movement : MonoBehaviour {
                 break;
         }
         currentPlace = GameState.Instance.currentPlace[GameState.Instance.currentTurn];
+        imgPlace.sprite = Place(GameState.Instance.board[currentPlace[0], currentPlace[1]]);
 
-        
         setButtons(currentPlace);
 
         txtMoney.text = "";

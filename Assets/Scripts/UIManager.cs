@@ -31,6 +31,7 @@ public class UIManager : MonoBehaviour {
     public Canvas canvasWin;
     public Canvas canvasLoss;
     public Canvas canvasDraw;
+    public Canvas canvasItems;
 
     public GameObject StartUpController;
     public GameObject ConnectionController;
@@ -44,7 +45,7 @@ public class UIManager : MonoBehaviour {
     public GameObject WinController;
     public GameObject LossController;
     public GameObject DrawController;
-
+    public GameObject ItemsController;
     public static UIManager Instance;
     // Use this for initialization
 
@@ -156,6 +157,7 @@ public class UIManager : MonoBehaviour {
         canvasWin.enabled = false;
         canvasLoss.enabled = false;
         canvasDraw.enabled = false;
+        canvasItems.enabled = false;
         /*
         StartUpController.GetComponent<StartUp>().enabled = false;
         ConnectionController.GetComponent<Connection>().enabled = false;
@@ -181,6 +183,7 @@ public class UIManager : MonoBehaviour {
         WinController.SetActive(false);
         LossController.SetActive(false);
         DrawController.SetActive(false);
+        ItemsController.SetActive(false);
     }
 
     public void StartUp()
@@ -392,6 +395,20 @@ public class UIManager : MonoBehaviour {
         canvasRulesMovement.gameObject.SetActive(true);
         canvasRulesMovement.enabled = true;
         RulesController.SetActive(true);
+    }
+
+    public void OpenItems()
+    {
+        canvasItems.gameObject.SetActive(true);
+        canvasItems.enabled = true;
+        ItemsController.SetActive(true);
+    }
+
+    public void CloseItems()
+    {
+        canvasItems.gameObject.SetActive(false);
+        canvasItems.enabled = false;
+        ItemsController.SetActive(false);
     }
 }
 
