@@ -203,7 +203,7 @@ public class Place : MonoBehaviour
                     fourButtons();
                     btnOneText.text = "Umschauen";
                     btnOne.onClick.AddListener(btnLookAroundClick);
-                    btnTwoText.text = "Item benutzen";
+                    btnTwoText.text = "Item";
                     btnTwo.onClick.AddListener(btnUseItemClick);
                     btnThreeText.text = "große Falle";
                     btnThree.onClick.AddListener(btnBigTrapClick);
@@ -228,8 +228,8 @@ public class Place : MonoBehaviour
                 {
                     eightButtons();
                     btnOneText.text = "Ortsoption";
-                    btnTwoText.text = "Hinweis finden";
-                    btnThreeText.text = "Item benutzen";
+                    btnTwoText.text = "Hinweis suchen";
+                    btnThreeText.text = "Item";
                     btnFourText.text = "falscher Hinweis";
                     btnFiveText.text = "kleine Falle";
                     btnSixText.text = "große Falle";
@@ -295,7 +295,7 @@ public class Place : MonoBehaviour
                     twoButtons();
                     btnOneText.text = "Umschauen";
                     btnOne.onClick.AddListener(btnLookAroundClick);
-                    btnTwoText.text = "Item benutzen";
+                    btnTwoText.text = "Item";
                     btnTwo.onClick.AddListener(btnUseItemClick);
                 }
                 else
@@ -303,8 +303,8 @@ public class Place : MonoBehaviour
 
                     threeButtons();
                     btnOneText.text = "Ortsoption";
-                    btnTwoText.text = "Hinweis finden";
-                    btnThreeText.text = "Item benutzen";
+                    btnTwoText.text = "Hinweis suchen";
+                    btnThreeText.text = "Item";
                     btnOne.onClick.AddListener(btnPlaceOptionClick);
                     btnTwo.onClick.AddListener(btnFindHintClick);
                     btnThree.onClick.AddListener(btnUseItemClick);
@@ -804,42 +804,7 @@ public class Place : MonoBehaviour
     {
         if (!GameState.Instance.usedEnergyDrink.Contains(true))
         {
-            System.Random rn = new System.Random();
-            int randomHint = rn.Next(1, 10);
-            if (randomHint == 1)
-            {
-                if (GameState.Instance.roles[GameState.Instance.currentTurn] == GameState.Instance.criminal)
-                {
-                    addTrueHint();
-                }
-                else
-                {
-                    addFalseHint();
-                }
-            }
-            localPlayer.SetPlayerState(GameState.Instance.currentTurn, "Waiting");
-            localPlayer.SetCurrentTurn(((GameState.Instance.currentTurn + 1) % GameState.Instance.playerCount));
-            localPlayer.SetPlayerState(GameState.Instance.currentTurn, "Movement");
-            //counting down quarantine time
-            if (GameState.Instance.roles[GameState.Instance.currentTurn] == "Doctor")
-            {
-                for (int i = 0; i < 19; i++)
-                {
-                    if (GameState.Instance.quarantined[i] > 0)
-                    {
-                        localPlayer.SetQuarantine(i, (GameState.Instance.quarantined[i] - 1));
-                    }
-                }
-            }
-            if (GameState.Instance.playerLost[GameState.Instance.currentTurn])
-            {
-                Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " has already lost");
-                endTurn();
-            }
-            else
-            {
-                UIManager.Instance.PrivatePlayer();
-            }
+            StartCoroutine("changePlayer");
         }
         else
         {
@@ -848,6 +813,47 @@ public class Place : MonoBehaviour
         }
     }
 
+    IEnumerator changePlayer()
+    {
+        System.Random rn = new System.Random();
+        int randomHint = rn.Next(1, 10);
+        if (randomHint == 1)
+        {
+            if (GameState.Instance.roles[GameState.Instance.currentTurn] == GameState.Instance.criminal)
+            {
+                addTrueHint();
+            }
+            else
+            {
+                addFalseHint();
+            }
+        }
+        localPlayer.SetPlayerState(GameState.Instance.currentTurn, "Waiting");
+        yield return new WaitForSeconds(0.3f);
+        localPlayer.SetCurrentTurn(((GameState.Instance.currentTurn + 1) % GameState.Instance.playerCount));
+        yield return new WaitForSeconds(0.3f);
+        localPlayer.SetPlayerState(GameState.Instance.currentTurn, "Movement");
+        //counting down quarantine time
+        if (GameState.Instance.roles[GameState.Instance.currentTurn] == "Doctor")
+        {
+            for (int i = 0; i < 19; i++)
+            {
+                if (GameState.Instance.quarantined[i] > 0)
+                {
+                    localPlayer.SetQuarantine(i, (GameState.Instance.quarantined[i] - 1));
+                }
+            }
+        }
+        if (GameState.Instance.playerLost[GameState.Instance.currentTurn])
+        {
+            Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " has already lost");
+            endTurn();
+        }
+        else
+        {
+            UIManager.Instance.PrivatePlayer();
+        }
+    }
     #region Dialogue
     void setDialogue(string newDialogue)
     {
@@ -863,7 +869,7 @@ public class Place : MonoBehaviour
         dialogueText.text = currentDialogue;
         dialogueText.fontSize = 49;
 
-        if (newDialogue.Length <= 130)
+        if (newDialogue.Length <= 120)
         {
             currentDialogue = newDialogue;
             leftOverDialogue = "";
@@ -879,7 +885,7 @@ public class Place : MonoBehaviour
                 {
                     if (char.IsWhiteSpace(c))
                     {
-                        if (currentString.Length + currentWord.Length > 130)
+                        if (currentString.Length + currentWord.Length > 120)
                         {
                             currentDialogue = currentString;
                             firstLine = false;
@@ -950,11 +956,195 @@ public class Place : MonoBehaviour
         OnEnable();
     }
 
-    //@TODO: add Random Events
     void btnLookAroundClick()
     {
         localPlayer.SetLastAction(GameState.Instance.currentTurn, "Umschauen");
-        setDialogue("Du schaust dich um aber du bemerkst nichts außergewöhnliches.");
+        System.Random rn = new System.Random();
+        int r = rn.Next(1, 40);
+        switch (r)
+        {
+            case 1:
+                localPlayer.SetMoney(GameState.Instance.currentTurn, GameState.Instance.money[GameState.Instance.currentTurn] + 1);
+                setDialogue("Du schaust dich um und findest einen Dollar am Boden. Muss wohl dein Glückstag sein.");
+                break;
+            case 2:
+                localPlayer.SetMoney(GameState.Instance.currentTurn, GameState.Instance.money[GameState.Instance.currentTurn] + 1);
+                setDialogue("Du schaust dich um und findest einen Dollar am Boden. Muss wohl dein Glückstag sein.");
+                break;
+            case 3:
+                if (GameState.Instance.money[GameState.Instance.currentTurn] > 0)
+                {
+                    localPlayer.SetMoney(GameState.Instance.currentTurn, GameState.Instance.money[GameState.Instance.currentTurn] - 3);
+                }
+                setDialogue("Du schaust dich genau um und findest aber nichts interessantes. Später findest du heraus das dich jemand bestohlen hat währen du abgelenkt warst.");
+                break;
+            case 4:
+                localPlayer.SetUnsolvedHints(GameState.Instance.currentTurn, GameState.Instance.unsolvedHints[GameState.Instance.currentTurn] + 1);
+                setDialogue("Du schaust dich um, als plötzlich ein Fremder auf dich zu kommt. Er gibt dir einen interessanten Tipp und du denkst, dass du einen neuen Hinweis hast musst ihn jedoch noch genauer analysieren.");
+                break;
+            case 5:
+                localPlayer.SetUnsolvedHints(GameState.Instance.currentTurn, GameState.Instance.unsolvedHints[GameState.Instance.currentTurn] + 1);
+                localPlayer.SetTrueUnsolveds(GameState.Instance.currentTurn, GameState.Instance.trueUnsolveds[GameState.Instance.currentTurn] + 1);
+                setDialogue("Du schaust dich um und als plötzlich ein Fremder auf dich zu kommt. Er gibt dir einen interessanten Tipp und du denkst, dass du einen neuen Hinweis hast musst ihn jedoch noch genauer analysieren.");
+                break;
+            case 6:
+                localPlayer.SetIsDisabled(GameState.Instance.currentTurn, 1);
+                localPlayer.SetCurrentPlace(GameState.Instance.currentTurn, findPosition(3)[0], findPosition(3)[1]);
+                setDialogue("Du schaust dich so genau um, dass du eine Straßenlaterne übersiehst und dir eine leichte Gehirnerschütterung ergatterst. Du bist für die nächste Runde im Krankenhaus.");
+                break;
+            case 7:
+                int xPlace = rn.Next(0, 5);
+                int yPlace = rn.Next(0, 6);
+                localPlayer.SetCurrentPlace(GameState.Instance.currentTurn, xPlace, yPlace);
+                setDialogue("Du schaust dich um und triffst einen alten Freund. Ihr verbringt den restlichen Tag in einer Bar und der Alkohol fließt in Strömen. Am nächsten Tag wachst du an einem unbekannten Platz auf.");
+                break;
+            case 8:
+                if (GameState.Instance.criminal == GameState.Instance.roles[GameState.Instance.currentTurn])
+                {
+                    int criminalrole = rn.Next(0, 3);
+                    switch (criminalrole)
+                    {
+                        case 0:
+                            setDialogue("Du schaust dich um und plötzlich hast du eine göttliche Eingebung. Du bist dir sicher das der Verbrecher Inferno ist.");
+                            break;
+                        case 1:
+                            setDialogue("Du schaust dich um und plötzlich hast du eine göttliche Eingebung. Du bist dir sicher das der Verbrecher Dr. Mortifier ist.");
+                            break;
+                        case 2:
+                            setDialogue("Du schaust dich um und plötzlich hast du eine göttliche Eingebung. Du bist dir sicher das der Verbrecher Phantom ist.");
+                            break;
+                        case 3:
+                            setDialogue("Du schaust dich um und plötzlich hast du eine göttliche Eingebung. Du bist dir sicher das der Verbrecher Fasculto ist.");
+                            break;
+                        default:
+                            setDialogue("Du schaust dich um und plötzlich hast du eine göttliche Eingebung. Du bist dir sicher das der Verbrecher Inferno ist.");
+                            break;
+                    }
+                    
+                }
+                else
+                {
+                    setDialogue("Du schaust dich um und plötzlich bist du dir sicher das dir eine Person auf der Schliche ist. Paranoid versuchst du dich in den Schatten zu halten.");
+                }
+                break;
+            case 9:
+                localPlayer.AddItem(GameState.Instance.currentTurn, "EnergyDrink");
+                setDialogue("Du schaust dich um und findest eine halbvolle Energy Drink Dose und steckst sie ein. Optimistisch aber ekelhaft!");
+                break;
+            case 10:
+                localPlayer.AddItem(GameState.Instance.currentTurn, "ProtectiveVest");
+                setDialogue("Du schaust dich um und findest ein Holzbrett. Du denkst dir das es dir als Schutzweste dienen kann. Du schaust aus wie ein Vollidiot aber du fühlst dich sicher.");
+                break;
+            case 11:
+                if (GameState.Instance.money[GameState.Instance.currentTurn] > 0)
+                {
+                    localPlayer.SetMoney(GameState.Instance.currentTurn, GameState.Instance.money[GameState.Instance.currentTurn] - 1);
+                    setDialogue("Du schaust dich um und siehst einen Obdachlosen. Du gibst ihm einen Dollar. Du bekommst einen Karmapunkt :P.");
+                }
+                else
+                {
+                    localPlayer.SetMoney(GameState.Instance.currentTurn, GameState.Instance.money[GameState.Instance.currentTurn] +1);
+                    setDialogue("Du schaust dich um und siehst einen Obdachlosen. Er sieht dir an, dass du ärmer bist als er und gibt dir einen Dollar.");
+                }
+                
+                break;
+            case 12:
+                int pair = rn.Next(0, 9);
+                switch(pair){
+                    case 0:
+                        setDialogue("Du schaust dich um und siehst eine in einen Baum geritze Nachricht: \"MM+CC\"");
+                        break;
+                    case 1:
+                        setDialogue("Du schaust dich um und siehst eine in einen Baum geritze Nachricht: \"Felicity rulez\"");
+                        break;
+                    case 2:
+                        setDialogue("Du schaust dich um und siehst eine in einen Baum geritze Nachricht: \"Westfield sucks\"");
+                        break;
+                    case 3:
+                        setDialogue("Du schaust dich um und siehst eine in einen Baum geritze Nachricht: \"AA ist cool\"");
+                        break;
+                    case 4:
+                        setDialogue("Du schaust dich um und siehst eine in einen Baum geritze Nachricht: \"Nugs not Drugs\"");
+                        break;
+                    case 5:
+                        setDialogue("Du schaust dich um und siehst eine in einen Baum geritze Nachricht: \"GoT wird überschätzt\"");
+                        break;
+                    case 6:
+                        setDialogue("Du schaust dich um und siehst eine in einen Baum geritze Nachricht: \"<- ist dämlich\"");
+                        break;
+                    case 7:
+                        setDialogue("Du schaust dich um und siehst eine in einen Baum geritze Nachricht: \"Erik <3 ~L\"");
+                        break;
+                    case 8:
+                        setDialogue("Du schaust dich um und siehst eine in einen Baum geritze Nachricht: \"F this Tree!\"");
+                        break;
+                    case 9:
+                        setDialogue("Du schaust dich um und siehst eine in einen Baum geritze Nachricht: \"Osswald ist eine Betrügerin\"");
+                        break;
+                    default:
+                        setDialogue("Du schaust dich um und siehst eine in einen Baum geritze Nachricht: \"!Westfields Papergirls!\"");
+                        break;
+                }
+                
+                break;
+            case 13:
+                localPlayer.AddItem(GameState.Instance.currentTurn, "Trainers");
+                setDialogue("Du schaust dich um und findest ein paar alte Turnschuhe und steckst sie ein. Du hoffst das dich niemand dabei beobachtet hat.");
+                break;
+            case 14:
+                int escape = rn.Next(0, 10);
+                if (escape == 0)
+                {
+                    localPlayer.SetMoney(GameState.Instance.currentTurn, 0);
+                    setDialogue("Du schaust dich um als plötzlich jemand auf dich zustürmt und dich mit einen Messer bedroht. Du gibst ihm dein ganzes Geld, dafür kommst du unverletzt davon.");
+                }
+                else
+                {
+                    setDialogue("Du schaust dich um als plötzlich jemand auf dich zustürmt und dich mit einen Messer bedroht. Du bist jedoch flink genug um zu entkommen.");
+                }
+                break;
+            case 15:
+                if (GameState.Instance.skillUsed[GameState.Instance.currentTurn])
+                {
+                    setDialogue("Du schaust dich um als dich plötzlich eine junge Frau anspricht. Wie sich herausstellt haben sich deine Ermittlungen herumgesprochen und die Frau ist ein großer Fan. Du fühlst dich bestätigt und kannst deine Fähigkeit erneut benutzen.");
+                }
+                else
+                {
+                    setDialogue("Du schaust dich um als dich plötzlich ein junger Mann anspricht. Wie sich herausstellt haben sich deine Ermittlungen herumgesprochen und der Mann ist ein großer Fan. Das ganze ist dir ein wenig unangenehm.");
+                }
+        break;
+            case 16:
+                if (GameState.Instance.solvedHints[GameState.Instance.currentTurn] > 0)
+                {
+                    if (GameState.Instance.trueSolveds[GameState.Instance.currentTurn] > 0)
+                    {
+                        localPlayer.SetTrueSolveds(GameState.Instance.currentTurn, GameState.Instance.trueSolveds[GameState.Instance.currentTurn] - 1);
+                    }
+                   
+                    localPlayer.SetSolvedHints(GameState.Instance.currentTurn, GameState.Instance.solvedHints[GameState.Instance.currentTurn] - 1);
+                }
+                
+                setDialogue("Du schaust dich um übersiehst aber trotzdem einen kleinen Stein und stolperst. Dabei verlierst du einen deiner Hinweise.");
+                break;
+            case 17:
+                setDialogue("Du schaust dich um entdeckst einen kaputten Taschenrechner und steckst ihn ein. Warum genau du das tust weißt du jedoch auch nicht, schließlich ist er ja kaputt.");
+                break;
+            case 18:
+                setDialogue("Du schaust dich um findest einen Mantel. Du testest ob er feuerfest ist und er geht in Flammen auf. Was hast du erwartet?!");
+                break;
+            case 19:
+                setDialogue("Du schaust dich um und findest eine Petrischale. Du entscheidest dich dagegen sie einzustecken, wer weiß was du dir dabei einfangen könntest.");
+                break;
+            case 20:
+                localPlayer.SetIsDisabled(GameState.Instance.currentTurn, 1);
+                localPlayer.SetCurrentPlace(GameState.Instance.currentTurn, findPosition(3)[0], findPosition(3)[1]);
+                setDialogue("Du schaust dich um und findest eine Petrischale und steckst sie ein. Ein paar Stunden später fühlst du dich elendst und begibst dich ins Krankenhaus, wo du für eine Runde bleiben musst.");
+                break;
+            default:
+                setDialogue("Du schaust dich um aber du bemerkst nichts außergewöhnliches.");
+                break;
+        }
+        
     }
 
     #region Use Item
@@ -4019,59 +4209,62 @@ public class Place : MonoBehaviour
     {
         switch (place)
         {
+            case 0:
+                simpleDialogue("Du befindest dich auf einer der vielen Straßen Westfields, auf dem ersten Blick wirkt alles normal aber vielleicht gibt es was zum entdecken.", 45);
+                break;
             case 1:
-                simpleDialogue("Du befindest dich am Hauptplatz, wie an den meisten Tagen herrscht reges Geschehen doch jeder scheint sich nur auf sich selbst zu konzentrieren.", 45);
+                simpleDialogue("Du befindest dich am Stadtplatz. Wie an den meisten Tagen herrscht reges Geschehen doch jeder scheint sich nur auf sich selbst zu konzentrieren.", 45);
                 break;
             case 2:
-                simpleDialogue("Du befindest dich im Park, als du dich umsiehst siehst du nur ein altes Ehepaar welches die Enten füttert und ein paar Obdachlose die in einem Kreis um eine Mülltonne stehen.", 50);
+                simpleDialogue("Du befindest dich im Park. Als du dich umsiehst siehst du nur ein altes Ehepaar welches die Enten füttert und ein paar Obdachlose die im Kreis um eine Mülltonne stehen.", 50);
                 break;
             case 3:
-                simpleDialogue("Du befindest dich im Krankenhaus, es sieht alles sehr steril aus und um dich herum siehst du Ärzte und Krankenpfleger welche hektisch von Raum zu Raum gehen.", 50);
+                simpleDialogue("Du befindest dich im Krankenhaus. Es sieht alles sehr steril aus und um dich herum siehst du Ärzte und Krankenpfleger welche hektisch von Raum zu Raum gehen.", 50);
                 break;
             case 4:
-                simpleDialogue("Du befindest dich in der Bank, um dich herum ist nur ein Angestellter welcher am Schalter steht und zwei Kunden welche gerade etwas Geld am Automaten abheben.", 50);
+                simpleDialogue("Du befindest dich in der Bank. Um dich herum ist nur ein Angestellter welcher am Schalter steht und zwei Kunden welche gerade etwas Geld am Automaten abheben.", 50);
                 break;
             case 5:
-                simpleDialogue("Du befindest dich im Parlamentsgebäude, um dich herum siehst du einige Politiker und Politikerinnen die sich rege miteinander unterhalten.", 50);
+                simpleDialogue("Du befindest dich im Parlamentsgebäude. Um dich herum siehst du einige Politiker und Politikerinnen die sich rege miteinander unterhalten.", 50);
                 break;
             case 6:
-                simpleDialogue("Du befindest dich auf dem Friedhof, obwohl dich die Atmosphere an diesem Ort etwas verunsichert weist du, dass du nicht ohne Grund hier bist.", 50);
+                simpleDialogue("Du befindest dich auf dem Friedhof. Obwohl dich die Atmosphere an diesem Ort etwas verunsichert weist du, dass du nicht ohne Grund hier bist.", 50);
                 break;
             case 7:
-                simpleDialogue("Du befindest dich im Gefängnis, als du dich umsiehst siehst du ein Paar Häftlinge in orangenen Jumpsuits und geglegentlich eine Wache.", 50);
+                simpleDialogue("Du befindest dich im Gefängnis. Durch ein Fenster siehst du ein Paar Häftlinge in orangenen Overalls und geglegentlich eine Wache.", 50);
                 break;
             case 8:
-                simpleDialogue("Du befindest dich im Kasino, als du dich umsiehst siehst du einige Leute in Abendgardrobe, außerdem hörst du das klingen und klirren von Spielchips und Sektflöten", 50);
+                simpleDialogue("Du befindest dich im Kasino. Als du dich umsiehst siehst du einige Leute in Abendgardrobe, außerdem hörst du das klingen und klirren von Spielchips und Sektflöten", 50);
                 break;
             case 9:
-                simpleDialogue("Du befindest dich im Internetcafe, um dich herum hörst du das klacken von Tastaturen und du siehst einen Typen der etwas auf seinem Laptop zu schreiben scheint.", 50);
+                simpleDialogue("Du befindest dich im Internetcafe. Um dich herum nimmst du das klacken von Tastaturen und den Geruch ungewaschener Körper wahr.", 50);
                 break;
             case 10:
-                simpleDialogue("Du befindest dich auf dem Bahnhof, du siehst dich um und siehst einige rennende Menschen die Versuchen ihren Zug noch zu erwischen.", 50);
+                simpleDialogue("Du befindest dich auf dem Bahnhof. Du siehst dich um und siehst eine Menge an hektischer Menschen und leuchtenden Anzeigetafeln.", 50);
                 break;
             case 11:
-                simpleDialogue("Du befindest dich im Armeeladen, als du den Laden betrittst siehst du verschiedenste Waffen an der hängen und der Verkäufer begrüßt dich.", 50);
+                simpleDialogue("Du befindest dich im Armeeladen. Als du den Laden betrittst siehst du verschiedenste Waffen an der Wand hängen und der Verkäufer nickt dir grimmig zu.", 50);
                 break;
             case 12:
-                simpleDialogue("Du befindest dich im Einkauszentrum, um dich herum sind Leute die hektisch mit ihren Einkaustaschen von Laden zu Laden laufen als wollten sie so schnell wie möglich hier raus.", 50);
+                simpleDialogue("Du befindest dich im Einkauszentrum. Um dich herum sind Leute die hektisch mit ihren Einkaufstaschen von Laden zu Laden hetzen als wollten sie so schnell wie möglich hier raus.", 50);
                 break;
             case 13:
-                simpleDialogue("Du befindest dich auf dem Schrottplatz, um dich herum siehst du alte verschrottete Autos und diverse andere altes Zeig welches so aussieht als würdes es schon seit Jahren hier herumliegen.", 50);
+                simpleDialogue("Du befindest dich auf dem Schrottplatz. Um dich herum siehst du alte verschrottete Autos und diverse andere altes Zeug welches augenscheinlich schon seit Jahren hier liegt.", 50);
                 break;
             case 14:
-                simpleDialogue("Du befindest dich in der Bibliothek, du siehst nur ein Paar junge Studenten die in ihre Bücher vertieft sind, suchen. Gelegentlich hört man ein verärgertes \"Psst\".", 50);
+                simpleDialogue("Du befindest dich in der Bibliothek. Du siehst nur ein Paar junge Studenten die in ihre Bücher vertieft sind. Gelegentlich hört man ein verärgertes \"Psst\".", 50);
                 break;
             case 15:
-                simpleDialogue("Du befindest dich im Labor, um dich herum ist der Geruch von Chemekalien und einige Leute in weißen Labormänteln.", 50);
+                simpleDialogue("Du befindest dich im Labor. Du versuchst dich an den chemischen Geruch zu gewöhnen während du den Forscher beim arbeiten zuschaust.", 50);
                 break;
             case 16:
-                simpleDialogue("Du befindest dich im italienischen Restaurant, der Geruch von Tomatensoße liegt in der Luft und der Besitzer ruft dir schon durch das Restaurant ein \"Willkommen\" zu.", 50);
+                simpleDialogue("Du befindest dich im italienischen Restaurant. Der Geruch von Tomatensoße liegt in der Luft und der Besitzer ruft dir ein freundliches \"buongiorno\" zu.", 50);
                 break;
             case 17:
-                simpleDialogue("Du befindest dich am Hafen, du richst den Geruch des Meeres und siehst eine Gruppe von Hafenarbeitern bei den Docks stehen.", 50);
+                simpleDialogue("Du befindest dich am Hafen. Du riechst den Geruch des Meeres und siehst eine Gruppe von Hafenarbeitern bei den Docks stehen.", 50);
                 break;
             case 18:
-                simpleDialogue("Du befindest dich in der Bar, als du sie betritts siehst du einige Leute an der Bar sitzen mit ihren Gesichtern tief in ihren Glässern vergraben.", 50);
+                simpleDialogue("Du befindest dich in der Bar. Du siehst die gewöhnlichen Stammkunden und wiederstehst dem Verlangen augenblicklich ein Bier zu bestellen.", 50);
                 break;
         }
     }

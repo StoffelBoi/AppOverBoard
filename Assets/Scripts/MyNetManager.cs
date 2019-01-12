@@ -54,7 +54,10 @@ public class MyNetManager : NetworkManager
         yield return new WaitForSeconds(1f);
         if (IsClientConnected())
         {
-            MyNetDiscovery.StopBroadcast();
+            if (MyNetDiscovery.running)
+            {
+                MyNetDiscovery.StopBroadcast();
+            }
             isClient = true;
             Connection.Instance.txtInfo.text = "Verbunden!";
             yield return new WaitForSeconds(1.2f);
@@ -63,7 +66,10 @@ public class MyNetManager : NetworkManager
         {
             Connection.Instance.txtInfo.text = "Nichts gefunden. Versuche es manuell.";
             StopClient();
-            MyNetDiscovery.StopBroadcast();
+            if (MyNetDiscovery.running)
+            {
+                MyNetDiscovery.StopBroadcast();
+            }
             yield return new WaitForSeconds(.1f);
             Connection.Instance.ManualConnectLayout();
 
@@ -141,16 +147,18 @@ public class MyNetManager : NetworkManager
             StopHost();
             NetworkServer.ClearLocalObjects();
             NetworkServer.ClearSpawners();
-            //MyNetDiscovery.StopBroadcast();
         }
         if (isClient)
         {
             StopHost();
             StopClient();
-            //MyNetDiscovery.StopBroadcast();
             
         }
-        StopAllCoroutines();
+        if (MyNetDiscovery.running)
+        {
+            MyNetDiscovery.StopBroadcast();
+        }
+            StopAllCoroutines();
         NetworkServer.Reset();
         NetworkTransport.Init();
         NetworkTransport.Shutdown();
@@ -189,7 +197,10 @@ public class MyNetManager : NetworkManager
     {
         base.OnStopServer();
         isServer = false;
-        MyNetDiscovery.StopBroadcast();
+        if (MyNetDiscovery.running)
+        {
+            MyNetDiscovery.StopBroadcast();
+        }
         UIManager.Instance.Connection();
     }
 
@@ -199,21 +210,12 @@ public class MyNetManager : NetworkManager
     //    EventDispatcher.TriggerEvent(Vars.ServerHandleDisconnect);
     //}
 
-    public override void OnClientConnect(NetworkConnection conn)
-    {
-        base.OnClientConnect(conn);
-        if (isClient)
-        {
-            Connection.Instance.txtInfo.text = "Client IP: " + LocalIPAddress();
-        }
 
-    }
     public override void OnClientDisconnect(NetworkConnection conn)
     {
         base.OnClientDisconnect(conn);
         isClient = false;
-        Connection.Instance.txtInfo.text = "Disconnected! Try Again! Code: 2" + conn.lastError;
-
+        UIManager.Instance.RestartScene();
     }
 
     public override void OnStopClient()
@@ -222,7 +224,13 @@ public class MyNetManager : NetworkManager
         if (IsClientConnected())
         {
             isClient = false;
-            Connection.Instance.txtInfo.text = "Disconnected! Try Again! Code: 1";
         }
+    }
+
+    public override void OnServerDisconnect(NetworkConnection connection)
+    {
+        base.OnServerConnect(connection);
+        UIManager.Instance.RestartScene();
+
     }
 }
