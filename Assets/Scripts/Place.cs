@@ -11,6 +11,29 @@ public class Place : MonoBehaviour
     public Text actionsTextField;
     public Image actionsTextFieldPanel;
 
+    public Sprite imgStreet_Symbol;
+    public Sprite imgMainsquare_Symbol;
+    public Sprite imgPark_Symbol;
+    public Sprite imgHospital_Symbol;
+    public Sprite imgBank_Symbol;
+    public Sprite imgParliament_Symbol;
+    public Sprite imgCemetary_Symbol;
+    public Sprite imgPrison_Symbol;
+    public Sprite imgCasino_Symbol;
+    public Sprite imgInternetcafe_Symbol;
+    public Sprite imgTrainstation_Symbol;
+    public Sprite imgArmyshop_Symbol;
+    public Sprite imgShoppingcenter_Symbol;
+    public Sprite imgJunkyard_Symbol;
+    public Sprite imgLibrary_Symbol;
+    public Sprite imgLaboratory_Symbol;
+    public Sprite imgItalienrestaurant_Symbol;
+    public Sprite imgHarbor_Symbol;
+    public Sprite imgBar_Symbol;
+    public Sprite imgQuarantine_Symbol;
+    public Sprite imgEdge_Symbol;
+
+
     public Sprite street;
     public Sprite mainsquare;
     public Sprite park;
@@ -39,10 +62,12 @@ public class Place : MonoBehaviour
     public Sprite larson;
 
     public Sprite twoByTwo;
+    public Sprite twoByThree;
     public Sprite twoByFour;
     public Sprite twoByFive;
     public Sprite twoBySeven;
     public Sprite twoByNine;
+    public Sprite threeByThree;
     public Sprite threeByFour;
     public Sprite threeByFive;
     public Sprite threeBySeven;
@@ -51,7 +76,9 @@ public class Place : MonoBehaviour
     public Sprite fourByFive;
     public Sprite fourBySeven;
 
-
+    public Image up;
+    public Image down;
+    public Image ActionsTextFieldImage;
 
     public Button btnOne;
     public Button btnTwo;
@@ -120,6 +147,8 @@ public class Place : MonoBehaviour
     private string guessedCriminal;
     private string guessedPlace;
     private Player localPlayer;
+
+
     void Awake()
     {
         if (Instance == null)
@@ -1435,9 +1464,7 @@ public class Place : MonoBehaviour
         actionTextFieldNumber();
         actionsTextField.fontSize = 130;
         actionsTextField.text = "" + delayedTurns;
-        btnOneText.text = "+";
         btnTwoText.text = "Falle legen";
-        btnThreeText.text = "-";
         btnOne.onClick.AddListener(btnDelayedTurnUp);
         btnThree.onClick.AddListener(btnDelayedTurnDown);
         if (delayedTurns == 1)
@@ -1830,11 +1857,9 @@ public class Place : MonoBehaviour
     void hospitalAction()
     {
         actionTextFieldString();
-        actionsTextField.fontSize = 100;
+        ActionsTextFieldImage.sprite = imgMainsquare_Symbol;
         actionsTextField.text = "Stadtplatz";
-        btnOneText.text = "+";
         btnTwoText.text = "Quarantäne";
-        btnThreeText.text = "-";
         btnOne.onClick.AddListener(btnPlaceUp);
         btnTwo.onClick.AddListener(btnQuarantine);
         btnThree.onClick.AddListener(btnPlaceDown);
@@ -2077,9 +2102,7 @@ public class Place : MonoBehaviour
         actionTextFieldNumber();
         actionsTextField.fontSize = 130;
         actionsTextField.text = "" + currentBet;
-        btnOneText.text = "+";
         btnTwoText.text = "Einsatz";
-        btnThreeText.text = "-";
         btnOne.onClick.AddListener(btnCasinoBetUp);
         btnTwo.onClick.AddListener(btnCasinoBet);
         btnThree.onClick.AddListener(btnCasinoBetDown);
@@ -2100,9 +2123,17 @@ public class Place : MonoBehaviour
         {
             btnThree.interactable = false;
         }
+        else
+        {
+            btnThree.interactable = true;
+        }
         if (currentBet == GameState.Instance.money[GameState.Instance.currentTurn])
         {
             btnOne.interactable = false;
+        }
+        else
+        {
+            btnOne.interactable = true;
         }
         actionsTextField.text = "" + currentBet;
 
@@ -2114,9 +2145,17 @@ public class Place : MonoBehaviour
         {
             btnThree.interactable = false;
         }
+        else
+        {
+            btnThree.interactable = true;
+        }
         if (currentBet == GameState.Instance.money[GameState.Instance.currentTurn])
         {
             btnOne.interactable = false;
+        }
+        else
+        {
+            btnOne.interactable = true;
         }
         actionsTextField.text = "" + currentBet;
     }
@@ -2209,11 +2248,9 @@ public class Place : MonoBehaviour
     void trainstationAction()
     {
         actionTextFieldString();
-        actionsTextField.fontSize = 100;
+        ActionsTextFieldImage.sprite = imgMainsquare_Symbol;
         actionsTextField.text = "Stadtplatz";
-        btnOneText.text = "+";
         btnTwoText.text = "Abfahrt";
-        btnThreeText.text = "-";
         btnOne.onClick.AddListener(btnPlaceUp);
         btnTwo.onClick.AddListener(btnTrainstationTravel);
         btnThree.onClick.AddListener(btnPlaceDown);
@@ -2229,117 +2266,154 @@ public class Place : MonoBehaviour
         {
             case "Stadtplatz":
                 actionsTextField.text = "Park";
+                ActionsTextFieldImage.sprite = imgPark_Symbol;
                 break;
             case "Park":
                 actionsTextField.text = "Krankenhaus";
+                ActionsTextFieldImage.sprite = imgHospital_Symbol;
                 break;
             case "Krankenhaus":
                 actionsTextField.text = "Bank";
+                ActionsTextFieldImage.sprite = imgBank_Symbol;
                 break;
             case "Bank":
                 actionsTextField.text = "Parlament";
+                ActionsTextFieldImage.sprite = imgParliament_Symbol;
                 break;
             case "Parlament":
                 actionsTextField.text = "Friedhof";
+                ActionsTextFieldImage.sprite = imgCemetary_Symbol;
                 break;
             case "Friedhof":
                 actionsTextField.text = "Gefängnis";
+                ActionsTextFieldImage.sprite = imgPrison_Symbol;
                 break;
             case "Gefängnis":
                 actionsTextField.text = "Kasino";
+                ActionsTextFieldImage.sprite = imgCasino_Symbol;
                 break;
             case "Kasino":
                 actionsTextField.text = "Internet Cafe";
+                ActionsTextFieldImage.sprite = imgInternetcafe_Symbol;
                 break;
             case "Internet Cafe":
                 actionsTextField.text = "Bahnhof";
+                ActionsTextFieldImage.sprite = imgTrainstation_Symbol;
                 break;
             case "Bahnhof":
                 actionsTextField.text = "Armee Laden";
+                ActionsTextFieldImage.sprite = imgArmyshop_Symbol;
                 break;
             case "Armee Laden":
                 actionsTextField.text = "Shopping Center";
+                ActionsTextFieldImage.sprite = imgShoppingcenter_Symbol;
                 break;
             case "Shopping Center":
                 actionsTextField.text = "Schrottplatz";
+                ActionsTextFieldImage.sprite = imgJunkyard_Symbol;
                 break;
             case "Schrottplatz":
                 actionsTextField.text = "Bibliothek";
+                ActionsTextFieldImage.sprite = imgLibrary_Symbol;
                 break;
             case "Bibliothek":
                 actionsTextField.text = "Labor";
+                ActionsTextFieldImage.sprite = imgLaboratory_Symbol;
                 break;
             case "Labor":
                 actionsTextField.text = "Italiener";
+                ActionsTextFieldImage.sprite = imgItalienrestaurant_Symbol;
                 break;
             case "Italiener":
                 actionsTextField.text = "Hafen";
+                ActionsTextFieldImage.sprite = imgHarbor_Symbol;
                 break;
             case "Hafen":
                 actionsTextField.text = "Bar";
+                ActionsTextFieldImage.sprite = imgBar_Symbol;
                 break;
             case "Bar":
                 actionsTextField.text = "Stadtplatz";
+                ActionsTextFieldImage.sprite = imgMainsquare_Symbol;
                 break;
         }
     }
+
     void btnPlaceUp()
     {
         switch (actionsTextField.text)
         {
             case "Stadtplatz":
                 actionsTextField.text = "Bar";
+                ActionsTextFieldImage.sprite = imgBar_Symbol;
                 break;
             case "Park":
                 actionsTextField.text = "Stadtplatz";
+                ActionsTextFieldImage.sprite = imgMainsquare_Symbol;
                 break;
             case "Krankenhaus":
                 actionsTextField.text = "Park";
+                ActionsTextFieldImage.sprite = imgPark_Symbol;
                 break;
             case "Bank":
                 actionsTextField.text = "Krankenhaus";
+                ActionsTextFieldImage.sprite = imgHospital_Symbol;
                 break;
             case "Parlament":
                 actionsTextField.text = "Bank";
+                ActionsTextFieldImage.sprite = imgBank_Symbol;
                 break;
             case "Friedhof":
                 actionsTextField.text = "Parlament";
+                ActionsTextFieldImage.sprite = imgParliament_Symbol;
                 break;
             case "Gefängnis":
                 actionsTextField.text = "Friedhof";
+                ActionsTextFieldImage.sprite = imgCemetary_Symbol;
                 break;
             case "Kasino":
                 actionsTextField.text = "Gefängnis";
+                ActionsTextFieldImage.sprite = imgPrison_Symbol;
                 break;
             case "Internet Cafe":
                 actionsTextField.text = "Kasino";
+                ActionsTextFieldImage.sprite = imgCasino_Symbol;
                 break;
             case "Bahnhof":
                 actionsTextField.text = "Internet Cafe";
+                ActionsTextFieldImage.sprite = imgInternetcafe_Symbol;
                 break;
             case "Armee Laden":
                 actionsTextField.text = "Bahnhof";
+                ActionsTextFieldImage.sprite = imgTrainstation_Symbol;
                 break;
             case "Shopping Center":
                 actionsTextField.text = "Armee Laden";
+                ActionsTextFieldImage.sprite = imgArmyshop_Symbol;
                 break;
             case "Schrottplatz":
                 actionsTextField.text = "Shopping Center";
+                ActionsTextFieldImage.sprite = imgShoppingcenter_Symbol;
                 break;
             case "Bibliothek":
                 actionsTextField.text = "Schrottplatz";
+                ActionsTextFieldImage.sprite = imgJunkyard_Symbol;
                 break;
             case "Labor":
                 actionsTextField.text = "Bibliothek";
+                ActionsTextFieldImage.sprite = imgLibrary_Symbol;
                 break;
             case "Italiener":
                 actionsTextField.text = "Labor";
+                ActionsTextFieldImage.sprite = imgLaboratory_Symbol;
                 break;
             case "Hafen":
                 actionsTextField.text = "Italiener";
+                ActionsTextFieldImage.sprite = imgItalienrestaurant_Symbol;
                 break;
             case "Bar":
                 actionsTextField.text = "Hafen";
+                ActionsTextFieldImage.sprite = imgHarbor_Symbol;
                 break;
         }
     }
@@ -2925,6 +2999,44 @@ public class Place : MonoBehaviour
         simpleDialogue("Wohin muss " + translateName(player) + " gehen?", 70);
         manipulatedPlayer = player;
         fiveButtons();
+
+        btnOne.GetComponent<RectTransform>().sizeDelta = new Vector2(332, 333);
+        btnOne.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1, 58.5f);
+        btnOne.GetComponent<Image>().sprite = threeByThree;
+
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(349, -233.5f);
+        btnTwo.GetComponent<Image>().sprite = fourByThree;
+
+        btnThree.GetComponent<RectTransform>().sizeDelta = new Vector2(332, 333);
+        btnThree.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1, -526.5f);
+        btnThree.GetComponent<Image>().sprite = threeByThree;
+
+        btnFour.GetComponent<RectTransform>().sizeDelta = new Vector2(332, 447);
+        btnFour.GetComponent<RectTransform>().anchoredPosition = new Vector2(-352, -233.5f);
+        btnFour.GetComponent<Image>().sprite = fourByThree;
+
+        btnFive.GetComponent<RectTransform>().sizeDelta = new Vector2(332, 215);
+        btnFive.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1, -233.5f);
+        btnFive.GetComponent<Image>().sprite = twoByThree;
+
+        btnOneBorder.gameObject.SetActive(true);
+        btnOneBorder.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(170, 170);
+        btnTwoBorder.gameObject.SetActive(true);
+        btnTwoBorder.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(170, 170);
+        btnThreeBorder.gameObject.SetActive(true);
+        btnThreeBorder.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(170, 170);
+        btnFourBorder.gameObject.SetActive(true);
+        btnFourBorder.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(170, 170);
+        btnFiveBorder.gameObject.SetActive(true);
+        btnFiveBorder.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(170, 170);
+
+        btnOneText.gameObject.SetActive(false);
+        btnTwoText.gameObject.SetActive(false);
+        btnThreeText.gameObject.SetActive(false);
+        btnFourText.gameObject.SetActive(false);
+        btnFiveText.gameObject.SetActive(false);
+
         int[] currentPlayerPlace = GameState.Instance.currentPlace[player];
         if (currentPlayerPlace[0] > 0)
         {
@@ -2933,11 +3045,13 @@ public class Place : MonoBehaviour
                 btnOne.interactable = false;
                 btnOneText.fontSize = 50;
                 btnOneText.text = "Quarantäne";
+                btnOneBorder.sprite = imgQuarantine_Symbol;
             }
             else
             {
                 btnOne.interactable = true;
                 btnOneText.text = translatePlace(GameState.Instance.board[currentPlayerPlace[0] - 1, currentPlayerPlace[1]]);
+                btnOneBorder.sprite=getPlaceSymbol(GameState.Instance.board[currentPlayerPlace[0] - 1, currentPlayerPlace[1]]);
             }
 
         }
@@ -2946,6 +3060,7 @@ public class Place : MonoBehaviour
 
             btnOne.interactable = false;
             btnOneText.text = "Stadtrand";
+            btnOneBorder.sprite = imgEdge_Symbol;
         }
         if (currentPlayerPlace[1] < 5)
         {
@@ -2954,17 +3069,20 @@ public class Place : MonoBehaviour
                 btnTwo.interactable = false;
                 btnTwoText.fontSize = 50;
                 btnTwoText.text = "Quarantäne";
+                btnTwoBorder.sprite = imgQuarantine_Symbol;
             }
             else
             {
                 btnTwo.interactable = true;
                 btnTwoText.text = translatePlace(GameState.Instance.board[currentPlayerPlace[0], currentPlayerPlace[1] + 1]);
+                btnTwoBorder.sprite = getPlaceSymbol(GameState.Instance.board[currentPlayerPlace[0], currentPlayerPlace[1] + 1]);
             }
         }
         else
         {
             btnTwo.interactable = false;
             btnTwoText.text = "Stadtrand";
+            btnTwoBorder.sprite = imgEdge_Symbol;
         }
 
         if (currentPlayerPlace[0] < 6)
@@ -2974,17 +3092,20 @@ public class Place : MonoBehaviour
                 btnThree.interactable = false;
                 btnThreeText.fontSize = 50;
                 btnThreeText.text = "Quarantäne";
+                btnThreeBorder.sprite = imgQuarantine_Symbol;
             }
             else
             {
                 btnThree.interactable = true;
                 btnThreeText.text = translatePlace(GameState.Instance.board[currentPlayerPlace[0] + 1, currentPlayerPlace[1]]);
+                btnThreeBorder.sprite = getPlaceSymbol(GameState.Instance.board[currentPlayerPlace[0] + 1, currentPlayerPlace[1]]);
             }
         }
         else
         {
             btnThree.interactable = false;
             btnThreeText.text = "Stadtrand";
+            btnThreeBorder.sprite = imgEdge_Symbol;
         }
         if (currentPlayerPlace[1] > 0)
         {
@@ -2993,17 +3114,20 @@ public class Place : MonoBehaviour
                 btnFour.interactable = false;
                 btnFourText.fontSize = 50;
                 btnFourText.text = "Quarantäne";
+                btnFourBorder.sprite = imgQuarantine_Symbol;
             }
             else
             {
                 btnFour.interactable = true;
                 btnFourText.text = translatePlace(GameState.Instance.board[currentPlayerPlace[0], currentPlayerPlace[1] - 1]);
+                btnFourBorder.sprite = getPlaceSymbol(GameState.Instance.board[currentPlayerPlace[0], currentPlayerPlace[1] - 1]);
             }
         }
         else
         {
             btnFour.interactable = false;
             btnFourText.text = "Stadtrand";
+            btnFourBorder.sprite = imgEdge_Symbol;
         }
 
         if (GameState.Instance.quarantined[GameState.Instance.board[currentPlayerPlace[0], currentPlayerPlace[1]]] > 0)
@@ -3011,11 +3135,13 @@ public class Place : MonoBehaviour
             btnFive.interactable = false;
             btnFiveText.fontSize = 50;
             btnFiveText.text = "Quarantäne";
+            btnFiveBorder.sprite = imgQuarantine_Symbol;
         }
         else
         {
             btnFive.interactable = true;
             btnFiveText.text = translatePlace(GameState.Instance.board[currentPlayerPlace[0], currentPlayerPlace[1]]);
+            btnFiveBorder.sprite = getPlaceSymbol(GameState.Instance.board[currentPlayerPlace[0], currentPlayerPlace[1]]);
         }
 
         btnOne.onClick.AddListener(btnManipulationUp);
@@ -3596,6 +3722,7 @@ public class Place : MonoBehaviour
         btnSeven.gameObject.SetActive(true);
         btnEight.gameObject.SetActive(true);
 
+
         btnOne.onClick.RemoveAllListeners();
         btnTwo.onClick.RemoveAllListeners();
         btnThree.onClick.RemoveAllListeners();
@@ -3622,6 +3749,16 @@ public class Place : MonoBehaviour
         btnSix.gameObject.SetActive(false);
         btnSeven.gameObject.SetActive(false);
         btnEight.gameObject.SetActive(false);
+
+        btnOneText.gameObject.SetActive(true);
+        btnTwoText.gameObject.SetActive(true);
+        btnThreeText.gameObject.SetActive(true);
+        btnFourText.gameObject.SetActive(true);
+        btnFiveText.gameObject.SetActive(true);
+        btnSixText.gameObject.SetActive(true);
+        btnSevenText.gameObject.SetActive(true);
+        btnEightText.gameObject.SetActive(true);
+
 
         btnOneImage.color = new Color(255, 255, 255, 255);
         btnTwoImage.color = new Color(255, 255, 255, 255);
@@ -3661,6 +3798,9 @@ public class Place : MonoBehaviour
         btnFour.targetGraphic = btnFour.GetComponent<Image>();
         btnFive.targetGraphic = btnFive.GetComponent<Image>();
         btnSix.targetGraphic = btnSix.GetComponent<Image>();
+
+        up.gameObject.SetActive(false);
+        down.gameObject.SetActive(false);
 
         actionsTextField.gameObject.SetActive(false);
 
@@ -3843,6 +3983,15 @@ public class Place : MonoBehaviour
         btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(800, 214);
         btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(116, -233);
         btnTwo.GetComponent<Image>().sprite = twoBySeven;
+
+        btnOneText.text = "";
+        btnThreeText.text = "";
+
+        up.gameObject.SetActive(true);
+        down.gameObject.SetActive(true);
+
+        actionsTextField.gameObject.SetActive(true);
+        ActionsTextFieldImage.gameObject.SetActive(false);
     }
     void actionTextFieldString()
     {
@@ -3850,13 +3999,22 @@ public class Place : MonoBehaviour
         actionsTextField.gameObject.SetActive(true);
         actionsTextFieldPanel.gameObject.SetActive(true);
 
-        actionsTextFieldPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(566, 214);
-        actionsTextFieldPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(-235, -233);
-        actionsTextFieldPanel.GetComponent<Image>().sprite = twoByFive;
+        actionsTextFieldPanel.GetComponent<RectTransform>().sizeDelta = new Vector2(214, 214);
+        actionsTextFieldPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(-411, -233);
+        actionsTextFieldPanel.GetComponent<Image>().sprite = twoByTwo;
 
-        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(448, 214);
-        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(290, -233);
-        btnTwo.GetComponent<Image>().sprite = twoByFour;
+        btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(800, 214);
+        btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(116, -233);
+        btnTwo.GetComponent<Image>().sprite = twoBySeven;
+
+        btnOneText.text = "";
+        btnThreeText.text = "";
+
+        up.gameObject.SetActive(true);
+        down.gameObject.SetActive(true);
+
+        actionsTextField.gameObject.SetActive(false);
+        ActionsTextFieldImage.gameObject.SetActive(true);
     }
     #endregion
 
@@ -4039,7 +4197,86 @@ public class Place : MonoBehaviour
         localPlayer.SetCurrentPlace(player, targetPosition[0], targetPosition[1]);
         localPlayer.SetIsDisabled(player, 2);
     }
+    Sprite getPlaceSymbol(int place)
+    {
+        Sprite s = imgStreet_Symbol;
+        switch (place)
+        {
+            case 1:
+                s = imgMainsquare_Symbol;
 
+                break;
+            case 2:
+                s = imgPark_Symbol;
+
+                break;
+            case 3:
+                s = imgHospital_Symbol;
+
+                break;
+            case 4:
+                s = imgBank_Symbol;
+
+                break;
+            case 5:
+                s = imgParliament_Symbol;
+
+                break;
+            case 6:
+                s = imgCemetary_Symbol;
+
+                break;
+            case 7:
+                s = imgPrison_Symbol;
+
+                break;
+            case 8:
+                s = imgCasino_Symbol;
+
+                break;
+            case 9:
+                s = imgInternetcafe_Symbol;
+
+                break;
+            case 10:
+                s = imgTrainstation_Symbol;
+
+                break;
+            case 11:
+                s = imgArmyshop_Symbol;
+
+                break;
+            case 12:
+                s = imgShoppingcenter_Symbol;
+
+                break;
+            case 13:
+                s = imgJunkyard_Symbol;
+
+                break;
+            case 14:
+                s = imgLibrary_Symbol;
+
+                break;
+            case 15:
+                s = imgLaboratory_Symbol;
+
+                break;
+            case 16:
+                s = imgItalienrestaurant_Symbol;
+
+                break;
+            case 17:
+                s = imgHarbor_Symbol;
+
+                break;
+            case 18:
+                s = imgBar_Symbol;
+
+                break;
+        }
+        return s;
+    }
     string translatePlace(int place)
     {
         string s = "Straße";

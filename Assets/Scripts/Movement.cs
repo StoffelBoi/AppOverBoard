@@ -169,6 +169,7 @@ public class Movement : MonoBehaviour {
         }
         else
         {
+            btnStay.interactable = true;
             imgStay.sprite = Symbol(GameState.Instance.board[currentPlace[0], currentPlace[1]]);
         }
         if (currentPlace[0] > 0)
