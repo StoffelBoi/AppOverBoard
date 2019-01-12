@@ -135,6 +135,8 @@ public class BoardAssembly : MonoBehaviour {
         btnOk.onClick.AddListener(btnReadyToPlay);
         btnBack.onClick.RemoveAllListeners();
         btnBack.onClick.AddListener(btnNotReady);
+        btnMenu.onClick.RemoveAllListeners();
+        btnMenu.onClick.AddListener(UIManager.Instance.OpenMenu);
         player = GameState.Instance.localPlayer.GetComponent<Player>();
         board = new int[7, 6]
             {
@@ -199,8 +201,8 @@ public class BoardAssembly : MonoBehaviour {
     }
     IEnumerator GetBoard()
     {
-        Debug.Log("GetBoard Start");
-        yield return new WaitForSeconds(0.5f);
+    
+        yield return new WaitForSeconds(1f);
         for (int i = 0; i < 7; i++)
         {
             for (int j = 0; j <6; j++)

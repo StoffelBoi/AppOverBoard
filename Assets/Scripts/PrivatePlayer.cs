@@ -30,6 +30,21 @@ public class PrivatePlayer : MonoBehaviour {
     public int playerID;
     private string character;
     private string villain;
+
+    public Image TargetTimeTextPanel;
+    public Text TargetTimeText;
+    public Image TargetTimeClockPanel;
+
+    public Image ClockBG;
+    public Image ClockMask;
+    public Image ClockProgress;
+
+    public Sprite Green;
+    public Sprite Red;
+
+    public Image TargetTimePanel;
+    public Image TargetTime;
+
     void OnEnable()
     {
         txtFacts.fontSize = 69;
@@ -41,7 +56,10 @@ public class PrivatePlayer : MonoBehaviour {
         btnItems.onClick.AddListener(UIManager.Instance.OpenItems);
         player = GameState.Instance.localPlayer.GetComponent<Player>();
         playerID = player.id;
-
+        TargetTimeClockPanel.gameObject.SetActive(false);
+        TargetTimeTextPanel.gameObject.SetActive(false);
+        TargetTimePanel.gameObject.SetActive(false);
+        btnGuess.gameObject.SetActive(true);
         character = GameState.Instance.roles[playerID];
         villain = GameState.Instance.criminalRole;
         Sprite portrait=mcay;
@@ -73,10 +91,10 @@ public class PrivatePlayer : MonoBehaviour {
                 name += "Eric Edmond\nReporter";
                 break;
         }
-        
 
-        
 
+
+       
         string infos = "";
         infos +=
             "Fakten:\n\nPerson:\t"+ GameState.Instance.placeFact[playerID] +
@@ -86,7 +104,11 @@ public class PrivatePlayer : MonoBehaviour {
         if (GameState.Instance.criminal == character)
         {
             txtFacts.fontSize = 53;
-            btnGuess.interactable = false;
+            btnGuess.gameObject.SetActive(false);
+            TargetTimeClockPanel.gameObject.SetActive(true);
+            TargetTimeTextPanel.gameObject.SetActive(true);
+            TargetTimePanel.gameObject.SetActive(true);
+           
             name += "\n" + villain;
             infos = "Nicht aktivierte Zielorte:\n\n";
             for (int i = 0; i<3-GameState.Instance.activatedQuestPlaces; i++)
@@ -94,6 +116,21 @@ public class PrivatePlayer : MonoBehaviour {
                 infos += (i+1)+". Zielort:" + translatePlace(GameState.Instance.questPlaces[i]) + "\n\n";
             }
             infos += "Verbrechensort:" + translatePlace(GameState.Instance.targetPlace);
+            switch (GameState.Instance.criminalRole)
+            {
+                case "Inferno":
+                    TargetTimeText.text = "Innerhalb von 50min";
+                    break;
+                case "Dr.Mortifier":
+                    TargetTimeText.text = "Nach Verbrechen: in 10min 5 Felder entfernt";
+                    break;
+                case "Phantom":
+                    TargetTimeText.text = "Alle 20min für 5min";
+                    break;
+                case "Fasculto":
+                    TargetTimeText.text = "Nach 40min für 20min";
+                    break;
+            }
         }
         string money = "";
         string solveds = "";
@@ -127,11 +164,19 @@ public class PrivatePlayer : MonoBehaviour {
     }
     void btnToMenu()
     {
-        UIManager.Instance.Rules();
+        UIManager.Instance.OpenMenu();
     }
 
     void Update()
     {
+         if (GameState.Instance.targetTime)
+            {
+                TargetTime.sprite = Green;
+            }
+            else
+            {
+                TargetTime.sprite = Red;
+            }
         if (GameState.Instance.playerState[playerID] == "Movement")
         {
             btnTurnText.text = "Bewegung";
@@ -165,6 +210,75 @@ public class PrivatePlayer : MonoBehaviour {
         if (isActiveAndEnabled)
         {
             txtTime.text = GameState.Instance.elapsedTime;
+
+            if (GameState.Instance.roles[playerID] == GameState.Instance.criminal)
+            {
+                switch (GameState.Instance.criminalRole)
+                {
+                    case "Inferno":
+                        ClockBG.sprite = Red;
+                        ClockProgress.sprite = Green;
+
+                        float infernoProgress =(float)1034- (float)((float)1034 / (float)50 * (float)((float)50 - (float)((float)GameState.Instance.elapsedSeconds / (float)60)));
+                        ClockMask.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2((float)infernoProgress, 0);
+                        break;
+                    case "Dr.Mortifier":
+                        if (!GameState.Instance.planted)
+                        {
+                            ClockBG.sprite = Red;
+                            ClockProgress.sprite = Green;
+                        }
+                        else
+                        {
+                            ClockBG.sprite = Red;
+                            ClockProgress.sprite = Green;
+                            float mortifierProgress = (float)1034 - ((float)1034 / (float)10) * ((float)10 - (((float)TimeManager.Instance.getAwayTime.ElapsedMilliseconds/(float)1000) / (float)60));
+
+
+                            ClockMask.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2((float)mortifierProgress, 0);
+                        }
+
+
+                        break;
+                    case "Phantom":
+                        float phantomProgress = 0;
+                        if (!GameState.Instance.targetTime)
+                        {
+                            ClockBG.sprite = Green;
+                            ClockProgress.sprite = Red;
+                            phantomProgress = (float)1034 - ((float)1034 / (float)20) * ((float)20 - (((float)GameState.Instance.elapsedSeconds / (float)60) % (float)25));
+
+                        }
+                        else
+                        {
+                            ClockBG.sprite = Red;
+                            ClockProgress.sprite = Green;
+                            phantomProgress = (float)1034 - ((float)1034 / (float)5) * ((float)5 - ((((float)GameState.Instance.elapsedSeconds / (float)60) % (float)25)- (float)20));
+
+                        }
+                        ClockMask.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2((float)phantomProgress, 0);
+
+                        break;
+                    case "Fasculto":
+                        float fascultoProgress = 0;
+                        if (!GameState.Instance.targetTime)
+                        {
+                            ClockBG.sprite = Green;
+                            ClockProgress.sprite = Red;
+                            fascultoProgress = (float)1034 - ((float)1034 / (float)40) * ((float)40 - ((float)GameState.Instance.elapsedSeconds / (float)60));
+
+                        }
+                        else
+                        {
+                            ClockBG.sprite = Red;
+                            ClockProgress.sprite = Green;
+                            fascultoProgress = (float)1034 - ((float)1034 / (float)0) * ((float)20 - (((float)GameState.Instance.elapsedSeconds / (float)60) - (float)40));
+
+                        }
+                        ClockMask.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2((float)fascultoProgress, 0);
+                        break;
+                }
+            }
         }
     }
 

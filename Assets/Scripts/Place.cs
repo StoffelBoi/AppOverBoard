@@ -64,6 +64,7 @@ public class Place : MonoBehaviour
 
     public Button btnBack;
     public Button btnInfo;
+    public Button btnMenu;
 
     public Text btnOneText;
     public Text btnTwoText;
@@ -128,6 +129,8 @@ public class Place : MonoBehaviour
     }
     void OnEnable()
     {
+        btnMenu.onClick.RemoveAllListeners();
+        btnMenu.onClick.AddListener(UIManager.Instance.OpenMenu);
         guessedCorrectly = true;
         localPlayer = GameState.Instance.localPlayer.GetComponent<Player>();
         currentBet = 0;
@@ -142,6 +145,7 @@ public class Place : MonoBehaviour
         btnBack.onClick.RemoveAllListeners();
         btnBack.onClick.AddListener(btnGoBack);
         btnInfo.gameObject.SetActive(true);
+        btnInfo.interactable = true;
         btnInfo.onClick.RemoveAllListeners();
         btnInfo.onClick.AddListener(btnToInfo);
         currentPlace = GameState.Instance.board[GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]];
@@ -847,7 +851,7 @@ public class Place : MonoBehaviour
     #region Dialogue
     void setDialogue(string newDialogue)
     {
-        btnInfo.gameObject.SetActive(false);
+        btnInfo.interactable = false;
         btnBack.interactable = false;
         oneButton();
         btnOneText.text = "Weiter";
@@ -3748,23 +3752,7 @@ public class Place : MonoBehaviour
         }
         return s;
     }
-    public bool calculateGetAway()
-    {
-        int distance = 0;
-        int[] start = findPosition(GameState.Instance.targetPlace);
-        int criminalID=-1;
-        for (int i = 0; i < GameState.Instance.playerCount; i++)
-        {
-            if (GameState.Instance.roles[i] == GameState.Instance.criminal)
-            {
-                criminalID = i;
-            }
-        }
-        int[] end = GameState.Instance.currentPlace[criminalID];
-        distance += Math.Abs(start[0] - end[0]);
-        distance += Math.Abs(start[1] - end[1]);
-        return (distance >= 5);
-    }
+   
 
     string translateName(int player)
     {

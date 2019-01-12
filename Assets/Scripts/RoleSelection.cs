@@ -12,19 +12,42 @@ public class RoleSelection : MonoBehaviour
     public Button btn_psychic;
     public Button btn_psychologist;
     public Button btn_reporter;
+    public Button btn_ok;
+    public Button btn_Menu;
+    public Button btn_Back;
+
+    public Image doctor_selectedBG;
+    public Image police_selectedBG;
+    public Image detective_selectedBG;
+    public Image psychic_selectedBG;
+    public Image psychologist_selectedBG;
+    public Image reporter_selectedBG;
+
+    public bool okPressed = false;
+    public bool selected=false;
     private Player player;
     void Start()
     {
-        
+        btn_Menu.onClick.AddListener(UIManager.Instance.OpenMenu);
         btn_doctor.onClick.AddListener(DoctorClick);
         btn_policeMan.onClick.AddListener(PoliceClick);
         btn_privateDetective.onClick.AddListener(DetectiveClick);
         btn_psychic.onClick.AddListener(PsychicClick);
         btn_psychologist.onClick.AddListener(PsychologistClick);
         btn_reporter.onClick.AddListener(ReporterClick);
+        btn_ok.onClick.AddListener(okClick);
+        btn_Back.onClick.AddListener(backClick);
     }
     void OnEnable()
     {
+        doctor_selectedBG.gameObject.SetActive(false);
+        police_selectedBG.gameObject.SetActive(false);
+        detective_selectedBG.gameObject.SetActive(false);
+        psychic_selectedBG.gameObject.SetActive(false);
+        psychologist_selectedBG.gameObject.SetActive(false);
+        reporter_selectedBG.gameObject.SetActive(false);
+        btn_ok.interactable = false;
+        btn_Back.interactable = false;
         player = GameState.Instance.localPlayer.GetComponent<Player>();
     }
     void setCriminalRole()
@@ -114,15 +137,14 @@ public class RoleSelection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        int selectedRoles = 0;
-        for (int i = 0; i < 6; i++)
+        if (selected)
         {
-            if (GameState.Instance.roles[i] != "")
-            {
-                selectedRoles++;
-            }
+            btn_ok.interactable = true;
         }
-        player.SetSelectedRoles(selectedRoles);
+        else
+        {
+            btn_ok.interactable = false;
+        }
         if (GameState.Instance.selectedRoles == GameState.Instance.playerCount)
         {
             setCriminalRole();
@@ -133,7 +155,7 @@ public class RoleSelection : MonoBehaviour
         {
             btn_doctor.interactable = false;
         }
-        else
+        else if(!okPressed)
         {
             btn_doctor.interactable = true;
         }
@@ -141,7 +163,7 @@ public class RoleSelection : MonoBehaviour
         {
             btn_policeMan.interactable = false;
         }
-        else
+        else if (!okPressed)
         {
             btn_policeMan.interactable = true;
         }
@@ -149,7 +171,7 @@ public class RoleSelection : MonoBehaviour
         {
             btn_privateDetective.interactable = false;
         }
-        else
+        else if (!okPressed)
         {
             btn_privateDetective.interactable = true;
         }
@@ -157,7 +179,7 @@ public class RoleSelection : MonoBehaviour
         {
             btn_psychic.interactable = false;
         }
-        else
+        else if (!okPressed)
         {
             btn_psychic.interactable = true;
         }
@@ -165,7 +187,7 @@ public class RoleSelection : MonoBehaviour
         {
             btn_psychologist.interactable = false;
         }
-        else
+        else if (!okPressed)
         {
             btn_psychologist.interactable = true;
         }
@@ -173,7 +195,7 @@ public class RoleSelection : MonoBehaviour
         {
             btn_reporter.interactable = false;
         }
-        else
+        else if (!okPressed)
         {
             btn_reporter.interactable = true;
         }
@@ -183,40 +205,135 @@ public class RoleSelection : MonoBehaviour
 
     void DoctorClick()
     {
+
+        doctor_selectedBG.gameObject.SetActive(true);
+        police_selectedBG.gameObject.SetActive(false);
+        detective_selectedBG.gameObject.SetActive(false);
+        psychic_selectedBG.gameObject.SetActive(false);
+        psychologist_selectedBG.gameObject.SetActive(false);
+        reporter_selectedBG.gameObject.SetActive(false);
+
         player.SetRole(player.id, "Doctor");
         initializingPlayer();
+        selected = true;
     }
 
     void PoliceClick()
     {
+        doctor_selectedBG.gameObject.SetActive(false);
+        police_selectedBG.gameObject.SetActive(true);
+        detective_selectedBG.gameObject.SetActive(false);
+        psychic_selectedBG.gameObject.SetActive(false);
+        psychologist_selectedBG.gameObject.SetActive(false);
+        reporter_selectedBG.gameObject.SetActive(false);
+
         player.SetRole(player.id, "Police");
         initializingPlayer();
+        selected = true;
     }
 
     void DetectiveClick()
     {
+        doctor_selectedBG.gameObject.SetActive(false);
+        police_selectedBG.gameObject.SetActive(false);
+        detective_selectedBG.gameObject.SetActive(true);
+        psychic_selectedBG.gameObject.SetActive(false);
+        psychologist_selectedBG.gameObject.SetActive(false);
+        reporter_selectedBG.gameObject.SetActive(false);
+
         player.SetRole(player.id, "Detective");
         initializingPlayer();
+        selected = true;
     }
 
     void PsychicClick()
     {
+        doctor_selectedBG.gameObject.SetActive(false);
+        police_selectedBG.gameObject.SetActive(false);
+        detective_selectedBG.gameObject.SetActive(false);
+        psychic_selectedBG.gameObject.SetActive(true);
+        psychologist_selectedBG.gameObject.SetActive(false);
+        reporter_selectedBG.gameObject.SetActive(false);
+
         player.SetRole(player.id, "Psychic");
         initializingPlayer();
+        selected = true;
     }
 
     void PsychologistClick()
     {
+        doctor_selectedBG.gameObject.SetActive(false);
+        police_selectedBG.gameObject.SetActive(false);
+        detective_selectedBG.gameObject.SetActive(false);
+        psychic_selectedBG.gameObject.SetActive(false);
+        psychologist_selectedBG.gameObject.SetActive(true);
+        reporter_selectedBG.gameObject.SetActive(false);
+
         player.SetRole(player.id, "Psychologist");
         initializingPlayer();
+        selected = true;
     }
 
     void ReporterClick()
     {
+        doctor_selectedBG.gameObject.SetActive(false);
+        police_selectedBG.gameObject.SetActive(false);
+        detective_selectedBG.gameObject.SetActive(false);
+        psychic_selectedBG.gameObject.SetActive(false);
+        psychologist_selectedBG.gameObject.SetActive(false);
+        reporter_selectedBG.gameObject.SetActive(true);
+
+
         player.SetRole(player.id, "Reporter");
         initializingPlayer();
+        selected = true;
     }
 
+    void okClick()
+    {
+        okPressed = true;
+        btn_policeMan.interactable = false;
+        btn_doctor.interactable = false;
+        btn_privateDetective.interactable = false;
+        btn_psychic.interactable = false;
+        btn_psychologist.interactable = false;
+        btn_reporter.interactable = false;
+        
+        player.SetSelectedRoles(GameState.Instance.selectedRoles+1);
+        btn_Back.interactable = true;
+        selected = false;
+    }
+
+    void backClick()
+    {
+        okPressed = false;
+        btn_policeMan.interactable = true;
+        btn_doctor.interactable = true;
+        btn_privateDetective.interactable = true;
+        btn_psychic.interactable = true;
+        btn_psychologist.interactable = true;
+        btn_reporter.interactable = true;
+
+        doctor_selectedBG.gameObject.SetActive(false);
+        police_selectedBG.gameObject.SetActive(false);
+        detective_selectedBG.gameObject.SetActive(false);
+        psychic_selectedBG.gameObject.SetActive(false);
+        psychologist_selectedBG.gameObject.SetActive(false);
+        reporter_selectedBG.gameObject.SetActive(false);
+
+
+
+
+
+
+
+
+        player.SetSelectedRoles(GameState.Instance.selectedRoles - 1);
+        btn_Back.interactable = false;
+        player.SetRole(player.id, "");
+        
+
+    }
     void initializingPlayer()
     {
         player.SetMoney(player.id, 6);

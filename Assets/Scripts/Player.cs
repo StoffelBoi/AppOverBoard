@@ -266,32 +266,27 @@ public class Player : NetworkBehaviour
         }
     }
     #endregion
-    #region SetCurrenTurn
+    #region SetCurrentTurn
     public void SetCurrentTurn(int currentTurn)
     {
-        GameState.Instance.currentTurn = currentTurn;
-        Debug.Log("SetCurrentTurn: " + currentTurn);
+        GameState.Instance.currentTurn = currentTurn;   
         if (isServer)
         {
-            Debug.Log("isServer");
             RpcSetCurrenTurn(currentTurn);
         }
         else
         {
-            Debug.Log("isNOTServer");
             CmdSetCurrentTurn(currentTurn);
         }
     }
     [Command]
     public void CmdSetCurrentTurn(int currentTurn)
     {
-        Debug.Log("CmdSetCurrentTurn");
         SetCurrentTurn(currentTurn);
     }
     [ClientRpc]
     public void RpcSetCurrenTurn(int currentTurn)
     {
-        Debug.Log("RpcSetCurrentTurn");
         if (!isServer)
         {
             GameState.Instance.currentTurn = currentTurn;
@@ -1311,7 +1306,67 @@ public class Player : NetworkBehaviour
     }
     #endregion
 
+    void Update()
+    {
+        if (isLocalPlayer)
+        {
+            if (GameState.Instance.criminalWin == true)
+            {
+                if (GameState.Instance.criminal == GameState.Instance.roles[id])
+                {
+                    UIManager.Instance.Win();
+                    return;
+                }
+                else
+                {
+                    UIManager.Instance.Loss();
+                    return;
+                }
+            }
+            if (GameState.Instance.playerWin.Contains(true))
+            {
+                if (GameState.Instance.playerWin[id])
+                {
+                    UIManager.Instance.Win();
+                    return;
+                }
+                else
+                {
+                    UIManager.Instance.Loss();
+                    return;
+                }
+            }
+            if (GameState.Instance.criminal == GameState.Instance.roles[id])
+            {
+                if (GameState.Instance.playerLost.Contains(true))
+                {
+                    int lostPlayers = 0;
+                    for (int i = 0; i < GameState.Instance.playerCount; i++)
+                    {
+                        if (GameState.Instance.playerLost[i])
+                        {
+                            lostPlayers++;
+                        }
+                    }
+                    if (lostPlayers == GameState.Instance.playerCount - 1)
+                    {
+                        GameState.Instance.localPlayer.GetComponent<Player>().SetCriminalWin(true);
+                        return;
+                    }
+                }
+            }
+            if (GameState.Instance.playerLost[id])
+            {
+                UIManager.Instance.Loss();
+                return;
+            }
+            if (GameState.Instance.draw)
+            {
+                UIManager.Instance.Draw();
+                return;
+            }
+        }
 
-   
+    }
 
 }

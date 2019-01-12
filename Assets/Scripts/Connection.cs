@@ -29,7 +29,7 @@ public class Connection : MonoBehaviour {
     }
     void OnEnable()
     {
-        playerCount = 3;
+        GameState.Instance.playerCount = 3;
         disableEverything();
         btnHost.gameObject.SetActive(true);
         btnJoin.gameObject.SetActive(true);
@@ -80,6 +80,7 @@ public class Connection : MonoBehaviour {
 
     void btnSelectPlayerCount()
     {
+
         disableEverything();
         btnUp.gameObject.SetActive(true);
         btnDown.gameObject.SetActive(true);
@@ -121,10 +122,11 @@ public class Connection : MonoBehaviour {
 
     void btnHostClick()
     {
+ 
         MyNetManager.Instance.StartGame();
-        GameState.Instance.playerCount = playerCount;
+        GameState.Instance.connectedPlayer = playerCount;
     }
-    //@TODO add back button
+
     void btnJoinClick()
     {
         disableEverything();
@@ -135,6 +137,8 @@ public class Connection : MonoBehaviour {
         infoPanel.gameObject.SetActive(true);
         IPInputField.gameObject.SetActive(true);
         IPInputField.interactable = false;
+        btnBack.onClick.RemoveAllListeners();
+        btnBack.interactable = false;
         btnBack.onClick.AddListener(btnStopHost);
         btnJoin.GetComponent<RectTransform>().anchoredPosition = new Vector3(116, -59.5f, 0);
         MyNetManager.Instance.SearchGame();
@@ -144,6 +148,7 @@ public class Connection : MonoBehaviour {
 
     public void ManualConnectLayout()
     {
+        btnBack.interactable = true;
         btnJoin.GetComponentInChildren<Text>().text = "Bestätigen";
         btnJoin.onClick.RemoveAllListeners();
         btnJoin.onClick.AddListener(MyNetManager.Instance.ManualConnect);
@@ -153,7 +158,7 @@ public class Connection : MonoBehaviour {
 
     void btnStopHost()
     {
+
         MyNetManager.Instance.StopHosting();
-        OnEnable();
     }
 }

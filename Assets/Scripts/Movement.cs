@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour {
     public Button btnDown;
     public Button btnLeft;
     public Button btnUp;
-
+    public Button btnMenu;
     public Button btnInfo;
 
     public Image imgChar;
@@ -80,7 +80,7 @@ public class Movement : MonoBehaviour {
     
     void Start()
     {
-        
+        btnMenu.onClick.AddListener(UIManager.Instance.OpenMenu);
         btnInfo.onClick.AddListener(btnToInfo);
         btnRight.onClick.AddListener(rightClick);
         btnLeft.onClick.AddListener(leftClick);

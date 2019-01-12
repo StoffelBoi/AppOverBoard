@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour {
     public Canvas canvasLoss;
     public Canvas canvasDraw;
     public Canvas canvasItems;
+    public Canvas canvasMenu;
 
     public GameObject StartUpController;
     public GameObject ConnectionController;
@@ -46,6 +47,8 @@ public class UIManager : MonoBehaviour {
     public GameObject LossController;
     public GameObject DrawController;
     public GameObject ItemsController;
+    public GameObject MenuController;
+
     public static UIManager Instance;
     // Use this for initialization
 
@@ -61,71 +64,11 @@ public class UIManager : MonoBehaviour {
         StartUp();
     }
 
-    void Update()
-    {
-        if (GameState.Instance.localPlayer != null)
-        {
-            if (GameState.Instance.criminalWin == true)
-            {
-                if (GameState.Instance.criminal == GameState.Instance.roles[GameState.Instance.localPlayer.GetComponent<Player>().id])
-                {
-                    Win();
-                    return;
-                }
-                else
-                {
-                    Loss();
-                    return;
-                }
-            }
-            if (GameState.Instance.playerWin.Contains(true))
-            {
-                if (GameState.Instance.playerWin[GameState.Instance.localPlayer.GetComponent<Player>().id])
-                {
-                    Win();
-                    return;
-                }
-                else
-                {
-                    Loss();
-                    return;
-                }
-            }
-            if (GameState.Instance.criminal == GameState.Instance.roles[GameState.Instance.localPlayer.GetComponent<Player>().id])
-            {
-                if (GameState.Instance.playerLost.Contains(true))
-                {
-                    int lostPlayers = 0;
-                    for (int i = 0; i < GameState.Instance.playerCount; i++)
-                    {
-                        if (GameState.Instance.playerLost[i])
-                        {
-                            lostPlayers++;
-                        }
-                    }
-                    if (lostPlayers == GameState.Instance.playerCount - 1)
-                    {
-                        GameState.Instance.localPlayer.GetComponent<Player>().SetCriminalWin(true);
-                        return;
-                    }
-                }
-            }
-            if (GameState.Instance.playerLost[GameState.Instance.localPlayer.GetComponent<Player>().id])
-            {
-                Loss();
-                return;
-            }
-            if (GameState.Instance.draw)
-            {
-                Draw();
-                return;
-            }
-        }
-    }
 
     public void RestartScene()
     {
         MyNetManager.Instance.StopHosting();
+        UnityEngine.Networking.NetworkManager.Shutdown();
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
     }
@@ -158,6 +101,7 @@ public class UIManager : MonoBehaviour {
         canvasLoss.enabled = false;
         canvasDraw.enabled = false;
         canvasItems.enabled = false;
+        canvasMenu.enabled = false;
         /*
         StartUpController.GetComponent<StartUp>().enabled = false;
         ConnectionController.GetComponent<Connection>().enabled = false;
@@ -184,6 +128,7 @@ public class UIManager : MonoBehaviour {
         LossController.SetActive(false);
         DrawController.SetActive(false);
         ItemsController.SetActive(false);
+        MenuController.SetActive(false);
     }
 
     public void StartUp()
@@ -206,6 +151,7 @@ public class UIManager : MonoBehaviour {
 
     public void RoleSelection()
     {
+        GameState.Instance.boardGenerated = false;
         DisableEverything();
         canvasRoleSelection.gameObject.SetActive(true);
         canvasRoleSelection.enabled = true;
@@ -224,6 +170,7 @@ public class UIManager : MonoBehaviour {
 
     public void BoardAssembly()
     {
+        GameState.Instance.boardGenerated = true;
         DisableEverything();
         canvasBoardAssembly.gameObject.SetActive(true);
         canvasBoardAssembly.enabled = true;
@@ -233,6 +180,7 @@ public class UIManager : MonoBehaviour {
 
     public void PrivatePlayer()
     {
+        
         DisableEverything();
         canvasPrivatePlayer.gameObject.SetActive(true);
         canvasPrivatePlayer.enabled = true;
@@ -409,6 +357,19 @@ public class UIManager : MonoBehaviour {
         canvasItems.gameObject.SetActive(false);
         canvasItems.enabled = false;
         ItemsController.SetActive(false);
+    }
+
+    public void OpenMenu()
+    {
+        canvasMenu.gameObject.SetActive(true);
+        canvasMenu.enabled = true;
+        MenuController.SetActive(true);
+    }
+    public void CloseMenu()
+    {
+        canvasMenu.gameObject.SetActive(false);
+        canvasMenu.enabled = false;
+        MenuController.SetActive(false);
     }
 }
 

@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 
-public class GameState : NetworkBehaviour {
+public class GameState : NetworkBehaviour
+{
 
     public static GameState Instance;
     public GameObject localPlayer;
@@ -19,7 +20,7 @@ public class GameState : NetworkBehaviour {
 
     public List<string> playerState = new List<string>();
 
-    public List<string> roles =new List<string>();
+    public List<string> roles = new List<string>();
 
     public List<int> money = new List<int>();
 
@@ -36,13 +37,13 @@ public class GameState : NetworkBehaviour {
     public List<bool> isHintManipulated = new List<bool>();
 
     public List<bool> isMovementManipulated = new List<bool>();
-   
+
     public List<bool> skillUsed = new List<bool>();
 
     public List<string> lastTransaction = new List<string>();
 
     public List<string> lastAction = new List<string>();
- 
+
     public List<int> solvedFacts = new List<int>();
 
     public List<string> playerFact = new List<string>();
@@ -94,19 +95,28 @@ public class GameState : NetworkBehaviour {
     public int activatedQuestPlaces;
     public bool planted = false;
     public bool bigTrapUsed;
-   
+    public bool boardGenerated = false;
     public int[,] board;
-   
+
 
     void Awake()
     {
         restartAwake();
     }
-    void Start() {
+
+    void Start()
+    {
+
         restartStart();
     }
     void restartAwake()
     {
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
+            Destroy(gameObject);
+        planted = false;
+        boardGenerated = false;
         selectedRoles = 0;
         elapsedSeconds = 0;
         elapsedTime = "0:00:00";
@@ -119,14 +129,11 @@ public class GameState : NetworkBehaviour {
         bigTrapUsed = false;
         draw = false;
         criminalWin = false;
-        if (Instance == null)
-            Instance = this;
-        else if (Instance != this)
-            Destroy(gameObject);
+
     }
     void restartStart()
     {
-
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
         for (int i = 0; i < 6; i++)
         {
             readyToPlay.Add(false);

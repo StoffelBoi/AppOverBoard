@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
@@ -10,8 +12,9 @@ public class TimeManager : MonoBehaviour {
     private bool started;
     private string criminalRole;
     public bool getAway;
-    private Stopwatch getAwayTime;
+    public Stopwatch getAwayTime;
     private Player player;
+    public int speed=1;
     void Awake()
     {
         if (Instance == null)
@@ -44,7 +47,7 @@ public class TimeManager : MonoBehaviour {
 	void Update () {
         if (started)
         {
-           player.SetElapsedSeconds((int)(stopwatch.ElapsedMilliseconds / 1000));
+            GameState.Instance.elapsedSeconds = (speed * (int)(stopwatch.ElapsedMilliseconds / 1000));
             elapsedMinutes = GameState.Instance.elapsedSeconds / 60;
             elapsedHours = elapsedMinutes / 60;
             string seconds = "" + (GameState.Instance.elapsedSeconds % 60);
@@ -82,7 +85,7 @@ public class TimeManager : MonoBehaviour {
                     }
                     if(getAwayTime.ElapsedMilliseconds / 1000 >= 600)
                     {
-                        if(Place.Instance.calculateGetAway())
+                        if(calculateGetAway())
                         {
                             player.SetCriminalWin(true);
                         }
@@ -130,5 +133,39 @@ public class TimeManager : MonoBehaviour {
 
 
         }
+    }
+
+    public bool calculateGetAway()
+    {
+        int distance = 0;
+        int[] start = findPosition(GameState.Instance.targetPlace);
+        int criminalID = -1;
+        for (int i = 0; i < GameState.Instance.playerCount; i++)
+        {
+            if (GameState.Instance.roles[i] == GameState.Instance.criminal)
+            {
+                criminalID = i;
+            }
+        }
+        int[] end = GameState.Instance.currentPlace[criminalID];
+        distance += Math.Abs(start[0] - end[0]);
+        distance += Math.Abs(start[1] - end[1]);
+        return (distance >= 5);
+    }
+    int[] findPosition(int place)
+    {
+        int[] position = new int[2];
+        for (int i = 0; i < 7; i++)
+        {
+            for (int j = 0; j < 6; j++)
+            {
+                if (GameState.Instance.board[i, j] == place)
+                {
+                    position[0] = i;
+                    position[1] = j;
+                }
+            }
+        }
+        return position;
     }
 }

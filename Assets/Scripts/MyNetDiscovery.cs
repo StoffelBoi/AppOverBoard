@@ -11,7 +11,6 @@ public class MyNetDiscovery : NetworkDiscovery
 
         var items = fromAddress.Split(':');
         MyNetManager.Instance.networkAddress = items[3];
-        Debug.Log(items[3]);
         MyNetManager.Instance.StartClient();
         StopBroadcast();
     }
