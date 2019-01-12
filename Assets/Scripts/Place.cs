@@ -804,7 +804,42 @@ public class Place : MonoBehaviour
     {
         if (!GameState.Instance.usedEnergyDrink.Contains(true))
         {
-            StartCoroutine("changePlayer");
+            System.Random rn = new System.Random();
+            int randomHint = rn.Next(1, 10);
+            if (randomHint == 1)
+            {
+                if (GameState.Instance.roles[GameState.Instance.currentTurn] == GameState.Instance.criminal)
+                {
+                    addTrueHint();
+                }
+                else
+                {
+                    addFalseHint();
+                }
+            }
+            localPlayer.SetPlayerState(GameState.Instance.currentTurn, "Waiting");
+            localPlayer.SetCurrentTurn(((GameState.Instance.currentTurn + 1) % GameState.Instance.playerCount));
+            localPlayer.SetPlayerState(GameState.Instance.currentTurn, "Movement");
+            //counting down quarantine time
+            if (GameState.Instance.roles[GameState.Instance.currentTurn] == "Doctor")
+            {
+                for (int i = 0; i < 19; i++)
+                {
+                    if (GameState.Instance.quarantined[i] > 0)
+                    {
+                        localPlayer.SetQuarantine(i, (GameState.Instance.quarantined[i] - 1));
+                    }
+                }
+            }
+            if (GameState.Instance.playerLost[GameState.Instance.currentTurn])
+            {
+                Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " has already lost");
+                endTurn();
+            }
+            else
+            {
+                UIManager.Instance.PrivatePlayer();
+            }
         }
         else
         {
@@ -813,47 +848,7 @@ public class Place : MonoBehaviour
         }
     }
 
-    IEnumerator changePlayer()
-    {
-        System.Random rn = new System.Random();
-        int randomHint = rn.Next(1, 10);
-        if (randomHint == 1)
-        {
-            if (GameState.Instance.roles[GameState.Instance.currentTurn] == GameState.Instance.criminal)
-            {
-                addTrueHint();
-            }
-            else
-            {
-                addFalseHint();
-            }
-        }
-        localPlayer.SetPlayerState(GameState.Instance.currentTurn, "Waiting");
-        yield return new WaitForSeconds(0.3f);
-        localPlayer.SetCurrentTurn(((GameState.Instance.currentTurn + 1) % GameState.Instance.playerCount));
-        yield return new WaitForSeconds(0.3f);
-        localPlayer.SetPlayerState(GameState.Instance.currentTurn, "Movement");
-        //counting down quarantine time
-        if (GameState.Instance.roles[GameState.Instance.currentTurn] == "Doctor")
-        {
-            for (int i = 0; i < 19; i++)
-            {
-                if (GameState.Instance.quarantined[i] > 0)
-                {
-                    localPlayer.SetQuarantine(i, (GameState.Instance.quarantined[i] - 1));
-                }
-            }
-        }
-        if (GameState.Instance.playerLost[GameState.Instance.currentTurn])
-        {
-            Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " has already lost");
-            endTurn();
-        }
-        else
-        {
-            UIManager.Instance.PrivatePlayer();
-        }
-    }
+
     #region Dialogue
     void setDialogue(string newDialogue)
     {
