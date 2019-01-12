@@ -11,8 +11,9 @@ public class Movement : MonoBehaviour {
     public Button btnDown;
     public Button btnLeft;
     public Button btnUp;
-    public Button btnMenu;
+
     public Button btnInfo;
+    public Button btnMenu;
 
     public Image imgChar;
     public Image imgPlace;

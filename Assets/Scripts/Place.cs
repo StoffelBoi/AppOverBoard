@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System;
 public class Place : MonoBehaviour
 {
-    
+
     public Text placeName;
     public Image image;
     public Text actionsTextField;
@@ -414,7 +414,7 @@ public class Place : MonoBehaviour
     {
         if (GameState.Instance.roles[player] != GameState.Instance.criminal)
         {
-       
+
             guessedCorrectly = false;
         }
         guessedPlayer = translateName(player);
@@ -448,7 +448,7 @@ public class Place : MonoBehaviour
     }
     void CheckRoleFact(int role)
     {
-        
+
         switch (role)
         {
             case 0:
@@ -643,7 +643,7 @@ public class Place : MonoBehaviour
         oneButton();
         btnOneText.text = "OK";
         btnOne.onClick.AddListener(checkGuessClick);
-        simpleDialogue("Spieler: "+guessedPlayer+"\nVerbrecher: "+guessedCriminal+"\nZielort: " +guessedPlace+"\nKorrekt?", 60);
+        simpleDialogue("Spieler: " + guessedPlayer + "\nVerbrecher: " + guessedCriminal + "\nZielort: " + guessedPlace + "\nKorrekt?", 60);
     }
     void checkGuessClick()
     {
@@ -757,14 +757,14 @@ public class Place : MonoBehaviour
                     {
                         if (!GameState.Instance.items[GameState.Instance.currentTurn].Contains("ProtectiveVest"))
                         {
-                           
+
                             activatedTrap(GameState.Instance.currentTurn, findTargetPosition("Phantom"));
                             localPlayer.SetIsDisabled(GameState.Instance.currentTurn, 1);
                             setDialogue("Dir wurde leider ein Verbrechen angehängt das du nicht begangen hast. Deshalb verbringst du die nächsten zwei Züge im Gefängnis.");
                         }
                         else
                         {
-                            simpleDialogue("Dir wurde fast ein Verbrechen angehängt aber deine Schutzweste hat dich beschützt.",60);
+                            simpleDialogue("Dir wurde fast ein Verbrechen angehängt aber deine Schutzweste hat dich beschützt.", 60);
                             localPlayer.RemoveItem(GameState.Instance.currentTurn, "ProtectiveVest");
                         }
                     }
@@ -778,14 +778,14 @@ public class Place : MonoBehaviour
                     {
                         if (!GameState.Instance.items[GameState.Instance.currentTurn].Contains("ProtectiveVest"))
                         {
-                            
+
                             activatedTrap(GameState.Instance.currentTurn, findTargetPosition("Fasculto"));
                             localPlayer.SetIsDisabled(GameState.Instance.currentTurn, 1);
                             setDialogue("Du hast einen komischen Gegenstand angegriffen und hast dich nach einer langen Pechsträhne schwer verletzt. Du muss die nächsten 2 Züge im Krankenhaus verbringen.");
                         }
                         else
                         {
-                            simpleDialogue("Du wärst beinahe verflucht worden, doch deine Schutzweste hat dich beschützt.",60);
+                            simpleDialogue("Du wärst beinahe verflucht worden, doch deine Schutzweste hat dich beschützt.", 60);
                             localPlayer.RemoveItem(GameState.Instance.currentTurn, "ProtectiveVest");
                         }
                     }
@@ -818,7 +818,7 @@ public class Place : MonoBehaviour
                 }
             }
             localPlayer.SetPlayerState(GameState.Instance.currentTurn, "Waiting");
-            localPlayer.SetCurrentTurn(((GameState.Instance.currentTurn + 1)%GameState.Instance.playerCount));
+            localPlayer.SetCurrentTurn(((GameState.Instance.currentTurn + 1) % GameState.Instance.playerCount));
             localPlayer.SetPlayerState(GameState.Instance.currentTurn, "Movement");
             //counting down quarantine time
             if (GameState.Instance.roles[GameState.Instance.currentTurn] == "Doctor")
@@ -827,7 +827,7 @@ public class Place : MonoBehaviour
                 {
                     if (GameState.Instance.quarantined[i] > 0)
                     {
-                        localPlayer.SetQuarantine(i,(GameState.Instance.quarantined[i]-1));
+                        localPlayer.SetQuarantine(i, (GameState.Instance.quarantined[i] - 1));
                     }
                 }
             }
@@ -1001,7 +1001,7 @@ public class Place : MonoBehaviour
         {
             btnOne.interactable = false;
         }
-        if (FingerprintKitCount == 0||currentPlace==0)
+        if (FingerprintKitCount == 0 || currentPlace == 0)
         {
             btnTwo.interactable = false;
         }
@@ -1036,12 +1036,12 @@ public class Place : MonoBehaviour
     }
     void btnFingerprintKitOnClick()
     {
-        int tempFoundHints= GameState.Instance.notFoundTrue[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]] + GameState.Instance.notFoundFalse[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]]; ;
+        int tempFoundHints = GameState.Instance.notFoundTrue[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]] + GameState.Instance.notFoundFalse[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]]; ;
         localPlayer.SetLastAction(GameState.Instance.currentTurn, "Item benutzen");
-        localPlayer.SetSolvedHints(GameState.Instance.currentTurn,(GameState.Instance.solvedHints[GameState.Instance.currentTurn]+GameState.Instance.notFoundTrue[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]] + GameState.Instance.notFoundFalse[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]]));
-        localPlayer.SetTrueSolveds(GameState.Instance.currentTurn,(GameState.Instance.trueSolveds[GameState.Instance.currentTurn]+GameState.Instance.notFoundTrue[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]]));
-        localPlayer.SetNotFoundTrue(GameState.Instance.currentTurn,GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1],0);
-        localPlayer.SetNotFoundFalse(GameState.Instance.currentTurn,GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1],  0);
+        localPlayer.SetSolvedHints(GameState.Instance.currentTurn, (GameState.Instance.solvedHints[GameState.Instance.currentTurn] + GameState.Instance.notFoundTrue[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]] + GameState.Instance.notFoundFalse[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]]));
+        localPlayer.SetTrueSolveds(GameState.Instance.currentTurn, (GameState.Instance.trueSolveds[GameState.Instance.currentTurn] + GameState.Instance.notFoundTrue[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]]));
+        localPlayer.SetNotFoundTrue(GameState.Instance.currentTurn, GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1], 0);
+        localPlayer.SetNotFoundFalse(GameState.Instance.currentTurn, GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1], 0);
         localPlayer.RemoveItem(GameState.Instance.currentTurn, "FingerprintKit");
         if (checkForFact())
         {
@@ -1053,7 +1053,7 @@ public class Place : MonoBehaviour
             {
                 simpleDialogue("Mit dem Fingerprintset findest und entschlüsselst du " + tempFoundHints + " Hinweise und hast dadurch wichtige Informationen herausfinden können.", 60);
             }
-            
+
         }
         else
         {
@@ -1071,14 +1071,14 @@ public class Place : MonoBehaviour
             }
             else
             {
-                simpleDialogue("Selbst mit dem Fingerabdruckset lässt sich hier kein Hinweis finden.",60);
+                simpleDialogue("Selbst mit dem Fingerabdruckset lässt sich hier kein Hinweis finden.", 60);
             }
         }
 
         oneButton();
         btnOneText.text = "Weiter";
         btnOne.onClick.AddListener(btnFingerprintkitContinue);
-        
+
     }
     void btnFingerprintkitContinue()
     {
@@ -1086,7 +1086,7 @@ public class Place : MonoBehaviour
     }
     void btnEnergyDrinkOnClick()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn,"Item benutzen");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Item benutzen");
         localPlayer.AddUsedEnergyDrink(true);
         localPlayer.RemoveItem(GameState.Instance.currentTurn, "EnergyDrink");
         oneButton();
@@ -1108,7 +1108,7 @@ public class Place : MonoBehaviour
         oneButton();
         btnOneText.text = "Weiter";
         btnOne.onClick.AddListener(btnWhiskeyContinue);
-        simpleDialogue("Du tauscht deinen Whiskey gegen einen sicher richtigen Hinweis.",60);
+        simpleDialogue("Du tauscht deinen Whiskey gegen einen sicher richtigen Hinweis.", 60);
     }
     void btnWhiskeyContinue()
     {
@@ -1313,7 +1313,7 @@ public class Place : MonoBehaviour
         }
         else
         {
-            localPlayer.SetMoney(GameState.Instance.currentTurn,(GameState.Instance.money[GameState.Instance.currentTurn]-2));
+            localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 2));
         }
         localPlayer.SetDrMortifierTraps(currentPlace, delayedTurns);
         addTrueHint();
@@ -1355,14 +1355,14 @@ public class Place : MonoBehaviour
         else
         {
             localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 2));
-            
+
         }
         localPlayer.SetFascultoTraps(currentPlace, delayedTurns);
         addTrueHint();
         setDialogue("Du hinterlässt ein verfluchtes Artifakt");
     }
     #endregion
-  
+
     void btnActivateQuestPlaceClick()
     {
         addTrueHint();
@@ -1457,23 +1457,23 @@ public class Place : MonoBehaviour
             {
                 localPlayer.SetCriminalWin(true);
             }
-            else if (GameState.Instance.criminalRole == "Dr.Mortifier") 
+            else if (GameState.Instance.criminalRole == "Dr.Mortifier")
             {
                 localPlayer.SetPlanted(true);
                 setDialogue("Du hast deine Biowaffe platziert. Begib dich schnell in Sicherheit.");
             }
         }
-        
+
     }
 
     void btnFindHintClick()
     {
-        int tempfoundHints= GameState.Instance.notFoundTrue[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]] + GameState.Instance.notFoundFalse[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]]; ;
+        int tempfoundHints = GameState.Instance.notFoundTrue[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]] + GameState.Instance.notFoundFalse[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]]; ;
         localPlayer.SetLastAction(GameState.Instance.currentTurn, "Hinweis finden");
-        localPlayer.SetUnsolvedHints((GameState.Instance.currentTurn),(GameState.Instance.unsolvedHints[GameState.Instance.currentTurn] + GameState.Instance.notFoundTrue[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]] + GameState.Instance.notFoundFalse[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]]));
-        localPlayer.SetTrueUnsolveds(GameState.Instance.currentTurn,(GameState.Instance.trueUnsolveds[GameState.Instance.currentTurn] + GameState.Instance.notFoundTrue[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]]));
-        localPlayer.SetNotFoundTrue(GameState.Instance.currentTurn,GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1], 0);
-        localPlayer.SetNotFoundFalse(GameState.Instance.currentTurn,GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1],0);
+        localPlayer.SetUnsolvedHints((GameState.Instance.currentTurn), (GameState.Instance.unsolvedHints[GameState.Instance.currentTurn] + GameState.Instance.notFoundTrue[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]] + GameState.Instance.notFoundFalse[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]]));
+        localPlayer.SetTrueUnsolveds(GameState.Instance.currentTurn, (GameState.Instance.trueUnsolveds[GameState.Instance.currentTurn] + GameState.Instance.notFoundTrue[GameState.Instance.currentTurn][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]]));
+        localPlayer.SetNotFoundTrue(GameState.Instance.currentTurn, GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1], 0);
+        localPlayer.SetNotFoundFalse(GameState.Instance.currentTurn, GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1], 0);
         if (tempfoundHints > 0)
         {
             if (tempfoundHints == 1)
@@ -1484,7 +1484,7 @@ public class Place : MonoBehaviour
             {
                 setDialogue("Du schaust dich genauer um, und findest " + tempfoundHints + " Hinweise, die zum Verbrecher führen könnten.");
             }
-           
+
         }
         else
         {
@@ -1603,7 +1603,7 @@ public class Place : MonoBehaviour
             {
                 setDialogue("Du hast " + tempUnsolvedHints + " Hinweise entschlüsselt.");
             }
-            
+
         }
     }
 
@@ -1627,7 +1627,7 @@ public class Place : MonoBehaviour
             localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] + 6));
             setDialogue("Du hast 6$ verdient.");
         }
-        
+
     }
     void parkAction()
     {
@@ -1920,7 +1920,7 @@ public class Place : MonoBehaviour
             btnOne.interactable = false;
         }
         actionsTextField.text = "" + currentBet;
-       
+
     }
     void btnCasinoBetDown()
     {
@@ -1980,7 +1980,7 @@ public class Place : MonoBehaviour
         btnOne.onClick.AddListener(btnBuyingDrMortifierTrap);
         btnOne.onClick.AddListener(btnBuyingPhantomTrap);
         btnOne.onClick.AddListener(btnBuyingFascultoTrap);
-        simpleDialogue("Welche Falle willst du kaufen?",60);
+        simpleDialogue("Welche Falle willst du kaufen?", 60);
     }
     void btnBuyingInfernoTrap()
     {
@@ -2036,7 +2036,7 @@ public class Place : MonoBehaviour
         {
             btnTwo.interactable = false;
         }
-        simpleDialogue("Wo fährst du hin?",70);
+        simpleDialogue("Wo fährst du hin?", 70);
     }
     void btnPlaceDown()
     {
@@ -2166,7 +2166,7 @@ public class Place : MonoBehaviour
         switch (actionsTextField.text)
         {
             case "Stadtplatz":
-                localPlayer.SetCurrentPlace(GameState.Instance.currentTurn, findPosition(1)[0],findPosition(1)[1]);
+                localPlayer.SetCurrentPlace(GameState.Instance.currentTurn, findPosition(1)[0], findPosition(1)[1]);
                 setDialogue("Du hast einen Zug zum Stadtplatz genommen");
                 break;
             case "Park":
@@ -2352,7 +2352,7 @@ public class Place : MonoBehaviour
             btnSix.interactable = false;
             btnOne.interactable = false;
         }
-        simpleDialogue("Was willst du kaufen?",60);
+        simpleDialogue("Was willst du kaufen?", 60);
     }
     void btnBuyTrainers()
     {
@@ -2619,7 +2619,7 @@ public class Place : MonoBehaviour
             randOne = rn.Next(0, 7);
             randTwo = rn.Next(0, 6);
         }
-        localPlayer.SetCurrentPlace(GameState.Instance.currentTurn, randOne, randTwo );
+        localPlayer.SetCurrentPlace(GameState.Instance.currentTurn, randOne, randTwo);
         string place = "";
         switch (translatePlace(GameState.Instance.board[GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]]))
         {
@@ -2693,7 +2693,7 @@ public class Place : MonoBehaviour
         btnTwoText.text = "Hinweis";
         btnOne.onClick.AddListener(btnManipulationMovementClick);
         btnTwo.onClick.AddListener(btnManipulationHintClick);
-        simpleDialogue("Welche Art von Manipulation?",60);
+        simpleDialogue("Welche Art von Manipulation?", 60);
     }
     void btnManipulationMovementClick()
     {
@@ -2737,7 +2737,7 @@ public class Place : MonoBehaviour
 
     void MovementManipulation(int player)
     {
-        simpleDialogue("Wohin muss "+translateName(player)+" gehen?", 70);
+        simpleDialogue("Wohin muss " + translateName(player) + " gehen?", 70);
         manipulatedPlayer = player;
         fiveButtons();
         int[] currentPlayerPlace = GameState.Instance.currentPlace[player];
@@ -2844,7 +2844,7 @@ public class Place : MonoBehaviour
     void btnManipulationUp()
     {
         btnBack.interactable = false;
-        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0]-1, GameState.Instance.currentPlace[manipulatedPlayer][1] );
+        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0] - 1, GameState.Instance.currentPlace[manipulatedPlayer][1]);
         if (firstMovementManipulation && GameState.Instance.board[GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]] == 0)
         {
             btnBack.interactable = false;
@@ -2863,7 +2863,7 @@ public class Place : MonoBehaviour
     void btnManipulationRight()
     {
         btnBack.interactable = false;
-        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]+1 );
+        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1] + 1);
         if (firstMovementManipulation && GameState.Instance.board[GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]] == 0)
         {
             btnBack.interactable = false;
@@ -2882,7 +2882,7 @@ public class Place : MonoBehaviour
     void btnManipulationDown()
     {
         btnBack.interactable = false;
-        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0] + 1, GameState.Instance.currentPlace[manipulatedPlayer][1] );
+        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0] + 1, GameState.Instance.currentPlace[manipulatedPlayer][1]);
         if (firstMovementManipulation && GameState.Instance.board[GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]] == 0)
         {
             btnBack.interactable = false;
@@ -2901,7 +2901,7 @@ public class Place : MonoBehaviour
     void btnManipulationLeft()
     {
         btnBack.interactable = false;
-        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1] - 1 );
+        localPlayer.SetCurrentPlace(manipulatedPlayer, GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1] - 1);
         if (firstMovementManipulation && GameState.Instance.board[GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]] == 0)
         {
             btnBack.interactable = false;
@@ -2932,11 +2932,12 @@ public class Place : MonoBehaviour
         string name = translateName(manipulatedPlayer);
         string place = "";
         int currentManipulatedPlace = GameState.Instance.board[GameState.Instance.currentPlace[manipulatedPlayer][0], GameState.Instance.currentPlace[manipulatedPlayer][1]];
-        if(currentManipulatedPlace == 0|| currentManipulatedPlace == 14 || currentManipulatedPlace == 18 || currentManipulatedPlace == 4)
+        if (currentManipulatedPlace == 0 || currentManipulatedPlace == 14 || currentManipulatedPlace == 18 || currentManipulatedPlace == 4)
         {
             place = "zur " + translatePlace(currentManipulatedPlace);
         }
-        else{
+        else
+        {
             place = "zum " + translatePlace(currentManipulatedPlace);
         }
         switch (GameState.Instance.criminalRole)
@@ -3035,7 +3036,8 @@ public class Place : MonoBehaviour
         HintManipulationDialogue(5);
     }
 
-    void HintManipulationDialogue(int player) {
+    void HintManipulationDialogue(int player)
+    {
         string name = translateName(player);
         localPlayer.SetIsHintManipulated(player, true);
         switch (GameState.Instance.criminalRole)
@@ -3070,7 +3072,7 @@ public class Place : MonoBehaviour
         btnFive.onClick.AddListener(btnPlayerFiveClickBigTrap);
         btnSix.onClick.AddListener(btnPlayerSixClickBigTrap);
 
-        simpleDialogue("Wähle einen Spieler aus.",80);
+        simpleDialogue("Wähle einen Spieler aus.", 80);
     }
     void btnPlayerOneClickBigTrap()
     {
@@ -3128,7 +3130,7 @@ public class Place : MonoBehaviour
         switch (GameState.Instance.criminalRole)
         {
             case "Inferno":
-                s = "Du hast "+name+" mit einer kleinen Rakete getroffen.";
+                s = "Du hast " + name + " mit einer kleinen Rakete getroffen.";
                 break;
             case "Dr.Mortifier":
                 s = "Du hast " + name + " mit einer starken Grippe infiziert.";
@@ -3140,7 +3142,7 @@ public class Place : MonoBehaviour
                 s = "Du hast " + name + " mit einem Unglücksfluch belegt und dadurch eine einige kleine Unfälle ausgelöst.";
                 break;
         }
-        
+
 
         setDialogue(s);
     }
@@ -3436,7 +3438,7 @@ public class Place : MonoBehaviour
         btnSeven.gameObject.SetActive(false);
         btnEight.gameObject.SetActive(false);
 
-        btnOneImage.color = new Color(255,255,255,255);
+        btnOneImage.color = new Color(255, 255, 255, 255);
         btnTwoImage.color = new Color(255, 255, 255, 255);
         btnThreeImage.color = new Color(255, 255, 255, 255);
         btnFourImage.color = new Color(255, 255, 255, 255);
@@ -3548,7 +3550,7 @@ public class Place : MonoBehaviour
         btnSixMask.gameObject.SetActive(true);
         btnSixImage.gameObject.SetActive(true);
         btnSixBorder.gameObject.SetActive(true);
-   
+
         btnOneMask.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
         btnOneMask.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         btnOneMask.sprite = fourByThree;
@@ -3596,52 +3598,52 @@ public class Place : MonoBehaviour
         btnSixBorder.GetComponent<RectTransform>().sizeDelta = new Vector2(333, 447);
         btnSixBorder.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         btnSixBorder.sprite = fourByThree_Border;
-   btnOneImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
-   btnOneImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
-   btnOneImage.GetComponent<Image>().sprite = getPlayerPic(0);
+        btnOneImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
+        btnOneImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
+        btnOneImage.GetComponent<Image>().sprite = getPlayerPic(0);
 
-   btnTwoImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
-   btnTwoImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
-   btnTwoImage.GetComponent<Image>().sprite = getPlayerPic(1);
+        btnTwoImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
+        btnTwoImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
+        btnTwoImage.GetComponent<Image>().sprite = getPlayerPic(1);
 
-   btnThreeImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
-   btnThreeImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
-   btnThreeImage.GetComponent<Image>().sprite = getPlayerPic(2);
+        btnThreeImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
+        btnThreeImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
+        btnThreeImage.GetComponent<Image>().sprite = getPlayerPic(2);
 
-   btnFourImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
-   btnFourImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
-   btnFourImage.GetComponent<Image>().sprite = getPlayerPic(3);
+        btnFourImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
+        btnFourImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
+        btnFourImage.GetComponent<Image>().sprite = getPlayerPic(3);
 
-   btnFiveImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
-   btnFiveImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
-   btnFiveImage.GetComponent<Image>().sprite = getPlayerPic(4);
+        btnFiveImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
+        btnFiveImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
+        btnFiveImage.GetComponent<Image>().sprite = getPlayerPic(4);
 
-   btnSixImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
-   btnSixImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
-   btnSixImage.GetComponent<Image>().sprite = getPlayerPic(5);
+        btnSixImage.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 400);
+        btnSixImage.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -40);
+        btnSixImage.GetComponent<Image>().sprite = getPlayerPic(5);
 
 
-   switch (GameState.Instance.playerCount)
-   {
-       case 4:
-           btnFour.interactable = true;
-           btnFourImage.color = new Color(255, 255, 255, 255);
-           break;
-       case 5:
-           btnFour.interactable = true;
-           btnFive.interactable = true;
-           btnFourImage.color = new Color(255, 255, 255, 255);
-           btnFiveImage.color = new Color(255, 255, 255, 255);
-           break;
-       case 6:
-           btnFour.interactable = true;
-           btnFive.interactable = true;
-           btnSix.interactable = true;
-           btnFourImage.color = new Color(255, 255, 255, 255);
-           btnFiveImage.color = new Color(255, 255, 255, 255);
-           btnSixImage.color = new Color(255, 255, 255, 255);
-           break;
-   }
+        switch (GameState.Instance.playerCount)
+        {
+            case 4:
+                btnFour.interactable = true;
+                btnFourImage.color = new Color(255, 255, 255, 255);
+                break;
+            case 5:
+                btnFour.interactable = true;
+                btnFive.interactable = true;
+                btnFourImage.color = new Color(255, 255, 255, 255);
+                btnFiveImage.color = new Color(255, 255, 255, 255);
+                break;
+            case 6:
+                btnFour.interactable = true;
+                btnFive.interactable = true;
+                btnSix.interactable = true;
+                btnFourImage.color = new Color(255, 255, 255, 255);
+                btnFiveImage.color = new Color(255, 255, 255, 255);
+                btnSixImage.color = new Color(255, 255, 255, 255);
+                break;
+        }
     }
     void actionTextFieldNumber()
     {
@@ -3728,7 +3730,7 @@ public class Place : MonoBehaviour
             {
                 leftOverPlayers.Add("Reporter");
             }
-            switch (leftOverPlayers[player-GameState.Instance.playerCount])
+            switch (leftOverPlayers[player - GameState.Instance.playerCount])
             {
                 case "Doctor":
                     s = mckay;
@@ -3752,7 +3754,7 @@ public class Place : MonoBehaviour
         }
         return s;
     }
-   
+
 
     string translateName(int player)
     {
@@ -3849,7 +3851,7 @@ public class Place : MonoBehaviour
     void activatedTrap(int player, int[] targetPosition)
     {
         localPlayer.SetMoney(player, 0);
-        localPlayer.SetCurrentPlace(player, targetPosition[0],targetPosition[1]);
+        localPlayer.SetCurrentPlace(player, targetPosition[0], targetPosition[1]);
         localPlayer.SetIsDisabled(player, 2);
     }
 
@@ -3860,75 +3862,75 @@ public class Place : MonoBehaviour
         {
             case 1:
                 s = "Stadtplatz";
-               
+
                 break;
             case 2:
                 s = "Park";
-               
+
                 break;
             case 3:
                 s = "Krankenhaus";
-              
+
                 break;
             case 4:
                 s = "Bank";
-               
+
                 break;
             case 5:
                 s = "Parlament";
-              
+
                 break;
             case 6:
                 s = "Friedhof";
-              
+
                 break;
             case 7:
                 s = "Gefängnis";
-              
+
                 break;
             case 8:
                 s = "Kasino";
-               
+
                 break;
             case 9:
                 s = "Internet Cafe";
-              
+
                 break;
             case 10:
                 s = "Bahnhof";
-                
+
                 break;
             case 11:
                 s = "Armee Laden";
-              
+
                 break;
             case 12:
                 s = "Shopping Center";
-               
+
                 break;
             case 13:
                 s = "Schrottplatz";
-              
+
                 break;
             case 14:
                 s = "Bibliothek";
-               
+
                 break;
             case 15:
                 s = "Labor";
-                
+
                 break;
             case 16:
                 s = "Italiener";
-                
+
                 break;
             case 17:
                 s = "Hafen";
-               
+
                 break;
             case 18:
                 s = "Bar";
-                
+
                 break;
         }
         return s;
@@ -3939,7 +3941,7 @@ public class Place : MonoBehaviour
         switch (place)
         {
             case 1:
-           
+
                 pic = mainsquare;
                 break;
             case 2:
@@ -3947,11 +3949,11 @@ public class Place : MonoBehaviour
                 pic = park;
                 break;
             case 3:
-         
+
                 pic = hospital;
                 break;
             case 4:
-        
+
                 pic = bank;
                 break;
             case 5:
@@ -3959,7 +3961,7 @@ public class Place : MonoBehaviour
                 pic = parliament;
                 break;
             case 6:
-        
+
                 pic = cementary;
                 break;
             case 7:
@@ -3967,43 +3969,43 @@ public class Place : MonoBehaviour
                 pic = prison;
                 break;
             case 8:
-        
+
                 pic = casino;
                 break;
             case 9:
-    
+
                 pic = internetcafe;
                 break;
             case 10:
-   
+
                 pic = trainstation;
                 break;
             case 11:
-            
+
                 pic = armyshop;
                 break;
             case 12:
-            
+
                 pic = shoppingcenter;
                 break;
             case 13:
-       
+
                 pic = junkyard;
                 break;
             case 14:
-     ;
+                ;
                 pic = library;
                 break;
             case 15:
-     
+
                 pic = laboratory;
                 break;
             case 16:
-       
+
                 pic = italienrestaurant;
                 break;
             case 17:
-     
+
                 pic = harbor;
                 break;
             case 18:
@@ -4078,7 +4080,7 @@ public class Place : MonoBehaviour
         for (int i = 0; i < GameState.Instance.playerCount; i++)
         {
             localPlayer.SetNotFoundTrue(i, GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1], (GameState.Instance.notFoundTrue[i][GameState.Instance.currentPlace[GameState.Instance.currentTurn][0], GameState.Instance.currentPlace[GameState.Instance.currentTurn][1]] + 1));
-            
+
         }
     }
 
@@ -4105,7 +4107,7 @@ public class Place : MonoBehaviour
     int[] findPosition(int place)
     {
         int[] position = new int[2];
-        for (int i = 0; i<7; i++)
+        for (int i = 0; i < 7; i++)
         {
             for (int j = 0; j < 6; j++)
             {
@@ -4121,7 +4123,7 @@ public class Place : MonoBehaviour
 
     bool checkForFact()
     {
-        
+
         if (GameState.Instance.solvedFacts[GameState.Instance.currentTurn] < 3)
         {
             if ((GameState.Instance.trueSolveds[GameState.Instance.currentTurn] - (GameState.Instance.solvedFacts[GameState.Instance.currentTurn] * 3)) >= 3)
@@ -4134,7 +4136,7 @@ public class Place : MonoBehaviour
                         if (GameState.Instance.playerFact[GameState.Instance.currentTurn] == "")
                         {
                             string playerFact = "";
-                            for(int i  =0;i<GameState.Instance.playerCount; i++)
+                            for (int i = 0; i < GameState.Instance.playerCount; i++)
                             {
                                 if (GameState.Instance.roles[i] == GameState.Instance.criminal)
                                 {

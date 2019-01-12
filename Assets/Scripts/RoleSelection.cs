@@ -24,7 +24,7 @@ public class RoleSelection : MonoBehaviour
     public Image reporter_selectedBG;
 
     public bool okPressed = false;
-    public bool selected=false;
+    public bool selected = false;
     private Player player;
     void Start()
     {
@@ -103,13 +103,13 @@ public class RoleSelection : MonoBehaviour
                 switch (targetPlace)
                 {
                     case 1:
-                       player.SetTargetPlace(4);
+                        player.SetTargetPlace(4);
                         break;
                     case 2:
-                       player.SetTargetPlace(8);
+                        player.SetTargetPlace(8);
                         break;
                     case 3:
-                       player.SetTargetPlace(12);
+                        player.SetTargetPlace(12);
                         break;
                 }
                 break;
@@ -155,7 +155,7 @@ public class RoleSelection : MonoBehaviour
         {
             btn_doctor.interactable = false;
         }
-        else if(!okPressed)
+        else if (!okPressed)
         {
             btn_doctor.interactable = true;
         }
@@ -298,8 +298,8 @@ public class RoleSelection : MonoBehaviour
         btn_psychic.interactable = false;
         btn_psychologist.interactable = false;
         btn_reporter.interactable = false;
-        
-        player.SetSelectedRoles(GameState.Instance.selectedRoles+1);
+
+        player.SetSelectedRoles(GameState.Instance.selectedRoles + 1);
         btn_Back.interactable = true;
         selected = false;
     }
@@ -331,7 +331,7 @@ public class RoleSelection : MonoBehaviour
         player.SetSelectedRoles(GameState.Instance.selectedRoles - 1);
         btn_Back.interactable = false;
         player.SetRole(player.id, "");
-        
+
 
     }
     void initializingPlayer()
@@ -353,7 +353,7 @@ public class RoleSelection : MonoBehaviour
         player.SetPlaceFact(player.id, "");
         player.SetPlayerWin(player.id, false);
         player.SetPlayerLost(player.id, false);
-        player.SetCurrentPlace(player.id, 3, 2 );
+        player.SetCurrentPlace(player.id, 3, 2);
         addingHintBoards();
     }
     void addingHintBoards()

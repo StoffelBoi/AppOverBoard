@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour {
+public class UIManager : MonoBehaviour
+{
 
     public Canvas canvasStartUp;
     public Canvas canvasConnection;
@@ -180,7 +181,7 @@ public class UIManager : MonoBehaviour {
 
     public void PrivatePlayer()
     {
-        
+
         DisableEverything();
         canvasPrivatePlayer.gameObject.SetActive(true);
         canvasPrivatePlayer.enabled = true;

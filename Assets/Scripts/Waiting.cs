@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Waiting : MonoBehaviour {
+public class Waiting : MonoBehaviour
+{
 
     public Text playerCount;
     public Text txtWaiting;
@@ -13,7 +14,7 @@ public class Waiting : MonoBehaviour {
     public Button btnBack;
     public static Waiting Instance;
     private bool waiting;
-	void Awake()
+    void Awake()
     {
         if (Instance == null)
             Instance = this;
@@ -30,9 +31,10 @@ public class Waiting : MonoBehaviour {
         waiting = true;
         StartCoroutine("AnimateDots");
     }
-	// Update is called once per frame
-	void Update () {
-        playerCount.text="Verbundene Spieler:"+(GameState.Instance.connectedPlayer+"/" + GameState.Instance.playerCount);
+    // Update is called once per frame
+    void Update()
+    {
+        playerCount.text = "Verbundene Spieler:" + (GameState.Instance.connectedPlayer + "/" + GameState.Instance.playerCount);
 
         if (GameState.Instance.connectedPlayer == GameState.Instance.playerCount)
         {
@@ -40,7 +42,7 @@ public class Waiting : MonoBehaviour {
             {
                 MyNetManager.Instance.MyNetDiscovery.StopBroadcast();
             }
-               waiting = false;
+            waiting = false;
             UIManager.Instance.RoleSelection();
         }
     }

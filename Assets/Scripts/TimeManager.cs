@@ -1,10 +1,10 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
-public class TimeManager : MonoBehaviour {
+public class TimeManager : MonoBehaviour
+{
     private Stopwatch stopwatch;
     public static TimeManager Instance;
     public int elapsedMinutes;
@@ -14,7 +14,7 @@ public class TimeManager : MonoBehaviour {
     public bool getAway;
     public Stopwatch getAwayTime;
     private Player player;
-    public int speed=1;
+    public int speed = 1;
     void Awake()
     {
         if (Instance == null)
@@ -23,13 +23,14 @@ public class TimeManager : MonoBehaviour {
             Destroy(gameObject);
     }
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         started = false;
         stopwatch = new Stopwatch();
         criminalRole = "";
         getAway = false;
         getAwayTime = new Stopwatch();
-	}
+    }
 
     public void startTimer()
     {
@@ -37,14 +38,15 @@ public class TimeManager : MonoBehaviour {
         stopwatch.Start();
         started = true;
         criminalRole = GameState.Instance.criminalRole;
-        if (criminalRole == "Inferno"||criminalRole=="Dr.Mortifier")
+        if (criminalRole == "Inferno" || criminalRole == "Dr.Mortifier")
         {
             player.SetTargetTime(true);
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (started)
         {
             GameState.Instance.elapsedSeconds = (speed * (int)(stopwatch.ElapsedMilliseconds / 1000));
@@ -83,9 +85,9 @@ public class TimeManager : MonoBehaviour {
                         getAway = true;
                         getAwayTime.Start();
                     }
-                    if(getAwayTime.ElapsedMilliseconds / 1000 >= 600)
+                    if (getAwayTime.ElapsedMilliseconds / 1000 >= 600)
                     {
-                        if(calculateGetAway())
+                        if (calculateGetAway())
                         {
                             player.SetCriminalWin(true);
                         }
@@ -93,7 +95,7 @@ public class TimeManager : MonoBehaviour {
                         {
                             player.SetDraw(true);
                         }
-                        
+
                     }
                 }
             }
@@ -115,9 +117,9 @@ public class TimeManager : MonoBehaviour {
                     }
                 }
             }
-            
+
             //Fasculto Test:
-            if(criminalRole == "Fasculto")
+            if (criminalRole == "Fasculto")
             {
                 if (GameState.Instance.elapsedSeconds > 2400)
                 {

@@ -201,7 +201,7 @@ public class BoardAssembly : MonoBehaviour {
     }
     IEnumerator GetBoard()
     {
-    
+     
         yield return new WaitForSeconds(1f);
         for (int i = 0; i < 7; i++)
         {

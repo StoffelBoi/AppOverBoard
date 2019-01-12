@@ -19,6 +19,67 @@ public class Player : NetworkBehaviour
         }
     }
 
+    void Update()
+    {
+        if (isLocalPlayer)
+        {
+            if (GameState.Instance.criminalWin == true)
+            {
+                if (GameState.Instance.criminal == GameState.Instance.roles[GameState.Instance.localPlayer.GetComponent<Player>().id])
+                {
+                    UIManager.Instance.Win();
+                    return;
+                }
+                else
+                {
+                    UIManager.Instance.Loss();
+                    return;
+                }
+            }
+            if (GameState.Instance.playerWin.Contains(true))
+            {
+                if (GameState.Instance.playerWin[GameState.Instance.localPlayer.GetComponent<Player>().id])
+                {
+                    UIManager.Instance.Win();
+                    return;
+                }
+                else
+                {
+                    UIManager.Instance.Loss();
+                    return;
+                }
+            }
+            if (GameState.Instance.criminal == GameState.Instance.roles[GameState.Instance.localPlayer.GetComponent<Player>().id])
+            {
+                if (GameState.Instance.playerLost.Contains(true))
+                {
+                    int lostPlayers = 0;
+                    for (int i = 0; i < GameState.Instance.playerCount; i++)
+                    {
+                        if (GameState.Instance.playerLost[i])
+                        {
+                            lostPlayers++;
+                        }
+                    }
+                    if (lostPlayers == GameState.Instance.playerCount - 1)
+                    {
+                        GameState.Instance.localPlayer.GetComponent<Player>().SetCriminalWin(true);
+                        return;
+                    }
+                }
+            }
+            if (GameState.Instance.playerLost[GameState.Instance.localPlayer.GetComponent<Player>().id])
+            {
+                UIManager.Instance.Loss();
+                return;
+            }
+            if (GameState.Instance.draw)
+            {
+                UIManager.Instance.Draw();
+                return;
+            }
+        }
+    }
     ///////////////////////////////////////////////////////
     //////////////Manually Synchronized Stuff//////////////
     ///////////////////////////////////////////////////////
@@ -269,7 +330,7 @@ public class Player : NetworkBehaviour
     #region SetCurrentTurn
     public void SetCurrentTurn(int currentTurn)
     {
-        GameState.Instance.currentTurn = currentTurn;   
+        GameState.Instance.currentTurn = currentTurn;
         if (isServer)
         {
             RpcSetCurrenTurn(currentTurn);
@@ -1306,67 +1367,7 @@ public class Player : NetworkBehaviour
     }
     #endregion
 
-    void Update()
-    {
-        if (isLocalPlayer)
-        {
-            if (GameState.Instance.criminalWin == true)
-            {
-                if (GameState.Instance.criminal == GameState.Instance.roles[id])
-                {
-                    UIManager.Instance.Win();
-                    return;
-                }
-                else
-                {
-                    UIManager.Instance.Loss();
-                    return;
-                }
-            }
-            if (GameState.Instance.playerWin.Contains(true))
-            {
-                if (GameState.Instance.playerWin[id])
-                {
-                    UIManager.Instance.Win();
-                    return;
-                }
-                else
-                {
-                    UIManager.Instance.Loss();
-                    return;
-                }
-            }
-            if (GameState.Instance.criminal == GameState.Instance.roles[id])
-            {
-                if (GameState.Instance.playerLost.Contains(true))
-                {
-                    int lostPlayers = 0;
-                    for (int i = 0; i < GameState.Instance.playerCount; i++)
-                    {
-                        if (GameState.Instance.playerLost[i])
-                        {
-                            lostPlayers++;
-                        }
-                    }
-                    if (lostPlayers == GameState.Instance.playerCount - 1)
-                    {
-                        GameState.Instance.localPlayer.GetComponent<Player>().SetCriminalWin(true);
-                        return;
-                    }
-                }
-            }
-            if (GameState.Instance.playerLost[id])
-            {
-                UIManager.Instance.Loss();
-                return;
-            }
-            if (GameState.Instance.draw)
-            {
-                UIManager.Instance.Draw();
-                return;
-            }
-        }
 
-    }
+   
 
 }

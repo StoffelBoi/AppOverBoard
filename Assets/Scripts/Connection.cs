@@ -29,7 +29,7 @@ public class Connection : MonoBehaviour {
     }
     void OnEnable()
     {
-        GameState.Instance.playerCount = 3;
+        playerCount = 3;
         disableEverything();
         btnHost.gameObject.SetActive(true);
         btnJoin.gameObject.SetActive(true);
@@ -80,7 +80,6 @@ public class Connection : MonoBehaviour {
 
     void btnSelectPlayerCount()
     {
-
         disableEverything();
         btnUp.gameObject.SetActive(true);
         btnDown.gameObject.SetActive(true);
@@ -122,11 +121,11 @@ public class Connection : MonoBehaviour {
 
     void btnHostClick()
     {
- 
         MyNetManager.Instance.StartGame();
-        GameState.Instance.connectedPlayer = playerCount;
+        GameState.Instance.connectedPlayer = 0;
+        GameState.Instance.playerCount = playerCount;
     }
-
+    //@TODO add back button
     void btnJoinClick()
     {
         disableEverything();
@@ -142,7 +141,7 @@ public class Connection : MonoBehaviour {
         btnBack.onClick.AddListener(btnStopHost);
         btnJoin.GetComponent<RectTransform>().anchoredPosition = new Vector3(116, -59.5f, 0);
         MyNetManager.Instance.SearchGame();
-        
+
 
     }
 
@@ -158,7 +157,6 @@ public class Connection : MonoBehaviour {
 
     void btnStopHost()
     {
-
         MyNetManager.Instance.StopHosting();
     }
 }

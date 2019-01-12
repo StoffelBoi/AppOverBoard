@@ -11,6 +11,7 @@ public class Items : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        btnMenu.onClick.AddListener(UIManager.Instance.OpenMenu);
         btnBack.onClick.AddListener(UIManager.Instance.CloseItems);
     }
     void OnEnable()

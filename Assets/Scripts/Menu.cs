@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Menu : MonoBehaviour {
+public class Menu : MonoBehaviour
+{
 
     public Image TitelPanel;
     public Button btnBoard;
@@ -80,14 +81,15 @@ public class Menu : MonoBehaviour {
 
     public Image symbol_6_0;
     public Image symbol_6_1;
-    public Image symbol_6_2;    
+    public Image symbol_6_2;
     public Image symbol_6_3;
     public Image symbol_6_4;
     public Image symbol_6_5;
 
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         btnBack.onClick.AddListener(UIManager.Instance.CloseMenu);
         btnBoard.onClick.AddListener(btnBoardOnClick);
         btnNo.onClick.AddListener(btnRestartClose);
@@ -105,7 +107,7 @@ public class Menu : MonoBehaviour {
         btnYes.gameObject.SetActive(false);
         BoardTitelPanel.gameObject.SetActive(false);
         BoardPanel.gameObject.SetActive(false);
-	}
+    }
     void OnEnable()
     {
         TitelPanel.gameObject.SetActive(true);
@@ -217,14 +219,14 @@ public class Menu : MonoBehaviour {
         symbol_4_3.sprite = GetPlacePic(GameState.Instance.board[4, 3]);
         symbol_4_4.sprite = GetPlacePic(GameState.Instance.board[4, 4]);
         symbol_4_5.sprite = GetPlacePic(GameState.Instance.board[4, 5]);
-    
+
         symbol_5_0.sprite = GetPlacePic(GameState.Instance.board[5, 0]);
         symbol_5_1.sprite = GetPlacePic(GameState.Instance.board[5, 1]);
         symbol_5_2.sprite = GetPlacePic(GameState.Instance.board[5, 2]);
         symbol_5_3.sprite = GetPlacePic(GameState.Instance.board[5, 3]);
         symbol_5_4.sprite = GetPlacePic(GameState.Instance.board[5, 4]);
         symbol_5_5.sprite = GetPlacePic(GameState.Instance.board[5, 5]);
-    
+
         symbol_6_0.sprite = GetPlacePic(GameState.Instance.board[6, 0]);
         symbol_6_1.sprite = GetPlacePic(GameState.Instance.board[6, 1]);
         symbol_6_2.sprite = GetPlacePic(GameState.Instance.board[6, 2]);
