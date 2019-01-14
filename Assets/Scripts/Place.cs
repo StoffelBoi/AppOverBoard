@@ -996,11 +996,11 @@ public class Place : MonoBehaviour
                 setDialogue("Du schaust dich um und findest einen Dollar am Boden. Muss wohl dein Glückstag sein.");
                 break;
             case 3:
-                if (GameState.Instance.money[GameState.Instance.currentTurn] > 0)
+                if (GameState.Instance.money[GameState.Instance.currentTurn] >= 3)
                 {
                     localPlayer.SetMoney(GameState.Instance.currentTurn, GameState.Instance.money[GameState.Instance.currentTurn] - 3);
                 }
-                setDialogue("Du schaust dich genau um und findest aber nichts interessantes. Später findest du heraus das dich jemand bestohlen hat währen du abgelenkt warst.");
+                setDialogue("Du schaust dich genau um und findest aber nichts interessantes. Später findest du heraus das dich jemand bestohlen hat während du abgelenkt warst.");
                 break;
             case 4:
                 localPlayer.SetUnsolvedHints(GameState.Instance.currentTurn, GameState.Instance.unsolvedHints[GameState.Instance.currentTurn] + 1);

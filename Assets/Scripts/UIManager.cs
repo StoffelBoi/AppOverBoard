@@ -34,6 +34,7 @@ public class UIManager : MonoBehaviour
     public Canvas canvasDraw;
     public Canvas canvasItems;
     public Canvas canvasMenu;
+    public Canvas canvasRules;
 
     public GameObject StartUpController;
     public GameObject ConnectionController;
@@ -43,12 +44,12 @@ public class UIManager : MonoBehaviour
     public GameObject PrivatePlayerController;
     public GameObject MovementController;
     public GameObject PlaceController;
-    public GameObject RulesController;
     public GameObject WinController;
     public GameObject LossController;
     public GameObject DrawController;
     public GameObject ItemsController;
     public GameObject MenuController;
+    public GameObject RulesController;
 
     public static UIManager Instance;
     // Use this for initialization
@@ -103,6 +104,7 @@ public class UIManager : MonoBehaviour
         canvasDraw.enabled = false;
         canvasItems.enabled = false;
         canvasMenu.enabled = false;
+        canvasRules.enabled = false;
         /*
         StartUpController.GetComponent<StartUp>().enabled = false;
         ConnectionController.GetComponent<Connection>().enabled = false;
@@ -371,6 +373,20 @@ public class UIManager : MonoBehaviour
         canvasMenu.gameObject.SetActive(false);
         canvasMenu.enabled = false;
         MenuController.SetActive(false);
+    }
+
+    public void OpenRules()
+    {
+        canvasRules.gameObject.SetActive(true);
+        canvasRules.enabled = true;
+        RulesController.SetActive(true);
+    }
+
+    public void CloseRules()
+    {
+        canvasRules.gameObject.SetActive(false);
+        canvasRules.enabled = false;
+        RulesController.SetActive(false);
     }
 }
 

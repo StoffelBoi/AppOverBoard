@@ -5,390 +5,895 @@ using UnityEngine.UI;
 
 public class Rules : MonoBehaviour
 {
-    public Button btn_places;
-    public Button btn_evil;
-    public Button btn_good;
-    public Button btn_winCon;
-    public Button btn_hints;
-    public Button btn_movement;
-    public Button btn_player;
-    public Button btn_backPlace;
-    public Button btn_backEvil;
-    public Button btn_backGood;
-    public Button btn_backWinCon;
-    public Button btn_backHints;
-    public Button btn_backMovement;
+    public Canvas cvsRulesStart;
+    public Canvas cvsPlaces;
+    public Canvas cvsCharacter;
+    public Canvas cvsCriminals;
+    public Canvas cvsItems;
+    public Canvas cvsGeneral;
 
-    public Canvas places1;
-    public Canvas places2;
-    public Canvas places3;
-    public Canvas places4;
-    public Canvas evil1;
-    public Canvas evil2;
-    public Canvas evil3;
-    public Canvas evil4;
-    public Canvas good1;
-    public Canvas good2;
-    public Canvas winCon;
-    public Canvas hints;
-    public Canvas movement;
-    private Touch lastTouch;
-    public Text testText;
-    void btnToPrivatePlayer()
-    {
-        UIManager.Instance.PrivatePlayer();
-    }
+    public Text txtTitel;
 
-    void btnToRulesPlace1()
-    {
-        UIManager.Instance.RulesPlace1();
-    }
+    public Button btnGeneral;
+    public Button btnPlaces;
+    public Button btnCharacter;
+    public Button btnCriminals;
+    public Button btnItems;
 
-    void btnToRulesPlace2()
-    {
-        UIManager.Instance.RulesPlace2();
-    }
+    public Button btnPageBack;
+    public Button btnPageForward;
+    public Button btnBack;
 
-    void btnToRulesPlace3()
-    {
-        UIManager.Instance.RulesPlace3();
-    }
+    public Text txtGeneral;
 
-    void btnToRulesPlace4()
-    {
-        UIManager.Instance.RulesPlace4();
-    }
+    public Text txtPlaceOne;
+    public Text txtPlaceTwo;
+    public Text txtPlaceThree;
+    public Text txtPlaceFour;
 
-    void btnToRulesEvil1()
-    {
-        UIManager.Instance.RulesEvil1();
-    }
+    public Image imgPlaceOne;
+    public Image imgPlaceTwo;
+    public Image imgPlaceThree;
+    public Image imgPlaceFour;
 
-    void btnToRulesEvil2()
-    {
-        UIManager.Instance.RulesEvil2();
-    }
+    public Image imgPlaceOneSymbol;
+    public Image imgPlaceTwoSymbol;
+    public Image imgPlaceThreeSymbol;
+    public Image imgPlaceFourSymbol;
 
-    void btnToRulesEvil3()
-    {
-        UIManager.Instance.RulesEvil3();
-    }
+    public Text txtCharacterOne;
+    public Text txtCharacterTwo;
+    public Text txtCharacterThree;
 
-    void btnToRulesEvil4()
-    {
-        UIManager.Instance.RulesEvil4();
-    }
+    public Image imgCharacterOne;
+    public Image imgCharacterTwo;
+    public Image imgCharacterThree;
 
-    void btnToRulesGood1()
-    {
-        UIManager.Instance.RulesGood1();
-    }
+    public Image imgCharacterOneBG;
+    public Image imgCharacterTwoBG;
+    public Image imgCharacterThreeBG;
 
-    void btnToRulesGood2()
-    {
-        UIManager.Instance.RulesGood2();
-    }
+    public Image CriminalGeneralPanel;
+    public Text txtCriminalGeneral;
 
-    void btnToRulesWinCon()
-    {
-        UIManager.Instance.RulesWinCon();
-    }
+    public Image imgCriminalOne;
+    public Image imgCriminalTwo;
+    public Image imgCriminalThree;
+    public Image imgCriminalFour;
 
-    void btnToRulesHints()
-    {
-        UIManager.Instance.RulesHints();
-    }
+    public Text txtCriminalOne;
+    public Text txtCriminalTwo;
+    public Text txtCriminalThree;
+    public Text txtCriminalFour;
 
-    void btnToRulesMovement()
-    {
-        UIManager.Instance.RulesMovement();
-    }
+    public Image imgItemsOne;
+    public Image imgItemsTwo;
+    public Image imgItemsThree;
 
-    void btnToContents()
-    {
-        UIManager.Instance.Rules();
-    }
-    void Start()
-    {
-        btn_places.onClick.AddListener(btnToRulesPlace1);
-        btn_evil.onClick.AddListener(btnToRulesEvil1);
-        btn_good.onClick.AddListener(btnToRulesGood1);
-        btn_winCon.onClick.AddListener(btnToRulesWinCon);
-        btn_hints.onClick.AddListener(btnToRulesHints);
-        btn_movement.onClick.AddListener(btnToRulesMovement);
-        btn_player.onClick.AddListener(btnToPrivatePlayer);
-        btn_backPlace.onClick.AddListener(btnToContents);
-        btn_backGood.onClick.AddListener(btnToContents);
-        btn_backEvil.onClick.AddListener(btnToContents);
-        btn_backHints.onClick.AddListener(btnToContents);
-        btn_backMovement.onClick.AddListener(btnToContents);
-        btn_backWinCon.onClick.AddListener(btnToContents);
-    }
+    public Text txtItemsOne;
+    public Text txtItemsTwo;
+    public Text txtItemsThree;
+
+    public Sprite imgStreet_Symbol;
+    public Sprite imgMainsquare_Symbol;
+    public Sprite imgPark_Symbol;
+    public Sprite imgHospital_Symbol;
+    public Sprite imgBank_Symbol;
+    public Sprite imgParliament_Symbol;
+    public Sprite imgCemetary_Symbol;
+    public Sprite imgPrison_Symbol;
+    public Sprite imgCasino_Symbol;
+    public Sprite imgInternetcafe_Symbol;
+    public Sprite imgTrainstation_Symbol;
+    public Sprite imgArmyshop_Symbol;
+    public Sprite imgShoppingcenter_Symbol;
+    public Sprite imgJunkyard_Symbol;
+    public Sprite imgLibrary_Symbol;
+    public Sprite imgLaboratory_Symbol;
+    public Sprite imgItalienrestaurant_Symbol;
+    public Sprite imgHarbor_Symbol;
+    public Sprite imgBar_Symbol;
+    public Sprite imgQuarantine_Symbol;
+    public Sprite imgEdge_Symbol;
+
+
+    public Sprite street;
+    public Sprite mainsquare;
+    public Sprite park;
+    public Sprite hospital;
+    public Sprite bank;
+    public Sprite parliament;
+    public Sprite cementary;
+    public Sprite prison;
+    public Sprite casino;
+    public Sprite internetcafe;
+    public Sprite trainstation;
+    public Sprite armyshop;
+    public Sprite shoppingcenter;
+    public Sprite junkyard;
+    public Sprite library;
+    public Sprite laboratory;
+    public Sprite italienrestaurant;
+    public Sprite harbor;
+    public Sprite bar;
+
+    public Sprite mcay;
+    public Sprite fields;
+    public Sprite cooper;
+    public Sprite osswald;
+    public Sprite larsen;
+    public Sprite edmond;
+
+    public Sprite trainers;
+    public Sprite fingerprintKit;
+    public Sprite energyDrink;
+    public Sprite calculator;
+    public Sprite whiskey;
+    public Sprite protectiveItems;
+
+    private int page = 1;
+    private string chapter="start";
+
     void OnEnable()
     {
-        lastTouch = Input.GetTouch(0);
-       
+        DisableEverything();
+        cvsRulesStart.gameObject.SetActive(true);
+
+        btnBack.onClick.RemoveAllListeners();
+        btnBack.onClick.AddListener(UIManager.Instance.CloseRules);
+
+        btnPageBack.onClick.RemoveAllListeners();
+        btnPageBack.onClick.AddListener(PageBack);
+
+        btnPageForward.onClick.RemoveAllListeners();
+        btnPageForward.onClick.AddListener(PageForward);
+
+        btnPageBack.interactable = false;
+        btnPageForward.interactable = false;
+
+        txtTitel.text = "Regeln";
+
+        page = 1;
+        chapter = "start";
+
+        btnGeneral.onClick.RemoveAllListeners();
+        btnGeneral.onClick.AddListener(General);
+        btnPlaces.onClick.RemoveAllListeners();
+        btnPlaces.onClick.AddListener(Places);
+        btnCharacter.onClick.RemoveAllListeners();
+        btnCharacter.onClick.AddListener(Character);
+        btnCriminals.onClick.RemoveAllListeners();
+        btnCriminals.onClick.AddListener(Criminals);
+        btnItems.onClick.RemoveAllListeners();
+        btnItems.onClick.AddListener(Items);
+
     }
 
-    private void Update()
+    void DisableEverything()
     {
-        bool inputGiven = true;
-        Touch touch = Input.GetTouch(0);
+        cvsRulesStart.gameObject.SetActive(false);
+        cvsGeneral.gameObject.SetActive(false);
+        cvsPlaces.gameObject.SetActive(false);
+        cvsCharacter.gameObject.SetActive(false);
+        cvsCriminals.gameObject.SetActive(false);
+        cvsItems.gameObject.SetActive(false);
+    }
 
-        if (Input.GetTouch(0).phase == TouchPhase.Ended)
+    void PageBack()
+    {
+        page--;
+
+        switch (chapter)
         {
-
-            if (places1.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-            {
-                if (touch.position.x <= 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-                else if (touch.position.x > 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesPlace2();
-                }
-
-
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesPlace2();
-                }
-            }
-
-            if (places2.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-            {
-                if (touch.position.x <= 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesPlace1();
-                }
-                else if (touch.position.x > 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesPlace3();
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesPlace3();
-                }
-            }
-
-            if (places3.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-            {
-                if (touch.position.x <= 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesPlace2();
-                }
-                else if (touch.position.x > 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesPlace4();
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesPlace4();
-                }
-            }
-
-            if (places4.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-            {
-                if (touch.position.x <= 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesPlace3();
-                }
-                else if (touch.position.x > 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-            }
-            if (evil1.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-            {
-                if (touch.position.x <= 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-                else if (touch.position.x > 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesEvil2();
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesEvil2();
-                }
-            }
-
-            if (evil2.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-            {
-                if (touch.position.x <= 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesEvil1();
-                }
-                else if (touch.position.x > 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesEvil3();
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesEvil3();
-                }
-            }
-
-            if (evil3.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-            {
-                if (touch.position.x <= 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesEvil2();
-                }
-                else if (touch.position.x > 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesEvil4();
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesEvil4();
-                }
-            }
-
-            if (evil4.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-            {
-                if (touch.position.x <= 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesEvil3();
-                }
-                else if (touch.position.x > 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-            }
-
-            if (good1.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-            {
-                if (touch.position.x <= 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-                else if (touch.position.x > 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesGood2();
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesGood2();
-                }
-            }
-
-            if (good2.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-            {
-                if (touch.position.x <= 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.RulesGood1();
-                }
-                else if (touch.position.x > 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-            }
-
-            if (winCon.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-            {
-                if (touch.position.x <= 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-                else if (touch.position.x > 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-            }
-
-            if (hints.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-            {
-                if (touch.position.x <= 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-                else if (touch.position.x > 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-            }
-
-            if (movement.enabled && inputGiven && touch.position.x != lastTouch.position.x)
-            {
-                if (touch.position.x <= 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-                else if (touch.position.x > 540)
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    inputGiven = false;
-                    UIManager.Instance.Rules();
-                }
-            }
+            case "start":
+                OnEnable();
+                break;
+            case "general":
+                General();
+                break;
+            case "places":
+                Places();
+                break;
+            case "character":
+                Character();
+                break;
+            case "criminals":
+                Criminals();
+                break;
+            case "items":
+                Items();
+                break;
         }
-        lastTouch = touch;
+    }
+
+    void PageForward()
+    {
+        page++;
+
+        switch (chapter)
+        {
+            case "start":
+                OnEnable();
+                break;
+            case "general":
+                General();
+                break;
+            case "places":
+                Places();
+                break;
+            case "character":
+                Character();
+                break;
+            case "criminals":
+                Criminals();
+                break;
+            case "items":
+                Items();
+                break;
+        }
+    }
+
+    void General()
+    {
+        DisableEverything();
+        cvsGeneral.gameObject.SetActive(true);
+        txtTitel.text = "Allgemeines";
+        btnBack.onClick.RemoveAllListeners();
+        btnBack.onClick.AddListener(OnEnable);
+        chapter = "general";
+
+        switch (page)
+        {
+            case 1:
+                btnPageForward.interactable = true;
+                btnPageBack.interactable = false;
+
+                txtGeneral.text = "Allgemeine Regeln Seite 1";
+                break;
+            case 2:
+                btnPageForward.interactable = false;
+                btnPageBack.interactable = true;
+
+                txtGeneral.text = "Allgemeine Regeln Seite 2";
+                break;
+        }
+    }
+
+    void Places()
+    {
+        DisableEverything();
+        cvsPlaces.gameObject.SetActive(true);
+        txtTitel.text = "Orte";
+        btnBack.onClick.RemoveAllListeners();
+        btnBack.onClick.AddListener(OnEnable);
+        chapter = "places";
+
+        switch (page)
+        {
+            case 1:
+                btnPageForward.interactable = true;
+                btnPageBack.interactable = false;
+
+                imgPlaceOne.sprite = mainsquare;
+                imgPlaceOneSymbol.sprite = imgMainsquare_Symbol;
+                imgPlaceTwo.sprite = internetcafe;
+                imgPlaceTwoSymbol.sprite = imgInternetcafe_Symbol;
+                imgPlaceThree.sprite = casino;
+                imgPlaceThreeSymbol.sprite = imgCasino_Symbol;
+                imgPlaceFour.sprite = junkyard;
+                imgPlaceFourSymbol.sprite = imgJunkyard_Symbol;
+
+                txtPlaceOne.text = "Stadtplatz Regeln";
+                txtPlaceTwo.text = "Internet Cafe Regeln";
+                txtPlaceThree.text = "Kasino Regeln";
+                txtPlaceFour.text = "Schrottplatz Regeln";
+
+                break;
+            case 2:
+                btnPageForward.interactable = true;
+                btnPageBack.interactable = true;
+
+                imgPlaceOne.sprite = armyshop;
+                imgPlaceOneSymbol.sprite = imgArmyshop_Symbol;
+                imgPlaceTwo.sprite = shoppingcenter;
+                imgPlaceTwoSymbol.sprite = imgShoppingcenter_Symbol;
+                imgPlaceThree.sprite = trainstation;
+                imgPlaceThreeSymbol.sprite = imgTrainstation_Symbol;
+                imgPlaceFour.sprite = library;
+                imgPlaceFourSymbol.sprite = imgLibrary_Symbol;
+
+                txtPlaceOne.text = "Armee Laden Regeln";
+                txtPlaceTwo.text = "Shopping Center Regeln";
+                txtPlaceThree.text = "Bahnhof Regeln";
+                txtPlaceFour.text = "Bibliothek Regeln";
+                break;
+            case 3:
+                btnPageForward.interactable = true;
+                btnPageBack.interactable = true;
+
+                imgPlaceOne.sprite = laboratory;
+                imgPlaceOneSymbol.sprite = imgLaboratory_Symbol;
+                imgPlaceTwo.sprite = italienrestaurant;
+                imgPlaceTwoSymbol.sprite = imgItalienrestaurant_Symbol;
+                imgPlaceThree.sprite = harbor;
+                imgPlaceThreeSymbol.sprite = imgHarbor_Symbol;
+                imgPlaceFour.sprite = bar;
+                imgPlaceFourSymbol.sprite = imgBar_Symbol;
+
+                txtPlaceOne.text = "Labor Regeln";
+                txtPlaceTwo.text = "Italiener Regeln";
+                txtPlaceThree.text = "Hafen Regeln";
+                txtPlaceFour.text = "Bar Regeln";
+                break;
+            case 4:
+                btnPageForward.interactable = true;
+                btnPageBack.interactable = true;
+
+                imgPlaceOne.sprite = hospital;
+                imgPlaceOneSymbol.sprite = imgHospital_Symbol;
+                imgPlaceTwo.sprite = bank;
+                imgPlaceTwoSymbol.sprite = imgBank_Symbol;
+                imgPlaceThree.sprite = park;
+                imgPlaceThreeSymbol.sprite = imgPark_Symbol;
+                imgPlaceFour.sprite = cementary;
+                imgPlaceFourSymbol.sprite = imgCemetary_Symbol;
+
+                txtPlaceOne.text = "Krankenhaus Regeln";
+                txtPlaceTwo.text = "Bank Regeln";
+                txtPlaceThree.text = "Park Regeln";
+                txtPlaceFour.text = "Friedhof Regeln";
+                break;
+            case 5:
+                btnPageForward.interactable = false;
+                btnPageBack.interactable = true;
+
+                imgPlaceOne.sprite = prison;
+                imgPlaceOneSymbol.sprite = imgPrison_Symbol;
+                imgPlaceTwo.sprite = parliament;
+                imgPlaceTwoSymbol.sprite = imgParliament_Symbol;
+                imgPlaceThree.sprite = street;
+                imgPlaceThreeSymbol.sprite = imgStreet_Symbol;
+                imgPlaceFour.sprite = null;
+                imgPlaceFourSymbol.sprite = null;
+
+                txtPlaceOne.text = "Gefängnis Regeln";
+                txtPlaceTwo.text = "Parlament Regeln";
+                txtPlaceThree.text = "Straße Regeln";
+                txtPlaceFour.text = " ";
+                break;
+        }
 
     }
-    
+
+    void Character()
+    {
+        DisableEverything();
+        cvsCharacter.gameObject.SetActive(true);
+        txtTitel.text = "Charaktere";
+        btnBack.onClick.RemoveAllListeners();
+        btnBack.onClick.AddListener(OnEnable);
+        chapter = "character";
+
+        switch (page)
+        {
+            case 1:
+                btnPageForward.interactable = true;
+                btnPageBack.interactable = false;
+
+                imgCharacterOne.sprite = mcay;
+                imgCharacterTwo.sprite = fields;
+                imgCharacterThree.sprite = cooper;
+
+                imgCharacterOneBG.sprite = hospital;
+                imgCharacterTwoBG.sprite = bank;
+                imgCharacterThreeBG.sprite = park;
+
+                txtCharacterOne.text = "Dr. Moe McKay Regeln";
+                txtCharacterTwo.text = "Felicity Field Regeln";
+                txtCharacterThree.text = "Colin Cooper Regeln";
+
+                break;
+            case 2:
+                btnPageForward.interactable = false;
+                btnPageBack.interactable = true;
+
+                imgCharacterOne.sprite = osswald;
+                imgCharacterTwo.sprite = larsen;
+                imgCharacterThree.sprite = edmond;
+
+                imgCharacterOneBG.sprite = cementary;
+                imgCharacterTwoBG.sprite = prison;
+                imgCharacterThreeBG.sprite = parliament;
+
+                txtCharacterOne.text = "Olivia Osswald Regeln";
+                txtCharacterTwo.text = "Laura Larsen Regeln";
+                txtCharacterThree.text = "Eric Edmond Regeln";
+                break;
+
+        }
+    }
+
+    void Criminals()
+    {
+        DisableEverything();
+        cvsCriminals.gameObject.SetActive(true);
+        txtTitel.text = "Verbrecher";
+        btnBack.onClick.RemoveAllListeners();
+        btnBack.onClick.AddListener(OnEnable);
+        chapter = "criminals";
+
+        switch (page)
+        {
+            case 1:
+                btnPageForward.interactable = true;
+                btnPageBack.interactable = false;
+                CriminalGeneralPanel.gameObject.SetActive(true);
+                txtCriminalGeneral.text = "Allgemeine Verbrecher Regeln Seite 1";
+                break;
+            case 2:
+                btnPageForward.interactable = true;
+                btnPageBack.interactable = true;
+                CriminalGeneralPanel.gameObject.SetActive(true);
+                txtCriminalGeneral.text = "Allgemeine Verbrecher Regeln Seite 2";
+                break;
+            case 3:
+                btnPageForward.interactable = false;
+                btnPageBack.interactable = true;
+                CriminalGeneralPanel.gameObject.SetActive(false);
+                break;
+        }
+    }
+
+    void Items()
+    {
+        DisableEverything();
+        cvsItems.gameObject.SetActive(true);
+        txtTitel.text = "Items";
+        btnBack.onClick.RemoveAllListeners();
+        btnBack.onClick.AddListener(OnEnable);
+        chapter = "items";
+
+        switch (page)
+        {
+            case 1:
+                btnPageBack.interactable = false;
+                btnPageForward.interactable = true;
+                imgItemsOne.sprite = trainers;
+                imgItemsTwo.sprite = fingerprintKit;
+                imgItemsThree.sprite = energyDrink;
+
+                    txtItemsOne.text = "Turnschuhe Regeln";
+                txtItemsTwo.text = "Fingerabdruck Set Regeln";
+                txtItemsThree.text = "Energy Drink Regeln";
+                break;
+            case 2:
+                btnPageBack.interactable = true;
+                btnPageForward.interactable = false;
+                imgItemsOne.sprite = calculator;
+                imgItemsTwo.sprite = whiskey;
+                imgItemsThree.sprite = protectiveItems;
+
+                   txtItemsOne.text = "Taschenrechner Regeln";
+                txtItemsTwo.text = "Whiskey Regeln";
+                txtItemsThree.text = "Schutz Items Regeln";
+                break;
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* public Button btn_places;
+     public Button btn_evil;
+     public Button btn_good;
+     public Button btn_winCon;
+     public Button btn_hints;
+     public Button btn_movement;
+     public Button btn_player;
+     public Button btn_backPlace;
+     public Button btn_backEvil;
+     public Button btn_backGood;
+     public Button btn_backWinCon;
+     public Button btn_backHints;
+     public Button btn_backMovement;
+
+     public Canvas places1;
+     public Canvas places2;
+     public Canvas places3;
+     public Canvas places4;
+     public Canvas evil1;
+     public Canvas evil2;
+     public Canvas evil3;
+     public Canvas evil4;
+     public Canvas good1;
+     public Canvas good2;
+     public Canvas winCon;
+     public Canvas hints;
+     public Canvas movement;
+     private Touch lastTouch;
+     public Text testText;
+     void btnToPrivatePlayer()
+     {
+         UIManager.Instance.PrivatePlayer();
+     }
+
+     void btnToRulesPlace1()
+     {
+         UIManager.Instance.RulesPlace1();
+     }
+
+     void btnToRulesPlace2()
+     {
+         UIManager.Instance.RulesPlace2();
+     }
+
+     void btnToRulesPlace3()
+     {
+         UIManager.Instance.RulesPlace3();
+     }
+
+     void btnToRulesPlace4()
+     {
+         UIManager.Instance.RulesPlace4();
+     }
+
+     void btnToRulesEvil1()
+     {
+         UIManager.Instance.RulesEvil1();
+     }
+
+     void btnToRulesEvil2()
+     {
+         UIManager.Instance.RulesEvil2();
+     }
+
+     void btnToRulesEvil3()
+     {
+         UIManager.Instance.RulesEvil3();
+     }
+
+     void btnToRulesEvil4()
+     {
+         UIManager.Instance.RulesEvil4();
+     }
+
+     void btnToRulesGood1()
+     {
+         UIManager.Instance.RulesGood1();
+     }
+
+     void btnToRulesGood2()
+     {
+         UIManager.Instance.RulesGood2();
+     }
+
+     void btnToRulesWinCon()
+     {
+         UIManager.Instance.RulesWinCon();
+     }
+
+     void btnToRulesHints()
+     {
+         UIManager.Instance.RulesHints();
+     }
+
+     void btnToRulesMovement()
+     {
+         UIManager.Instance.RulesMovement();
+     }
+
+     void btnToContents()
+     {
+         UIManager.Instance.Rules();
+     }
+     void Start()
+     {
+         btn_places.onClick.AddListener(btnToRulesPlace1);
+         btn_evil.onClick.AddListener(btnToRulesEvil1);
+         btn_good.onClick.AddListener(btnToRulesGood1);
+         btn_winCon.onClick.AddListener(btnToRulesWinCon);
+         btn_hints.onClick.AddListener(btnToRulesHints);
+         btn_movement.onClick.AddListener(btnToRulesMovement);
+         btn_player.onClick.AddListener(btnToPrivatePlayer);
+         btn_backPlace.onClick.AddListener(btnToContents);
+         btn_backGood.onClick.AddListener(btnToContents);
+         btn_backEvil.onClick.AddListener(btnToContents);
+         btn_backHints.onClick.AddListener(btnToContents);
+         btn_backMovement.onClick.AddListener(btnToContents);
+         btn_backWinCon.onClick.AddListener(btnToContents);
+     }
+     void OnEnable()
+     {
+         lastTouch = Input.GetTouch(0);
+
+     }
+
+     private void Update()
+     {
+         bool inputGiven = true;
+         Touch touch = Input.GetTouch(0);
+
+         if (Input.GetTouch(0).phase == TouchPhase.Ended)
+         {
+
+             if (places1.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+             {
+                 if (touch.position.x <= 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+                 else if (touch.position.x > 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesPlace2();
+                 }
+
+
+                 if (Input.GetKeyDown(KeyCode.Space))
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesPlace2();
+                 }
+             }
+
+             if (places2.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+             {
+                 if (touch.position.x <= 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesPlace1();
+                 }
+                 else if (touch.position.x > 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesPlace3();
+                 }
+                 if (Input.GetKeyDown(KeyCode.Space))
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesPlace3();
+                 }
+             }
+
+             if (places3.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+             {
+                 if (touch.position.x <= 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesPlace2();
+                 }
+                 else if (touch.position.x > 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesPlace4();
+                 }
+                 if (Input.GetKeyDown(KeyCode.Space))
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesPlace4();
+                 }
+             }
+
+             if (places4.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+             {
+                 if (touch.position.x <= 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesPlace3();
+                 }
+                 else if (touch.position.x > 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+                 if (Input.GetKeyDown(KeyCode.Space))
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+             }
+             if (evil1.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+             {
+                 if (touch.position.x <= 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+                 else if (touch.position.x > 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesEvil2();
+                 }
+                 if (Input.GetKeyDown(KeyCode.Space))
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesEvil2();
+                 }
+             }
+
+             if (evil2.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+             {
+                 if (touch.position.x <= 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesEvil1();
+                 }
+                 else if (touch.position.x > 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesEvil3();
+                 }
+                 if (Input.GetKeyDown(KeyCode.Space))
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesEvil3();
+                 }
+             }
+
+             if (evil3.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+             {
+                 if (touch.position.x <= 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesEvil2();
+                 }
+                 else if (touch.position.x > 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesEvil4();
+                 }
+                 if (Input.GetKeyDown(KeyCode.Space))
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesEvil4();
+                 }
+             }
+
+             if (evil4.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+             {
+                 if (touch.position.x <= 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesEvil3();
+                 }
+                 else if (touch.position.x > 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+                 if (Input.GetKeyDown(KeyCode.Space))
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+             }
+
+             if (good1.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+             {
+                 if (touch.position.x <= 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+                 else if (touch.position.x > 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesGood2();
+                 }
+                 if (Input.GetKeyDown(KeyCode.Space))
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesGood2();
+                 }
+             }
+
+             if (good2.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+             {
+                 if (touch.position.x <= 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.RulesGood1();
+                 }
+                 else if (touch.position.x > 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+                 if (Input.GetKeyDown(KeyCode.Space))
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+             }
+
+             if (winCon.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+             {
+                 if (touch.position.x <= 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+                 else if (touch.position.x > 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+                 if (Input.GetKeyDown(KeyCode.Space))
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+             }
+
+             if (hints.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+             {
+                 if (touch.position.x <= 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+                 else if (touch.position.x > 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+                 if (Input.GetKeyDown(KeyCode.Space))
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+             }
+
+             if (movement.enabled && inputGiven && touch.position.x != lastTouch.position.x)
+             {
+                 if (touch.position.x <= 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+                 else if (touch.position.x > 540)
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+
+                 if (Input.GetKeyDown(KeyCode.Space))
+                 {
+                     inputGiven = false;
+                     UIManager.Instance.Rules();
+                 }
+             }
+         }
+         lastTouch = touch;
+
+     }
+     */
 }

@@ -95,6 +95,8 @@ public class Menu : MonoBehaviour
         btnNo.onClick.AddListener(btnRestartClose);
         btnYes.onClick.AddListener(UIManager.Instance.RestartScene);
         btnRestart.onClick.AddListener(btnRestartClick);
+        btnRules.onClick.AddListener(UIManager.Instance.OpenRules);
+
 
         TitelPanel.gameObject.SetActive(true);
         btnBoard.gameObject.SetActive(true);
