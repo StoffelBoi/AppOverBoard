@@ -132,7 +132,7 @@ public class RoleSelection : MonoBehaviour
                 }
                 break;
         }
-        //Debug.Log(GameState.Instance.criminalRole + " played by " + GameState.Instance.criminal);
+     
     }
     // Update is called once per frame
     void Update()

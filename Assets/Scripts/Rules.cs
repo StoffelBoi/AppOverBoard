@@ -281,10 +281,11 @@ public class Rules : MonoBehaviour
                 imgPlaceFour.sprite = junkyard;
                 imgPlaceFourSymbol.sprite = imgJunkyard_Symbol;
 
-                txtPlaceOne.text = "Stadtplatz Regeln";
-                txtPlaceTwo.text = "Internet Cafe Regeln";
-                txtPlaceThree.text = "Kasino Regeln";
-                txtPlaceFour.text = "Schrottplatz Regeln";
+                txtPlaceOne.text = "Stadtplatz\n\n-Startpunkt für alle Spieler\n\n-Geld verdienen: 6$";
+                txtPlaceTwo.text = "Internet Cafe\n\n-Geld verdienen: 6$\n\n-Verbrecher kann sich hier Fallen kaufen.";
+                txtPlaceTwo.fontSize = 39;
+                txtPlaceThree.text = "Kasino\n\n-Glückspiel: 50% Chance sein gesetztes Geld zu verdoppeln bzw. verlieren.";
+                txtPlaceFour.text = "Schrottplatz\n\n-Schrott durchsuchen und zufällige Items finden.";
 
                 break;
             case 2:
@@ -300,10 +301,11 @@ public class Rules : MonoBehaviour
                 imgPlaceFour.sprite = library;
                 imgPlaceFourSymbol.sprite = imgLibrary_Symbol;
 
-                txtPlaceOne.text = "Armee Laden Regeln";
-                txtPlaceTwo.text = "Shopping Center Regeln";
-                txtPlaceThree.text = "Bahnhof Regeln";
-                txtPlaceFour.text = "Bibliothek Regeln";
+                txtPlaceOne.text = "Armee Laden\n\n-Schutzitems kaufen:\n\t-6$ Schutzweste\n\t-15$ F.fester Mantel\n\t-15$ Gasmaske\n\t-15$ Bodycam\n\t-15$ Talisman";
+                txtPlaceTwo.text = "Shopping Center\n\n-Items kaufen: \n\t-Turnschuhe\n\t-Fingerabdruck Set\n\t-Energy Drink\n\t-Taschenrechner\n\t-Whiskey\n-Verbrecher kann sich hier zufällig eine Falle kaufen.";
+                txtPlaceTwo.fontSize = 34;
+                txtPlaceThree.text = "Bahnhof\n\n-Reise zu jeden Ort für 2$.";
+                txtPlaceFour.text = "Bibliothek\n\n-Hinweise entschlüsseln.";
                 break;
             case 3:
                 btnPageForward.interactable = true;
@@ -318,10 +320,11 @@ public class Rules : MonoBehaviour
                 imgPlaceFour.sprite = bar;
                 imgPlaceFourSymbol.sprite = imgBar_Symbol;
 
-                txtPlaceOne.text = "Labor Regeln";
-                txtPlaceTwo.text = "Italiener Regeln";
-                txtPlaceThree.text = "Hafen Regeln";
-                txtPlaceFour.text = "Bar Regeln";
+                txtPlaceOne.text = "Labor\n\n-Hinweise entschlüsseln";
+                txtPlaceTwo.text = "Italiener\n\n-1-4$ für einen ev. richtigen Hinweis, je mehr man zahlt desto besser sind die Chancen.";
+                txtPlaceTwo.fontSize = 39;
+                txtPlaceThree.text = "Hafen\n\n-3$ für einen ev. richtigen Hinweis\n\n-Verbrecher kann sich hier Fallen kaufen.";
+                txtPlaceFour.text = "Bar\n\n-2$ für einen ev. richtigen Hinweis, in der nächsten Runde wacht man an einen zufälligen Platz auf.";
                 break;
             case 4:
                 btnPageForward.interactable = true;
@@ -336,10 +339,11 @@ public class Rules : MonoBehaviour
                 imgPlaceFour.sprite = cementary;
                 imgPlaceFourSymbol.sprite = imgCemetary_Symbol;
 
-                txtPlaceOne.text = "Krankenhaus Regeln";
-                txtPlaceTwo.text = "Bank Regeln";
-                txtPlaceThree.text = "Park Regeln";
-                txtPlaceFour.text = "Friedhof Regeln";
+                txtPlaceOne.text = "Krankenhaus\n\n-Ort für die Fähigkeit von Dr. Moe McKay.";
+                txtPlaceTwo.text = "Bank\n\n-Ort für die Fähigkeit von Felicity Fields.";
+                txtPlaceTwo.fontSize = 39;
+                txtPlaceThree.text = "Park\n\n-Ort für die Fähigkeit von Colin Cooper.";
+                txtPlaceFour.text = "Friedhof\n\n-Ort für die Fähigkeit von Olivia Osswald.";
                 break;
             case 5:
                 btnPageForward.interactable = false;
@@ -354,9 +358,10 @@ public class Rules : MonoBehaviour
                 imgPlaceFour.sprite = null;
                 imgPlaceFourSymbol.sprite = null;
 
-                txtPlaceOne.text = "Gefängnis Regeln";
-                txtPlaceTwo.text = "Parlament Regeln";
-                txtPlaceThree.text = "Straße Regeln";
+                txtPlaceOne.text = "Gefängnis\n\n-Ort für die Fähigkeit von Laura Larsen.";
+                txtPlaceTwo.text = "Parlament\n\n-Ort für die Fähigkeit von Erik Edmond.";
+                txtPlaceTwo.fontSize = 39;
+                txtPlaceThree.text = "Straße\n\n-zufällige Event.s";
                 txtPlaceFour.text = " ";
                 break;
         }
@@ -386,9 +391,9 @@ public class Rules : MonoBehaviour
                 imgCharacterTwoBG.sprite = bank;
                 imgCharacterThreeBG.sprite = park;
 
-                txtCharacterOne.text = "Dr. Moe McKay Regeln";
-                txtCharacterTwo.text = "Felicity Field Regeln";
-                txtCharacterThree.text = "Colin Cooper Regeln";
+                txtCharacterOne.text = "Dr. Moe McKay\n\n-kann im Krankenhaus einen Ort für 2 Runden unter Quarantäne stellen und in so für alle Charaktere sperren.";
+                txtCharacterTwo.text = "Felicity Field\n\n-kann in der Bank die letzte Transaktion eines Spielers einsehen.";
+                txtCharacterThree.text = "Colin Cooper\n\n-kann im Park sein Obdachlosennetzwerk fragen wieviele Questorte der Verbrecher schon erledigt hat.";
 
                 break;
             case 2:
@@ -403,9 +408,9 @@ public class Rules : MonoBehaviour
                 imgCharacterTwoBG.sprite = prison;
                 imgCharacterThreeBG.sprite = parliament;
 
-                txtCharacterOne.text = "Olivia Osswald Regeln";
-                txtCharacterTwo.text = "Laura Larsen Regeln";
-                txtCharacterThree.text = "Eric Edmond Regeln";
+                txtCharacterOne.text = "Olivia Osswald\n\n-kann im Friedhof eine Seance abhalten um herauszufinden wo sich in der Stadt scharfe Fallen befinden.";
+                txtCharacterTwo.text = "Laura Larsen\n\n-kann im Gefängnis eine Studie durch- führen um alle falschen Hinweise in der Stadt verschwinden zu lassen.";
+                txtCharacterThree.text = "Eric Edmond\n\n-kann im Parlament einen Politiker erpressen um heraus- zufinden welche Aktion ein Spieler im letzten Zug durchgeführt hat.";
                 break;
 
         }
@@ -442,8 +447,9 @@ public class Rules : MonoBehaviour
                 imgCriminalOne.sprite = inferno;
                 imgCriminalTwo.sprite = drMortifier;
 
-                txtCriminalOne.text = "Inferno Regeln";
-                txtCriminalTwo.text = "Dr. Mortifier Regeln";
+                txtCriminalOne.text = "Inferno\n\n-muss seine Bombe innerhalb von 50 Minuten platzieren.\n\nQuestorte:\nArmee Laden\nShopping Center\nSchrottplatz\n\nMögliche Zielorte:\nParlament\nGefängnis\nKasino";
+                txtCriminalTwo.text = "Dr.Mortifier\n\n-muss nach dem Platzieren der Krankheitserreger innerhalb von 10 Minuten 5+ Felder vom Seuchenherd entfernt sein.\n\nQuestorte:\nShopping Center\nBibliothek\nLabor\n\nMögliche Zielorte:\nStadtplatz\nShopping Center\nHafen";
+
                 break;
             case 4:
                 btnPageForward.interactable = false;
@@ -453,8 +459,9 @@ public class Rules : MonoBehaviour
                 imgCriminalOne.sprite = phantom;
                 imgCriminalTwo.sprite = fasculto;
 
-                txtCriminalOne.text = "Phantom Regeln";
-                txtCriminalTwo.text = "Fasculto Regeln";
+                txtCriminalOne.text = "Phantom\n\n-hat alle 20 Minuten ein 5 Minuten Zeitfenster für seinen Einbruch.\n\nQuestorte:\nInternet Cafe\nArmee Laden\nBar\n\nMögliche Zielorte:\nBank\nKasino\nShoppingCenter";
+                txtCriminalTwo.text = "Fasculto\n\n-hat nach 40 Minuten für 20 Minuten Zeit sein Ritual durchzuführen.\n\nQuestorte:\nBibliothek\nHafen\nBar\n\nMögliche Zielorte:\nParlament\nFriedhof\nGefängnis";
+
                 break;
         }
     }
@@ -477,9 +484,10 @@ public class Rules : MonoBehaviour
                 imgItemsTwo.sprite = fingerprintKit;
                 imgItemsThree.sprite = energyDrink;
 
-                    txtItemsOne.text = "Turnschuhe Regeln";
-                txtItemsTwo.text = "Fingerabdruck Set Regeln";
-                txtItemsThree.text = "Energy Drink Regeln";
+                    txtItemsOne.text = "Turnschuhe\n\n-ermöglichen es sich ein weiteres Mal zu bewegen.";
+                txtItemsTwo.text = "Fingerabdruck Set\n\n-ermöglicht es alle Hinweise am derzeitigen Platz zu finden und diese sofort zu entschlüsseln.";
+                txtItemsThree.fontSize = 50;
+                txtItemsThree.text = "Energy Drink\n\n-ermöglicht es im aktuellen Zug eine weitere Aktion durchzuführen.";
                 break;
             case 2:
                 btnPageBack.interactable = true;
@@ -488,9 +496,10 @@ public class Rules : MonoBehaviour
                 imgItemsTwo.sprite = whiskey;
                 imgItemsThree.sprite = protectiveItems;
 
-                   txtItemsOne.text = "Taschenrechner Regeln";
-                txtItemsTwo.text = "Whiskey Regeln";
-                txtItemsThree.text = "Schutz Items Regeln";
+                   txtItemsOne.text = "Taschenrechner\n\n-ermöglicht es am Stadtplatz und im Internet Cafe 2$ mehr zu verdienen.";
+                txtItemsTwo.text = "Whiskey\n\n-ermöglicht es diesen am Hafen gegen eine wahren entschlüsselten Hinweis auszutauschen.";
+                txtItemsThree.fontSize = 30;
+                txtItemsThree.text = "Schutz Items\n\n-schützen dich gegen Fallen.\n\nSchutzweste: einmal alle Fallen.\n\nF.fester Mantel: permanent Bomben.\n\nGasmaske: permanent Petrischalen.\n\nBodycam: permanent Diebesgut.\n\nTalisman: permanent v. Artifakte.";
                 break;
 
         }

@@ -862,7 +862,6 @@ public class Place : MonoBehaviour
             }
             if (GameState.Instance.playerLost[GameState.Instance.currentTurn])
             {
-                Debug.Log(GameState.Instance.roles[GameState.Instance.currentTurn] + " has already lost");
                 endTurn();
             }
             else
@@ -2181,7 +2180,7 @@ public class Place : MonoBehaviour
     {
         twoButtons();
         btnOneText.text = "Geld verdienen";
-        btnTwoText.text = "fremde Falle kaufen";
+        btnTwoText.text = "Falle kaufen";
         btnTwo.interactable = false;
         btnOne.onClick.AddListener(earnMoney);
         btnTwo.onClick.AddListener(btnBuyTrap);
@@ -2201,9 +2200,9 @@ public class Place : MonoBehaviour
         btnThreeText.text = "Diebesgut";
         btnFourText.text = "Verfluchtes Artifakt";
         btnOne.onClick.AddListener(btnBuyingInfernoTrap);
-        btnOne.onClick.AddListener(btnBuyingDrMortifierTrap);
-        btnOne.onClick.AddListener(btnBuyingPhantomTrap);
-        btnOne.onClick.AddListener(btnBuyingFascultoTrap);
+        btnTwo.onClick.AddListener(btnBuyingDrMortifierTrap);
+        btnThree.onClick.AddListener(btnBuyingPhantomTrap);
+        btnFour.onClick.AddListener(btnBuyingFascultoTrap);
         simpleDialogue("Welche Falle willst du kaufen?", 60);
     }
     void btnBuyingInfernoTrap()
@@ -2222,7 +2221,6 @@ public class Place : MonoBehaviour
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 2));
         localPlayer.AddItem(GameState.Instance.currentTurn, "PetriDish");
         addTrueHint();
-        endTurn();
         setDialogue("Du hast dir eine Petrischale gekauft.");
     }
     void btnBuyingPhantomTrap()
@@ -2503,8 +2501,8 @@ public class Place : MonoBehaviour
     void armyshopAction()
     {
         twoButtons();
-        btnOneText.text = "Schutzweste";
-        btnTwoText.text = "Permanenter Schutz";
+        btnOneText.text = "Schutzweste - 6$";
+        btnTwoText.text = "Permanenter Schutz - 15$";
         btnOne.onClick.AddListener(btnBuyProtectiveVest);
         btnTwo.onClick.AddListener(btnBuyPermanentProtection);
         if (GameState.Instance.money[GameState.Instance.currentTurn] < 6)
@@ -2532,7 +2530,7 @@ public class Place : MonoBehaviour
         btnTwoText.text = "Gasmaske";
         btnThreeText.text = "Bodycam";
         btnFourText.text = "Talisman";
-        btnOne.onClick.AddListener(btnBuyBodycam);
+        btnOne.onClick.AddListener(btnBuyFireProofCoat);
         btnTwo.onClick.AddListener(btnBuyGasmask);
         btnThree.onClick.AddListener(btnBuyBodycam);
         btnFour.onClick.AddListener(btnBuyTalisman);
@@ -2833,21 +2831,20 @@ public class Place : MonoBehaviour
     {
         twoButtons();
         btnOneText.text = "Hinweis - 3$";
-        btnTwoText.text = "fremde Falle kaufen";
+        btnTwoText.text = "Falle kaufen";
         btnOne.onClick.AddListener(btnHarborHint);
         btnTwo.onClick.AddListener(btnBuyTrap);
         if (GameState.Instance.money[GameState.Instance.currentTurn] < 3)
         {
             btnOne.interactable = false;
         }
-        if (GameState.Instance.criminalRole != GameState.Instance.roles[GameState.Instance.currentTurn])
+        if (GameState.Instance.criminal != GameState.Instance.roles[GameState.Instance.currentTurn])
         {
             btnTwo.interactable = false;
         }
-        else
-        {
-            simpleDialogue("Was willst du machen?", 60);
-        }
+
+        simpleDialogue("Was willst du machen?", 60);
+
     }
     void btnHarborHint()
     {
@@ -2860,7 +2857,7 @@ public class Place : MonoBehaviour
     void barAction()
     {
         oneButton();
-        btnOneText.text = "Ein Bier trinken";
+        btnOneText.text = "Ein Bier trinken - 2$";
         btnOne.onClick.AddListener(btnBarHint);
     }
     void btnBarHint()
@@ -3483,7 +3480,7 @@ public class Place : MonoBehaviour
 
         btnTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(799, 450);
         btnTwo.GetComponent<RectTransform>().anchoredPosition = new Vector2(116.5f, -468);
-        btnOne.GetComponent<Image>().sprite = fourBySeven;
+        btnTwo.GetComponent<Image>().sprite = fourBySeven;
 
         btnOneText.fontSize = 150;
         btnTwoText.fontSize = 150;
