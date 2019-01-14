@@ -251,20 +251,12 @@ public class Player : NetworkBehaviour
     #region SetCriminal
     public void SetCriminal(string role)
     {
-        GameState.Instance.criminal = role;
+     
         if (isServer)
         {
+            GameState.Instance.criminal = role;
             RpcSetCriminal(role);
         }
-        else
-        {
-            CmdSetCriminal(role);
-        }
-    }
-    [Command]
-    public void CmdSetCriminal(string role)
-    {
-        SetCriminal(role);
     }
     [ClientRpc]
     public void RpcSetCriminal(string role)
@@ -278,20 +270,12 @@ public class Player : NetworkBehaviour
     #region SetCriminalRole
     public void SetCriminalRole(string role)
     {
-        GameState.Instance.criminalRole = role;
+        
         if (isServer)
         {
+            GameState.Instance.criminalRole = role;
             RpcSetCriminalRole(role);
         }
-        else
-        {
-            CmdSetCriminalRole(role);
-        }
-    }
-    [Command]
-    public void CmdSetCriminalRole(string role)
-    {
-        SetCriminalRole(role);
     }
     [ClientRpc]
     public void RpcSetCriminalRole(string role)
@@ -305,20 +289,12 @@ public class Player : NetworkBehaviour
     #region SetTargetPlace
     public void SetTargetPlace(int place)
     {
-        GameState.Instance.targetPlace = place;
+        
         if (isServer)
         {
+            GameState.Instance.targetPlace = place;
             RpcSetTargetPlace(place);
         }
-        else
-        {
-            CmdSetTargetPlace(place);
-        }
-    }
-    [Command]
-    public void CmdSetTargetPlace(int place)
-    {
-        SetTargetPlace(place);
     }
     [ClientRpc]
     public void RpcSetTargetPlace(int place)
@@ -544,20 +520,12 @@ public class Player : NetworkBehaviour
     #region AddQuestPlace
     public void AddQuestPlace(int place)
     {
-        GameState.Instance.questPlaces.Add(place);
+       
         if (isServer)
         {
+            GameState.Instance.questPlaces.Add(place);
             RpcAddQuestPlace(place);
         }
-        else
-        {
-            CmdAddQuestPlace(place);
-        }
-    }
-    [Command]
-    public void CmdAddQuestPlace(int place)
-    {
-        AddQuestPlace(place);
     }
     [ClientRpc]
     public void RpcAddQuestPlace(int place)

@@ -98,9 +98,9 @@ public class PrivatePlayer : MonoBehaviour
 
         string infos = "";
         infos +=
-            "Fakten:\n\nPerson:\t" + GameState.Instance.placeFact[playerID] +
+            "Fakten:\n\nPerson:\t" + GameState.Instance.roleFact[playerID] +
             "\n\nVerbrecher:\t" + GameState.Instance.playerFact[playerID] +
-            "\n\nZielort:\t" + GameState.Instance.roleFact[playerID];
+            "\n\nZielort:\t" + GameState.Instance.placeFact[playerID];
 
         if (GameState.Instance.criminal == character)
         {

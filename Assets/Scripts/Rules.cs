@@ -302,7 +302,7 @@ public class Rules : MonoBehaviour
                 imgPlaceFourSymbol.sprite = imgLibrary_Symbol;
 
                 txtPlaceOne.text = "Armee Laden\n\n-Schutzitems kaufen:\n\t-6$ Schutzweste\n\t-15$ F.fester Mantel\n\t-15$ Gasmaske\n\t-15$ Bodycam\n\t-15$ Talisman";
-                txtPlaceTwo.text = "Shopping Center\n\n-Items kaufen: \n\t-Turnschuhe\n\t-Fingerabdruck Set\n\t-Energy Drink\n\t-Taschenrechner\n\t-Whiskey\n-Verbrecher kann sich hier zufällig eine Falle kaufen.";
+                txtPlaceTwo.text = "Shopping Center\n\n-Items kaufen: \n\t-4$ Turnschuhe\n\t-4$ Fingerabdruck Set\n\t-3$ Energy Drink\n\t-8$ Taschenrechner\n\t-8$ Whiskey\n-2$ Verbrecher kann sich hier zufällig eine Falle kaufen.";
                 txtPlaceTwo.fontSize = 34;
                 txtPlaceThree.text = "Bahnhof\n\n-Reise zu jeden Ort für 2$.";
                 txtPlaceFour.text = "Bibliothek\n\n-Hinweise entschlüsseln.";

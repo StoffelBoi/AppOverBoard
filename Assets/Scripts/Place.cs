@@ -981,7 +981,7 @@ public class Place : MonoBehaviour
 
     void btnLookAroundClick()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Umschauen");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Umsehen");
         System.Random rn = new System.Random();
         int r = rn.Next(1, 40);
         switch (r)
@@ -1011,9 +1011,8 @@ public class Place : MonoBehaviour
                 setDialogue("Du schaust dich um und als plötzlich ein Fremder auf dich zu kommt. Er gibt dir einen interessanten Tipp und du denkst, dass du einen neuen Hinweis hast musst ihn jedoch noch genauer analysieren.");
                 break;
             case 6:
-                localPlayer.SetIsDisabled(GameState.Instance.currentTurn, 1);
                 localPlayer.SetCurrentPlace(GameState.Instance.currentTurn, findPosition(3)[0], findPosition(3)[1]);
-                setDialogue("Du schaust dich so genau um, dass du eine Straßenlaterne übersiehst und dir eine leichte Gehirnerschütterung ergatterst. Du bist für die nächste Runde im Krankenhaus.");
+                setDialogue("Du schaust dich so genau um, dass du eine Straßenlaterne übersiehst und dir eine leichte Gehirnerschütterung ergatterst. Du musst leider ins Krankenhaus.");
                 break;
             case 7:
                 int xPlace = rn.Next(0, 5);
@@ -1115,7 +1114,7 @@ public class Place : MonoBehaviour
                 setDialogue("Du schaust dich um und findest ein paar alte Turnschuhe und steckst sie ein. Du hoffst das dich niemand dabei beobachtet hat.");
                 break;
             case 14:
-                int escape = rn.Next(0, 10);
+                int escape = rn.Next(0, 25);
                 if (escape == 0)
                 {
                     localPlayer.SetMoney(GameState.Instance.currentTurn, 0);
@@ -1159,9 +1158,8 @@ public class Place : MonoBehaviour
                 setDialogue("Du schaust dich um und findest eine Petrischale. Du entscheidest dich dagegen sie einzustecken, wer weiß was du dir dabei einfangen könntest.");
                 break;
             case 20:
-                localPlayer.SetIsDisabled(GameState.Instance.currentTurn, 1);
                 localPlayer.SetCurrentPlace(GameState.Instance.currentTurn, findPosition(3)[0], findPosition(3)[1]);
-                setDialogue("Du schaust dich um und findest eine Petrischale und steckst sie ein. Ein paar Stunden später fühlst du dich elendst und begibst dich ins Krankenhaus, wo du für eine Runde bleiben musst.");
+                setDialogue("Du schaust dich um und findest eine Petrischale und steckst sie ein. Ein paar Stunden später fühlst du dich elendst und begibst dich ins Krankenhaus.");
                 break;
             default:
                 setDialogue("Du schaust dich um aber du bemerkst nichts außergewöhnliches.");
@@ -1689,7 +1687,7 @@ public class Place : MonoBehaviour
         {
             if (tempfoundHints == 1)
             {
-                setDialogue("Du schaust dich genauer um, und findest " + tempfoundHints + " Hinweis, der zum Verbrecher führen könnten.");
+                setDialogue("Du schaust dich genauer um, und findest " + tempfoundHints + " Hinweis, der zum Verbrecher führen könnte.");
             }
             else
             {
@@ -2572,12 +2570,12 @@ public class Place : MonoBehaviour
     void shoppingcenterAction()
     {
         sixButtons();
-        btnOneText.text = "Turnschuhe";
-        btnTwoText.text = "Fingerabdruckset";
-        btnThreeText.text = "Energy Drink";
-        btnFourText.text = "Taschenrechner";
-        btnFiveText.text = "Whiskey";
-        btnSixText.text = "Zufallsfalle";
+        btnOneText.text = "Turnschuhe-4$";
+        btnTwoText.text = "Fingerabdruckset-4$";
+        btnThreeText.text = "Energy Drink-3$";
+        btnFourText.text = "Taschenrechner-8$";
+        btnFiveText.text = "Whiskey-8$";
+        btnSixText.text = "Zufallsfalle-2$";
 
         btnOne.onClick.AddListener(btnBuyTrainers);
         btnTwo.onClick.AddListener(btnBuyFingerprintKit);
@@ -2598,6 +2596,7 @@ public class Place : MonoBehaviour
         }
         if (GameState.Instance.money[GameState.Instance.currentTurn] < 4)
         {
+            btnOne.interactable = false;
             btnTwo.interactable = false;
         }
         if (GameState.Instance.money[GameState.Instance.currentTurn] < 3)
@@ -2607,7 +2606,7 @@ public class Place : MonoBehaviour
         if (GameState.Instance.money[GameState.Instance.currentTurn] < 2)
         {
             btnSix.interactable = false;
-            btnOne.interactable = false;
+           
         }
         simpleDialogue("Was willst du kaufen?", 60);
     }
@@ -2615,7 +2614,7 @@ public class Place : MonoBehaviour
     {
         localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "Turnschuhe");
-        localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 2));
+        localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 4));
         localPlayer.AddItem(GameState.Instance.currentTurn, "Trainers");
         setDialogue("Du hast dir Turnschuhe gekauft.");
     }
@@ -2934,7 +2933,7 @@ public class Place : MonoBehaviour
                 place = "in der Bar";
                 break;
         }
-        setDialogue("Du bist auf \"ein Bier\" in die Bar gegangen. Am nächsten Morgen bis du aus irgeneinem Grun " + place + " aufgewacht. Die anderen Barbesucher haben dir eine wichtigen Hinweis gegeben aber du kannst dich nicht mehr genau daran erinnern.");
+        setDialogue("Du bist auf \"ein Bier\" in die Bar gegangen. Am nächsten Morgen bis du aus irgeneinem Grund " + place + " aufgewacht. Die anderen Barbesucher haben dir eine wichtigen Hinweis gegeben aber du kannst dich nicht mehr genau daran erinnern.");
     }
 
     #endregion
