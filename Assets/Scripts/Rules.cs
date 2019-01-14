@@ -58,13 +58,9 @@ public class Rules : MonoBehaviour
 
     public Image imgCriminalOne;
     public Image imgCriminalTwo;
-    public Image imgCriminalThree;
-    public Image imgCriminalFour;
 
     public Text txtCriminalOne;
     public Text txtCriminalTwo;
-    public Text txtCriminalThree;
-    public Text txtCriminalFour;
 
     public Image imgItemsOne;
     public Image imgItemsTwo;
@@ -93,9 +89,6 @@ public class Rules : MonoBehaviour
     public Sprite imgItalienrestaurant_Symbol;
     public Sprite imgHarbor_Symbol;
     public Sprite imgBar_Symbol;
-    public Sprite imgQuarantine_Symbol;
-    public Sprite imgEdge_Symbol;
-
 
     public Sprite street;
     public Sprite mainsquare;
@@ -130,6 +123,11 @@ public class Rules : MonoBehaviour
     public Sprite calculator;
     public Sprite whiskey;
     public Sprite protectiveItems;
+
+    public Sprite inferno;
+    public Sprite drMortifier;
+    public Sprite phantom;
+    public Sprite fasculto;
 
     private int page = 1;
     private string chapter="start";
@@ -437,9 +435,26 @@ public class Rules : MonoBehaviour
                 txtCriminalGeneral.text = "Allgemeine Verbrecher Regeln Seite 2";
                 break;
             case 3:
+                btnPageForward.interactable = true;
+                btnPageBack.interactable = true;
+                CriminalGeneralPanel.gameObject.SetActive(false);
+
+                imgCriminalOne.sprite = inferno;
+                imgCriminalTwo.sprite = drMortifier;
+
+                txtCriminalOne.text = "Inferno Regeln";
+                txtCriminalTwo.text = "Dr. Mortifier Regeln";
+                break;
+            case 4:
                 btnPageForward.interactable = false;
                 btnPageBack.interactable = true;
                 CriminalGeneralPanel.gameObject.SetActive(false);
+
+                imgCriminalOne.sprite = phantom;
+                imgCriminalTwo.sprite = fasculto;
+
+                txtCriminalOne.text = "Phantom Regeln";
+                txtCriminalTwo.text = "Fasculto Regeln";
                 break;
         }
     }
