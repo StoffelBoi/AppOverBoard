@@ -13,12 +13,14 @@ public class PrivatePlayer : MonoBehaviour
     public Text txtSolved;
     public Text txtUnsolved;
     public Image imgChar;
+    public Image BG;
 
     public Button btnTurn;
     public Text btnTurnText;
     public Button btnMenu;
     public Button btnGuess;
     public Button btnItems;
+    public Button btnHide;
 
     public Sprite mcay;
     public Sprite fields;
@@ -51,9 +53,43 @@ public class PrivatePlayer : MonoBehaviour
 
     public Sprite green;
     public Sprite red;
+
+    public Canvas canvasHide;
+
+    public bool vibration;
+
+
+    public Sprite street;
+    public Sprite mainsquare;
+    public Sprite park;
+    public Sprite hospital;
+    public Sprite bank;
+    public Sprite parliament;
+    public Sprite cementary;
+    public Sprite prison;
+    public Sprite casino;
+    public Sprite internetcafe;
+    public Sprite trainstation;
+    public Sprite armyshop;
+    public Sprite shoppingcenter;
+    public Sprite junkyard;
+    public Sprite library;
+    public Sprite laboratory;
+    public Sprite italienrestaurant;
+    public Sprite harbor;
+    public Sprite bar;
+
     void OnEnable()
     {
+        if (GameState.Instance.playerState[playerID] != "Movement")
+        {
+            vibration = true;
+        }
         txtFacts.fontSize = 69;
+        BG.sprite = GetSprite();
+        canvasHide.gameObject.SetActive(false);
+        btnHide.onClick.RemoveAllListeners();
+        btnHide.onClick.AddListener(btnOpenHide);
         btnMenu.onClick.RemoveAllListeners();
         btnMenu.onClick.AddListener(btnToMenu);
         btnGuess.onClick.RemoveAllListeners();
@@ -185,6 +221,12 @@ public class PrivatePlayer : MonoBehaviour
         }
         if (GameState.Instance.playerState[playerID] == "Movement")
         {
+            if (vibration == true)
+            {
+                vibration = false;
+                Handheld.Vibrate();
+            }
+            btnTurnText.fontSize = 110;
             btnTurnText.text = "Bewegung";
             btnTurn.interactable = true;
             btnTurnColor.sprite = green;
@@ -203,8 +245,10 @@ public class PrivatePlayer : MonoBehaviour
         }
         else if (GameState.Instance.playerState[playerID] == "Action")
         {
+           
             btnTurnColor.sprite = green;
             btnGuessColor.sprite = green;
+            btnTurnText.fontSize = 110;
             btnTurnText.text = "Aktion";
             btnTurn.interactable = true;
             btnTurn.onClick.RemoveAllListeners();
@@ -214,7 +258,8 @@ public class PrivatePlayer : MonoBehaviour
         {
             btnTurnColor.sprite = red;
             btnGuessColor.sprite = red;
-            btnTurnText.text = "Warten";
+            btnTurnText.fontSize = 60;
+            btnTurnText.text = "Warten auf\n"+getName(GameState.Instance.roles[GameState.Instance.currentTurn]);
             btnTurn.interactable = false;
             btnTurn.onClick.RemoveAllListeners();
             btnGuess.interactable = false;
@@ -292,6 +337,19 @@ public class PrivatePlayer : MonoBehaviour
                 }
             }
         }
+    }
+    
+    void btnOpenHide()
+    {
+        btnHide.onClick.RemoveAllListeners();
+        btnHide.onClick.AddListener(btnCloseHide);
+        canvasHide.gameObject.SetActive(true);
+    }
+    void btnCloseHide()
+    {
+        btnHide.onClick.RemoveAllListeners();
+        btnHide.onClick.AddListener(btnOpenHide);
+        canvasHide.gameObject.SetActive(false);
     }
 
     void btnToPlace()
@@ -380,6 +438,96 @@ public class PrivatePlayer : MonoBehaviour
             case 18:
                 s = "Bar";
 
+                break;
+        }
+        return s;
+    }
+
+    string getName(string role)
+    {
+        string name = "";
+        switch (role)
+        {
+            case "Doctor":
+                name += "Dr.Moe McKay";
+                break;
+            case "Police":
+                name += "Felicity Fields";
+                break;
+            case "Detective":
+                name += "Collin Cooper";
+                break;
+            case "Psychic":
+                name += "Olivia Osswald";
+                break;
+            case "Psychologist":
+                name += "Laura Larsen";
+                break;
+            case "Reporter":
+                name += "Eric Edmond";
+                break;
+        }
+        return name;
+    }
+
+    Sprite GetSprite()
+    {
+        Sprite s = street;
+        switch(GameState.Instance.board[GameState.Instance.currentPlace[GameState.Instance.localPlayer.GetComponent<Player>().id][0], GameState.Instance.currentPlace[GameState.Instance.localPlayer.GetComponent<Player>().id][1]])
+        {
+            case 1:
+                s = mainsquare;
+                break;
+            case 2:
+                s = park;
+                break;
+            case 3:
+                s = hospital;
+                break;
+            case 4:
+                s = bank;
+                break;
+            case 5:
+                s = parliament;
+                break;
+            case 6:
+                s = cementary;
+                break;
+            case 7:
+                s = prison;
+                break;
+            case 8:
+                s = casino;
+                break;
+            case 9:
+                s = internetcafe;
+                break;
+            case 10:
+                s = trainstation;
+                break;
+            case 11:
+                s = armyshop;
+                break;
+            case 12:
+                s = shoppingcenter;
+                break;
+            case 13:
+                s = junkyard;
+                break;
+            case 14:
+                s = library;
+                break;
+            case 15:
+                s = laboratory;
+                break;
+            case 16:
+                s = italienrestaurant;
+                break;
+            case 17:
+                s = harbor;
+                break;
+            case 18:
+                s = bar;
                 break;
         }
         return s;

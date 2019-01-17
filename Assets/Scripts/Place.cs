@@ -263,7 +263,7 @@ public class Place : MonoBehaviour
                     btnFiveText.text = "kleine Falle";
                     btnSixText.text = "große Falle";
                     btnSevenText.text = "Manipulation\n-10$";
-                    btnEightText.text = "Questort aktivieren";
+                    btnEightText.text = "Questort aktivieren\n-6$";
 
                     btnOne.onClick.AddListener(btnPlaceOptionClick);
                     btnTwo.onClick.AddListener(btnFindHintClick);
