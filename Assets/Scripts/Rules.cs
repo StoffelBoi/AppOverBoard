@@ -282,7 +282,7 @@ public class Rules : MonoBehaviour
                 imgPlaceFourSymbol.sprite = imgJunkyard_Symbol;
 
                 txtPlaceOne.text = "Stadtplatz\n\n-Startpunkt für alle Spieler\n\n-Geld verdienen: 6$";
-                txtPlaceTwo.text = "Internet Cafe\n\n-Geld verdienen: 6$\n\n-Verbrecher kann sich hier Fallen kaufen.";
+                txtPlaceTwo.text = "Internet Cafe\n\n-Geld verdienen: 6$\n\n-Verbrecher: Fallen kaufen.";
                 txtPlaceTwo.fontSize = 39;
                 txtPlaceThree.text = "Kasino\n\n-Glückspiel: 50% Chance sein gesetztes Geld zu verdoppeln bzw. verlieren.";
                 txtPlaceFour.text = "Schrottplatz\n\n-Schrott durchsuchen und zufällige Items finden.";
@@ -295,6 +295,8 @@ public class Rules : MonoBehaviour
                 imgPlaceOne.sprite = armyshop;
                 imgPlaceOneSymbol.sprite = imgArmyshop_Symbol;
                 imgPlaceTwo.sprite = shoppingcenter;
+
+
                 imgPlaceTwoSymbol.sprite = imgShoppingcenter_Symbol;
                 imgPlaceThree.sprite = trainstation;
                 imgPlaceThreeSymbol.sprite = imgTrainstation_Symbol;
@@ -302,7 +304,7 @@ public class Rules : MonoBehaviour
                 imgPlaceFourSymbol.sprite = imgLibrary_Symbol;
 
                 txtPlaceOne.text = "Armee Laden\n\n-Schutzitems kaufen:\n\t-6$ Schutzweste\n\t-15$ F.fester Mantel\n\t-15$ Gasmaske\n\t-15$ Bodycam\n\t-15$ Talisman";
-                txtPlaceTwo.text = "Shopping Center\n\n-Items kaufen: \n\t-4$ Turnschuhe\n\t-4$ Fingerabdruck Set\n\t-3$ Energy Drink\n\t-8$ Taschenrechner\n\t-8$ Whiskey\n-2$ Verbrecher kann sich hier zufällig eine Falle kaufen.";
+                txtPlaceTwo.text = "Einkaufszentrum\n\n-Items kaufen: \n\t-4$ Turnschuhe\n\t-4$ Fingerabdruck Set\n\t-3$ Energy Drink\n\t-8$ Taschenrechner\n\t-8$ Whiskey\n-2$ Verbrecher: zufällig Falle kaufen.";
                 txtPlaceTwo.fontSize = 34;
                 txtPlaceThree.text = "Bahnhof\n\n-Reise zu jeden Ort für 2$.";
                 txtPlaceFour.text = "Bibliothek\n\n-Hinweise entschlüsseln.";
@@ -323,7 +325,7 @@ public class Rules : MonoBehaviour
                 txtPlaceOne.text = "Labor\n\n-Hinweise entschlüsseln";
                 txtPlaceTwo.text = "Italiener\n\n-1-4$ für einen ev. richtigen Hinweis, je mehr man zahlt desto besser sind die Chancen.";
                 txtPlaceTwo.fontSize = 39;
-                txtPlaceThree.text = "Hafen\n\n-3$ für einen ev. richtigen Hinweis\n\n-Verbrecher kann sich hier Fallen kaufen.";
+                txtPlaceThree.text = "Hafen\n\n-3$ für einen ev. richtigen Hinweis\n\n-Verbrecher: Fallen kaufen.";
                 txtPlaceFour.text = "Bar\n\n-2$ für einen ev. richtigen Hinweis, in der nächsten Runde wacht man an einen zufälligen Platz auf.";
                 break;
             case 4:
@@ -447,8 +449,8 @@ public class Rules : MonoBehaviour
                 imgCriminalOne.sprite = inferno;
                 imgCriminalTwo.sprite = drMortifier;
 
-                txtCriminalOne.text = "Inferno\n\n-muss seine Bombe innerhalb von 50 Minuten platzieren.\n\nQuestorte:\nArmee Laden\nShopping Center\nSchrottplatz\n\nMögliche Zielorte:\nParlament\nGefängnis\nKasino";
-                txtCriminalTwo.text = "Dr.Mortifier\n\n-muss nach dem Platzieren der Krankheitserreger innerhalb von 10 Minuten 5+ Felder vom Seuchenherd entfernt sein.\n\nQuestorte:\nShopping Center\nBibliothek\nLabor\n\nMögliche Zielorte:\nStadtplatz\nShopping Center\nHafen";
+                txtCriminalOne.text = "Inferno\n\n-muss seine Bombe innerhalb von 50 Minuten platzieren.\n\nQuestorte:\nArmee Laden\nEinkaufszentrum\nSchrottplatz\n\nMögliche Zielorte:\nParlament\nGefängnis\nKasino";
+                txtCriminalTwo.text = "Dr.Mortifier\n\n-muss nach dem Platzieren der Krankheitserreger innerhalb von 10 Minuten 5+ Felder vom Seuchenherd entfernt sein.\n\nQuestorte:\nEinkaufszentrum\nBibliothek\nLabor\n\nMögliche Zielorte:\nStadtplatz\nEinkaufszentrum\nHafen";
 
                 break;
             case 4:
@@ -459,7 +461,7 @@ public class Rules : MonoBehaviour
                 imgCriminalOne.sprite = phantom;
                 imgCriminalTwo.sprite = fasculto;
 
-                txtCriminalOne.text = "Phantom\n\n-hat alle 20 Minuten ein 5 Minuten Zeitfenster für seinen Einbruch.\n\nQuestorte:\nInternet Cafe\nArmee Laden\nBar\n\nMögliche Zielorte:\nBank\nKasino\nShoppingCenter";
+                txtCriminalOne.text = "Phantom\n\n-hat alle 20 Minuten ein 5 Minuten Zeitfenster für seinen Einbruch.\n\nQuestorte:\nInternet Cafe\nArmee Laden\nBar\n\nMögliche Zielorte:\nBank\nKasino\nEinkaufszentrum";
                 txtCriminalTwo.text = "Fasculto\n\n-hat nach 40 Minuten für 20 Minuten Zeit sein Ritual durchzuführen.\n\nQuestorte:\nBibliothek\nHafen\nBar\n\nMögliche Zielorte:\nParlament\nFriedhof\nGefängnis";
 
                 break;

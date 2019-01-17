@@ -236,7 +236,7 @@ public class Place : MonoBehaviour
                     btnTwo.onClick.AddListener(btnUseItemClick);
                     btnThreeText.text = "große Falle";
                     btnThree.onClick.AddListener(btnBigTrapClick);
-                    btnFourText.text = "Manipulation";
+                    btnFourText.text = "Manipulation\n-10$";
                     btnFour.onClick.AddListener(btnManipulationClick);
                     btnThree.interactable = false;
                     btnFour.interactable = false;
@@ -262,7 +262,7 @@ public class Place : MonoBehaviour
                     btnFourText.text = "falscher Hinweis";
                     btnFiveText.text = "kleine Falle";
                     btnSixText.text = "große Falle";
-                    btnSevenText.text = "Manipulation";
+                    btnSevenText.text = "Manipulation\n-10$";
                     btnEightText.text = "Questort aktivieren";
 
                     btnOne.onClick.AddListener(btnPlaceOptionClick);
@@ -525,13 +525,13 @@ public class Place : MonoBehaviour
                 break;
             case "Dr.Mortifier":
                 btnOneText.text = "Stadtplatz";
-                btnTwoText.text = "Shopping Center";
+                btnTwoText.text = "Einkaufszentrum";
                 btnThreeText.text = "Hafen";
                 break;
             case "Phantom":
                 btnOneText.text = "Bank";
                 btnTwoText.text = "Kasino";
-                btnThreeText.text = "Shopping Center";
+                btnThreeText.text = "Einkaufszentrum";
                 break;
             case "Fasculto":
                 btnOneText.text = "Parlament";
@@ -1021,7 +1021,7 @@ public class Place : MonoBehaviour
                 setDialogue("Du schaust dich um und triffst einen alten Freund. Ihr verbringt den restlichen Tag in einer Bar und der Alkohol fließt in Strömen. Am nächsten Tag wachst du an einem unbekannten Platz auf.");
                 break;
             case 8:
-                if (GameState.Instance.criminal == GameState.Instance.roles[GameState.Instance.currentTurn])
+                if (GameState.Instance.criminal != GameState.Instance.roles[GameState.Instance.currentTurn])
                 {
                     int criminalrole = rn.Next(0, 3);
                     switch (criminalrole)
@@ -1687,7 +1687,7 @@ public class Place : MonoBehaviour
         {
             if (tempfoundHints == 1)
             {
-                setDialogue("Du schaust dich genauer um, und findest " + tempfoundHints + " Hinweis, der zum Verbrecher führen könnte.");
+                setDialogue("Du schaust dich genauer um, und findest " + tempfoundHints + " Hinweis, der zum Verbrecher führen könnteF.");
             }
             else
             {
@@ -1913,9 +1913,9 @@ public class Place : MonoBehaviour
                 localPlayer.SetQuarantine(11, 3);
                 place = "den Armee Laden";
                 break;
-            case "Shopping Center":
+            case "Einkaufszentrum":
                 localPlayer.SetQuarantine(12, 3);
-                place = "das Shopping Center";
+                place = "das Einkaufszentrum";
                 break;
             case "Schrottplatz":
                 localPlayer.SetQuarantine(13, 3);
@@ -2301,10 +2301,10 @@ public class Place : MonoBehaviour
                 ActionsTextFieldImage.sprite = imgArmyshop_Symbol;
                 break;
             case "Armee Laden":
-                actionsTextField.text = "Shopping Center";
+                actionsTextField.text = "Einkaufszentrum";
                 ActionsTextFieldImage.sprite = imgShoppingcenter_Symbol;
                 break;
-            case "Shopping Center":
+            case "Einkaufszentrum":
                 actionsTextField.text = "Schrottplatz";
                 ActionsTextFieldImage.sprite = imgJunkyard_Symbol;
                 break;
@@ -2383,12 +2383,12 @@ public class Place : MonoBehaviour
                 actionsTextField.text = "Bahnhof";
                 ActionsTextFieldImage.sprite = imgTrainstation_Symbol;
                 break;
-            case "Shopping Center":
+            case "Einkaufszentrum":
                 actionsTextField.text = "Armee Laden";
                 ActionsTextFieldImage.sprite = imgArmyshop_Symbol;
                 break;
             case "Schrottplatz":
-                actionsTextField.text = "Shopping Center";
+                actionsTextField.text = "Einkaufszentrum";
                 ActionsTextFieldImage.sprite = imgShoppingcenter_Symbol;
                 break;
             case "Bibliothek":
@@ -2464,9 +2464,9 @@ public class Place : MonoBehaviour
                 localPlayer.SetCurrentPlace(GameState.Instance.currentTurn, findPosition(11)[0], findPosition(11)[1]);
                 setDialogue("Du hast einen Zug zum Armee Laden genommen");
                 break;
-            case "Shopping Center":
+            case "Einkaufszentrum":
                 localPlayer.SetCurrentPlace(GameState.Instance.currentTurn, findPosition(12)[0], findPosition(12)[1]);
-                setDialogue("Du hast einen Zug zum Shopping Center genommen");
+                setDialogue("Du hast einen Zug zum Einkaufszentrum genommen");
                 break;
             case "Schrottplatz":
                 localPlayer.SetCurrentPlace(GameState.Instance.currentTurn, findPosition(13)[0], findPosition(13)[1]);
@@ -2911,8 +2911,8 @@ public class Place : MonoBehaviour
             case "Armee Laden":
                 place = "im Armee Laden";
                 break;
-            case "Shopping Center":
-                place = "im Shopping Center";
+            case "Einkaufszentrum":
+                place = "im Einkaufszentrum";
                 break;
             case "Schrottplatz":
                 place = "im Schrottplatz";
@@ -2933,7 +2933,7 @@ public class Place : MonoBehaviour
                 place = "in der Bar";
                 break;
         }
-        setDialogue("Du bist auf \"ein Bier\" in die Bar gegangen. Am nächsten Morgen bis du aus irgeneinem Grund " + place + " aufgewacht. Die anderen Barbesucher haben dir eine wichtigen Hinweis gegeben aber du kannst dich nicht mehr genau daran erinnern.");
+        setDialogue("Du bist auf \"ein Bier\" in die Bar gegangen. Am nächsten Morgen bis du aus irgeneinem Grund " + place + " aufgewacht. Du glaubst die anderen Barbesucher haben dir eine wichtigen Hinweis gegeben.");
     }
 
     #endregion
@@ -4145,10 +4145,9 @@ public class Place : MonoBehaviour
     IEnumerator SimpleTypeWriter()
     {
         foreach (char c in currentDialogue)
-        {
-            yield return new WaitForSeconds(0.01f);
+        {   
             dialogueText.text += c;
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSeconds(0.005f);
         }
     }
 
@@ -4323,7 +4322,7 @@ public class Place : MonoBehaviour
 
                 break;
             case 12:
-                s = "Shopping Center";
+                s = "Einkaufszentrum";
 
                 break;
             case 13:
@@ -4444,55 +4443,55 @@ public class Place : MonoBehaviour
                 simpleDialogue("Du befindest dich am Stadtplatz. Wie an den meisten Tagen herrscht reges Geschehen doch jeder scheint sich nur auf sich selbst zu konzentrieren.", 45);
                 break;
             case 2:
-                simpleDialogue("Du befindest dich im Park. Als du dich umsiehst siehst du nur ein altes Ehepaar welches die Enten füttert und ein paar Obdachlose die im Kreis um eine Mülltonne stehen.", 50);
+                simpleDialogue("Du befindest dich im Park. Du siehst ein altes Ehepaar welches die Enten füttert und ein paar Obdachlose die im Kreis um eine Mülltonne stehen.", 45);
                 break;
             case 3:
-                simpleDialogue("Du befindest dich im Krankenhaus. Es sieht alles sehr steril aus und um dich herum siehst du Ärzte und Krankenpfleger welche hektisch von Raum zu Raum gehen.", 50);
+                simpleDialogue("Du befindest dich im Krankenhaus. Es sieht alles sehr steril aus und um dich herum siehst du Ärzte welche hektisch von Raum zu Raum eilen.", 45);
                 break;
             case 4:
-                simpleDialogue("Du befindest dich in der Bank. Um dich herum ist nur ein Angestellter welcher am Schalter steht und zwei Kunden welche gerade etwas Geld am Automaten abheben.", 50);
+                simpleDialogue("Du befindest dich in der Bank. Du siehst einen Angestellter am Schalter stehen und zwei Kunden die gerade etwas Geld am Automaten abheben.", 45);
                 break;
             case 5:
-                simpleDialogue("Du befindest dich im Parlamentsgebäude. Um dich herum siehst du einige Politiker und Politikerinnen die sich rege miteinander unterhalten.", 50);
+                simpleDialogue("Du befindest dich im Parlaments-\ngebäude. Um dich herum siehst du einige Politiker und Politikerinnen die sich rege miteinander unterhalten.", 45);
                 break;
             case 6:
-                simpleDialogue("Du befindest dich auf dem Friedhof. Obwohl dich die Atmosphere an diesem Ort etwas verunsichert weist du, dass du nicht ohne Grund hier bist.", 50);
+                simpleDialogue("Du befindest dich auf dem Friedhof. Obwohl dich die Atmosphere an diesem Ort etwas verunsichert weist du, dass du nicht ohne Grund hier bist.", 45);
                 break;
             case 7:
-                simpleDialogue("Du befindest dich im Gefängnis. Durch ein Fenster siehst du ein Paar Häftlinge in orangenen Overalls und geglegentlich eine Wache.", 50);
+                simpleDialogue("Du befindest dich im Gefängnis. Durch ein Fenster siehst du ein Paar Häftlinge in orangenen Overalls und geglegentlich eine Wache.", 45);
                 break;
             case 8:
-                simpleDialogue("Du befindest dich im Kasino. Als du dich umsiehst siehst du einige Leute in Abendgardrobe, außerdem hörst du das klingen und klirren von Spielchips und Sektflöten", 50);
+                simpleDialogue("Du befindest dich im Kasino.Du siehst du Leute in Abendgardrobe, außerdem hörst du das klingen und klirren von Spielchips und Sektflöten", 45);
                 break;
             case 9:
-                simpleDialogue("Du befindest dich im Internetcafe. Um dich herum nimmst du das klacken von Tastaturen und den Geruch ungewaschener Körper wahr.", 50);
+                simpleDialogue("Du befindest dich im Internetcafe. Um dich herum nimmst du das klacken von Tastaturen und den Geruch ungewaschener Körper wahr.", 45);
                 break;
             case 10:
-                simpleDialogue("Du befindest dich auf dem Bahnhof. Du siehst dich um und siehst eine Menge an hektischer Menschen und leuchtenden Anzeigetafeln.", 50);
+                simpleDialogue("Du befindest dich auf dem Bahnhof. Du siehst dich um und siehst eine Menge an hektischer Menschen und leuchtenden Anzeigetafeln.", 45);
                 break;
             case 11:
-                simpleDialogue("Du befindest dich im Armeeladen. Als du den Laden betrittst siehst du verschiedenste Waffen an der Wand hängen und der Verkäufer nickt dir grimmig zu.", 50);
+                simpleDialogue("Du befindest dich im Armeeladen. Als du den Laden betrittst siehst du einige Waffen an der Wand hängen. Der Verkäufer nickt dir grimmig zu.", 45);
                 break;
             case 12:
-                simpleDialogue("Du befindest dich im Einkauszentrum. Um dich herum sind Leute die hektisch mit ihren Einkaufstaschen von Laden zu Laden hetzen als wollten sie so schnell wie möglich hier raus.", 50);
+                simpleDialogue("Du befindest dich im Einkauszentrum. Um dich herum sind Leute die mit ihren Einkaufstaschen von Laden zu Laden hetzen.", 45);
                 break;
             case 13:
-                simpleDialogue("Du befindest dich auf dem Schrottplatz. Um dich herum siehst du alte verschrottete Autos und diverse andere altes Zeug welches augenscheinlich schon seit Jahren hier liegt.", 50);
+                simpleDialogue("Du befindest dich auf dem Schrottplatz.Du siehst kaputte Autos und anderes altes Zeug das vermutlich schon seit Jahren hier liegt.", 45);
                 break;
             case 14:
-                simpleDialogue("Du befindest dich in der Bibliothek. Du siehst nur ein Paar junge Studenten die in ihre Bücher vertieft sind. Gelegentlich hört man ein verärgertes \"Psst\".", 50);
+                simpleDialogue("Du befindest dich in der Bibliothek. Du siehst nur einige Studenten die in ihre Bücher vertieft sind. Gele-\ngentlich hört man ein verärgertes \"Psst\".", 45);
                 break;
             case 15:
-                simpleDialogue("Du befindest dich im Labor. Du versuchst dich an den chemischen Geruch zu gewöhnen während du den Forscher beim arbeiten zuschaust.", 50);
+                simpleDialogue("Du befindest dich im Labor. Du versuchst dich an den chemischen Geruch zu gewöhnen während du den Forscher beim arbeiten zuschaust.", 45);
                 break;
             case 16:
-                simpleDialogue("Du befindest dich im italienischen Restaurant. Der Geruch von Tomatensoße liegt in der Luft und der Besitzer ruft dir ein freundliches \"buongiorno\" zu.", 50);
+                simpleDialogue("Du befindest dich im italienischen Restaurant. Der Duft von Tomaten liegt in der Luft und der Besitzer ruft dir ein nettes \"buongiorno\" zu.", 45);
                 break;
             case 17:
-                simpleDialogue("Du befindest dich am Hafen. Du riechst den Geruch des Meeres und siehst eine Gruppe von Hafenarbeitern bei den Docks stehen.", 50);
+                simpleDialogue("Du befindest dich am Hafen. Du riechst den das Meer und siehst eine Gruppe von Hafenarbeitern bei den Docks stehen.", 45);
                 break;
             case 18:
-                simpleDialogue("Du befindest dich in der Bar. Du siehst die gewöhnlichen Stammkunden und wiederstehst dem Verlangen augenblicklich ein Bier zu bestellen.", 50);
+                simpleDialogue("Du befindest dich in der Bar. Du siehst die gewöhnlichen Stammkunden und wiederstehst dem Verlangen augenblicklich ein Bier zu bestellen.", 45);
                 break;
         }
     }

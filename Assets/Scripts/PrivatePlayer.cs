@@ -354,7 +354,7 @@ public class PrivatePlayer : MonoBehaviour
 
                 break;
             case 12:
-                s = "Shopping Center";
+                s = "Einkaufszentrum";
 
                 break;
             case 13:
