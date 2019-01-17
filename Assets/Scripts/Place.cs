@@ -1003,7 +1003,7 @@ public class Place : MonoBehaviour
                 break;
             case 4:
                 localPlayer.SetUnsolvedHints(GameState.Instance.currentTurn, GameState.Instance.unsolvedHints[GameState.Instance.currentTurn] + 1);
-                setDialogue("Du schaust dich um, als plötzlich ein Fremder auf dich zu kommt. Er gibt dir einen interessanten Tipp und du denkst, dass du einen neuen Hinweis hast musst ihn jedoch noch genauer analysieren.");
+                setDialogue("Du schaust dich um, als plötzlich ein Fremder auf dich zukommt. Er gibt dir einen interessanten Tipp und du denkst, dass du einen neuen Hinweis hast musst ihn jedoch noch genauer analysieren.");
                 break;
             case 5:
                 localPlayer.SetUnsolvedHints(GameState.Instance.currentTurn, GameState.Instance.unsolvedHints[GameState.Instance.currentTurn] + 1);
@@ -1687,7 +1687,7 @@ public class Place : MonoBehaviour
         {
             if (tempfoundHints == 1)
             {
-                setDialogue("Du schaust dich genauer um, und findest " + tempfoundHints + " Hinweis, der zum Verbrecher führen könnteF.");
+                setDialogue("Du schaust dich genauer um, und findest " + tempfoundHints + " Hinweis, der zum Verbrecher führen könnte.");
             }
             else
             {
@@ -4461,7 +4461,7 @@ public class Place : MonoBehaviour
                 simpleDialogue("Du befindest dich im Gefängnis. Durch ein Fenster siehst du ein Paar Häftlinge in orangenen Overalls und geglegentlich eine Wache.", 45);
                 break;
             case 8:
-                simpleDialogue("Du befindest dich im Kasino.Du siehst du Leute in Abendgardrobe, außerdem hörst du das klingen und klirren von Spielchips und Sektflöten", 45);
+                simpleDialogue("Du befindest dich im Kasino. Du siehst Leute in Abendgardrobe, außerdem hörst du das klingen und klirren von Spielchips und Sektflöten", 45);
                 break;
             case 9:
                 simpleDialogue("Du befindest dich im Internetcafe. Um dich herum nimmst du das klacken von Tastaturen und den Geruch ungewaschener Körper wahr.", 45);
@@ -4479,7 +4479,7 @@ public class Place : MonoBehaviour
                 simpleDialogue("Du befindest dich auf dem Schrottplatz.Du siehst kaputte Autos und anderes altes Zeug das vermutlich schon seit Jahren hier liegt.", 45);
                 break;
             case 14:
-                simpleDialogue("Du befindest dich in der Bibliothek. Du siehst nur einige Studenten die in ihre Bücher vertieft sind. Gele-\ngentlich hört man ein verärgertes \"Psst\".", 45);
+                simpleDialogue("Du befindest dich in der Bibliothek. Um dich herum sind meterhohe Regale vollgefüllt mit Büchern.", 45);
                 break;
             case 15:
                 simpleDialogue("Du befindest dich im Labor. Du versuchst dich an den chemischen Geruch zu gewöhnen während du den Forscher beim arbeiten zuschaust.", 45);
@@ -4488,7 +4488,7 @@ public class Place : MonoBehaviour
                 simpleDialogue("Du befindest dich im italienischen Restaurant. Der Duft von Tomaten liegt in der Luft und der Besitzer ruft dir ein nettes \"buongiorno\" zu.", 45);
                 break;
             case 17:
-                simpleDialogue("Du befindest dich am Hafen. Du riechst den das Meer und siehst eine Gruppe von Hafenarbeitern bei den Docks stehen.", 45);
+                simpleDialogue("Du befindest dich am Hafen. Um dich herum der Geruch des Meeres, außerdem siehst eine Gruppe von Hafenarbeitern die bei den Docks stehen.", 45);
                 break;
             case 18:
                 simpleDialogue("Du befindest dich in der Bar. Du siehst die gewöhnlichen Stammkunden und wiederstehst dem Verlangen augenblicklich ein Bier zu bestellen.", 45);
