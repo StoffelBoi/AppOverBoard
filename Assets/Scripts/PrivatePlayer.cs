@@ -46,6 +46,11 @@ public class PrivatePlayer : MonoBehaviour
     public Image TargetTimePanel;
     public Image TargetTime;
 
+    public Image btnTurnColor;
+    public Image btnGuessColor;
+
+    public Sprite green;
+    public Sprite red;
     void OnEnable()
     {
         txtFacts.fontSize = 69;
@@ -182,6 +187,8 @@ public class PrivatePlayer : MonoBehaviour
         {
             btnTurnText.text = "Bewegung";
             btnTurn.interactable = true;
+            btnTurnColor.sprite = green;
+            btnGuessColor.sprite = green; btnGuessColor.sprite = green;
             btnTurn.onClick.RemoveAllListeners();
             btnTurn.onClick.AddListener(btnToMovement);
             if (GameState.Instance.criminal != GameState.Instance.roles[GameState.Instance.localPlayer.GetComponent<Player>().id])
@@ -196,6 +203,8 @@ public class PrivatePlayer : MonoBehaviour
         }
         else if (GameState.Instance.playerState[playerID] == "Action")
         {
+            btnTurnColor.sprite = green;
+            btnGuessColor.sprite = green;
             btnTurnText.text = "Aktion";
             btnTurn.interactable = true;
             btnTurn.onClick.RemoveAllListeners();
@@ -203,6 +212,8 @@ public class PrivatePlayer : MonoBehaviour
         }
         else
         {
+            btnTurnColor.sprite = red;
+            btnGuessColor.sprite = red;
             btnTurnText.text = "Warten";
             btnTurn.interactable = false;
             btnTurn.onClick.RemoveAllListeners();
