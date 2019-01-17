@@ -227,7 +227,7 @@ public class PrivatePlayer : MonoBehaviour
                 Handheld.Vibrate();
             }
             btnTurnText.fontSize = 110;
-            btnTurnText.text = "Bewegung";
+            btnTurnText.text = "Bewegen";
             btnTurn.interactable = true;
             btnTurnColor.sprite = green;
             btnGuessColor.sprite = green; btnGuessColor.sprite = green;

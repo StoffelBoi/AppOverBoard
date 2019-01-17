@@ -129,6 +129,9 @@ public class Rules : MonoBehaviour
     public Sprite phantom;
     public Sprite fasculto;
 
+    public Image solved;
+    public Image notsolved;
+
     private int page = 1;
     private string chapter="start";
 
@@ -235,7 +238,7 @@ public class Rules : MonoBehaviour
     {
         DisableEverything();
         cvsGeneral.gameObject.SetActive(true);
-        txtTitel.text = "Allgemeines";
+        txtTitel.text = "<b>Allgemeines</b>";
         btnBack.onClick.RemoveAllListeners();
         btnBack.onClick.AddListener(OnEnable);
         chapter = "general";
@@ -246,13 +249,54 @@ public class Rules : MonoBehaviour
                 btnPageForward.interactable = true;
                 btnPageBack.interactable = false;
 
-                txtGeneral.text = "Allgemeine Regeln Seite 1";
+                solved.gameObject.SetActive(false);
+                notsolved.gameObject.SetActive(false);
+                txtGeneral.fontSize = 50;
+                txtGeneral.text =
+                    "<b>Bewegung:</b>\n" +
+                    "1 Feld, bzw. 2 wenn das erste Feld eine Straße ist.\n" +
+                    "\n" +
+                    "<b>Aktionen:</b>\n" +
+                    "<b>Ortsoption:</b> führ die Option\n\tdes derzeitigen Ortes \n\tdurch.\n" +
+                    "<b>Hinweis suchen:</b> such am der-\n\tzeitigen Ort nach \n\tnicht entschlüsselten  \n\tHinweisen.\n" +
+                    "<b>Items:</b> benutze eines deiner \n\tItems.\n" +
+                    "\n" +
+                    "<b>Verhaften:</b>\n" +
+                    "Wenn du glaubst alle drei Fakten zu wissen, kannst du versuchen den Verbrecher zu verhaften um zu gewinnen. \n" +
+                    "<b>Achtung:</b> wenn du falsch liegst verlierst du.";
                 break;
             case 2:
                 btnPageForward.interactable = false;
                 btnPageBack.interactable = true;
-
-                txtGeneral.text = "Allgemeine Regeln Seite 2";
+                solved.gameObject.SetActive(true);
+                notsolved.gameObject.SetActive(true);
+                txtGeneral.fontSize = 45;
+                txtGeneral.text =
+                    "<b>Hinweise:</b>\n" +
+                    "\n" +
+                    "Es gibt 2 Arten von Hinweisen:\n" +
+                    "\n" +
+                    "\t<b>Nicht enschlüsselte Hinweise:</b>\n" +
+                    "-Der Verbrecher hinterlässt diese \n" +
+                    " wenn er illegales tut.\n" +
+                    "-Jeder Charakter hinterlässt mit \n" +
+                    " geringer Wahrscheinlichkeit nicht \n" +
+                    " entschlüsselte Hinweise.\n" +
+                    "-Man findet diese wenn man die \n" +
+                    " \"Hinweise suchen\"-Aktion benutzt.\n" +
+                    "-Man muss diese im Labor oder in\n" +
+                    " der Bibliothek entschlüsseln.\n" +
+                    "-Du weißt nicht ob sie richtig \n" +
+                    " oder falsch sind.\n" +
+                    "\n" +
+                    "\t<b>Entschlüsselte Hinweise:</b>\n" +
+                    "-Man kann diese in der Bar,\n" +
+                    " dem italienischen Restaurant und\n" +
+                    " am Hafen kaufen.\n" +
+                    "-Können auch richtig oder falsch\n" +
+                    " sein.\n" +
+                    "-Für 3 entschlüsselte Hinweise\n" +
+                    " bekommt man einen der 3 Fakten.";
                 break;
         }
     }
@@ -261,7 +305,7 @@ public class Rules : MonoBehaviour
     {
         DisableEverything();
         cvsPlaces.gameObject.SetActive(true);
-        txtTitel.text = "Orte";
+        txtTitel.text = "<b>Orte</b>";
         btnBack.onClick.RemoveAllListeners();
         btnBack.onClick.AddListener(OnEnable);
         chapter = "places";
@@ -281,11 +325,11 @@ public class Rules : MonoBehaviour
                 imgPlaceFour.sprite = junkyard;
                 imgPlaceFourSymbol.sprite = imgJunkyard_Symbol;
 
-                txtPlaceOne.text = "Stadtplatz\n\n-Startpunkt für alle Spieler\n\n-Geld verdienen: 6$";
-                txtPlaceTwo.text = "Internet Cafe\n\n-Geld verdienen: 6$\n\n-Verbrecher: Fallen kaufen.";
+                txtPlaceOne.text = "<b>Stadtplatz</b>\n\n-Startpunkt für alle Spieler\n\n-Geld verdienen: 6$";
+                txtPlaceTwo.text = "<b>Internet Cafe</b>\n\n-Geld verdienen: 6$\n\n-Verbrecher: Fallen kaufen.";
                 txtPlaceTwo.fontSize = 39;
-                txtPlaceThree.text = "Kasino\n\n-Glückspiel: 50% Chance sein gesetztes Geld zu verdoppeln bzw. verlieren.";
-                txtPlaceFour.text = "Schrottplatz\n\n-Schrott durchsuchen und zufällige Items finden.";
+                txtPlaceThree.text = "<b>Kasino</b>\n\n-Glückspiel: 50% Chance sein gesetztes Geld zu verdoppeln bzw. verlieren.";
+                txtPlaceFour.text = "<b>Schrottplatz</b>\n\n-Schrott durchsuchen und zufällige Items finden.";
 
                 break;
             case 2:
@@ -303,11 +347,11 @@ public class Rules : MonoBehaviour
                 imgPlaceFour.sprite = library;
                 imgPlaceFourSymbol.sprite = imgLibrary_Symbol;
 
-                txtPlaceOne.text = "Armee Laden\n\n-Schutzitems kaufen:\n\t-6$ Schutzweste\n\t-15$ F.fester Mantel\n\t-15$ Gasmaske\n\t-15$ Bodycam\n\t-15$ Talisman";
-                txtPlaceTwo.text = "Einkaufszentrum\n\n-Items kaufen: \n\t-4$ Turnschuhe\n\t-4$ Fingerabdruck Set\n\t-3$ Energy Drink\n\t-8$ Taschenrechner\n\t-8$ Whiskey\n-2$ Verbrecher: zufällig Falle kaufen.";
+                txtPlaceOne.text = "<b>Armee Laden</b>\n\n-Schutzitems kaufen:\n\t-6$ Schutzweste\n\t-15$ F.fester Mantel\n\t-15$ Gasmaske\n\t-15$ Bodycam\n\t-15$ Talisman";
+                txtPlaceTwo.text = "<b>Einkaufszentrum</b>\n\n-Items kaufen: \n\t-4$ Turnschuhe\n\t-4$ Fingerabdruck Set\n\t-3$ Energy Drink\n\t-8$ Taschenrechner\n\t-8$ Whiskey\n-2$ Verbrecher: zufällig Falle kaufen.";
                 txtPlaceTwo.fontSize = 34;
-                txtPlaceThree.text = "Bahnhof\n\n-Reise zu jeden Ort für 2$.";
-                txtPlaceFour.text = "Bibliothek\n\n-Hinweise entschlüsseln.";
+                txtPlaceThree.text = "<b>Bahnhof</b>\n\n-Reise zu jeden Ort für 2$.";
+                txtPlaceFour.text = "<b>Bibliothek</b>\n\n-Hinweise entschlüsseln.";
                 break;
             case 3:
                 btnPageForward.interactable = true;
@@ -322,11 +366,11 @@ public class Rules : MonoBehaviour
                 imgPlaceFour.sprite = bar;
                 imgPlaceFourSymbol.sprite = imgBar_Symbol;
 
-                txtPlaceOne.text = "Labor\n\n-Hinweise entschlüsseln";
-                txtPlaceTwo.text = "Italiener\n\n-1-4$ für einen ev. richtigen Hinweis, je mehr man zahlt desto besser sind die Chancen.";
+                txtPlaceOne.text = "<b>Labor</b>\n\n-Hinweise entschlüsseln";
+                txtPlaceTwo.text = "<b>Italiener</b>\n\n-1-4$ für einen ev. richtigen Hinweis, je mehr man zahlt desto besser sind die Chancen.";
                 txtPlaceTwo.fontSize = 39;
-                txtPlaceThree.text = "Hafen\n\n-3$ für einen ev. richtigen Hinweis\n\n-Verbrecher: Fallen kaufen.";
-                txtPlaceFour.text = "Bar\n\n-2$ für einen ev. richtigen Hinweis, in der nächsten Runde wacht man an einen zufälligen Platz auf.";
+                txtPlaceThree.text = "<b>Hafen</b>\n\n-3$ für einen ev. richtigen Hinweis\n\n-Verbrecher: Fallen kaufen.";
+                txtPlaceFour.text = "<b>Bar</b>\n\n-2$ für einen ev. richtigen Hinweis, in der nächsten Runde wacht man an einen zufälligen Platz auf.";
                 break;
             case 4:
                 btnPageForward.interactable = true;
@@ -341,11 +385,11 @@ public class Rules : MonoBehaviour
                 imgPlaceFour.sprite = cementary;
                 imgPlaceFourSymbol.sprite = imgCemetary_Symbol;
 
-                txtPlaceOne.text = "Krankenhaus\n\n-Ort für die Fähigkeit von Dr. Moe McKay.";
-                txtPlaceTwo.text = "Bank\n\n-Ort für die Fähigkeit von Felicity Fields.";
+                txtPlaceOne.text = "<b>Krankenhaus</b>\n\n-Ort für die Fähigkeit von Dr. Moe McKay.";
+                txtPlaceTwo.text = "<b>Bank</b>\n\n-Ort für die Fähigkeit von Felicity Fields.";
                 txtPlaceTwo.fontSize = 39;
-                txtPlaceThree.text = "Park\n\n-Ort für die Fähigkeit von Colin Cooper.";
-                txtPlaceFour.text = "Friedhof\n\n-Ort für die Fähigkeit von Olivia Osswald.";
+                txtPlaceThree.text = "<b>Park</b>\n\n-Ort für die Fähigkeit von Colin Cooper.";
+                txtPlaceFour.text = "<b>Friedhof</b>\n\n-Ort für die Fähigkeit von Olivia Osswald.";
                 break;
             case 5:
                 btnPageForward.interactable = false;
@@ -360,10 +404,10 @@ public class Rules : MonoBehaviour
                 imgPlaceFour.sprite = null;
                 imgPlaceFourSymbol.sprite = null;
 
-                txtPlaceOne.text = "Gefängnis\n\n-Ort für die Fähigkeit von Laura Larsen.";
-                txtPlaceTwo.text = "Parlament\n\n-Ort für die Fähigkeit von Erik Edmond.";
+                txtPlaceOne.text = "<b>Gefängnis</b>\n\n-Ort für die Fähigkeit von Laura Larsen.";
+                txtPlaceTwo.text = "<b>Parlament</b>\n\n-Ort für die Fähigkeit von Erik Edmond.";
                 txtPlaceTwo.fontSize = 39;
-                txtPlaceThree.text = "Straße\n\n-zufällige Event.s";
+                txtPlaceThree.text = "<b>Straße</b>\n\n-zufällige Event.s";
                 txtPlaceFour.text = " ";
                 break;
         }
@@ -374,7 +418,7 @@ public class Rules : MonoBehaviour
     {
         DisableEverything();
         cvsCharacter.gameObject.SetActive(true);
-        txtTitel.text = "Charaktere";
+        txtTitel.text = "<b>Charaktere</b>";
         btnBack.onClick.RemoveAllListeners();
         btnBack.onClick.AddListener(OnEnable);
         chapter = "character";
@@ -393,9 +437,9 @@ public class Rules : MonoBehaviour
                 imgCharacterTwoBG.sprite = bank;
                 imgCharacterThreeBG.sprite = park;
 
-                txtCharacterOne.text = "Dr. Moe McKay\n\n-kann im Krankenhaus einen Ort für 2 Runden unter Quarantäne stellen und in so für alle Charaktere sperren.";
-                txtCharacterTwo.text = "Felicity Field\n\n-kann in der Bank die letzte Transaktion eines Spielers einsehen.";
-                txtCharacterThree.text = "Colin Cooper\n\n-kann im Park sein Obdachlosennetzwerk fragen wieviele Questorte der Verbrecher schon erledigt hat.";
+                txtCharacterOne.text = "<b>Dr. Moe McKay</b>\n\n-kann im Krankenhaus einen Ort für 2 Runden unter Quarantäne stellen und in so für alle Charaktere sperren.";
+                txtCharacterTwo.text = "<b>Felicity Field</b>\n\n-kann in der Bank die letzte Transaktion eines Spielers einsehen.";
+                txtCharacterThree.text = "<b>Colin Cooper</b>\n\n-kann im Park sein Obdachlosennetzwerk fragen wieviele Questorte der Verbrecher schon erledigt hat.";
 
                 break;
             case 2:
@@ -410,9 +454,9 @@ public class Rules : MonoBehaviour
                 imgCharacterTwoBG.sprite = prison;
                 imgCharacterThreeBG.sprite = parliament;
 
-                txtCharacterOne.text = "Olivia Osswald\n\n-kann im Friedhof eine Seance abhalten um herauszufinden wo sich in der Stadt scharfe Fallen befinden.";
-                txtCharacterTwo.text = "Laura Larsen\n\n-kann im Gefängnis eine Studie durch- führen um alle falschen Hinweise in der Stadt verschwinden zu lassen.";
-                txtCharacterThree.text = "Eric Edmond\n\n-kann im Parlament einen Politiker erpressen um heraus- zufinden welche Aktion ein Spieler im letzten Zug durchgeführt hat.";
+                txtCharacterOne.text = "<b>Olivia Osswald</b>\n\n-kann im Friedhof eine Seance abhalten um herauszufinden wo sich in der Stadt scharfe Fallen befinden.";
+                txtCharacterTwo.text = "<b>Laura Larsen</b>\n\n-kann im Gefängnis eine Studie durch- führen um alle falschen Hinweise in der Stadt verschwinden zu lassen.";
+                txtCharacterThree.text = "<b>Eric Edmond</b>\n\n-kann im Parlament einen Politiker erpressen um heraus- zufinden welche Aktion ein Spieler im letzten Zug durchgeführt hat.";
                 break;
 
         }
@@ -422,7 +466,7 @@ public class Rules : MonoBehaviour
     {
         DisableEverything();
         cvsCriminals.gameObject.SetActive(true);
-        txtTitel.text = "Verbrecher";
+        txtTitel.text = "<b>Verbrecher</b>";
         btnBack.onClick.RemoveAllListeners();
         btnBack.onClick.AddListener(OnEnable);
         chapter = "criminals";
@@ -432,39 +476,170 @@ public class Rules : MonoBehaviour
             case 1:
                 btnPageForward.interactable = true;
                 btnPageBack.interactable = false;
-                CriminalGeneralPanel.gameObject.SetActive(true);
-                txtCriminalGeneral.text = "Allgemeine Verbrecher Regeln Seite 1";
-                break;
-            case 2:
-                btnPageForward.interactable = true;
-                btnPageBack.interactable = true;
-                CriminalGeneralPanel.gameObject.SetActive(true);
-                txtCriminalGeneral.text = "Allgemeine Verbrecher Regeln Seite 2";
-                break;
-            case 3:
-                btnPageForward.interactable = true;
-                btnPageBack.interactable = true;
                 CriminalGeneralPanel.gameObject.SetActive(false);
 
                 imgCriminalOne.sprite = inferno;
                 imgCriminalTwo.sprite = drMortifier;
 
-                txtCriminalOne.text = "Inferno\n\n-muss seine Bombe innerhalb von 50 Minuten platzieren.\n\nQuestorte:\nArmee Laden\nEinkaufszentrum\nSchrottplatz\n\nMögliche Zielorte:\nParlament\nGefängnis\nKasino";
-                txtCriminalTwo.text = "Dr.Mortifier\n\n-muss nach dem Platzieren der Krankheitserreger innerhalb von 10 Minuten 5+ Felder vom Seuchenherd entfernt sein.\n\nQuestorte:\nEinkaufszentrum\nBibliothek\nLabor\n\nMögliche Zielorte:\nStadtplatz\nEinkaufszentrum\nHafen";
+                txtCriminalOne.text =
+                    "<b>Inferno</b>\n" +
+                    "\n" +
+                    "-muss seine Bombe innerhalb von 50 Minuten platzieren.\n" +
+                    "\n" +
+                    "<b>Questorte:</b>\n" +
+                    "Armee Laden\n" +
+                    "Einkaufszentrum\n" +
+                    "Schrottplatz\n" +
+                    "\n" +
+                    "<b>Mögliche Zielorte:</b>\n" +
+                    "Parlament\n" +
+                    "Gefängnis\n" +
+                    "Kasino";
+                txtCriminalTwo.text =
+                    "<b>Dr.Mortifier</b>\n" +
+                    "\n" +
+                    "-muss nach dem Platzieren der Krankheitserreger innerhalb von 10 Minuten 5+ Felder vom Seuchenherd entfernt sein.\n" +
+                    "\n" +
+                    "<b>Questorte:</b>\n" +
+                    "Einkaufszentrum\n" +
+                    "Bibliothek\n" +
+                    "Labor\n" +
+                    "\n" +
+                    "<b>Mögliche Zielorte:</b>\n" +
+                    "Stadtplatz\n" +
+                    "Einkaufszentrum\n" +
+                    "Hafen";
 
                 break;
-            case 4:
-                btnPageForward.interactable = false;
+            case 2:
+                btnPageForward.interactable = true;
                 btnPageBack.interactable = true;
                 CriminalGeneralPanel.gameObject.SetActive(false);
 
                 imgCriminalOne.sprite = phantom;
                 imgCriminalTwo.sprite = fasculto;
 
-                txtCriminalOne.text = "Phantom\n\n-hat alle 20 Minuten ein 5 Minuten Zeitfenster für seinen Einbruch.\n\nQuestorte:\nInternet Cafe\nArmee Laden\nBar\n\nMögliche Zielorte:\nBank\nKasino\nEinkaufszentrum";
-                txtCriminalTwo.text = "Fasculto\n\n-hat nach 40 Minuten für 20 Minuten Zeit sein Ritual durchzuführen.\n\nQuestorte:\nBibliothek\nHafen\nBar\n\nMögliche Zielorte:\nParlament\nFriedhof\nGefängnis";
+                txtCriminalOne.text =
+                    "<b>Phantom</b>\n" +
+                    "\n" +
+                    "-hat alle 20 Minuten ein 5 Minuten Zeitfenster für seinen Einbruch.\n" +
+                    "\n" +
+                    "<b>Questorte:</b>\n" +
+                    "Internet Cafe\n" +
+                    "Armee Laden\n" +
+                    "Bar\n" +
+                    "\n" +
+                    "<b>Mögliche Zielorte:</b>\n" +
+                    "Bank\n" +
+                    "Kasino\n" +
+                    "Einkaufszentrum";
+                txtCriminalTwo.text =
+                    "<b>Fasculto</b>\n" +
+                    "\n" +
+                    "-hat nach 40 Minuten für 20 Minuten Zeit sein Ritual durchzuführen.\n" +
+                    "\n" +
+                    "<b>Questorte:</b>\n" +
+                    "Bibliothek\n" +
+                    "Hafen\n" +
+                    "Bar\n" +
+                    "\n" +
+                    "<b>Mögliche Zielorte:</b>\n" +
+                    "Parlament\n" +
+                    "Friedhof\n" +
+                    "Gefängnis";
 
                 break;
+            case 3:
+                btnPageForward.interactable = true;
+                btnPageBack.interactable = true;
+                CriminalGeneralPanel.gameObject.SetActive(true);
+                txtCriminalGeneral.text = 
+                    "Dein Ziel als Verbrecher ist es sein Verbrechen mit Berück- sichtigung auf den Zeitaspekt durchzuführen.\n" +
+                    "\n" +
+                    "<b>Questorte:</b>\n" +
+                    "-Um dein Verbrechen durchzu-\n" +
+                    " führen musst du zuerst deine\n" +
+                    " 3 Questorte aktivieren.\n" +
+                    "-Questorte aktivieren kostet 6$.\n" +
+                    "\n" +
+                    "<b>Zeitaspekt:</b>\n" +
+                    "-Jeder Verbrecher hat einen\n" +
+                    " individuellen Zeitaspekt. Siehe\n" +
+                    " dazu Seite 1-2.\n" +
+                    "\n" +
+                    "<b>Zielort:</b>\n" +
+                    "-Jedem Verbrecher wird zufällig\n" +
+                    " einer der drei möglichen\n" +
+                    " Zielorte zugewiesen.\n" +
+                    "-Dort muss er nach dem er die\n" +
+                    " Questorte aktiviert hat sein\n" +
+                    " Verbrechen durchführen.";
+
+                break;
+            case 4:
+                btnPageForward.interactable = true;
+                btnPageBack.interactable = true;
+                CriminalGeneralPanel.gameObject.SetActive(true);
+                txtCriminalGeneral.text =
+                    "<b>Fallen:</b>\n" +
+                    "\n" +
+                    "Es gibt 2 Arten von Fallen:\n" +
+                    "\n" +
+                    "<b>kleine Fallen:</b>\n" +
+                    "-Diese werden an einem Ort\n" +
+                    " platziert.\n" +
+                    "-Jeder Verbrecher hat eine\n" +
+                    " eigene Art Falle, die für 2$\n" +
+                    " immer platziert werden kann.\n" +
+                    "-Andere Arten können im\n" +
+                    " Einkaufszentrum, Internetcafe\n" +
+                    " und am Hafen gekauft werden.\n" +
+                    "-Der Verbrecher bestimmt ab\n" +
+                    " wieviel Runden sie scharf sind.\n" +
+                    "-Betritt man einen Ort mit einer\n" +
+                    " scharfen Falle wird man\n" +
+                    " ins Krankenhaus (oder wenn es\n" +
+                    " Diebesgut ist, ins Gefängnis)\n" +
+                    " befördert und verliert sein\n" +
+                    " ganzes Geld.\n" +
+                    "\n" +
+                    "<b>große Fallen:</b>\n" +
+                    "-können einmal pro Spiel\n" +
+                    " eingesetzt werden.\n" +
+                    "-können gezielt auf einen\n" +
+                    " Charakter eingesetz werden.\n" +
+                    "-Schutzitems schützen nicht\n" +
+                    " davor.";
+                break;
+            case 5:
+                btnPageForward.interactable = false;
+                btnPageBack.interactable = true;
+                CriminalGeneralPanel.gameObject.SetActive(true);
+                txtCriminalGeneral.text =
+                    "<b>Aktionen:</b>\n" +
+                    "\n" +
+                    "<b>-falscher Hinweis:</b>\n" +
+                    " Du hinterlässt einen falschen\n" +
+                    " Hinweis am derzeitigen Ort.\n" +
+                    "\n" +
+                    "<b>-kleine Falle:</b>\n" +
+                    " Du hinterlässt ein Falle am\n" +
+                    " derzeitigen Ort und stellst ein\n" +
+                    " nach wievielen Zügen sie scharf\n" +
+                    " ist.\n" +
+                    "\n" +
+                    "<b>-große Falle:</b>\n" +
+                    " Du setzt deine große Falle\n" +
+                    " auf einen der Spieler ein.\n" +
+                    "\n" +
+                    "<b>-Manipulation:</b>\n Bewege einen Spieler oder\n" +
+                    " lösche einen seiner Hinweise.\n" +
+                    "\n" +
+                    "<b>-Questort aktivieren:</b>\n" +
+                    " Aktiviere für 6$ einen deiner\n" +
+                    " Questorte.";
+                break;
+
         }
     }
 
@@ -472,7 +647,7 @@ public class Rules : MonoBehaviour
     {
         DisableEverything();
         cvsItems.gameObject.SetActive(true);
-        txtTitel.text = "Items";
+        txtTitel.text = "<b>Items</b>";
         btnBack.onClick.RemoveAllListeners();
         btnBack.onClick.AddListener(OnEnable);
         chapter = "items";
@@ -486,10 +661,10 @@ public class Rules : MonoBehaviour
                 imgItemsTwo.sprite = fingerprintKit;
                 imgItemsThree.sprite = energyDrink;
 
-                    txtItemsOne.text = "Turnschuhe\n\n-ermöglichen es sich ein weiteres Mal zu bewegen.";
-                txtItemsTwo.text = "Fingerabdruck Set\n\n-ermöglicht es alle Hinweise am derzeitigen Platz zu finden und diese sofort zu entschlüsseln.";
+                    txtItemsOne.text = "<b>Turnschuhe</b>\n\n-ermöglichen es sich ein weiteres Mal zu bewegen.";
+                txtItemsTwo.text = "<b>Fingerabdruck Set</b>\n\n-ermöglicht es alle Hinweise am derzeitigen Platz zu finden und diese sofort zu entschlüsseln.";
                 txtItemsThree.fontSize = 50;
-                txtItemsThree.text = "Energy Drink\n\n-ermöglicht es im aktuellen Zug eine weitere Aktion durchzuführen.";
+                txtItemsThree.text = "<b>Energy Drink</b>\n\n-ermöglicht es im aktuellen Zug eine weitere Aktion durchzuführen.";
                 break;
             case 2:
                 btnPageBack.interactable = true;
@@ -498,10 +673,10 @@ public class Rules : MonoBehaviour
                 imgItemsTwo.sprite = whiskey;
                 imgItemsThree.sprite = protectiveItems;
 
-                   txtItemsOne.text = "Taschenrechner\n\n-ermöglicht es am Stadtplatz und im Internet Cafe 2$ mehr zu verdienen.";
-                txtItemsTwo.text = "Whiskey\n\n-ermöglicht es diesen am Hafen gegen eine wahren entschlüsselten Hinweis auszutauschen.";
+                   txtItemsOne.text = "<b>Taschenrechner</b>\n\n-ermöglicht es am Stadtplatz und im Internet Cafe 2$ mehr zu verdienen.";
+                txtItemsTwo.text = "<b>Whiskey</b>\n\n-ermöglicht es diesen am Hafen gegen eine wahren entschlüsselten Hinweis auszutauschen.";
                 txtItemsThree.fontSize = 30;
-                txtItemsThree.text = "Schutz Items\n\n-schützen dich gegen Fallen.\n\nSchutzweste: einmal alle Fallen.\n\nF.fester Mantel: permanent Bomben.\n\nGasmaske: permanent Petrischalen.\n\nBodycam: permanent Diebesgut.\n\nTalisman: permanent v. Artifakte.";
+                txtItemsThree.text = "<b>Schutz Items</b>\n\n-schützen dich gegen Fallen.\n\nSchutzweste: einmal alle Fallen.\n\nF.fester Mantel: permanent Bomben.\n\nGasmaske: permanent Petrischalen.\n\nBodycam: permanent Diebesgut.\n\nTalisman: permanent v. Artifakte.";
                 break;
 
         }
