@@ -8046,7 +8046,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &324733292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24107,7 +24107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &901352368
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32560,7 +32560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!223 &1124098857
 Canvas:
   m_ObjectHideFlags: 0
@@ -38419,7 +38419,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 52801786acd9bb542909b8d47280efb6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4f24686cf0008f9478962207701aeecd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -41156,13 +41156,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Fallen:\n\nEs gibt 2 Arten von Fallen:\n\nkleine Fallen:\n-Diese werden
-    an einem Ort platziert.\n-Jeder Verbrecher hat eine eigene Art Falle, die f\xFCr
-    2$ immer platziert werden kann.\n-Ander Arten k\xF6nnen im Einkaufszentrum, Internetcafe
-    und am Hafen gekauft werden.\n-Der Verbrecher bestimmt ab wieviel Runden sie scharf
-    sind.\n-Betritt man einen Ort mit einer scharfen Falle wird man ins Krankenhaus
-    (oder wenn es Diebesgut ist, ins Gef\xE4ngnis) bef\xF6rdert und verliert sein
-    ganzes Geld."
+  m_Text: 
 --- !u!1 &1454252335
 GameObject:
   m_ObjectHideFlags: 0
