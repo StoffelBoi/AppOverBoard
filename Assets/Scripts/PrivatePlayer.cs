@@ -152,10 +152,10 @@ public class PrivatePlayer : MonoBehaviour
             TargetTimePanel.gameObject.SetActive(true);
 
             name += "\n" + villain;
-            infos = "Nicht aktivierte Zielorte:\n\n";
+            infos = "Nicht aktivierte Questorte:\n\n";
             for (int i = 0; i < 3 - GameState.Instance.activatedQuestPlaces; i++)
             {
-                infos += (i + 1) + ". Zielort:" + translatePlace(GameState.Instance.questPlaces[i]) + "\n\n";
+                infos +=" -" + translatePlace(GameState.Instance.questPlaces[i]) + "\n\n";
             }
             infos += "Verbrechensort:" + translatePlace(GameState.Instance.targetPlace);
             switch (GameState.Instance.criminalRole)
