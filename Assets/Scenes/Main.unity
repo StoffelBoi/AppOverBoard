@@ -15485,6 +15485,75 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 561800357}
   m_CullTransparentMesh: 0
+--- !u!1 &562547496
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 562547497}
+  - component: {fileID: 562547498}
+  - component: {fileID: 562547499}
+  m_Layer: 13
+  m_Name: BadCharacter_Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &562547497
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 562547496}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4.5, y: 4.5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1517792417}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &562547498
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 562547496}
+  m_CullTransparentMesh: 0
+--- !u!114 &562547499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 562547496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!1 &572857198
 GameObject:
   m_ObjectHideFlags: 0
@@ -16963,6 +17032,7 @@ MonoBehaviour:
   txtSolved: {fileID: 677733107}
   txtUnsolved: {fileID: 262773841}
   imgChar: {fileID: 1516717666}
+  imgBadChar: {fileID: 562547499}
   BG: {fileID: 1070512848}
   btnTurn: {fileID: 181273880}
   btnTurnText: {fileID: 1294781013}
@@ -17012,6 +17082,30 @@ MonoBehaviour:
   italienrestaurant: {fileID: 21300000, guid: 58706090d924b3b488a9f4fabf9bbc79, type: 3}
   harbor: {fileID: 21300000, guid: 94970344afd8100409299a4708c93bb1, type: 3}
   bar: {fileID: 21300000, guid: 1d2b98a10bd98d14d976632a7b450a5d, type: 3}
+  infernoMcay: {fileID: 21300000, guid: ce4f83175f70a2f46800fd5120b1152c, type: 3}
+  infernoFields: {fileID: 21300000, guid: 5465d4eda2fdb4f4c81505a2b06af740, type: 3}
+  infernoCooper: {fileID: 21300000, guid: 4e54935a5292e95419a3043db60e0d70, type: 3}
+  infernoOsswald: {fileID: 21300000, guid: 1e9496f190bc31b449f00e96f95bb3f7, type: 3}
+  infernoLarsen: {fileID: 21300000, guid: 3e9001fa35522a8419144c48c985a8f5, type: 3}
+  infernoEdmond: {fileID: 21300000, guid: 15b3e8c8a1331a046b821b92e3d645fc, type: 3}
+  drmortifierMcay: {fileID: 21300000, guid: ce4f83175f70a2f46800fd5120b1152c, type: 3}
+  drmortifierFields: {fileID: 21300000, guid: 5465d4eda2fdb4f4c81505a2b06af740, type: 3}
+  drmortifierCooper: {fileID: 21300000, guid: 4e54935a5292e95419a3043db60e0d70, type: 3}
+  drmortifierOsswald: {fileID: 21300000, guid: 1e9496f190bc31b449f00e96f95bb3f7, type: 3}
+  drmortifierLarsen: {fileID: 21300000, guid: 3e9001fa35522a8419144c48c985a8f5, type: 3}
+  drmortifierEdmond: {fileID: 21300000, guid: 15b3e8c8a1331a046b821b92e3d645fc, type: 3}
+  phantomMcay: {fileID: 21300000, guid: e4c052afad4769b41ba750808ae6af04, type: 3}
+  phantomFields: {fileID: 21300000, guid: f0ca497502cd601458ddaf57b3ce4bf2, type: 3}
+  phantomCooper: {fileID: 21300000, guid: 99a1fbd58c5141c4392f228ef378830b, type: 3}
+  phantomOsswald: {fileID: 21300000, guid: 1798db99db766254f9f70476b92e30fb, type: 3}
+  phantomLarsen: {fileID: 21300000, guid: 3219da1243f466945b4b30cb8037e61f, type: 3}
+  phantomEdmond: {fileID: 21300000, guid: 3712d983f8e53d94b99b5f18c0cf5d9c, type: 3}
+  fascultoMcay: {fileID: 21300000, guid: ce4f83175f70a2f46800fd5120b1152c, type: 3}
+  fascultoFields: {fileID: 21300000, guid: 5465d4eda2fdb4f4c81505a2b06af740, type: 3}
+  fascultoCooper: {fileID: 21300000, guid: 4e54935a5292e95419a3043db60e0d70, type: 3}
+  fascultoOsswald: {fileID: 21300000, guid: 1e9496f190bc31b449f00e96f95bb3f7, type: 3}
+  fascultoLarsen: {fileID: 21300000, guid: 3e9001fa35522a8419144c48c985a8f5, type: 3}
+  fascultoEdmond: {fileID: 21300000, guid: 15b3e8c8a1331a046b821b92e3d645fc, type: 3}
 --- !u!4 &626111167
 Transform:
   m_ObjectHideFlags: 0
@@ -43198,6 +43292,7 @@ RectTransform:
   m_Children:
   - {fileID: 1070512846}
   - {fileID: 1516717665}
+  - {fileID: 562547497}
   m_Father: {fileID: 492880975}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -49982,10 +50077,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: dcab528aaf3c2fc45a7a0f99ae8babe2, type: 3}
-    m_FontSize: 53
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 5
+    m_MinSize: 0
     m_MaxSize: 84
     m_Alignment: 3
     m_AlignByGeometry: 0
@@ -50002,7 +50097,7 @@ MonoBehaviour:
     2.Zielort: Shopping Center
 
 
-    3.Zielort: Shopping Center
+    3.Zielort: Einkaufszentrum
 
 
     Verbrechensort: Shopping Center'

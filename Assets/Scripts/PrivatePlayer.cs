@@ -13,6 +13,7 @@ public class PrivatePlayer : MonoBehaviour
     public Text txtSolved;
     public Text txtUnsolved;
     public Image imgChar;
+    public Image imgBadChar;
     public Image BG;
 
     public Button btnTurn;
@@ -79,12 +80,42 @@ public class PrivatePlayer : MonoBehaviour
     public Sprite harbor;
     public Sprite bar;
 
+    public Sprite infernoMcay;
+    public Sprite infernoFields;
+    public Sprite infernoCooper;
+    public Sprite infernoOsswald;
+    public Sprite infernoLarsen;
+    public Sprite infernoEdmond;
+
+    public Sprite drmortifierMcay;
+    public Sprite drmortifierFields;
+    public Sprite drmortifierCooper;
+    public Sprite drmortifierOsswald;
+    public Sprite drmortifierLarsen;
+    public Sprite drmortifierEdmond;
+
+    public Sprite phantomMcay;
+    public Sprite phantomFields;
+    public Sprite phantomCooper;
+    public Sprite phantomOsswald;
+    public Sprite phantomLarsen;
+    public Sprite phantomEdmond;
+
+    public Sprite fascultoMcay;
+    public Sprite fascultoFields;
+    public Sprite fascultoCooper;
+    public Sprite fascultoOsswald;
+    public Sprite fascultoLarsen;
+    public Sprite fascultoEdmond;
+
+
     void OnEnable()
     {
         if (GameState.Instance.playerState[playerID] != "Movement")
         {
             vibration = true;
         }
+        imgBadChar.color = new Color(255, 255, 255, 0);
         txtFacts.fontSize = 69;
         BG.sprite = GetSprite();
         canvasHide.gameObject.SetActive(false);
@@ -105,6 +136,7 @@ public class PrivatePlayer : MonoBehaviour
         character = GameState.Instance.roles[playerID];
         villain = GameState.Instance.criminalRole;
         Sprite portrait = mcay;
+        Sprite badPortrait = null;
         string name = "";
         switch (character)
         {
@@ -139,12 +171,13 @@ public class PrivatePlayer : MonoBehaviour
 
         string infos = "";
         infos +=
-            "Fakten:\n\nPerson:\t" + GameState.Instance.roleFact[playerID] +
-            "\n\nVerbrecher:\t" + GameState.Instance.playerFact[playerID] +
+            "Fakten:\n\nPerson:\t" + GameState.Instance.playerFact[playerID] +
+            "\n\nVerbrecher:\t" + GameState.Instance.roleFact[playerID] +
             "\n\nZielort:\t" + GameState.Instance.placeFact[playerID];
 
         if (GameState.Instance.criminal == character)
         {
+            imgBadChar.color = new Color(255, 255, 255, 255);
             txtFacts.fontSize = 53;
             btnGuess.gameObject.SetActive(false);
             TargetTimeClockPanel.gameObject.SetActive(true);
@@ -161,15 +194,99 @@ public class PrivatePlayer : MonoBehaviour
             switch (GameState.Instance.criminalRole)
             {
                 case "Inferno":
+                    switch (character)
+                    {
+                        case "Doctor":
+                            badPortrait = infernoMcay;
+                            break;
+                        case "Police":
+                            badPortrait = infernoFields;
+                            break;
+                        case "Detective":
+                            badPortrait = infernoCooper;
+                            break;
+                        case "Psychic":
+                            badPortrait = infernoOsswald;
+                            break;
+                        case "Psychologist":
+                            badPortrait = infernoLarsen;
+                            break;
+                        case "Reporter":
+                            badPortrait = infernoEdmond;
+                            break;
+                    }
                     TargetTimeText.text = "Innerhalb von 50min";
                     break;
                 case "Dr.Mortifier":
+                    switch (character)
+                    {
+                        case "Doctor":
+                            badPortrait = drmortifierMcay;
+                            break;
+                        case "Police":
+                            badPortrait = drmortifierFields;
+                            break;
+                        case "Detective":
+                            badPortrait = drmortifierCooper;
+                            break;
+                        case "Psychic":
+                            badPortrait = drmortifierOsswald;
+                            break;
+                        case "Psychologist":
+                            badPortrait = drmortifierLarsen;
+                            break;
+                        case "Reporter":
+                            badPortrait = drmortifierEdmond;
+                            break;
+                    }
                     TargetTimeText.text = "Nach Verbrechen: in 10min 5 Felder entfernt";
                     break;
                 case "Phantom":
+                    switch (character)
+                    {
+                        case "Doctor":
+                            badPortrait = phantomMcay;
+                            break;
+                        case "Police":
+                            badPortrait = phantomFields;
+                            break;
+                        case "Detective":
+                            badPortrait = phantomCooper;
+                            break;
+                        case "Psychic":
+                            badPortrait = phantomOsswald;
+                            break;
+                        case "Psychologist":
+                            badPortrait = phantomLarsen;
+                            break;
+                        case "Reporter":
+                            badPortrait = phantomEdmond;
+                            break;
+                    }
                     TargetTimeText.text = "Alle 20min für 5min";
                     break;
                 case "Fasculto":
+                    switch (character)
+                    {
+                        case "Doctor":
+                            badPortrait = fascultoMcay;
+                            break;
+                        case "Police":
+                            badPortrait = fascultoFields;
+                            break;
+                        case "Detective":
+                            badPortrait = fascultoCooper;
+                            break;
+                        case "Psychic":
+                            badPortrait = fascultoOsswald;
+                            break;
+                        case "Psychologist":
+                            badPortrait = fascultoLarsen;
+                            break;
+                        case "Reporter":
+                            badPortrait = fascultoEdmond;
+                            break;
+                    }
                     TargetTimeText.text = "Nach 40min für 20min";
                     break;
             }
@@ -198,6 +315,7 @@ public class PrivatePlayer : MonoBehaviour
         txtFacts.text = infos;
         txtChar.text = name;
         imgChar.sprite = portrait;
+        imgBadChar.sprite = badPortrait;
     }
     void btnToGuess()
     {
@@ -344,12 +462,14 @@ public class PrivatePlayer : MonoBehaviour
         btnHide.onClick.RemoveAllListeners();
         btnHide.onClick.AddListener(btnCloseHide);
         canvasHide.gameObject.SetActive(true);
+        imgBadChar.gameObject.SetActive(false);
     }
     void btnCloseHide()
     {
         btnHide.onClick.RemoveAllListeners();
         btnHide.onClick.AddListener(btnOpenHide);
         canvasHide.gameObject.SetActive(false);
+        imgBadChar.gameObject.SetActive(true);
     }
 
     void btnToPlace()

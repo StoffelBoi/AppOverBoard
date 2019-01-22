@@ -176,21 +176,18 @@ public class MyNetManager : NetworkManager
 
     public string LocalIPAddress()
     {
-        foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+        IPHostEntry host;
+        string localIP = "Unknown";
+        host = Dns.GetHostEntry(Dns.GetHostName());
+        foreach (IPAddress ip in host.AddressList)
         {
-            if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
             {
-                Console.WriteLine(ni.Name);
-                foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
-                {
-                    if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                    {
-                        return ip.Address.ToString();
-                    }
-                }
+                localIP = ip.ToString();
+                break;
             }
         }
-        return "Unknown";
+        return localIP;
     }
 
     public override void OnStopServer()

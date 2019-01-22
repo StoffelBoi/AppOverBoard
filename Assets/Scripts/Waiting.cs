@@ -50,13 +50,13 @@ public class Waiting : MonoBehaviour
     {
         while (waiting)
         {
-            txtWaiting.text = "Waiting for\nPlayers    ";
+            txtWaiting.text = "Auf Spieler\nwarten    ";
             yield return new WaitForSeconds(0.3f);
-            txtWaiting.text = "Waiting for\nPlayers .  ";
+            txtWaiting.text = "Auf Spieler\nwarten .  ";
             yield return new WaitForSeconds(0.3f);
-            txtWaiting.text = "Waiting for\nPlayers .. ";
+            txtWaiting.text = "Auf Spieler\nwarten .. ";
             yield return new WaitForSeconds(0.3f);
-            txtWaiting.text = "Waiting for\nPlayers ...";
+            txtWaiting.text = "Auf Spieler\nwarten ...";
             yield return new WaitForSeconds(0.3f);
 
         }

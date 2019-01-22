@@ -2858,6 +2858,14 @@ public class Place : MonoBehaviour
         oneButton();
         btnOneText.text = "Ein Bier trinken - 2$";
         btnOne.onClick.AddListener(btnBarHint);
+        if(GameState.Instance.money[GameState.Instance.currentTurn] < 2)
+        {
+            btnOne.interactable = false;
+        }
+        else
+        {
+            btnOne.interactable = true;
+        }
     }
     void btnBarHint()
     {

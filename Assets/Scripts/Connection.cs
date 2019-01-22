@@ -125,7 +125,7 @@ public class Connection : MonoBehaviour {
         GameState.Instance.connectedPlayer = 0;
         GameState.Instance.playerCount = playerCount;
     }
-    //@TODO add back button
+
     void btnJoinClick()
     {
         disableEverything();
