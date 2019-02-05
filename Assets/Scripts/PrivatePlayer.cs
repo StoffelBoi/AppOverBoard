@@ -16,6 +16,9 @@ public class PrivatePlayer : MonoBehaviour
     public Image imgBadChar;
     public Image BG;
 
+    public Sprite notTargetTimeSprite;
+    public Sprite TargetTimeSprite;
+
     public Button btnTurn;
     public Text btnTurnText;
     public Button btnMenu;
@@ -331,11 +334,11 @@ public class PrivatePlayer : MonoBehaviour
     {
         if (GameState.Instance.targetTime)
         {
-            TargetTime.sprite = Green;
+            TargetTime.sprite = TargetTimeSprite;
         }
         else
         {
-            TargetTime.sprite = Red;
+            TargetTime.sprite = notTargetTimeSprite;
         }
         if (GameState.Instance.playerState[playerID] == "Movement")
         {

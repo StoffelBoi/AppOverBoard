@@ -132,9 +132,18 @@ public class Rules : MonoBehaviour
     public Image solved;
     public Image notsolved;
 
-    private int page = 1;
+    public int page = 1;
     private string chapter="start";
 
+    public static Rules Instance;
+
+    void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
+            Destroy(gameObject);
+    }
     void OnEnable()
     {
         DisableEverything();
@@ -301,7 +310,7 @@ public class Rules : MonoBehaviour
         }
     }
 
-    void Places()
+    public void Places()
     {
         DisableEverything();
         cvsPlaces.gameObject.SetActive(true);

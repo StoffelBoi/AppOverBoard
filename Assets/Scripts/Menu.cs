@@ -188,53 +188,95 @@ public class Menu : MonoBehaviour
     void FillBoard()
     {
         symbol_0_0.sprite = GetPlacePic(GameState.Instance.board[0, 0]);
+        rulesListener(symbol_0_0, GameState.Instance.board[0, 0]);
         symbol_0_1.sprite = GetPlacePic(GameState.Instance.board[0, 1]);
+        rulesListener(symbol_0_1, GameState.Instance.board[0, 1]);
         symbol_0_2.sprite = GetPlacePic(GameState.Instance.board[0, 2]);
+        rulesListener(symbol_0_2, GameState.Instance.board[0, 2]);
         symbol_0_3.sprite = GetPlacePic(GameState.Instance.board[0, 3]);
+        rulesListener(symbol_0_3, GameState.Instance.board[0, 3]);
         symbol_0_4.sprite = GetPlacePic(GameState.Instance.board[0, 4]);
+        rulesListener(symbol_0_4, GameState.Instance.board[0, 4]);
         symbol_0_5.sprite = GetPlacePic(GameState.Instance.board[0, 5]);
+        rulesListener(symbol_0_5, GameState.Instance.board[0, 5]);
 
         symbol_1_0.sprite = GetPlacePic(GameState.Instance.board[1, 0]);
+        rulesListener(symbol_1_0, GameState.Instance.board[1, 0]);
         symbol_1_1.sprite = GetPlacePic(GameState.Instance.board[1, 1]);
+        rulesListener(symbol_1_1, GameState.Instance.board[1, 1]);
         symbol_1_2.sprite = GetPlacePic(GameState.Instance.board[1, 2]);
+        rulesListener(symbol_1_2, GameState.Instance.board[1, 2]);
         symbol_1_3.sprite = GetPlacePic(GameState.Instance.board[1, 3]);
+        rulesListener(symbol_1_3, GameState.Instance.board[1, 3]);
         symbol_1_4.sprite = GetPlacePic(GameState.Instance.board[1, 4]);
+        rulesListener(symbol_1_4, GameState.Instance.board[1, 4]);
         symbol_1_5.sprite = GetPlacePic(GameState.Instance.board[1, 5]);
+        rulesListener(symbol_1_5, GameState.Instance.board[1, 5]);
 
         symbol_2_0.sprite = GetPlacePic(GameState.Instance.board[2, 0]);
+        rulesListener(symbol_2_0, GameState.Instance.board[2, 0]);
         symbol_2_1.sprite = GetPlacePic(GameState.Instance.board[2, 1]);
+        rulesListener(symbol_2_1, GameState.Instance.board[2, 1]);
         symbol_2_2.sprite = GetPlacePic(GameState.Instance.board[2, 2]);
+        rulesListener(symbol_2_2, GameState.Instance.board[2, 2]);
         symbol_2_3.sprite = GetPlacePic(GameState.Instance.board[2, 3]);
+        rulesListener(symbol_2_3, GameState.Instance.board[2, 3]);
         symbol_2_4.sprite = GetPlacePic(GameState.Instance.board[2, 4]);
+        rulesListener(symbol_2_4, GameState.Instance.board[2, 4]);
         symbol_2_5.sprite = GetPlacePic(GameState.Instance.board[2, 5]);
+        rulesListener(symbol_2_5, GameState.Instance.board[2, 5]);
 
         symbol_3_0.sprite = GetPlacePic(GameState.Instance.board[3, 0]);
+        rulesListener(symbol_3_0, GameState.Instance.board[3, 0]);
         symbol_3_1.sprite = GetPlacePic(GameState.Instance.board[3, 1]);
+        rulesListener(symbol_3_1, GameState.Instance.board[3, 1]);
         symbol_3_2.sprite = GetPlacePic(GameState.Instance.board[3, 2]);
+        rulesListener(symbol_3_2, GameState.Instance.board[3, 2]);
         symbol_3_3.sprite = GetPlacePic(GameState.Instance.board[3, 3]);
+        rulesListener(symbol_3_3, GameState.Instance.board[3, 3]);
         symbol_3_4.sprite = GetPlacePic(GameState.Instance.board[3, 4]);
+        rulesListener(symbol_3_4, GameState.Instance.board[3, 4]);
         symbol_3_5.sprite = GetPlacePic(GameState.Instance.board[3, 5]);
+        rulesListener(symbol_3_5, GameState.Instance.board[3, 5]);
 
         symbol_4_0.sprite = GetPlacePic(GameState.Instance.board[4, 0]);
+        rulesListener(symbol_4_0, GameState.Instance.board[4, 0]);
         symbol_4_1.sprite = GetPlacePic(GameState.Instance.board[4, 1]);
+        rulesListener(symbol_4_1, GameState.Instance.board[4, 1]);
         symbol_4_2.sprite = GetPlacePic(GameState.Instance.board[4, 2]);
+        rulesListener(symbol_4_2, GameState.Instance.board[4, 2]);
         symbol_4_3.sprite = GetPlacePic(GameState.Instance.board[4, 3]);
+        rulesListener(symbol_4_3, GameState.Instance.board[4, 3]);
         symbol_4_4.sprite = GetPlacePic(GameState.Instance.board[4, 4]);
+        rulesListener(symbol_4_4, GameState.Instance.board[4, 4]);
         symbol_4_5.sprite = GetPlacePic(GameState.Instance.board[4, 5]);
+        rulesListener(symbol_4_5, GameState.Instance.board[4, 5]);
 
         symbol_5_0.sprite = GetPlacePic(GameState.Instance.board[5, 0]);
+        rulesListener(symbol_5_0, GameState.Instance.board[5, 0]);
         symbol_5_1.sprite = GetPlacePic(GameState.Instance.board[5, 1]);
+        rulesListener(symbol_5_1, GameState.Instance.board[5, 1]);
         symbol_5_2.sprite = GetPlacePic(GameState.Instance.board[5, 2]);
+        rulesListener(symbol_5_2, GameState.Instance.board[5, 2]);
         symbol_5_3.sprite = GetPlacePic(GameState.Instance.board[5, 3]);
+        rulesListener(symbol_5_3, GameState.Instance.board[5, 3]);
         symbol_5_4.sprite = GetPlacePic(GameState.Instance.board[5, 4]);
+        rulesListener(symbol_5_4, GameState.Instance.board[5, 4]);
         symbol_5_5.sprite = GetPlacePic(GameState.Instance.board[5, 5]);
+        rulesListener(symbol_5_5, GameState.Instance.board[5, 5]);
 
         symbol_6_0.sprite = GetPlacePic(GameState.Instance.board[6, 0]);
+        rulesListener(symbol_6_0, GameState.Instance.board[6, 0]);
         symbol_6_1.sprite = GetPlacePic(GameState.Instance.board[6, 1]);
+        rulesListener(symbol_6_1, GameState.Instance.board[6, 1]);
         symbol_6_2.sprite = GetPlacePic(GameState.Instance.board[6, 2]);
+        rulesListener(symbol_6_2, GameState.Instance.board[6, 2]);
         symbol_6_3.sprite = GetPlacePic(GameState.Instance.board[6, 3]);
+        rulesListener(symbol_6_3, GameState.Instance.board[6, 3]);
         symbol_6_4.sprite = GetPlacePic(GameState.Instance.board[6, 4]);
+        rulesListener(symbol_6_4, GameState.Instance.board[6, 4]);
         symbol_6_5.sprite = GetPlacePic(GameState.Instance.board[6, 5]);
+        rulesListener(symbol_6_5, GameState.Instance.board[6, 5]);
     }
 
     Sprite GetPlacePic(int place)
@@ -301,5 +343,97 @@ public class Menu : MonoBehaviour
                 break;
         }
         return s;
+    }
+
+    void rulesListener(Image currImage, int place)
+    {
+        currImage.gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        switch (place)
+        {
+            case 1:
+            case 9:
+            case 8:
+            case 13:
+                currImage.gameObject.GetComponent<Button>().onClick.AddListener(toPageOne);
+                break;
+            case 11:
+            case 12:
+            case 10:
+            case 14:
+                currImage.gameObject.GetComponent<Button>().onClick.AddListener(toPageTwo);
+                break;
+            case 15:
+            case 16:
+            case 17:
+            case 18:
+                currImage.gameObject.GetComponent<Button>().onClick.AddListener(toPageThree);
+                break;
+            case 3:
+            case 4:
+            case 2:
+            case 6:
+                currImage.gameObject.GetComponent<Button>().onClick.AddListener(toPageFour);
+                break;
+            case 0:
+            case 5:
+            case 7:
+                currImage.gameObject.GetComponent<Button>().onClick.AddListener(toPageFive);
+                break;
+        }
+    }
+    void toPageOne()
+    {
+        UIManager.Instance.OpenRules();
+        Rules.Instance.page = 1;
+        Rules.Instance.Places();
+        Rules.Instance.btnBack.onClick.RemoveAllListeners();
+        Rules.Instance.btnBack.onClick.AddListener(UIManager.Instance.CloseRules);
+        Rules.Instance.btnPageForward.interactable = false;
+        Rules.Instance.btnPageBack.interactable = false;
+        Debug.Log("1");
+    }
+    void toPageTwo()
+    {
+        UIManager.Instance.OpenRules();
+        Rules.Instance.page = 2;
+        Rules.Instance.Places();
+        Rules.Instance.btnBack.onClick.RemoveAllListeners();
+        Rules.Instance.btnBack.onClick.AddListener(UIManager.Instance.CloseRules);
+        Rules.Instance.btnPageForward.interactable = false;
+        Rules.Instance.btnPageBack.interactable = false;
+        Debug.Log("2");
+    }
+    void toPageThree()
+    {
+        UIManager.Instance.OpenRules();
+        Rules.Instance.page = 3;
+        Rules.Instance.Places();
+        Rules.Instance.btnBack.onClick.RemoveAllListeners();
+        Rules.Instance.btnBack.onClick.AddListener(UIManager.Instance.CloseRules);
+        Rules.Instance.btnPageForward.interactable = false;
+        Rules.Instance.btnPageBack.interactable = false;
+        Debug.Log("3");
+    }
+    void toPageFour()
+    {
+        UIManager.Instance.OpenRules();
+        Rules.Instance.page = 4;
+        Rules.Instance.Places();
+        Rules.Instance.btnBack.onClick.RemoveAllListeners();
+        Rules.Instance.btnBack.onClick.AddListener(UIManager.Instance.CloseRules);
+        Rules.Instance.btnPageForward.interactable = false;
+        Rules.Instance.btnPageBack.interactable = false;
+        Debug.Log("4");
+    }
+    void toPageFive()
+    {
+        UIManager.Instance.OpenRules();
+        Rules.Instance.page = 5;
+        Rules.Instance.Places();
+        Rules.Instance.btnBack.onClick.RemoveAllListeners();
+        Rules.Instance.btnBack.onClick.AddListener(UIManager.Instance.CloseRules);
+        Rules.Instance.btnPageForward.interactable = false;
+        Rules.Instance.btnPageBack.interactable = false;
+        Debug.Log("5");
     }
 }

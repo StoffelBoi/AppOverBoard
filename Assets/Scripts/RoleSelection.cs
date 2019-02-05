@@ -57,7 +57,6 @@ public class RoleSelection : MonoBehaviour
         int targetPlace = rn.Next(1, 4);
         int playerNumber = rn.Next(0, GameState.Instance.playerCount);
         player.SetCriminal(GameState.Instance.roles[playerNumber]);
-        Role = 3;
         switch (Role)
         {
             case 1:
