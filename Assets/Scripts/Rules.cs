@@ -489,7 +489,8 @@ public class Rules : MonoBehaviour
 
                 imgCriminalOne.sprite = inferno;
                 imgCriminalTwo.sprite = drMortifier;
-
+                imgCriminalOne.GetComponent<RectTransform>().sizeDelta = new Vector2(290, 290);
+                imgCriminalTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(290, 290);
                 txtCriminalOne.text =
                     "<b>Inferno</b>\n" +
                     "\n" +
@@ -527,6 +528,8 @@ public class Rules : MonoBehaviour
 
                 imgCriminalOne.sprite = phantom;
                 imgCriminalTwo.sprite = fasculto;
+                imgCriminalOne.GetComponent<RectTransform>().sizeDelta = new Vector2(290, 109);
+                imgCriminalTwo.GetComponent<RectTransform>().sizeDelta = new Vector2(300, 111);
 
                 txtCriminalOne.text =
                     "<b>Phantom</b>\n" +
