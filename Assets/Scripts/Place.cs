@@ -256,7 +256,7 @@ public class Place : MonoBehaviour
                 else
                 {
                     eightButtons();
-                    btnOneText.text = "Ortsoption";
+                    btnOneText.text = "Ortsaktion";
                     btnTwoText.text = "Hinweis suchen";
                     btnThreeText.text = "Item";
                     btnFourText.text = "falscher Hinweis";
@@ -331,7 +331,7 @@ public class Place : MonoBehaviour
                 {
 
                     threeButtons();
-                    btnOneText.text = "Ortsoption";
+                    btnOneText.text = "Ortsaktion";
                     btnTwoText.text = "Hinweis suchen";
                     btnThreeText.text = "Item";
                     btnOne.onClick.AddListener(btnPlaceOptionClick);
@@ -1788,7 +1788,7 @@ public class Place : MonoBehaviour
         localPlayer.SetSolvedHints(GameState.Instance.currentTurn, (GameState.Instance.solvedHints[GameState.Instance.currentTurn] + GameState.Instance.unsolvedHints[GameState.Instance.currentTurn]));
         localPlayer.SetTrueUnsolveds(GameState.Instance.currentTurn, 0);
         localPlayer.SetUnsolvedHints(GameState.Instance.currentTurn, 0);
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
 
         if (checkForFact())
         {
@@ -1825,7 +1825,7 @@ public class Place : MonoBehaviour
     }
     void earnMoney()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         if (GameState.Instance.items[GameState.Instance.currentTurn].Contains("Calculator"))
         {
             localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] + 8));
@@ -2160,7 +2160,7 @@ public class Place : MonoBehaviour
     {
         System.Random rn = new System.Random();
         int rand = rn.Next(0, 100);
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "Kasino Wette");
         if (rand < 50)
         {
@@ -2205,7 +2205,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyingInfernoTrap()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "kleine Falle");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 2));
         localPlayer.AddItem(GameState.Instance.currentTurn, "Bomb");
@@ -2214,7 +2214,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyingDrMortifierTrap()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "kleine Falle");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 2));
         localPlayer.AddItem(GameState.Instance.currentTurn, "PetriDish");
@@ -2223,7 +2223,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyingPhantomTrap()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "kleine Falle");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 2));
         localPlayer.AddItem(GameState.Instance.currentTurn, "StolenGoods");
@@ -2232,7 +2232,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyingFascultoTrap()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "kleine Falle");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 2));
         localPlayer.AddItem(GameState.Instance.currentTurn, "CursedArtifact");
@@ -2415,7 +2415,7 @@ public class Place : MonoBehaviour
     }
     void btnTrainstationTravel()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "Zugticket");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 2));
         switch (actionsTextField.text)
@@ -2515,7 +2515,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyProtectiveVest()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "Schutzweste");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 6));
         localPlayer.AddItem(GameState.Instance.currentTurn, "ProtectiveVest");
@@ -2536,7 +2536,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyFireProofCoat()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "Feuerfester Mantel");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 15));
         localPlayer.AddItem(GameState.Instance.currentTurn, "FireProofCoat");
@@ -2544,7 +2544,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyGasmask()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "Gasmaske");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 15));
         localPlayer.AddItem(GameState.Instance.currentTurn, "Gasmask");
@@ -2552,7 +2552,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyBodycam()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "Bodycam");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 15));
         localPlayer.AddItem(GameState.Instance.currentTurn, "Bodycam");
@@ -2560,7 +2560,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyTalisman()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "Talisman");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 15));
         localPlayer.AddItem(GameState.Instance.currentTurn, "Talisman");
@@ -2612,7 +2612,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyTrainers()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "Turnschuhe");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 4));
         localPlayer.AddItem(GameState.Instance.currentTurn, "Trainers");
@@ -2620,7 +2620,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyFingerprintKit()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "Fingerabdruckset");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 4));
         localPlayer.AddItem(GameState.Instance.currentTurn, "FingerprintKit");
@@ -2628,7 +2628,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyEnergyDrink()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "Energy Drink");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 3));
         localPlayer.AddItem(GameState.Instance.currentTurn, "EnergyDrink");
@@ -2636,7 +2636,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyCalculator()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "Taschenrechner");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 8));
         localPlayer.AddItem(GameState.Instance.currentTurn, "Calculator");
@@ -2644,7 +2644,7 @@ public class Place : MonoBehaviour
     }
     void btnBuyWhiskey()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "Whiskey");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 8));
         localPlayer.AddItem(GameState.Instance.currentTurn, "Whiskey");
@@ -2689,7 +2689,7 @@ public class Place : MonoBehaviour
         {
             rand = rn.Next(0, 13);
         }
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
 
         switch (rand)
         {
@@ -2796,7 +2796,7 @@ public class Place : MonoBehaviour
     }
     void btnItalienTwentyPercentChance()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "\"Italienisches Essen\"");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 1));
         chanceToGetTrueHint(2);
@@ -2804,7 +2804,7 @@ public class Place : MonoBehaviour
     }
     void btnItalienThirtyPercentChance()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "\"Italienisches Essen\"");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 2));
         chanceToGetTrueHint(3);
@@ -2812,7 +2812,7 @@ public class Place : MonoBehaviour
     }
     void btnItalienFiftyPercentChance()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "\"Italienisches Essen\"");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 3));
         chanceToGetTrueHint(5);
@@ -2820,7 +2820,7 @@ public class Place : MonoBehaviour
     }
     void btnItalienSixtyPercentChance()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "\"Italienisches Essen\"");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 4));
         chanceToGetTrueHint(6);
@@ -2847,7 +2847,7 @@ public class Place : MonoBehaviour
     }
     void btnHarborHint()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "\"Hafenequipment\"");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 3));
         chanceToGetTrueHint(5);
@@ -2869,7 +2869,7 @@ public class Place : MonoBehaviour
     }
     void btnBarHint()
     {
-        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsoption");
+        localPlayer.SetLastAction(GameState.Instance.currentTurn, "Ortsaktion");
         localPlayer.SetLastTransaction(GameState.Instance.currentTurn, "\"ein Bier\"");
         localPlayer.SetMoney(GameState.Instance.currentTurn, (GameState.Instance.money[GameState.Instance.currentTurn] - 2));
         chanceToGetTrueHint(4);
